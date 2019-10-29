@@ -18,8 +18,14 @@ class HomeScreen extends StatelessWidget {
           onPressed: () => _scaffoldKey.currentState.openDrawer(),
         ),
       ),
-      body: Center(
-        child: CafeTile(),
+      body: ListView(
+        children: <Widget>[
+          CafeTile(),
+          CafeTile(),
+          CafeTile(),
+          CafeTile(),
+          CafeTile(),
+        ],
       ),
       drawer: Drawer(),
       bottomNavigationBar: BottomNavigationBar(
