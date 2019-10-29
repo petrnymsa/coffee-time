@@ -1,5 +1,6 @@
 import 'package:coffee_time/ui/screens/dummy.dart';
 import 'package:coffee_time/ui/shared/hand_drawn_icons_icons.dart';
+import 'package:coffee_time/ui/widgets/cafe_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Text('Flutter Demo Home Page'),
+        child: CafeTile(),
       ),
       drawer: Drawer(),
       bottomNavigationBar: BottomNavigationBar(
