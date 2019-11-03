@@ -139,7 +139,7 @@ class CafeTile extends StatelessWidget {
                                   fontSize: 18, fontWeight: FontWeight.w300),
                             ),
                             Spacer(),
-                            Rating(4),
+                            Rating(_cafe.rating),
                           ],
                         ),
                         Padding(
