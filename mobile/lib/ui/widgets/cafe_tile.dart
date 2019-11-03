@@ -1,52 +1,43 @@
 import 'dart:ui';
 
-import 'package:coffee_time/ui/widgets/pricing.dart';
+import 'package:coffee_time/models/cafe.dart';
 import 'package:coffee_time/ui/widgets/rating.dart';
 import 'package:coffee_time/ui/widgets/tag.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class BlurredImage extends StatelessWidget {
-  final ImageProvider image;
-
-  BlurredImage(this.image);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      decoration: new BoxDecoration(
-        image: new DecorationImage(
-          image: image,
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: new BackdropFilter(
-        filter: new ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-        child: new Container(
-          decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)),
-        ),
-      ),
-    );
-  }
-}
+//TODO text styles
+//TODO color styles
 
 class CafeTile extends StatelessWidget {
-  final Function onClick;
+  final Function onTap;
+  final Function onFavoriteTap;
+  final Function onMapTap;
 
-  CafeTile({Key key, this.onClick}) : super(key: key);
+  final Cafe _cafe;
 
-  void _onTileClick() {
+  CafeTile({Key key, Cafe cafe, this.onTap, this.onFavoriteTap, this.onMapTap})
+      : _cafe = cafe,
+        super(key: key);
+
+  void _onTileTap() {
     print('tile click');
-    if (onClick != null) onClick();
+    if (onTap != null) onTap();
+  }
+
+  void _onFavoriteTap() {
+    if (onFavoriteTap != null) onFavoriteTap();
+  }
+
+  void _onMapTap() {
+    if (onMapTap != null) onMapTap();
   }
 
   @override
   Widget build(BuildContext context) {
-    const tileHeight = 226.0;
+    const tileHeight = 216.0;
     const imageHegiht = 120.0;
-    const radius = 15.0;
+    const radius = 8.0;
     const borderRadius = const BorderRadius.only(
       topLeft: Radius.circular(radius),
       topRight: Radius.circular(radius),
@@ -56,11 +47,11 @@ class CafeTile extends StatelessWidget {
         "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg";
 
     return GestureDetector(
-      onTap: _onTileClick,
-      child: SizedBox(
-        height: tileHeight,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+      onTap: _onTileTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+        child: Container(
+          height: tileHeight,
           child: Card(
             elevation: 6.0,
             shape: RoundedRectangleBorder(
@@ -68,20 +59,34 @@ class CafeTile extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                ClipRRect(
-                  borderRadius: borderRadius,
-                  child: Image.network(
-                    tileImageUrl,
-                    height: imageHegiht,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                Container(
+                  height: imageHegiht,
+                  child: Stack(
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: borderRadius,
+                        child: Image.network(
+                          tileImageUrl,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6.0, vertical: 4.0),
+                          color: Colors.black87,
+                          child: Text(
+                            _cafe.title,
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  // BlurredImage(Image.network(
-                  //   "https://www.dulwichpicturegallery.org.uk/media/10077/cafe-banner-min.jpg",
-                  //   height: 100,
-                  //   width: double.infinity,
-                  //   fit: BoxFit.cover,
-                  // ).image),
                 ),
                 Align(
                   alignment: Alignment.topRight,
@@ -117,36 +122,19 @@ class CafeTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 60),
-                  child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6.0, vertical: 4.0),
-                      color: Colors.black87,
-                      child: Text(
-                        'Cafe Prostoru_',
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: Container(
+                    height: tileHeight - imageHegiht - 8,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 4.0, vertical: 2.0),
-                    height: tileHeight - imageHegiht - 24,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
                             Text(
-                              'Technická 270/6',
+                              _cafe.address,
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w300),
                             ),
@@ -154,51 +142,34 @@ class CafeTile extends StatelessWidget {
                             Rating(4),
                           ],
                         ),
-                        // Align(
-                        //   alignment: Alignment.centerRight,
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.only(right: 4.0),
-                        //     child: Pricing(2),
-                        //   ),
-                        // ),
-                        //Text('Zavírá ve 22:00'),
-                        // SizedBox(
-                        //   height: 16,
-                        // ),
                         Padding(
                           padding: const EdgeInsets.only(left: 2.0),
-                          child: Text(
-                            'Vzdálené 800 m',
-                            style: prefix0.TextStyle(
-                                color: Colors.grey, fontSize: 14),
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                'Vzdálené ${_cafe.distance} m',
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 14),
+                              ),
+                              Spacer(),
+                              Text(
+                                  'Zavírá ve ${_cafe.closing.hour}:${_cafe.closing.minute}',
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 14)),
+                            ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 2.0, top: 4.0),
+                          padding: const EdgeInsets.only(left: 2.0, top: 8.0),
                           child: Row(
-                            children: <Widget>[
-                              Tag(
-                                'Wifi',
-                                icon: Icons.wifi,
-                                color: Colors.green,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 6.0),
-                                child: Tag(
-                                  'Pivo',
-                                  icon: FontAwesomeIcons.beer,
-                                  color: Colors.amber,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 6.0),
-                                child: Tag(
-                                  'Venkovní terasa',
-                                  icon: FontAwesomeIcons.umbrellaBeach,
-                                  color: Colors.blueGrey,
-                                ),
-                              ),
-                            ],
+                            children: _cafe.tags
+                                .map((t) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Tag(t.title,
+                                          icon: t.icon, color: t.color),
+                                    ))
+                                .toList(),
                           ),
                         ),
                       ],

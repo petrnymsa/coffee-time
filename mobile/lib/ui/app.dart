@@ -1,4 +1,4 @@
-import 'package:coffee_time/ui/screens/home.dart';
+import 'package:coffee_time/ui/screens/home/home.dart';
 import 'package:coffee_time/ui/shared/theme.dart';
 import 'package:flutter/material.dart';
 
