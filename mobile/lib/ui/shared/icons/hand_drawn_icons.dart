@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/HandDrawnIcons.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 

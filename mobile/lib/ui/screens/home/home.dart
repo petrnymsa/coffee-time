@@ -1,14 +1,10 @@
-import 'package:coffee_time/data/cafe_repository.dart';
-import 'package:coffee_time/models/cafe.dart';
-import 'package:coffee_time/ui/screens/dummy.dart';
 import 'package:coffee_time/ui/screens/home/bottom_nav_bar.dart';
 import 'package:coffee_time/ui/screens/home/tabs/cafe_list.dart';
 import 'package:coffee_time/ui/screens/home/tabs/favorites.dart';
 import 'package:coffee_time/ui/screens/home/tabs/map.dart';
-import 'package:coffee_time/ui/shared/hand_drawn_icons_icons.dart';
-import 'package:coffee_time/ui/widgets/cafe_tile.dart';
+
+import 'package:coffee_time/ui/shared/main_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -31,16 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text('App'),
-          leading: IconButton(
-            icon: Icon(HandDrawnIcons.uniF1C3),
-            onPressed: () => _scaffoldKey.currentState.openDrawer(),
-          ),
+          title: Text('Kavárny v okolí'),
+          // leading: IconButton(
+          //   icon: Icon(HandDrawnIcons.uniF1C3),
+          //   onPressed: () => _scaffoldKey.currentState.openDrawer(),
+          // ),
         ),
         body: SafeArea(
           child: _buildCurrentTab(context),
         ),
-        drawer: Drawer(),
+        drawer: MainDrawer(),
         bottomNavigationBar: HomeBottomNavigationBar(
             defaultTab: _currentTab,
             onTabChange: (tab) {
