@@ -1,5 +1,6 @@
 import 'package:coffee_time/data/cafe_repository.dart';
 import 'package:coffee_time/models/cafe.dart';
+import 'package:coffee_time/ui/screens/detail/detail.dart';
 import 'package:coffee_time/ui/widgets/cafe_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,13 @@ class CafeListTab extends StatelessWidget {
                 itemCount: data.length,
                 itemBuilder: (_, i) => CafeTile(
                   cafe: data[i],
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      //todo push named route
+                      builder: (_) => DetailScreen(cafe: data[i]),
+                    ),
+                  ),
                 ),
               );
             }

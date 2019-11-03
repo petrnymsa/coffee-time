@@ -27,6 +27,8 @@ class InMemoryCafeRepository implements CafeRepository {
                   address: 'Thákurova 9',
                   distance: 500,
                   rating: 4.7,
+                  mainPhotoUrl:
+                      "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg",
                   closing: DateTime.utc(2019, 10, 30, 16, 00),
                   tags: [_tagSitOutside]),
               Cafe(
@@ -36,6 +38,8 @@ class InMemoryCafeRepository implements CafeRepository {
                   distance: 800,
                   rating: 4.3,
                   closing: DateTime.utc(2019, 10, 30, 22, 00),
+                  mainPhotoUrl:
+                      "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg",
                   tags: [_tagWifi, _tagSitOutside, _tagBeer]),
               Cafe(
                   id: uuid.v4(),
@@ -43,6 +47,8 @@ class InMemoryCafeRepository implements CafeRepository {
                   address: 'Nám. Interbrigády',
                   distance: 480,
                   rating: 3.2,
+                  mainPhotoUrl:
+                      "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg",
                   closing: DateTime.utc(2019, 10, 30, 19, 00),
                   tags: [_tagWifi]),
             ]);

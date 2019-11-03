@@ -4,15 +4,7 @@ class Tag extends StatelessWidget {
   final IconData icon;
   final String title;
   final Color color;
-
-  Color _darkerColor;
-  Tag(this.title, {this.icon, this.color = Colors.black}) {
-    const reduce = 40;
-    _darkerColor = color
-        .withBlue(color.blue - reduce)
-        .withGreen(color.green - reduce)
-        .withRed(color.red - reduce);
-  }
+  Tag(this.title, {this.icon, this.color = Colors.black});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +12,6 @@ class Tag extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
       decoration: BoxDecoration(
         color: color,
-        // border: Border.all(color: _darkerColor, width: 1.0),
       ),
       child: Row(
         children: [
@@ -34,9 +25,9 @@ class Tag extends StatelessWidget {
             child: Text(
               this.title,
               style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
+                fontSize: 14,
+                color: Colors.white,
+              ),
             ),
           ),
         ],

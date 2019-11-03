@@ -7,7 +7,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: AppTheme.theme,
+      theme: AppTheme.apply(context),
       home: HomeScreen(),
     );
   }

@@ -28,10 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text('Kavárny v okolí'),
-          // leading: IconButton(
-          //   icon: Icon(HandDrawnIcons.uniF1C3),
-          //   onPressed: () => _scaffoldKey.currentState.openDrawer(),
-          // ),
         ),
         body: SafeArea(
           child: _buildCurrentTab(context),
