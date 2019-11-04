@@ -40,7 +40,16 @@ class InMemoryCafeRepository implements CafeRepository {
                   closing: DateTime.utc(2019, 10, 30, 22, 00),
                   mainPhotoUrl:
                       "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg",
-                  tags: [_tagWifi, _tagSitOutside, _tagBeer]),
+                  tags: [
+                    _tagWifi,
+                    _tagSitOutside,
+                    _tagBeer,
+                    _tagBeer,
+                    _tagBeer,
+                    _tagBeer,
+                    _tagBeer,
+                    _tagBeer
+                  ]),
               Cafe(
                   id: uuid.v4(),
                   title: 'Estella CAFÉ',
@@ -50,7 +59,7 @@ class InMemoryCafeRepository implements CafeRepository {
                   mainPhotoUrl:
                       "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg",
                   closing: DateTime.utc(2019, 10, 30, 19, 00),
-                  tags: [_tagWifi]),
+                  tags: []),
             ]);
   }
 }

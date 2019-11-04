@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const _brown = const Color(0xFFB98068);
-  static const _light_brown = const Color(0xFFCA9F75);
+  // static const _brown = const Color(0xFFB98068);
+  static const _brown = const Color(0xFFF2594B);
 
+  // static const _light_brown = const Color(0xFFCA9F75);
+  static const _light_brown = const Color(0xFFF2836B);
   static ThemeData apply(BuildContext context) {
     return ThemeData(
         primaryColor: _brown,

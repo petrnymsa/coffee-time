@@ -37,6 +37,7 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      elevation: 5.0,
       currentIndex: _index,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(

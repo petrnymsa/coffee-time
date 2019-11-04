@@ -13,7 +13,7 @@ class Rating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
+    final primaryColor = Theme.of(context).accentColor;
 
     final ratingToStars = RatingStarsCount.fromRating(rating);
 

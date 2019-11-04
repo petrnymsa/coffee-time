@@ -30,7 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text('Kavárny v okolí'),
         ),
         body: SafeArea(
-          child: _buildCurrentTab(context),
+          child:
+              Container(color: Colors.white, child: _buildCurrentTab(context)),
         ),
         drawer: MainDrawer(),
         bottomNavigationBar: HomeBottomNavigationBar(

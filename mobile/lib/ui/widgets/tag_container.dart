@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Tag extends StatelessWidget {
+class TagContainer extends StatelessWidget {
   final IconData icon;
   final String title;
   final Color color;
-  Tag(this.title, {this.icon, this.color = Colors.black});
+  TagContainer({this.title, this.icon, this.color = Colors.black});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
       decoration: BoxDecoration(
-        color: color,
+        color: const Color(0xFF63A69F),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           if (this.icon != null)
             Icon(
@@ -25,9 +28,9 @@ class Tag extends StatelessWidget {
             child: Text(
               this.title,
               style: TextStyle(
-                fontSize: 14,
-                color: Colors.white,
-              ),
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ],

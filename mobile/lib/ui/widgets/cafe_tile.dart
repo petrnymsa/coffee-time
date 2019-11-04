@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:coffee_time/models/cafe.dart';
 import 'package:coffee_time/ui/widgets/rating.dart';
-import 'package:coffee_time/ui/widgets/tag.dart';
+import 'package:coffee_time/ui/widgets/tag_container.dart';
 import 'package:flutter/material.dart';
 
 //TODO text styles
@@ -190,7 +190,8 @@ class CafeTile extends StatelessWidget {
         children: _cafe.tags
             .map((t) => Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: Tag(t.title, icon: t.icon, color: t.color),
+                  child: TagContainer(
+                      title: t.title, icon: t.icon, color: t.color),
                 ))
             .toList(),
       ),
