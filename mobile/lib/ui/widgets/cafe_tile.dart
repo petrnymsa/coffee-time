@@ -4,6 +4,7 @@ import 'package:coffee_time/models/cafe.dart';
 import 'package:coffee_time/ui/widgets/rating.dart';
 import 'package:coffee_time/ui/widgets/tag_container.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 //TODO text styles
 //TODO color styles
@@ -34,7 +35,7 @@ class CafeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const tileHeight = 216.0;
+    final tileHeight = _cafe.tags.isNotEmpty ? 216.0 : 180.0;
     const imageHegiht = 120.0;
     const radius = 8.0;
     const borderRadius = const BorderRadius.only(
@@ -153,7 +154,7 @@ class CafeTile extends StatelessWidget {
                               ],
                             ),
                           ),
-                          _buildTags(),
+                          if (_cafe.tags.isNotEmpty) _buildTags(),
                         ],
                       ),
                     ),
@@ -169,7 +170,7 @@ class CafeTile extends StatelessWidget {
 
   Text _buildClosing(BuildContext context) {
     return Text(
-      'Zavírá ve ${_cafe.closing.hour}:${_cafe.closing.minute}',
+      'Zavírá ${DateFormat.Hm().format(_cafe.closing)}',
       style: TextStyle(
           color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
     );
@@ -177,7 +178,7 @@ class CafeTile extends StatelessWidget {
 
   Text _buildDistance(BuildContext context) {
     return Text(
-      'Vzdálené ${_cafe.distance} m',
+      'Vzdálené ${_cafe.distance.toStringAsFixed(0)} m',
       style: TextStyle(
           color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
     );
@@ -188,6 +189,7 @@ class CafeTile extends StatelessWidget {
       padding: const EdgeInsets.only(left: 2.0, top: 8.0),
       child: Row(
         children: _cafe.tags
+            .take(3)
             .map((t) => Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: TagContainer(
