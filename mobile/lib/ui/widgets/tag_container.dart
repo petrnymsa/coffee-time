@@ -12,7 +12,7 @@ class TagContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
       decoration: BoxDecoration(
         color: const Color(0xFF63A69F),
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(6.0),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
