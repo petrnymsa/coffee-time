@@ -9,7 +9,7 @@ class CafeListTab extends StatelessWidget {
 
   final _cafeRepository =
       InMemoryCafeRepository(); // todo inject through provider / bloc
-
+  //TODO refactor this
   @override
   Widget build(BuildContext context) {
     print('Build ${this.toStringShort()}');
@@ -30,22 +30,36 @@ class CafeListTab extends StatelessWidget {
               );
             } else {
               final data = snapshot.data as List<Cafe>;
-              return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (_, i) => CafeTile(
-                  cafe: data[i],
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      //todo push named route
-                      builder: (_) => DetailScreen(cafe: data[i]),
-                    ),
-                  ),
-                ),
-              );
+              return _buildCafeList(context, data);
             }
         }
       },
+    );
+  }
+
+  //todo refactor to standalone widget
+  Widget _buildCafeList(BuildContext context, List<Cafe> data) {
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (_, i) => Hero(
+              tag: data[i].id,
+              child: CafeTile(
+                cafe: data[i],
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    //todo push named route
+                    builder: (_) => DetailScreen(cafe: data[i]),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
