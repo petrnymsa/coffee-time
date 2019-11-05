@@ -3,18 +3,19 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // static const _brown = const Color(0xFFB98068);
-  static const _brown = const Color(0xFFF2594B);
+  static const main_color = const Color(0xFFF2594B);
+  static const secondary_color = const Color(0xFFF2836B);
+  static const background_color = const Color(0xFFF7F7F7);
 
-  // static const _light_brown = const Color(0xFFCA9F75);
-  static const _light_brown = const Color(0xFFF2836B);
   static ThemeData apply(BuildContext context) {
     return ThemeData(
-        primaryColor: _brown,
-        accentColor: _light_brown,
+        primaryColor: main_color,
+        accentColor: secondary_color,
+        backgroundColor: background_color,
+        scaffoldBackgroundColor: background_color,
         primaryIconTheme: IconThemeData(color: Colors.white),
         accentIconTheme: IconThemeData(color: Colors.white),
-        iconTheme: IconThemeData(color: _brown),
+        iconTheme: IconThemeData(color: main_color),
         fontFamily: 'Raleway');
   }
 }

@@ -3,7 +3,6 @@ import 'package:coffee_time/ui/screens/home/tabs/cafe_list.dart';
 import 'package:coffee_time/ui/screens/home/tabs/favorites.dart';
 import 'package:coffee_time/ui/screens/home/tabs/map.dart';
 
-import 'package:coffee_time/ui/shared/main_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,10 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text('Kavárny v okolí'),
         ),
         body: SafeArea(
-          child:
-              Container(color: Colors.white, child: _buildCurrentTab(context)),
+          child: Container(child: _buildCurrentTab(context)),
         ),
-        drawer: MainDrawer(),
         bottomNavigationBar: HomeBottomNavigationBar(
             defaultTab: _currentTab,
             onTabChange: (tab) {
