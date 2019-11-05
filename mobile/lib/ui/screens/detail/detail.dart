@@ -1,4 +1,5 @@
 import 'package:coffee_time/models/cafe.dart';
+import 'package:coffee_time/models/opening_hour.dart';
 import 'package:coffee_time/models/tag.dart';
 import 'package:coffee_time/ui/screens/detail/widgets/opening_hours_table.dart';
 import 'package:coffee_time/ui/screens/detail/widgets/section_header.dart';
@@ -59,25 +60,13 @@ class DetailScreen extends StatelessWidget {
                     Divider(),
                     _ContactCard(),
                     const SizedBox(height: 10.0),
+                    _OpeningHoursContainer(),
+                    Divider(),
                     _TagsContainer(
                       tags: cafe.tags,
                       onAddTag: () => print('Add tag'),
                     ),
-                    const SizedBox(height: 10.0),
-                    ExpandablePanel(
-                      expanded: true,
-                      header: SectionHeader(
-                        icon: FontAwesomeIcons.clock,
-                        title: 'Otevírací doba',
-                      ),
-                      body: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 40.0),
-                          child: OpeningHoursTable(),
-                        ),
-                      ),
-                    ),
+                    Divider(),
                     SizedBox(
                       height: 60,
                     ),
@@ -99,6 +88,51 @@ class DetailScreen extends StatelessWidget {
           .textTheme
           .overline
           .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
+    );
+  }
+}
+
+class _OpeningHoursContainer extends StatelessWidget {
+  const _OpeningHoursContainer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpandablePanel(
+      header: SectionHeader(
+        icon: FontAwesomeIcons.clock,
+        title: 'Otevírací doba',
+      ),
+      body: Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 40.0),
+          child: OpeningHoursTable(
+            openingHours: {
+              1: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              2: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              3: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              4: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              5: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              6: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              7: null,
+            },
+          ),
+        ),
+      ),
     );
   }
 }
