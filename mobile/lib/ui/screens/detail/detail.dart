@@ -1,4 +1,8 @@
 import 'package:coffee_time/models/cafe.dart';
+import 'package:coffee_time/models/tag.dart';
+import 'package:coffee_time/ui/screens/detail/widgets/opening_hours_table.dart';
+import 'package:coffee_time/ui/screens/detail/widgets/section_header.dart';
+import 'package:coffee_time/ui/widgets/expandable_panel.dart';
 import 'package:coffee_time/ui/widgets/tag_container.dart';
 import 'package:coffee_time/ui/screens/detail/widgets/carousel_slider.dart';
 import 'package:coffee_time/ui/widgets/rating.dart';
@@ -22,11 +26,14 @@ class DetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              CarouselSlider(images: [
-                cafe.mainPhotoUrl,
-                cafe.mainPhotoUrl,
-                cafe.mainPhotoUrl,
-              ]),
+              Hero(
+                tag: cafe.id,
+                child: CarouselSlider(images: [
+                  cafe.mainPhotoUrl,
+                  cafe.mainPhotoUrl,
+                  cafe.mainPhotoUrl,
+                ]),
+              ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
@@ -42,85 +49,37 @@ class DetailScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20.0,
                     ),
-                    Stack(
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.center,
-                          child: Column(
-                            children: <Widget>[
-                              SelectableText(
-                                cafe.title,
-                                style: Theme.of(context).textTheme.headline,
-                              ),
-                              SelectableText(
-                                cafe.address,
-                                style: Theme.of(context).textTheme.subhead,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 20),
-                            child: IconButton(
-                              icon: Icon(FontAwesomeIcons.locationArrow),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
-                      ],
+                    _CafeNameContainer(
+                      title: cafe.title,
+                      address: cafe.address,
+                      onShowMap: () {
+                        print('Show map for ${cafe.title}');
+                      },
                     ),
                     Divider(),
                     _ContactCard(),
-                    const SizedBox(
-                      height: 10.0,
+                    const SizedBox(height: 10.0),
+                    _TagsContainer(
+                      tags: cafe.tags,
+                      onAddTag: () => print('Add tag'),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(0.0),
-                      child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(FontAwesomeIcons.tags),
-                            const SizedBox(
-                              width: 16.0,
-                            ),
-                            Text(
-                              'Štítky',
-                              style: Theme.of(context).textTheme.headline,
-                            ),
-                            if (cafe.tags.isNotEmpty) Spacer(),
-                            if (cafe.tags.isNotEmpty)
-                              FlatButton(
-                                child: Text('Přidat štítek'),
-                                textColor: Theme.of(context).primaryColor,
-                                onPressed: () {},
-                              )
-                          ]),
+                    const SizedBox(height: 10.0),
+                    ExpandablePanel(
+                      expanded: true,
+                      header: SectionHeader(
+                        icon: FontAwesomeIcons.clock,
+                        title: 'Otevírací doba',
+                      ),
+                      body: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 40.0),
+                          child: OpeningHoursTable(),
+                        ),
+                      ),
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: cafe.tags.isEmpty
-                          ? FlatButton(
-                              onPressed: () {},
-                              child: Text('Žádné štítky. Přidat nový.'),
-                              textColor: Theme.of(context).primaryColor,
-                            )
-                          : Wrap(
-                              alignment: WrapAlignment.start,
-                              crossAxisAlignment: WrapCrossAlignment.start,
-                              direction: Axis.horizontal,
-                              spacing: 5.0,
-                              runSpacing: 5.0,
-                              children: cafe.tags
-                                  .map(
-                                    (tag) => TagContainer(
-                                        title: tag.title,
-                                        color: tag.color,
-                                        icon: tag.icon),
-                                  )
-                                  .toList(),
-                            ),
+                    SizedBox(
+                      height: 60,
                     ),
                   ],
                 ),
@@ -140,6 +99,112 @@ class DetailScreen extends StatelessWidget {
           .textTheme
           .overline
           .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
+    );
+  }
+}
+
+class _TagsContainer extends StatelessWidget {
+  const _TagsContainer({Key key, @required this.tags, this.onAddTag})
+      : super(key: key);
+
+  final List<Tag> tags;
+  final Function onAddTag;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        SectionHeader(
+          icon: FontAwesomeIcons.tags,
+          title: 'Štítky',
+          after: [
+            Spacer(),
+            FlatButton(
+              child: Text(tags.isNotEmpty
+                  ? 'Přidat štítek'
+                  : 'Žádné štítky. Přidat nový.'),
+              textColor: Theme.of(context).primaryColor,
+              onPressed: onAddTag,
+            )
+          ],
+        ),
+        if (tags.isNotEmpty)
+          Align(
+            alignment: Alignment.topLeft,
+            child: Wrap(
+              alignment: WrapAlignment.start,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              direction: Axis.horizontal,
+              spacing: 5.0,
+              runSpacing: 5.0,
+              children: tags
+                  .map(
+                    (tag) => TagContainer(
+                        title: tag.title, color: tag.color, icon: tag.icon),
+                  )
+                  .toList(),
+            ),
+          ),
+        if (tags.isNotEmpty)
+          Align(
+            alignment: Alignment.centerRight,
+            child: Row(
+              children: <Widget>[
+                Text('Štítky neodpovídají realitě?'),
+                FlatButton(
+                  child: Text(
+                    'Navrhnout změnu',
+                  ),
+                  textColor: Theme.of(context).accentColor,
+                  onPressed: () => print('Rate tags'),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _CafeNameContainer extends StatelessWidget {
+  const _CafeNameContainer(
+      {Key key, @required this.title, @required this.address, this.onShowMap})
+      : super(key: key);
+
+  final String title;
+  final String address;
+  final Function onShowMap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Align(
+          alignment: Alignment.center,
+          child: Column(
+            children: <Widget>[
+              SelectableText(
+                title,
+                style: Theme.of(context).textTheme.headline,
+              ),
+              SelectableText(
+                address,
+                style: Theme.of(context).textTheme.subhead,
+              ),
+            ],
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(
+              icon: Icon(FontAwesomeIcons.locationArrow),
+              onPressed: onShowMap,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
