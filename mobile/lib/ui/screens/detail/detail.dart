@@ -39,7 +39,7 @@ class DetailScreen extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
                 child: Column(
-                  children: <Widget>[
+                  children: [
                     Row(
                       children: <Widget>[
                         _buildOpeningTime(context),
@@ -47,9 +47,7 @@ class DetailScreen extends StatelessWidget {
                         Rating.large(cafe.rating),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
+                    const SizedBox(height: 20.0),
                     _CafeNameContainer(
                       title: cafe.title,
                       address: cafe.address,
@@ -67,8 +65,10 @@ class DetailScreen extends StatelessWidget {
                       onAddTag: () => print('Add tag'),
                     ),
                     Divider(),
-                    SizedBox(
-                      height: 60,
+                    SizedBox(height: 10.0),
+                    SectionHeader(
+                      icon: FontAwesomeIcons.comments,
+                      title: 'Hodnocení',
                     ),
                   ],
                 ),
