@@ -9,12 +9,11 @@ jobs:
     - uses: actions/setup-java@v1
       with:
         java-version: '12.x'
-    - uses: subosito/flutter-action@v1.0.0
+    - uses: subosito/flutter-action@v1
       with:
-         version: '1.0.0'
-         channel: 'stable'
-    - name: 'upgrade'
-      run: flutter upgrade
+         channel: 'stable' # or: 'dev' or 'beta'
+    #- name: 'upgrade'
+    #  run: flutter upgrade
     # Get flutter packages
     - name: 'pub get'
       run: |
