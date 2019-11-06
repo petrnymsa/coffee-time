@@ -13,6 +13,10 @@ jobs:
       with:
          version: '1.0.0'
     # Get flutter packages
-    - run: flutter pub get
+    - run: |
+         cd mobile 
+         flutter pub get
     # Build
-    - run: flutter build aot
+    - run: |
+         cd mobile
+         flutter build aot
