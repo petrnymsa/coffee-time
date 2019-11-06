@@ -1,4 +1,4 @@
-name: CI
+name: 'Build and test'
 
 on: [push]
 jobs:
@@ -24,3 +24,11 @@ jobs:
       run: |
          cd mobile
          flutter build aot
+    - name: 'analyze'
+      run: |
+         cd mobile
+         flutter analyze --no-pub
+    - name: 'test'
+      run: |
+         cd mobile
+         flutter test
