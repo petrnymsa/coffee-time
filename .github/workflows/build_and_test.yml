@@ -12,12 +12,16 @@ jobs:
     - uses: subosito/flutter-action@v1.0.0
       with:
          version: '1.0.0'
-         channel: 'stable' 
+         channel: 'stable'
+    - name: 'upgrade'
+      run: flutter upgrade
     # Get flutter packages
-    - run: |
+    - name: 'pub get'
+      run: |
          cd mobile 
          flutter pub get
     # Build
-    - run: |
+    - name: 'build'
+      run: |
          cd mobile
          flutter build aot
