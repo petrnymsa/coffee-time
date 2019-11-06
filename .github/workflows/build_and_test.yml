@@ -29,6 +29,7 @@ jobs:
          cd mobile
          flutter analyze --no-pub
     - name: 'test'
+      if: always()
       run: |
          cd mobile
          flutter test
