@@ -44,11 +44,14 @@ class Rating extends StatelessWidget {
     ).toList());
     return Container(
       child: Row(
+        textBaseline: TextBaseline.alphabetic,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             rating.toStringAsPrecision(2),
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(
+              color: Colors.grey,
+            ),
           ),
           ...stars,
         ],

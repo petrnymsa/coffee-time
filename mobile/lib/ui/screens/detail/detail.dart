@@ -65,11 +65,23 @@ class DetailScreen extends StatelessWidget {
                       onAddTag: () => print('Add tag'),
                     ),
                     Divider(),
-                    SizedBox(height: 10.0),
                     SectionHeader(
                       icon: FontAwesomeIcons.comments,
                       title: 'Hodnocení',
+                      after: <Widget>[
+                        Spacer(),
+                        FlatButton(
+                          child: Text('Přidat hodnocení'),
+                          onPressed: () {},
+                        )
+                      ],
                     ),
+                    ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: 16,
+                      itemBuilder: (_, i) => const CommentTile(),
+                    )
                   ],
                 ),
               )
@@ -88,6 +100,53 @@ class DetailScreen extends StatelessWidget {
           .textTheme
           .overline
           .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
+    );
+  }
+}
+
+class CommentTile extends StatelessWidget {
+  const CommentTile({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Icon(FontAwesomeIcons.solidUser),
+          backgroundColor: Theme.of(context).accentColor,
+          foregroundColor: Colors.white,
+        ),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Text(
+              'John Doe',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(width: 2.0),
+            Text(
+              '(6.11.2019)',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 12.0,
+                fontWeight: FontWeight.w300,
+                color: Colors.black87,
+              ),
+            ),
+            Spacer(),
+            Rating(4.5),
+          ],
+        ),
+        subtitle: Text(
+          'Příjemné prostředí a výborná káva. Doporučuji.',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
     );
   }
 }
@@ -157,7 +216,7 @@ class _TagsContainer extends StatelessWidget {
               child: Text(tags.isNotEmpty
                   ? 'Přidat štítek'
                   : 'Žádné štítky. Přidat nový.'),
-              textColor: Theme.of(context).primaryColor,
+              //  textColor: Theme.of(context).primaryColor,
               onPressed: onAddTag,
             )
           ],
@@ -189,7 +248,7 @@ class _TagsContainer extends StatelessWidget {
                   child: Text(
                     'Navrhnout změnu',
                   ),
-                  textColor: Theme.of(context).accentColor,
+                  // textColor: Theme.of(context).accentColor,
                   onPressed: () => print('Rate tags'),
                 ),
               ],
