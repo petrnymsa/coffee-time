@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class HourMinute {
   final int hour;
   final int minute;
@@ -6,7 +8,7 @@ class HourMinute {
 
   @override
   String toString() {
-    return '$hour:${minute.toStringAsFixed(2)}';
+    return '$hour:${NumberFormat('00').format(minute)}';
   }
 }
 
