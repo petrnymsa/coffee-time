@@ -31,12 +31,12 @@ class _ExpandablePanelState extends State<ExpandablePanel>
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      // padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: AnimatedSize(
         alignment: Alignment.topLeft,
         vsync: this,
         curve: Curves.easeIn,
-        duration: Duration(milliseconds: 500),
+        duration: Duration(milliseconds: 300),
         child: Column(
           children: [
             GestureDetector(
