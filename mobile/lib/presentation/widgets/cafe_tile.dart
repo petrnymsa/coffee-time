@@ -1,22 +1,23 @@
 import 'dart:ui';
 
-import 'package:coffee_time/models/cafe.dart';
-import 'package:coffee_time/ui/widgets/rating.dart';
-import 'package:coffee_time/ui/widgets/tag_container.dart';
+import 'package:coffee_time/domain/entities/cafe.dart';
+import 'package:coffee_time/presentation/widgets/rating.dart';
+import 'package:coffee_time/presentation/widgets/tag_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-//TODO text styles
-//TODO color styles
+// todo text styles
+// todo color styles
 
 class CafeTile extends StatelessWidget {
   final Function onTap;
   final Function onFavoriteTap;
   final Function onMapTap;
 
-  final Cafe _cafe;
+  final CafeEntity _cafe;
 
-  CafeTile({Key key, Cafe cafe, this.onTap, this.onFavoriteTap, this.onMapTap})
+  CafeTile(
+      {Key key, CafeEntity cafe, this.onTap, this.onFavoriteTap, this.onMapTap})
       : _cafe = cafe,
         super(key: key);
 
@@ -66,11 +67,12 @@ class CafeTile extends StatelessWidget {
                       children: <Widget>[
                         ClipRRect(
                           borderRadius: borderRadius,
-                          child: Image.network(
-                            _cafe.mainPhotoUrl,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
+                          // child: Image.network(
+                          //   _cafe.,
+                          //   width: double.infinity,
+                          //   fit: BoxFit.cover,
+                          // ),
+                          child: Placeholder(),
                         ),
                         Center(
                           child: Container(
@@ -78,7 +80,7 @@ class CafeTile extends StatelessWidget {
                                 horizontal: 6.0, vertical: 4.0),
                             color: Colors.black87,
                             child: Text(
-                              _cafe.title,
+                              _cafe.name,
                               style: TextStyle(
                                   fontSize: 26,
                                   fontWeight: FontWeight.bold,
@@ -170,7 +172,7 @@ class CafeTile extends StatelessWidget {
 
   Text _buildClosing(BuildContext context) {
     return Text(
-      'Zavírá ${DateFormat.Hm().format(_cafe.closing)}',
+      'Zavírá ??? todo',
       style: TextStyle(
           color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
     );
@@ -178,7 +180,7 @@ class CafeTile extends StatelessWidget {
 
   Text _buildDistance(BuildContext context) {
     return Text(
-      'Vzdálené ${_cafe.distance.toStringAsFixed(0)} m',
+      'not implemented',
       style: TextStyle(
           color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
     );

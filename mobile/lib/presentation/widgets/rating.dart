@@ -1,4 +1,4 @@
-import 'package:coffee_time/utils/rating_stars_count.dart';
+import 'package:coffee_time/core/utils/rating_stars_count.dart';
 import 'package:flutter/material.dart';
 
 class Rating extends StatelessWidget {

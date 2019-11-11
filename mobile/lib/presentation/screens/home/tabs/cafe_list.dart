@@ -1,6 +1,6 @@
-import 'package:coffee_time/data/cafe_repository.dart';
-import 'package:coffee_time/models/cafe.dart';
-import 'package:coffee_time/ui/screens/detail/detail.dart';
+import 'package:coffee_time/domain/entities/cafe.dart';
+import 'package:coffee_time/domain/repository/cafe_repository.dart';
+import 'package:coffee_time/presentation/screens/detail/detail.dart';
 import 'package:coffee_time/ui/widgets/cafe_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -9,12 +9,12 @@ class CafeListTab extends StatelessWidget {
 
   final _cafeRepository =
       InMemoryCafeRepository(); // todo inject through provider / bloc
-  //TODO refactor this
+  //todo refactor this
   @override
   Widget build(BuildContext context) {
     print('Build ${this.toStringShort()}');
     return FutureBuilder(
-      future: _cafeRepository.get(),
+      future: _cafeRepository.getByLocation(null), //todo rewrite
       builder: (ctx, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -29,7 +29,7 @@ class CafeListTab extends StatelessWidget {
                 style: TextStyle(color: Colors.red),
               );
             } else {
-              final data = snapshot.data as List<Cafe>;
+              final data = snapshot.data as List<CafeEntity>;
               return _buildCafeList(context, data);
             }
         }
@@ -38,7 +38,7 @@ class CafeListTab extends StatelessWidget {
   }
 
   //todo refactor to standalone widget
-  Widget _buildCafeList(BuildContext context, List<Cafe> data) {
+  Widget _buildCafeList(BuildContext context, List<CafeEntity> data) {
     return Column(
       children: <Widget>[
         Expanded(

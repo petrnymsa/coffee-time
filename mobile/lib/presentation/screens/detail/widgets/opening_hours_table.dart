@@ -1,4 +1,4 @@
-import 'package:coffee_time/models/opening_hour.dart';
+import 'package:coffee_time/ui/models/opening_hour.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

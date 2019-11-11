@@ -1,6 +1,6 @@
-import 'package:coffee_time/models/cafe.dart';
-import 'package:coffee_time/models/opening_hour.dart';
-import 'package:coffee_time/models/tag.dart';
+import 'package:coffee_time/domain/entities/cafe.dart';
+import 'package:coffee_time/domain/entities/tag.dart';
+import 'package:coffee_time/ui/models/opening_hour.dart';
 import 'package:coffee_time/ui/screens/detail/widgets/opening_hours_table.dart';
 import 'package:coffee_time/ui/screens/detail/widgets/section_header.dart';
 import 'package:coffee_time/ui/widgets/expandable_panel.dart';
@@ -9,18 +9,17 @@ import 'package:coffee_time/ui/screens/detail/widgets/carousel_slider.dart';
 import 'package:coffee_time/ui/widgets/rating.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailScreen extends StatelessWidget {
-  final Cafe cafe;
+  final CafeEntity cafe;
   const DetailScreen({Key key, this.cafe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(cafe.title),
+        title: Text(cafe.name),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -30,9 +29,9 @@ class DetailScreen extends StatelessWidget {
               Hero(
                 tag: cafe.id,
                 child: CarouselSlider(images: [
-                  cafe.mainPhotoUrl,
-                  cafe.mainPhotoUrl,
-                  cafe.mainPhotoUrl,
+                  // cafe.mainPhotoUrl,
+                  // cafe.mainPhotoUrl,
+                  // cafe.mainPhotoUrl,
                 ]),
               ),
               Container(
@@ -49,10 +48,10 @@ class DetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20.0),
                     _CafeNameContainer(
-                      title: cafe.title,
+                      title: cafe.name,
                       address: cafe.address,
                       onShowMap: () {
-                        print('Show map for ${cafe.title}');
+                        print('Show map for ${cafe.name}');
                       },
                     ),
                     Divider(),
@@ -93,9 +92,9 @@ class DetailScreen extends StatelessWidget {
   }
 
   Text _buildOpeningTime(BuildContext context) {
-    final closingTime = DateFormat.Hm().format(cafe.closing);
+    //final closingTime = DateFormat.Hm().format(cafe.closing);
     return Text(
-      'Otevřeno do $closingTime',
+      'Otevřeno do NOT IMPLEMENTED',
       style: Theme.of(context)
           .textTheme
           .overline
@@ -200,7 +199,7 @@ class _TagsContainer extends StatelessWidget {
   const _TagsContainer({Key key, @required this.tags, this.onAddTag})
       : super(key: key);
 
-  final List<Tag> tags;
+  final List<TagEntity> tags;
   final Function onAddTag;
 
   @override
@@ -323,8 +322,8 @@ class _ContactCard extends StatelessWidget {
                     child: InkWell(
                       child: Text("775 028 016"),
                       onTap: () async {
-                        if (await canLaunch("tel:775028016")) {
-                          await launch("tel:775028016");
+                        if (await canLaunch("tel:111222333")) {
+                          await launch("tel:111222333");
                         }
                       },
                     ),
