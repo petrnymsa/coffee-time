@@ -1,4 +1,4 @@
-import 'package:coffee_time/ui/shared/icons/hand_draw_icons_named.dart';
+import 'package:coffee_time/presentation/shared/icons/hand_draw_icons_named.dart';
 import 'package:flutter/material.dart';
 
 enum HomeBottomNavigationBarTab { CafeList, Map, Favorites, Settings }

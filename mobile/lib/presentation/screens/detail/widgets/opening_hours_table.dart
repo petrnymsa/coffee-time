@@ -1,4 +1,5 @@
-import 'package:coffee_time/ui/models/opening_hour.dart';
+import 'package:coffee_time/presentation/models/opening_hour.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -46,44 +47,6 @@ class OpeningHoursTable extends StatelessWidget {
     return Table(
       defaultColumnWidth: FractionColumnWidth(.40),
       children: rows,
-      // [
-      //   TableRow(
-      //     children: [
-      //       Text('Po'),
-      //       Text('8:00 - 18:00'),
-      //     ],
-      //   ),
-      //   TableRow(children: [
-      //     Text(
-      //       'Út',
-      //       style: TextStyle(color: Theme.of(context).primaryColor),
-      //     ),
-      //     Text(
-      //       '8:00 - 18:00',
-      //       style: TextStyle(color: Theme.of(context).primaryColor),
-      //     ),
-      //   ]),
-      //   TableRow(children: [
-      //     Text('St'),
-      //     Text('8:00 - 18:00'),
-      //   ]),
-      //   TableRow(children: [
-      //     Text('Čt'),
-      //     Text('8:00 - 18:00'),
-      //   ]),
-      //   TableRow(children: [
-      //     Text('Pá'),
-      //     Text('8:00 - 18:00'),
-      //   ]),
-      //   TableRow(children: [
-      //     Text('So'),
-      //     Text('8:00 - 18:00'),
-      //   ]),
-      //   TableRow(children: [
-      //     Text('Ne'),
-      //     Text('Zavřeno'),
-      //   ])
-      // ],
     );
   }
 }

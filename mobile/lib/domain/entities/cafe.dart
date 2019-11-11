@@ -13,7 +13,7 @@ class CafeEntity {
   final PhotoEntity photo;
   final List<TagEntity> tags;
 
-  final bool isFavorite;
+  bool isFavorite;
 
   CafeEntity(
       {this.id,

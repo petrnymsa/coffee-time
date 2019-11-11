@@ -1,58 +1,47 @@
+import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/repository/cafe_repository.dart';
+import 'package:coffee_time/presentation/core/base_provider.dart';
+import 'package:coffee_time/presentation/models/cafe.dart';
 import 'package:coffee_time/presentation/screens/detail/detail.dart';
-import 'package:coffee_time/ui/widgets/cafe_tile.dart';
+import 'package:coffee_time/presentation/screens/home/home_provider.dart';
+import 'package:coffee_time/presentation/widgets/cafe_tile.dart';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CafeListTab extends StatelessWidget {
   CafeListTab({Key key}) : super(key: key);
-
-  final _cafeRepository =
-      InMemoryCafeRepository(); // todo inject through provider / bloc
-  //todo refactor this
   @override
   Widget build(BuildContext context) {
     print('Build ${this.toStringShort()}');
-    return FutureBuilder(
-      future: _cafeRepository.getByLocation(null), //todo rewrite
-      builder: (ctx, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-            return Text('Not started');
-          case ConnectionState.active:
-          case ConnectionState.waiting:
-            return Center(child: CircularProgressIndicator());
-          case ConnectionState.done:
-            if (snapshot.hasError) {
-              return Text(
-                '${snapshot.error}',
-                style: TextStyle(color: Colors.red),
-              );
-            } else {
-              final data = snapshot.data as List<CafeEntity>;
-              return _buildCafeList(context, data);
-            }
-        }
+    return Consumer<HomeProvider>(
+      builder: (ctx, model, child) {
+        if (model.state == ProviderState.busy)
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+
+        return _buildCafeList(ctx, model.cafes);
       },
     );
   }
 
   //todo refactor to standalone widget
-  Widget _buildCafeList(BuildContext context, List<CafeEntity> data) {
+  Widget _buildCafeList(BuildContext context, List<Cafe> data) {
     return Column(
       children: <Widget>[
         Expanded(
           child: ListView.builder(
             itemCount: data.length,
             itemBuilder: (_, i) => Hero(
-              tag: data[i].id,
+              tag: data[i].entity.id,
               child: CafeTile(
-                cafe: data[i],
+                cafe: data[i].entity,
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     //todo push named route
-                    builder: (_) => DetailScreen(cafe: data[i]),
+                    builder: (_) => DetailScreen(cafe: data[i].entity),
                   ),
                 ),
               ),

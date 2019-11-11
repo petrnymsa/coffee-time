@@ -1,4 +1,4 @@
-import 'package:coffee_time/ui/app.dart';
+import 'package:coffee_time/presentation/app.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';

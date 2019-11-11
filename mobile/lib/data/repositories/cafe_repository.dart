@@ -1,28 +1,20 @@
-import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/photo.dart';
+import 'package:coffee_time/domain/repositories/cafe_repository.dart';
 import 'package:uuid/uuid.dart';
 
-class InMemoryCafeService implements CafeService {
+class InMemoryCafeRepository implements CafeRepository {
   @override
-  Future<CafeDetailEntity> getDetail(String cafeId) {
-    // TODO: implement getDetail
-    throw Exception('getDetail not implemented yet');
-  }
-
-  @override
-  Future<List<CafeEntity>> getNearBy(LocationEntity location) {
-    //todo implement 'find by location'
-    return Future.delayed(Duration(milliseconds: 600), () {
-      return _cafes;
-    });
+  Future<List<CafeEntity>> getByLocation(LocationEntity location) {
+    return Future.delayed(Duration(milliseconds: 500), () => _cafes);
   }
 
   static Uuid uuid = Uuid();
+  static String photo_url =
+      "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg";
 
-  static PhotoEntity _photo() => PhotoEntity(reference: uuid.v4());
+  static PhotoEntity _photo() => PhotoEntity(url: photo_url);
   static LocationEntity _location() => LocationEntity(17.56, 20.53);
 
   List<CafeEntity> _cafes = [

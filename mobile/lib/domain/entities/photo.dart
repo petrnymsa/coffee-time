@@ -1,7 +1,7 @@
 class PhotoEntity {
-  final String reference;
+  final String url;
   final int width;
   final int height;
 
-  PhotoEntity({this.reference, this.width, this.height});
+  PhotoEntity({this.url, this.width, this.height});
 }

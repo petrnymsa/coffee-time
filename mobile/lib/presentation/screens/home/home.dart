@@ -1,9 +1,8 @@
-import 'package:coffee_time/ui/screens/home/bottom_nav_bar.dart';
-import 'package:coffee_time/ui/screens/home/tabs/cafe_list.dart';
-import 'package:coffee_time/ui/screens/home/tabs/favorites.dart';
-import 'package:coffee_time/ui/screens/home/tabs/map.dart';
-
+import 'package:coffee_time/presentation/screens/home/bottom_nav_bar.dart';
+import 'package:coffee_time/presentation/screens/home/home_provider.dart';
+import 'package:coffee_time/presentation/screens/home/tabs/tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -23,7 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ChangeNotifierProvider(
+      builder: (_) => HomeProvider(),
+      child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text('Kavárny v okolí'),
@@ -32,12 +33,15 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(child: _buildCurrentTab(context)),
         ),
         bottomNavigationBar: HomeBottomNavigationBar(
-            defaultTab: _currentTab,
-            onTabChange: (tab) {
-              setState(() {
-                _currentTab = tab;
-              });
-            }));
+          defaultTab: _currentTab,
+          onTabChange: (tab) {
+            setState(() {
+              _currentTab = tab;
+            });
+          },
+        ),
+      ),
+    );
   }
 
   Widget _buildCurrentTab(BuildContext context) {
