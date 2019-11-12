@@ -2,8 +2,9 @@ import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/comment.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/photo.dart';
+import 'package:equatable/equatable.dart';
 
-class CafeDetailEntity extends CafeEntity {
+class CafeDetailEntity extends CafeEntity implements Equatable {
   final String cafeId;
   final ContactEntity contact;
 
@@ -27,4 +28,8 @@ class CafeDetailEntity extends CafeEntity {
             location: entity.location,
             photos: [...entity.photos, ...additionalPhotos],
             tags: entity.tags);
+
+  @override
+  List<Object> get props =>
+      [...super.props, cafeId, contact, cafeUrl, comments];
 }

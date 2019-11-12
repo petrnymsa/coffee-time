@@ -17,6 +17,7 @@ dependencies:
   intl: ^0.16.0
   meta: ^1.1.7
   logger: ^0.7.0+2
+  equatable: ^0.6.1
 
   provider: ^3.1.0+1
 
