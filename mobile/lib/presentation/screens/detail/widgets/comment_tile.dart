@@ -28,17 +28,12 @@ class CommentTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                // Flexible(
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    comment.user,
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
+                Text(
+                  comment.user,
+                  style: TextStyle(
+                    fontSize: 18,
                   ),
                 ),
-                //  ),
                 Spacer(),
                 Rating.small(
                   comment.rating,
