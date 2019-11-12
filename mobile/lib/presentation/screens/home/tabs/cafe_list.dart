@@ -1,3 +1,4 @@
+import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
@@ -9,11 +10,17 @@ import 'package:coffee_time/presentation/widgets/cafe_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CafeListTab extends StatelessWidget {
+class CafeListTab extends StatefulWidget {
   CafeListTab({Key key}) : super(key: key);
+
+  @override
+  _CafeListTabState createState() => _CafeListTabState();
+}
+
+class _CafeListTabState extends State<CafeListTab> {
   @override
   Widget build(BuildContext context) {
-    print('Build ${this.toStringShort()}');
+    getLogger('CafeListTab').i('Build');
     return Consumer<HomeProvider>(
       builder: (ctx, model, child) {
         if (model.state == ProviderState.busy)
@@ -26,9 +33,7 @@ class CafeListTab extends StatelessWidget {
     );
   }
 
-  //todo refactor to standalone widget
   Widget _buildCafeList(BuildContext context, List<Cafe> data) {
-    print(data[0].entity.isFavorite);
     return Column(
       children: <Widget>[
         Expanded(

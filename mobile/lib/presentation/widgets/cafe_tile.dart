@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
@@ -47,7 +48,7 @@ class CafeTile extends StatelessWidget {
       child: Consumer<Cafe>(builder: (ctx, model, _) {
         final cafe = model.entity;
         final tileHeight = cafe.tags.isNotEmpty ? 216.0 : 180.0;
-        print("CafeTile ${cafe.id} | ${cafe.name}: rebuild");
+        getLogger('CafeTile ${cafe.name}').i('Build');
 
         return GestureDetector(
             onTap: _onTileTap,

@@ -1,3 +1,4 @@
+import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
@@ -13,11 +14,14 @@ import 'package:coffee_time/presentation/widgets/rating.dart';
 import 'package:coffee_time/presentation/widgets/tag_container.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key key}) : super(key: key);
+  DetailScreen({Key key}) : super(key: key);
+
+  final Logger logger = getLogger('DetailScreen');
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +68,7 @@ class DetailScreen extends StatelessWidget {
                           title: cafe.name,
                           address: cafe.address,
                           onShowMap: () {
-                            print('Show map for ${cafe.name}');
+                            logger.i('Show map for ${cafe.name}');
                           },
                         ),
                         Divider(),
@@ -74,7 +78,7 @@ class DetailScreen extends StatelessWidget {
                         Divider(),
                         _TagsContainer(
                           tags: cafe.tags,
-                          onAddTag: () => print('Add tag'),
+                          onAddTag: () => logger.i('Add tag'),
                         ),
                         Divider(),
                         SectionHeader(
@@ -215,7 +219,7 @@ class _TagsContainer extends StatelessWidget {
                     'Navrhnout změnu',
                   ),
                   // textColor: Theme.of(context).accentColor,
-                  onPressed: () => print('Rate tags'),
+                  onPressed: null,
                 ),
               ],
             ),
@@ -315,7 +319,6 @@ class _ContactCard extends StatelessWidget {
                         child: Text(urlWithoutHttps),
                         onTap: () async {
                           if (await canLaunch(contact.website)) {
-                            print('launch web');
                             await launch(contact.website);
                           }
                         },

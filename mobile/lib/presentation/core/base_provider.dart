@@ -20,7 +20,6 @@ abstract class BaseProvider<TError extends ProviderError> with ChangeNotifier {
   TError get error => _error;
 
   void _setState(ProviderState state) {
-    print('change state to $_state');
     _state = state;
     notifyListeners();
   }

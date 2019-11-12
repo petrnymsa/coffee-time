@@ -1,3 +1,4 @@
+import 'package:coffee_time/core/app_logger.dart';
 import 'package:flutter/material.dart';
 
 class MapTab extends StatelessWidget {
@@ -5,7 +6,7 @@ class MapTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Build ${this.toStringShort()}');
+    getLogger('CafeListTab').i('Build');
     return Center(
       child: Text('Map'),
     );
