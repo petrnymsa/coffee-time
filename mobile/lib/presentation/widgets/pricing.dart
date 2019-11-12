@@ -10,6 +10,7 @@ class Pricing extends StatelessWidget {
     if (this.pricing == 1)
       return Text("\$");
     else if (this.pricing == 2) return Text("\$\$");
-    if (this.pricing >= 3) return Text("\$\$\$");
+
+    return Text("\$\$\$");
   }
 }

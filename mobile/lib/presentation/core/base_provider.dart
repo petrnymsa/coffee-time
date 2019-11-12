@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 enum ProviderState {
   busy,
   error,
-  idle,
+  ready,
 }
 
 abstract class ProviderError {}
@@ -29,7 +29,7 @@ abstract class BaseProvider<TError extends ProviderError> with ChangeNotifier {
   void setBusy() => _setState(ProviderState.busy);
 
   @protected
-  void setIdle() => _setState(ProviderState.idle);
+  void setReady() => _setState(ProviderState.ready);
 
   @protected
   void setError(TError error) {

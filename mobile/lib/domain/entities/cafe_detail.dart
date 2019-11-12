@@ -1,22 +1,30 @@
+import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/comment.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/photo.dart';
 
-class CafeDetailEntity {
-  final String id;
+class CafeDetailEntity extends CafeEntity {
   final String cafeId;
   final ContactEntity contact;
 
   final String cafeUrl;
 
   final List<CommentEntity> comments;
-  final List<PhotoEntity> photos;
 
-  CafeDetailEntity(
-      {this.id,
-      this.cafeId,
-      this.contact,
+  CafeDetailEntity.fromCafe(CafeEntity entity,
+      {this.contact,
       this.cafeUrl,
       this.comments,
-      this.photos});
+      List<PhotoEntity> additionalPhotos})
+      : cafeId = entity.id,
+        super(
+            id: entity.id, //todo random uuuid?
+            name: entity.name,
+            address: entity.address,
+            rating: entity.rating,
+            openNow: entity.openNow,
+            isFavorite: entity.isFavorite,
+            location: entity.location,
+            photos: [...entity.photos, ...additionalPhotos],
+            tags: entity.tags);
 }

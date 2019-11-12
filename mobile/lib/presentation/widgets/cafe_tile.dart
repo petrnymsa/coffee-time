@@ -1,10 +1,12 @@
 import 'dart:ui';
 
 import 'package:coffee_time/domain/entities/cafe.dart';
+import 'package:coffee_time/domain/entities/tag.dart';
+import 'package:coffee_time/presentation/models/cafe.dart';
 import 'package:coffee_time/presentation/widgets/rating.dart';
 import 'package:coffee_time/presentation/widgets/tag_container.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 // todo text styles
 // todo color styles
@@ -14,15 +16,10 @@ class CafeTile extends StatelessWidget {
   final Function onFavoriteTap;
   final Function onMapTap;
 
-  final CafeEntity _cafe;
-
-  CafeTile(
-      {Key key, CafeEntity cafe, this.onTap, this.onFavoriteTap, this.onMapTap})
-      : _cafe = cafe,
-        super(key: key);
+  CafeTile({Key key, this.onTap, this.onFavoriteTap, this.onMapTap})
+      : super(key: key);
 
   void _onTileTap() {
-    print('tile click');
     if (onTap != null) onTap();
   }
 
@@ -36,7 +33,6 @@ class CafeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tileHeight = _cafe.tags.isNotEmpty ? 216.0 : 180.0;
     const imageHegiht = 120.0;
     const radius = 8.0;
     const borderRadius = const BorderRadius.only(
@@ -48,149 +44,145 @@ class CafeTile extends StatelessWidget {
       data: Theme.of(context).copyWith(
         iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.white),
       ),
-      child: GestureDetector(
-        onTap: _onTileTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-          child: Container(
-            height: tileHeight,
-            child: Card(
-              elevation: 6.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: borderRadius,
-              ),
-              child: Stack(
-                children: [
-                  Container(
-                    height: imageHegiht,
-                    child: Stack(
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: borderRadius,
-                          // child: Image.network(
-                          //   _cafe.,
-                          //   width: double.infinity,
-                          //   fit: BoxFit.cover,
-                          // ),
-                          child: Placeholder(),
+      child: Consumer<Cafe>(builder: (ctx, model, _) {
+        final cafe = model.entity;
+        final tileHeight = cafe.tags.isNotEmpty ? 216.0 : 180.0;
+        print("CafeTile ${cafe.id} | ${cafe.name}: rebuild");
+
+        return GestureDetector(
+            onTap: _onTileTap,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+              child: Container(
+                height: tileHeight,
+                child: Card(
+                  elevation: 6.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: borderRadius,
+                  ),
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: imageHegiht,
+                        child: Stack(
+                          children: <Widget>[
+                            ClipRRect(
+                              borderRadius: borderRadius,
+                              child: Image.network(
+                                cafe.photos.first?.url,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Center(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6.0, vertical: 4.0),
+                                color: Colors.black87,
+                                child: Text(
+                                  cafe.name,
+                                  style: TextStyle(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Amatic',
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Center(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 6.0, vertical: 4.0),
-                            color: Colors.black87,
-                            child: Text(
-                              _cafe.name,
-                              style: TextStyle(
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Amatic',
-                                  color: Colors.white),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          padding:
+                              const EdgeInsets.only(left: 2.0, bottom: 2.0),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(radius),
+                              topRight: Radius.circular(radius),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 2.0, bottom: 2.0),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(radius),
-                          topRight: Radius.circular(radius),
+                          child: IconButton(
+                            icon: Icon(cafe.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border),
+                            onPressed: _onFavoriteTap,
+                          ),
                         ),
                       ),
-                      child: IconButton(
-                        icon: Icon(Icons.favorite),
-                        onPressed: _onFavoriteTap,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 2.0, bottom: 2.0),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(radius),
-                          topLeft: Radius.circular(radius),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          padding:
+                              const EdgeInsets.only(left: 2.0, bottom: 2.0),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).accentColor,
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(radius),
+                              topLeft: Radius.circular(radius),
+                            ),
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.map),
+                            onPressed: _onMapTap,
+                          ),
                         ),
                       ),
-                      child: IconButton(
-                        icon: Icon(Icons.map),
-                        onPressed: _onMapTap,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                      height: tileHeight - imageHegiht - 8,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 4.0, vertical: 2.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                          height: tileHeight - imageHegiht - 8,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4.0, vertical: 2.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(
-                                _cafe.address,
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w300),
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    cafe.address,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                  Spacer(),
+                                  Rating(cafe.rating),
+                                ],
                               ),
-                              Spacer(),
-                              Rating(_cafe.rating),
+                              _buildClosing(context, cafe.openNow),
+                              if (cafe.tags.isNotEmpty) _buildTags(cafe.tags),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 2.0),
-                            child: Row(
-                              children: <Widget>[
-                                _buildDistance(context),
-                                Spacer(),
-                                _buildClosing(context),
-                              ],
-                            ),
-                          ),
-                          if (_cafe.tags.isNotEmpty) _buildTags(),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
+            ));
+      }),
+    );
+  }
+
+  Widget _buildClosing(BuildContext context, bool openNow) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Text(
+        openNow ? 'Otevřeno' : 'Zavřeno',
+        style: TextStyle(
+            color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
       ),
     );
   }
 
-  Text _buildClosing(BuildContext context) {
-    return Text(
-      'Zavírá ??? todo',
-      style: TextStyle(
-          color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
-    );
-  }
-
-  Text _buildDistance(BuildContext context) {
-    return Text(
-      'not implemented',
-      style: TextStyle(
-          color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
-    );
-  }
-
-  Widget _buildTags() {
+  Widget _buildTags(List<TagEntity> tags) {
     return Padding(
       padding: const EdgeInsets.only(left: 2.0, top: 8.0),
       child: Row(
-        children: _cafe.tags
+        children: tags
             .take(3)
             .map((t) => Padding(
                   padding: const EdgeInsets.only(right: 8.0),

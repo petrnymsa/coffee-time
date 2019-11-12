@@ -11,6 +11,7 @@ class SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //return LayoutBuilder(builder: (ctx, constraints) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -18,12 +19,19 @@ class SectionHeader extends StatelessWidget {
         const SizedBox(
           width: 16.0,
         ),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.headline,
+        ConstrainedBox(
+          constraints: BoxConstraints(), //todo constraint it on smaller devices
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.headline,
+            ),
+          ),
         ),
         if (after != null) ...after
       ],
     );
+//    });
   }
 }

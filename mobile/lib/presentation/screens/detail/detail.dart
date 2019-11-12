@@ -1,7 +1,11 @@
 import 'package:coffee_time/domain/entities/cafe.dart';
+import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
+import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/models/opening_hour.dart';
+import 'package:coffee_time/presentation/screens/detail/detail_provider.dart';
 import 'package:coffee_time/presentation/screens/detail/widgets/carousel_slider.dart';
+import 'package:coffee_time/presentation/screens/detail/widgets/comment_tile.dart';
 import 'package:coffee_time/presentation/screens/detail/widgets/opening_hours_table.dart';
 import 'package:coffee_time/presentation/screens/detail/widgets/section_header.dart';
 import 'package:coffee_time/presentation/widgets/expandable_panel.dart';
@@ -9,143 +13,109 @@ import 'package:coffee_time/presentation/widgets/rating.dart';
 import 'package:coffee_time/presentation/widgets/tag_container.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailScreen extends StatelessWidget {
-  final CafeEntity cafe;
-  const DetailScreen({Key key, this.cafe}) : super(key: key);
+  const DetailScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(cafe.name),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Hero(
-                tag: cafe.id,
-                child: CarouselSlider(images: [
-                  // cafe.mainPhotoUrl,
-                  // cafe.mainPhotoUrl,
-                  // cafe.mainPhotoUrl,
-                ]),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: <Widget>[
-                        _buildOpeningTime(context),
-                        Spacer(),
-                        Rating.large(cafe.rating),
-                      ],
-                    ),
-                    const SizedBox(height: 20.0),
-                    _CafeNameContainer(
-                      title: cafe.name,
-                      address: cafe.address,
-                      onShowMap: () {
-                        print('Show map for ${cafe.name}');
-                      },
-                    ),
-                    Divider(),
-                    _ContactCard(),
-                    const SizedBox(height: 10.0),
-                    _OpeningHoursContainer(),
-                    Divider(),
-                    _TagsContainer(
-                      tags: cafe.tags,
-                      onAddTag: () => print('Add tag'),
-                    ),
-                    Divider(),
-                    SectionHeader(
-                      icon: FontAwesomeIcons.comments,
-                      title: 'Hodnocení',
-                      after: <Widget>[
-                        Spacer(),
-                        FlatButton(
-                          child: Text('Přidat hodnocení'),
-                          onPressed: () {},
+    final cafeId = ModalRoute.of(context).settings.arguments;
+    return ChangeNotifierProvider(
+      builder: (_) => DetailProvider(cafeId: cafeId),
+      child: Scaffold(
+        body: Consumer<DetailProvider>(
+          builder: (ctx, model, _) {
+            if (model.state == ProviderState.busy)
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+
+            final cafe = model.detail;
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Stack(
+                    children: [
+                      CarouselSlider(
+                        images: cafe.photos.map((p) => p.url).toList(),
+                      ),
+                      AppBar(
+                        backgroundColor: Colors.transparent,
+                      )
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 10.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: <Widget>[
+                            _buildOpeningTime(context, cafe.openNow),
+                            Spacer(),
+                            Rating.large(cafe.rating),
+                          ],
+                        ),
+                        const SizedBox(height: 20.0),
+                        _CafeNameContainer(
+                          title: cafe.name,
+                          address: cafe.address,
+                          onShowMap: () {
+                            print('Show map for ${cafe.name}');
+                          },
+                        ),
+                        Divider(),
+                        _ContactCard(contact: cafe.contact),
+                        const SizedBox(height: 10.0),
+                        _OpeningHoursContainer(),
+                        Divider(),
+                        _TagsContainer(
+                          tags: cafe.tags,
+                          onAddTag: () => print('Add tag'),
+                        ),
+                        Divider(),
+                        SectionHeader(
+                          icon: FontAwesomeIcons.comments,
+                          title: 'Hodnocení',
+                          after: <Widget>[
+                            FlatButton(
+                              onPressed: () {},
+                              child: FittedBox(
+                                child: Text('Přidat hodnocení'),
+                              ),
+                            )
+                          ],
+                        ),
+                        ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          itemCount: cafe.comments.length,
+                          itemBuilder: (_, i) =>
+                              CommentTile(comment: cafe.comments[i]),
                         )
                       ],
                     ),
-                    ListView.builder(
-                      primary: false,
-                      shrinkWrap: true,
-                      itemCount: 16,
-                      itemBuilder: (_, i) => const CommentTile(),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+                  )
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Text _buildOpeningTime(BuildContext context) {
+  Text _buildOpeningTime(BuildContext context, bool opensNow) {
     //final closingTime = DateFormat.Hm().format(cafe.closing);
     return Text(
-      'Otevřeno do NOT IMPLEMENTED',
+      opensNow ? 'Otevřeno' : 'Zavřeno',
       style: Theme.of(context)
           .textTheme
           .overline
           .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
-    );
-  }
-}
-
-class CommentTile extends StatelessWidget {
-  const CommentTile({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: CircleAvatar(
-          child: Icon(FontAwesomeIcons.solidUser),
-          backgroundColor: Theme.of(context).accentColor,
-          foregroundColor: Colors.white,
-        ),
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Text(
-              'John Doe',
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(width: 2.0),
-            Text(
-              '(6.11.2019)',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12.0,
-                fontWeight: FontWeight.w300,
-                color: Colors.black87,
-              ),
-            ),
-            Spacer(),
-            Rating(4.5),
-          ],
-        ),
-        subtitle: Text(
-          'Příjemné prostředí a výborná káva. Doporučuji.',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
     );
   }
 }
@@ -210,11 +180,8 @@ class _TagsContainer extends StatelessWidget {
           icon: FontAwesomeIcons.tags,
           title: 'Štítky',
           after: [
-            Spacer(),
             FlatButton(
-              child: Text(tags.isNotEmpty
-                  ? 'Přidat štítek'
-                  : 'Žádné štítky. Přidat nový.'),
+              child: Text(tags.isNotEmpty ? 'Přidat štítek' : 'Přidat nový.'),
               //  textColor: Theme.of(context).primaryColor,
               onPressed: onAddTag,
             )
@@ -302,16 +269,22 @@ class _CafeNameContainer extends StatelessWidget {
 }
 
 class _ContactCard extends StatelessWidget {
-  const _ContactCard({Key key}) : super(key: key);
+  final ContactEntity contact;
+
+  const _ContactCard({Key key, @required this.contact}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final urlWithoutHttps =
+        contact.website?.replaceAll(new RegExp('^https?://'), 'www.');
+
     return Card(
       elevation: 2.0,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               child: Row(
@@ -320,10 +293,10 @@ class _ContactCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: InkWell(
-                      child: Text("775 028 016"),
+                      child: Text(contact.phone),
                       onTap: () async {
-                        if (await canLaunch("tel:111222333")) {
-                          await launch("tel:111222333");
+                        if (await canLaunch("tel:${contact.phone}")) {
+                          await launch("tel:${contact.phone}");
                         }
                       },
                     ),
@@ -331,25 +304,26 @@ class _ContactCard extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(FontAwesomeIcons.globe),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: InkWell(
-                      child: Text("www.cafe.prostoru.cz"),
-                      onTap: () async {
-                        if (await canLaunch("https://cafe.prostoru.cz")) {
-                          print('launch web');
-                          await launch("https://cafe.prostoru.cz");
-                        }
-                      },
+            if (contact.website != null)
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Icon(FontAwesomeIcons.globe),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: InkWell(
+                        child: Text(urlWithoutHttps),
+                        onTap: () async {
+                          if (await canLaunch(contact.website)) {
+                            print('launch web');
+                            await launch(contact.website);
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),

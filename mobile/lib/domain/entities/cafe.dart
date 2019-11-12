@@ -10,7 +10,7 @@ class CafeEntity {
   final bool openNow;
   final LocationEntity location;
 
-  final PhotoEntity photo;
+  final List<PhotoEntity> photos;
   final List<TagEntity> tags;
 
   bool isFavorite;
@@ -21,9 +21,9 @@ class CafeEntity {
       this.address,
       this.rating,
       this.openNow,
-      this.isFavorite,
+      this.isFavorite = false,
       this.location,
-      this.photo,
+      this.photos,
       this.tags})
       : assert(id != null),
         assert(name != null),

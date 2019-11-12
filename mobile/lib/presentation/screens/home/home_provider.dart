@@ -18,6 +18,6 @@ class HomeProvider<WithoutError> extends BaseProvider {
     setBusy();
     final _cafeEntities = await _cafeRepository.getByLocation(null);
     _cafes = _cafeEntities.map((e) => Cafe(e)).toList();
-    setIdle();
+    setReady();
   }
 }

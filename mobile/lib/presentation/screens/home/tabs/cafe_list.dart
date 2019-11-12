@@ -28,26 +28,27 @@ class CafeListTab extends StatelessWidget {
 
   //todo refactor to standalone widget
   Widget _buildCafeList(BuildContext context, List<Cafe> data) {
+    print(data[0].entity.isFavorite);
     return Column(
       children: <Widget>[
         Expanded(
           child: ListView.builder(
             itemCount: data.length,
-            itemBuilder: (_, i) => Hero(
-              tag: data[i].entity.id,
+            itemBuilder: (_, i) => ChangeNotifierProvider.value(
+              value: data[i],
               child: CafeTile(
-                cafe: data[i].entity,
+                onFavoriteTap: () => data[i].toggleFavorite(),
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    //todo push named route
-                    builder: (_) => DetailScreen(cafe: data[i].entity),
-                  ),
+                      //todo push named route
+                      builder: (_) => DetailScreen(),
+                      settings: RouteSettings(arguments: data[i].entity.id)),
                 ),
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

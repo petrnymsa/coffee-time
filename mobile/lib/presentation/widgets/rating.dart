@@ -5,10 +5,23 @@ class Rating extends StatelessWidget {
   final max = 5;
   final double rating;
   final double iconSize;
-  Rating(this.rating, {this.iconSize = 24.0});
+  final bool displayRating;
+  Rating(this.rating, {this.iconSize = 24.0, this.displayRating = true});
 
-  factory Rating.large(double rating) {
-    return Rating(rating, iconSize: 28);
+  factory Rating.large(double rating, {bool displayRating = true}) {
+    return Rating(
+      rating,
+      iconSize: 28,
+      displayRating: displayRating,
+    );
+  }
+
+  factory Rating.small(double rating, {bool displayRating = true}) {
+    return Rating(
+      rating,
+      iconSize: 16,
+      displayRating: displayRating,
+    );
   }
 
   @override
@@ -42,17 +55,19 @@ class Rating extends StatelessWidget {
         size: iconSize,
       ),
     ).toList());
+
     return Container(
       child: Row(
         textBaseline: TextBaseline.alphabetic,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            rating.toStringAsPrecision(2),
-            style: TextStyle(
-              color: Colors.grey,
+          if (displayRating)
+            Text(
+              rating.toStringAsPrecision(2),
+              style: TextStyle(
+                color: Colors.grey,
+              ),
             ),
-          ),
           ...stars,
         ],
       ),

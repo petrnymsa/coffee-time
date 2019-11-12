@@ -9,7 +9,7 @@ class CafeModel extends CafeEntity {
     @required rating,
     @required openNow,
     @required location,
-    @required photo,
+    @required photos,
     @required tags,
     @required isFavorite,
   }) : super(
@@ -19,7 +19,7 @@ class CafeModel extends CafeEntity {
           rating: rating,
           openNow: openNow,
           location: location,
-          photo: photo,
+          photos: photos,
           tags: tags,
           isFavorite: isFavorite,
         );
