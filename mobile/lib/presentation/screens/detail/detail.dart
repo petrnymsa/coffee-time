@@ -202,8 +202,7 @@ class _TagsContainer extends StatelessWidget {
               runSpacing: 5.0,
               children: tags
                   .map(
-                    (tag) => TagContainer(
-                        title: tag.title, color: tag.color, icon: tag.icon),
+                    (tag) => TagContainer(title: tag.title, icon: tag.icon),
                   )
                   .toList(),
             ),

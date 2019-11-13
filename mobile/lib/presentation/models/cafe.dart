@@ -9,7 +9,7 @@ class Cafe with ChangeNotifier {
   CafeEntity get entity => _entity;
 
   void toggleFavorite() {
-    _entity.isFavorite = !_entity.isFavorite;
+    _entity = _entity.copyWith(isFavorite: !_entity.isFavorite);
     //todo call to repository to update
     notifyListeners();
   }

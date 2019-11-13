@@ -1,3 +1,4 @@
+import 'package:coffee_time/data/models/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/comment.dart';
@@ -12,7 +13,15 @@ import 'mock.dart';
 class InMemoryCafeRepository implements CafeRepository {
   @override
   Future<List<CafeEntity>> getByLocation(LocationEntity location) {
-    return Future.delayed(Duration(milliseconds: 500), () => _cafes);
+    return Future.delayed(Duration(milliseconds: 100), () async {
+      if (!initialized) {
+        initialized = true;
+        cafes = _predefinedCafes;
+        cafes.addAll(await mock.readCafeData());
+      }
+
+      return cafes;
+    });
   }
 
   @override
@@ -20,14 +29,16 @@ class InMemoryCafeRepository implements CafeRepository {
     return Future.delayed(Duration(milliseconds: 200), () => _cafeDetails[id]);
   }
 
-  static Uuid uuid = Uuid();
+  bool initialized = false;
+  List<CafeEntity> cafes = [];
 
+  static Uuid uuid = Uuid();
   static PhotoEntity _photo(String url) => PhotoEntity(url: url);
   static LocationEntity _location() => LocationEntity(17.56, 20.53);
 
   static MockData mock = MockData();
 
-  static List<CafeEntity> _cafes = [
+  static List<CafeEntity> _predefinedCafes = [
     CafeEntity(
         id: "1",
         name: 'Archicafé',
@@ -39,7 +50,7 @@ class InMemoryCafeRepository implements CafeRepository {
         ],
         openNow: true,
         location: _location(),
-        tags: []),
+        tags: mock.mapTags(['wifi', 'outside', 'food'])),
     CafeEntity(
         id: "2",
         name: 'Cafe Prostoru_',
@@ -51,7 +62,7 @@ class InMemoryCafeRepository implements CafeRepository {
         ],
         openNow: true,
         location: _location(),
-        tags: []),
+        tags: mock.mapTags(['wifi', 'outside', 'food', 'beer'])),
     CafeEntity(
         id: "3",
         name: 'Estella CAFÉ',
@@ -63,13 +74,13 @@ class InMemoryCafeRepository implements CafeRepository {
         ],
         openNow: true,
         location: _location(),
-        tags: []),
+        tags: mock.mapTags(['wifi'])),
   ];
 
   Map<String, CafeDetailEntity> _cafeDetails = {
-    "1": CafeDetailEntity.fromCafe(_cafes[0],
+    "1": CafeDetailEntity.fromCafe(_predefinedCafes[0],
         contact: ContactEntity(
-          address: _cafes[0].address,
+          address: _predefinedCafes[0].address,
           phone: '111 222 333',
         ),
         comments: mock.getRandomComments(3),
@@ -79,9 +90,9 @@ class InMemoryCafeRepository implements CafeRepository {
           _photo(
               "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
         ]),
-    "2": CafeDetailEntity.fromCafe(_cafes[1],
+    "2": CafeDetailEntity.fromCafe(_predefinedCafes[1],
         contact: ContactEntity(
-          address: _cafes[0].address,
+          address: _predefinedCafes[0].address,
           phone: '111 222 333',
           website: 'https://cafe.prostoru.cz',
         ),
@@ -92,9 +103,9 @@ class InMemoryCafeRepository implements CafeRepository {
           _photo(
               "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
         ]),
-    "3": CafeDetailEntity.fromCafe(_cafes[2],
+    "3": CafeDetailEntity.fromCafe(_predefinedCafes[2],
         contact: ContactEntity(
-          address: _cafes[0].address,
+          address: _predefinedCafes[0].address,
           phone: '111 222 333',
         ),
         comments: mock.getRandomComments(3),

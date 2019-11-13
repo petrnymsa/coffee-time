@@ -1,0 +1,20 @@
+{
+    "id": "7157b595-d704-457f-8aae-539dd928bd0d",
+    "name": "Hodkiewicz, Brekke and Harvey Cafe",
+    "address": "24 Elka Lane",
+    "opening_hours": {
+        "open_now": true
+    },
+    "location": {
+        "lat": 46.946681,
+        "lng": 142.0144982
+    },
+    "photos": [
+        {
+            "photo_reference": "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/ab243c8c-2719-4986-b869-d83256692e17.jpg",
+            "height": 456,
+            "width": 684
+        }
+    ],
+    "rating": 3.5
+}
