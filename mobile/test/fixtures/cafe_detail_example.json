@@ -1,0 +1,44 @@
+{
+    "place_id": "7157b595-d704-457f-8aae-539dd928bd0d",
+    "name": "Hodkiewicz, Brekke and Harvey Cafe",
+    "address": "24 Elka Lane",
+    "opening_hours": {
+        "open_now": true
+    },
+    "location": {
+        "lat": 46.946681,
+        "lng": 142.0144982
+    },
+    "rating": 3.5,
+    "photos": [
+        {
+            "photo_reference": "https://media.cvut.cz/10.jpg",
+            "height": 456,
+            "width": 684
+        },
+        {
+            "reference": "https://media.cvut.cz/1.jpg",
+            "height": 439,
+            "width": 700
+        }
+    ],
+    "website": "http://cafeprostoru.cz",
+    "formatted_phone_number": "291-921-0831",
+    "reviews": [
+        {
+            "author_name": "Cob Peasee",
+            "rating": 4,
+            "relative_time_description": "6/19/2019",
+            "text": "disintermediate real-time infomediaries",
+            "profile_photo_url": "https://robohash.org/eosetfuga.bmp?size=50x50&set=set1"
+        },
+        {
+            "author_name": "Sharlene Lisle",
+            "rating": 5,
+            "relative_time_description": "11/24/2018",
+            "text": "architect innovative mindshare",
+            "profile_photo_url": "https://robohash.org/autemmaioreset.png?size=50x50&set=set1"
+        }
+    ],
+    "url": "https://goo.gl/maps/gLopcuff9KpZ9NYS8"
+}

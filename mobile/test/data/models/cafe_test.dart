@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:coffee_time/core/utils/rating_stars_count.dart';
 import 'package:coffee_time/data/models/cafe.dart';
 import 'package:flutter_test/flutter_test.dart' as t;
 
