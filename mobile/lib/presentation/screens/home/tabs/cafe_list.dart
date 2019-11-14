@@ -34,31 +34,21 @@ class _CafeListTabState extends State<CafeListTab> {
   }
 
   Widget _buildCafeList(BuildContext context, List<Cafe> data) {
-    return Column(
-      children: <Widget>[
-        Container(
-          height: 60,
-          color: Colors.green,
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (_, i) => ChangeNotifierProvider.value(
-              value: data[i],
-              child: CafeTile(
-                onFavoriteTap: () => data[i].toggleFavorite(),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      //todo push named route
-                      builder: (_) => DetailScreen(),
-                      settings: RouteSettings(arguments: data[i].entity.id)),
-                ),
-              ),
-            ),
+    return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (_, i) => ChangeNotifierProvider.value(
+        value: data[i],
+        child: CafeTile(
+          onFavoriteTap: () => data[i].toggleFavorite(),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                //todo push named route
+                builder: (_) => DetailScreen(),
+                settings: RouteSettings(arguments: data[i].entity.id)),
           ),
         ),
-      ],
+      ),
     );
   }
 }

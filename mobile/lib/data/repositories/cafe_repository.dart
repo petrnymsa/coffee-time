@@ -48,11 +48,14 @@ class InMemoryCafeRepository implements CafeRepository {
     }
     final moreDetails = await mock.readCadeDetailData();
     details.addAll(moreDetails);
+
+    addresses = details.map((d) => d.contact.address).toSet().toList();
   }
 
   bool initialized = false;
   List<CafeEntity> cafes = [];
   List<CafeDetailEntity> details = [];
+  List<String> addresses = [];
 
   static Uuid uuid = Uuid();
   static PhotoEntity _photo(String url) => PhotoEntity(url: url);

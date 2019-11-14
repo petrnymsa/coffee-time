@@ -18,7 +18,6 @@ dependencies:
   meta: ^1.1.7
   logger: ^0.7.0+2
   equatable: ^0.6.1
-
   provider: ^3.1.0+1
 
   # The following adds the Cupertino Icons font to your application.
