@@ -4,7 +4,7 @@ import 'package:coffee_time/presentation/models/cafe.dart';
 
 //todo split this to CafeListTab provider, MapProvider and TabProvider
 class HomeProvider<WithoutError> extends BaseProvider {
-  InMemoryCafeRepository _cafeRepository = InMemoryCafeRepository();
+  InMemoryCafeRepository _cafeRepository = InMemoryCafeRepository.instance;
 
   List<Cafe> _cafes;
 

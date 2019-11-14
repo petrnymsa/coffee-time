@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:coffee_time/data/models/cafe.dart';
+import 'package:coffee_time/data/models/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/comment.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,18 @@ class MockData {
       cafes.add(CafeModel.fromJson(cf));
     }
     return cafes;
+  }
+
+  Future<List<CafeDetailModel>> readCadeDetailData() async {
+    final cafeData =
+        await asset_loader.loadAsset('assets/mock/cafe_detail.json');
+    final cafeDataJson = json.decode(cafeData);
+
+    final List<CafeDetailModel> details = [];
+    for (final cf in cafeDataJson) {
+      details.add(CafeDetailModel.fromJson(cf));
+    }
+    return details;
   }
 
   List<CommentEntity> getRandomComments(int max) {

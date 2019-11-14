@@ -1,4 +1,3 @@
-import 'package:coffee_time/data/models/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
 
 import './contact.dart';
@@ -20,7 +19,21 @@ class CafeDetailModel extends CafeDetailEntity {
       List<TagModel> tags,
       ContactModel contact,
       String cafeUrl,
-      List<CommentModel> comments});
+      List<CommentModel> comments})
+      : super(
+          id: id,
+          name: name,
+          address: address,
+          rating: rating,
+          openNow: openNow,
+          isFavorite: isFavorite,
+          location: location,
+          photos: photos,
+          tags: tags,
+          contact: contact,
+          cafeUrl: cafeUrl,
+          comments: comments,
+        );
 
   factory CafeDetailModel.fromJson(Map<String, dynamic> json) {
     final photos = (json['photos'] as List<dynamic>)
@@ -37,8 +50,7 @@ class CafeDetailModel extends CafeDetailEntity {
             ?.map((m) => CommentModel.fromJson(m))
             ?.toList() ??
         [];
-
-    return CafeDetailModel(
+    final model = CafeDetailModel(
       id: json['place_id'],
       name: json['name'],
       address: json['address'],
@@ -55,6 +67,7 @@ class CafeDetailModel extends CafeDetailEntity {
       cafeUrl: json['url'],
       comments: reviews,
     );
+    return model;
   }
 
   Map<String, dynamic> toJson() {

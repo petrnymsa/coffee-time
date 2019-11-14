@@ -15,4 +15,9 @@ class PhotoModel extends PhotoEntity {
   Map<String, dynamic> toJson() {
     return {'photo_reference': url, 'width': width, 'height': height};
   }
+
+  @override
+  String toString() {
+    return '$url,$width,$height';
+  }
 }

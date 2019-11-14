@@ -36,6 +36,10 @@ class _CafeListTabState extends State<CafeListTab> {
   Widget _buildCafeList(BuildContext context, List<Cafe> data) {
     return Column(
       children: <Widget>[
+        Container(
+          height: 60,
+          color: Colors.green,
+        ),
         Expanded(
           child: ListView.builder(
             itemCount: data.length,

@@ -1,3 +1,4 @@
+import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/data/models/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
@@ -11,13 +12,19 @@ import 'package:uuid/uuid.dart';
 import 'mock.dart';
 
 class InMemoryCafeRepository implements CafeRepository {
+  static InMemoryCafeRepository _instance;
+
+  static InMemoryCafeRepository get instance {
+    if (_instance == null) _instance = InMemoryCafeRepository();
+
+    return _instance;
+  }
+
   @override
   Future<List<CafeEntity>> getByLocation(LocationEntity location) {
     return Future.delayed(Duration(milliseconds: 100), () async {
       if (!initialized) {
-        initialized = true;
-        cafes = _predefinedCafes;
-        cafes.addAll(await mock.readCafeData());
+        await init();
       }
 
       return cafes;
@@ -26,11 +33,26 @@ class InMemoryCafeRepository implements CafeRepository {
 
   @override
   Future<CafeDetailEntity> getDetail(String id) {
-    return Future.delayed(Duration(milliseconds: 200), () => _cafeDetails[id]);
+    if (!initialized) init();
+    return Future.delayed(Duration(milliseconds: 200),
+        () => details.firstWhere((x) => x.id == id, orElse: () => null));
+  }
+
+  Future init() async {
+    initialized = true;
+    cafes = _predefinedCafes;
+    cafes.addAll(await mock.readCafeData());
+
+    for (final pd in _cafeDetails.keys) {
+      details.add(_cafeDetails[pd]);
+    }
+    final moreDetails = await mock.readCadeDetailData();
+    details.addAll(moreDetails);
   }
 
   bool initialized = false;
   List<CafeEntity> cafes = [];
+  List<CafeDetailEntity> details = [];
 
   static Uuid uuid = Uuid();
   static PhotoEntity _photo(String url) => PhotoEntity(url: url);

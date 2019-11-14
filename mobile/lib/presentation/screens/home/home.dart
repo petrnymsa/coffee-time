@@ -2,6 +2,7 @@ import 'package:coffee_time/presentation/screens/home/bottom_nav_bar.dart';
 import 'package:coffee_time/presentation/screens/home/home_provider.dart';
 import 'package:coffee_time/presentation/screens/home/tabs/tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,6 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
         key: _scaffoldKey,
         appBar: AppBar(
           title: Text('Kavárny v okolí'),
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {},
+              icon: Icon(FontAwesomeIcons.list),
+            )
+          ],
         ),
         body: SafeArea(
           child: Container(child: _buildCurrentTab(context)),

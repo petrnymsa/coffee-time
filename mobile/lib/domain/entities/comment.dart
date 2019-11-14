@@ -11,7 +11,7 @@ class CommentEntity extends Equatable {
       {this.avatar, this.user, this.posted, this.rating, this.content});
 
   @override
-  List<Object> get props => [avatar, user, posted, rating, content];
+  List<Object> get props => [avatar, user, posted.toString(), rating, content];
 
   CommentEntity copyWith({
     String id,
