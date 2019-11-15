@@ -1,12 +1,10 @@
 import 'package:coffee_time/data/repositories/cafe_repository.dart';
-import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
 
-enum HomeFilterMode { Location, Search }
+import '../home_provider.dart';
 
-//todo split this to CafeListTab provider, MapProvider and TabProvider
-class HomeProvider<WithoutError> extends BaseProvider {
+class CafeListProvider extends BaseProvider<WithoutError> {
   InMemoryCafeRepository _cafeRepository = InMemoryCafeRepository.instance;
 
   List<Cafe> _cafes;
@@ -18,8 +16,7 @@ class HomeProvider<WithoutError> extends BaseProvider {
   String _searchQuery;
   String get searchQuery => _searchQuery;
 
-  HomeProvider() {
-    refreshByLocation();
+  CafeListProvider() {
     _mode = HomeFilterMode.Location;
   }
 

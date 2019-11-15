@@ -48,6 +48,23 @@ class InMemoryCafeRepository implements CafeRepository {
             .toList());
   }
 
+  @override
+  Future<List<CafeEntity>> getFavorites() {
+    return Future.delayed(Duration(milliseconds: 100),
+        () => cafes.where((c) => c.isFavorite).toList());
+  }
+
+  @override
+  Future<bool> updateEntity(CafeEntity entity) {
+    return Future.delayed(Duration(milliseconds: 250), () {
+      var i = cafes.indexWhere((e) => e.id == entity.id);
+      if (i == -1) return false;
+
+      cafes[i] = entity;
+      return true;
+    });
+  }
+
   Future init() async {
     initialized = true;
     cafes = _predefinedCafes;

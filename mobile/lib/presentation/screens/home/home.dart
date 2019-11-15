@@ -1,6 +1,8 @@
 import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/presentation/screens/home/bottom_nav_bar.dart';
 import 'package:coffee_time/presentation/screens/home/home_provider.dart';
+import 'package:coffee_time/presentation/screens/home/tabs/cafe_list_provider.dart';
+import 'package:coffee_time/presentation/screens/home/tabs/favorites_provider.dart';
 import 'package:coffee_time/presentation/screens/home/tabs/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -49,13 +51,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           body: SafeArea(
-            child: Container(child: _buildCurrentTab(context)),
+            child: Container(child: _buildCurrentTab(ctx)),
           ),
           bottomNavigationBar: HomeBottomNavigationBar(
             defaultTab: _currentTab,
             onTabChange: (tab) {
               setState(() {
                 _currentTab = tab; //todo very ugly
+                if (_currentTab == HomeBottomNavigationBarTab.CafeList)
+                  Provider.of<HomeProvider>(ctx, listen: false).refresh();
               });
             },
           ),
@@ -73,7 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return MapTab();
         break;
       case HomeBottomNavigationBarTab.Favorites:
-        return FavoritesTab();
+        return ChangeNotifierProvider<FavoritesProvider>(
+            builder: (_) => FavoritesProvider()..load(), child: FavoritesTab());
         break;
       default:
         return Center(
