@@ -21,7 +21,7 @@ class CommentModel extends CommentEntity {
       avatar: json['profile_photo_url'],
       user: json['author_name'],
       rating: json['rating'].toDouble(),
-      posted: DateFormat.yMd().parse(json['relative_time_description']),
+      posted: DateFormat.yMd('en').parse(json['relative_time_description']),
       content: json['text'],
     );
   }

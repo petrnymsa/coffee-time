@@ -28,7 +28,36 @@ class _CafeListTabState extends State<CafeListTab> {
             child: CircularProgressIndicator(),
           );
 
-        return _buildCafeList(ctx, model.cafes);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            if (model.mode == HomeFilterMode.Search)
+              Center(
+                child: Container(
+                  padding: EdgeInsets.only(left: 30),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'Kavárny na adrese ${model.searchQuery}',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      SizedBox(
+                        width: 4.0,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.cancel),
+                        onPressed: () {
+                          model.refreshByLocation();
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            Expanded(child: _buildCafeList(ctx, model.cafes)),
+          ],
+        );
       },
     );
   }

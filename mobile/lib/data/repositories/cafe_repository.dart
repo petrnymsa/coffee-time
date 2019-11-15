@@ -38,6 +38,16 @@ class InMemoryCafeRepository implements CafeRepository {
         () => details.firstWhere((x) => x.id == id, orElse: () => null));
   }
 
+  @override
+  Future<List<CafeEntity>> getBySearch(String search) {
+    return Future.delayed(
+        Duration(milliseconds: 100),
+        () => cafes
+            .where(
+                (c) => c.address.toLowerCase().contains(search.toLowerCase()))
+            .toList());
+  }
+
   Future init() async {
     initialized = true;
     cafes = _predefinedCafes;

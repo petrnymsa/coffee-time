@@ -26,34 +26,39 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       builder: (_) => HomeProvider(),
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text('Kavárny v okolí'),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.list),
-            ),
-            IconButton(
-              onPressed: () async {
-                final result = await showSearch(
-                    context: context, delegate: HomeSearchDelegate());
-              },
-              icon: Icon(Icons.search),
-            )
-          ],
-        ),
-        body: SafeArea(
-          child: Container(child: _buildCurrentTab(context)),
-        ),
-        bottomNavigationBar: HomeBottomNavigationBar(
-          defaultTab: _currentTab,
-          onTabChange: (tab) {
-            setState(() {
-              _currentTab = tab; //todo very ugly
-            });
-          },
+      child: Builder(
+        builder: (ctx) => Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+            title: Text('Kavárny v okolí'),
+            actions: <Widget>[
+              IconButton(
+                onPressed: () async {
+                  final result = await showSearch(
+                      context: context, delegate: HomeSearchDelegate());
+                  if (result != null)
+                    Provider.of<HomeProvider>(ctx, listen: false)
+                        .refreshBySearch(result);
+                },
+                icon: Icon(Icons.search),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.list),
+              )
+            ],
+          ),
+          body: SafeArea(
+            child: Container(child: _buildCurrentTab(context)),
+          ),
+          bottomNavigationBar: HomeBottomNavigationBar(
+            defaultTab: _currentTab,
+            onTabChange: (tab) {
+              setState(() {
+                _currentTab = tab; //todo very ugly
+              });
+            },
+          ),
         ),
       ),
     );
@@ -115,8 +120,6 @@ class HomeSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    if (query.length < 2) return Container();
-
     final addresses = InMemoryCafeRepository.instance.addresses
         .where((a) => a.toLowerCase().contains(query.toLowerCase()))
         .toList();
