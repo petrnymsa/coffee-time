@@ -59,7 +59,7 @@ class CafeDetailModel extends CafeDetailEntity {
       location: LocationModel.fromJson(json['location']),
       photos: photos,
       tags: tags,
-      isFavorite: true, //todo IsFavorite reading,
+      isFavorite: false, //todo IsFavorite reading,
       contact: ContactModel(
           address: json['address'],
           website: json['website'],

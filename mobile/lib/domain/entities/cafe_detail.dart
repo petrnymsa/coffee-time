@@ -34,6 +34,34 @@ class CafeDetailEntity extends CafeEntity {
             photos: photos,
             tags: tags);
 
+  CafeDetailEntity copyWith(
+      {String id,
+      String name,
+      String address,
+      double rating,
+      bool openNow,
+      LocationEntity location,
+      List<PhotoEntity> photos,
+      List<TagEntity> tags,
+      bool isFavorite,
+      ContactEntity contact,
+      String cafeUrl,
+      List<CommentEntity> comments}) {
+    return CafeDetailEntity(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        address: address ?? this.address,
+        rating: rating ?? this.rating,
+        openNow: openNow ?? this.openNow,
+        location: location ?? this.location,
+        photos: photos ?? this.photos,
+        tags: tags ?? this.tags,
+        isFavorite: isFavorite ?? this.isFavorite,
+        contact: contact ?? this.contact,
+        cafeUrl: cafeUrl ?? this.cafeUrl,
+        comments: comments ?? this.comments);
+  }
+
   factory CafeDetailEntity.fromCafe(CafeEntity entity,
       {ContactEntity contact,
       String cafeUrl,

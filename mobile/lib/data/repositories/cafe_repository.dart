@@ -22,7 +22,7 @@ class InMemoryCafeRepository implements CafeRepository {
 
   @override
   Future<List<CafeEntity>> getByLocation(LocationEntity location) {
-    return Future.delayed(Duration(milliseconds: 100), () async {
+    return Future.delayed(Duration(milliseconds: 1), () async {
       if (!initialized) {
         await init();
       }
@@ -34,7 +34,7 @@ class InMemoryCafeRepository implements CafeRepository {
   @override
   Future<CafeDetailEntity> getDetail(String id) {
     if (!initialized) init();
-    return Future.delayed(Duration(milliseconds: 200),
+    return Future.delayed(Duration(milliseconds: 1),
         () => details.firstWhere((x) => x.id == id, orElse: () => null));
   }
 
@@ -50,17 +50,18 @@ class InMemoryCafeRepository implements CafeRepository {
 
   @override
   Future<List<CafeEntity>> getFavorites() {
-    return Future.delayed(Duration(milliseconds: 100),
+    return Future.delayed(Duration(milliseconds: 1),
         () => cafes.where((c) => c.isFavorite).toList());
   }
 
   @override
   Future<bool> updateEntity(CafeEntity entity) {
-    return Future.delayed(Duration(milliseconds: 250), () {
+    return Future.delayed(Duration(milliseconds: 1), () {
       var i = cafes.indexWhere((e) => e.id == entity.id);
-      if (i == -1) return false;
+      cafes[i] = cafes[i].copyWith(isFavorite: entity.isFavorite);
+      i = details.indexWhere((e) => e.id == entity.id);
+      details[i] = details[i].copyWith(isFavorite: entity.isFavorite);
 
-      cafes[i] = entity;
       return true;
     });
   }

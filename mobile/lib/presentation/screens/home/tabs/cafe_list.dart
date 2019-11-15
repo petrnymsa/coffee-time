@@ -68,15 +68,17 @@ class _CafeListTabState extends State<CafeListTab> {
       itemBuilder: (_, i) => ChangeNotifierProvider.value(
         value: data[i],
         child: CafeTile(
-          onFavoriteTap: () => data[i].toggleFavorite(),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                //todo push named route
-                builder: (_) => DetailScreen(),
-                settings: RouteSettings(arguments: data[i].entity.id)),
-          ),
-        ),
+            onFavoriteTap: () => data[i].toggleFavorite(),
+            onTap: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    //todo push named route
+                    builder: (_) => DetailScreen(),
+                    settings: RouteSettings(arguments: data[i].entity.id)),
+              );
+              Provider.of<HomeProvider>(context, listen: false).refresh();
+            }),
       ),
     );
   }

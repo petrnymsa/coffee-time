@@ -1,5 +1,6 @@
 import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
+import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
@@ -39,16 +40,29 @@ class DetailScreen extends StatelessWidget {
             final cafe = model.detail;
             return SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Stack(
                     children: [
                       CarouselSlider(
                         images: cafe.photos.map((p) => p.url).toList(),
                       ),
+                      Positioned(
+                        bottom: 10,
+                        right: 10,
+                        child: IconButton(
+                            iconSize: 36,
+                            icon: Icon(cafe.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border),
+                            onPressed: () {
+                              print('FAVORITE ');
+                              model.toggleFavorite();
+                            }),
+                      ),
                       AppBar(
                         backgroundColor: Colors.transparent,
-                      )
+                        elevation: 0,
+                      ),
                     ],
                   ),
                   Container(
