@@ -1,10 +1,8 @@
 import 'package:coffee_time/core/app_logger.dart';
-import 'package:coffee_time/data/repositories/cafe_repository.dart';
-import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
+import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail.dart';
-import 'package:coffee_time/presentation/screens/home/home_provider.dart';
 import 'package:coffee_time/presentation/widgets/cafe_tile.dart';
 
 import 'package:flutter/material.dart';
@@ -21,7 +19,7 @@ class _CafeListTabState extends State<CafeListTab> {
   @override
   Widget build(BuildContext context) {
     getLogger('CafeListTab').i('Build');
-    return Consumer<HomeProvider>(
+    return Consumer<CafeListProvider>(
       builder: (ctx, model, child) {
         if (model.state == ProviderState.busy)
           return Center(
@@ -32,7 +30,7 @@ class _CafeListTabState extends State<CafeListTab> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (model.mode == HomeFilterMode.Search)
+            if (model.mode == CafeListMode.Search)
               Center(
                 child: Container(
                   padding: EdgeInsets.only(left: 30),
@@ -68,7 +66,11 @@ class _CafeListTabState extends State<CafeListTab> {
       itemBuilder: (_, i) => ChangeNotifierProvider.value(
         value: data[i],
         child: CafeTile(
-            onFavoriteTap: () => data[i].toggleFavorite(),
+            onFavoriteTap: () {
+              Provider.of<CafeListProvider>(context, listen: false)
+                  .toggleFavorite(data[i]);
+            },
+            onMapTap: () {},
             onTap: () async {
               await Navigator.push(
                 context,
@@ -77,7 +79,7 @@ class _CafeListTabState extends State<CafeListTab> {
                     builder: (_) => DetailScreen(),
                     settings: RouteSettings(arguments: data[i].entity.id)),
               );
-              Provider.of<HomeProvider>(context, listen: false).refresh();
+              Provider.of<CafeListProvider>(context, listen: false).refresh();
             }),
       ),
     );

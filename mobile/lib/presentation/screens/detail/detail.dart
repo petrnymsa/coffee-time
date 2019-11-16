@@ -5,6 +5,7 @@ import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/models/opening_hour.dart';
+import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail_provider.dart';
 import 'package:coffee_time/presentation/screens/detail/widgets/carousel_slider.dart';
 import 'package:coffee_time/presentation/screens/detail/widgets/comment_tile.dart';
@@ -59,6 +60,9 @@ class DetailScreen extends StatelessWidget {
                               onPressed: () {
                                 print('FAVORITE ');
                                 model.toggleFavorite();
+                                Provider.of<CafeListProvider>(context,
+                                        listen: false)
+                                    .refresh();
                               }),
                         ),
                       ),

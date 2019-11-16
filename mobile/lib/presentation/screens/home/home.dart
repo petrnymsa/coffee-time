@@ -1,8 +1,9 @@
 import 'package:coffee_time/data/repositories/cafe_repository.dart';
+import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/home/bottom_nav_bar.dart';
-import 'package:coffee_time/presentation/screens/home/home_provider.dart';
-import 'package:coffee_time/presentation/screens/home/tabs/favorites_provider.dart';
+import 'package:coffee_time/presentation/screens/home/tabs/map_provider.dart';
 import 'package:coffee_time/presentation/screens/home/tabs/tabs.dart';
+import 'package:coffee_time/presentation/screens/home/tabs_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,18 +15,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  HomeBottomNavigationBarTab _currentTab;
-
   @override
   void initState() {
-    _currentTab = HomeBottomNavigationBarTab.CafeList;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (_) => HomeProvider(),
+      builder: (_) => TabsProvider(),
       child: Builder(
         builder: (ctx) => Scaffold(
           key: _scaffoldKey,
@@ -37,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   final result = await showSearch(
                       context: context, delegate: HomeSearchDelegate());
                   if (result != null)
-                    Provider.of<HomeProvider>(ctx, listen: false)
+                    Provider.of<CafeListProvider>(context, listen: false)
                         .refreshBySearch(result);
                 },
                 icon: Icon(Icons.search),
@@ -49,34 +47,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           body: SafeArea(
-            child: Container(child: _buildCurrentTab(ctx)),
+            child: Container(
+              child: Consumer<TabsProvider>(
+                builder: (ctx, model, _) => _buildCurrentTab(context, model),
+              ),
+            ),
           ),
-          bottomNavigationBar: HomeBottomNavigationBar(
-            defaultTab: _currentTab,
-            onTabChange: (tab) {
-              setState(() {
-                _currentTab = tab; //todo very ugly
-                if (_currentTab == HomeBottomNavigationBarTab.CafeList)
-                  Provider.of<HomeProvider>(ctx, listen: false).refresh();
-              });
-            },
-          ),
+          bottomNavigationBar: HomeBottomNavigationBar(),
         ),
       ),
     );
   }
 
-  Widget _buildCurrentTab(BuildContext context) {
-    switch (_currentTab) {
-      case HomeBottomNavigationBarTab.CafeList:
+  Widget _buildCurrentTab(BuildContext context, TabsProvider model) {
+    switch (model.currentTab) {
+      case CurrentTab.CafeList:
         return CafeListTab();
         break;
-      case HomeBottomNavigationBarTab.Map:
+      case CurrentTab.Map:
         return MapTab();
         break;
-      case HomeBottomNavigationBarTab.Favorites:
-        return ChangeNotifierProvider<FavoritesProvider>(
-            builder: (_) => FavoritesProvider()..load(), child: FavoritesTab());
+      case CurrentTab.Favorites:
+        return FavoritesTab();
         break;
       default:
         return Center(

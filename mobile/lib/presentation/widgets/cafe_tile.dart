@@ -34,8 +34,8 @@ class CafeTile extends StatelessWidget {
     if (onMapTap != null) onMapTap();
     //final scheme = 'geo:${loc.lat},${loc.lng}';
 
-    final scheme = 'geo:0,0?q=${cafe.address}';
-    if (await canLaunch(scheme)) launch(scheme);
+    // final scheme = 'geo:0,0?q=${cafe.address}';
+    // if (await canLaunch(scheme)) launch(scheme);
   }
 
   @override

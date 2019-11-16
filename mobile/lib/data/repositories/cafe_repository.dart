@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/data/models/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
@@ -26,9 +28,31 @@ class InMemoryCafeRepository implements CafeRepository {
       if (!initialized) {
         await init();
       }
+      const radius = 5;
 
-      return cafes;
+      return cafes.where((cafe) {
+        final cl = cafe.location;
+        final distance = getDistanceFromLatLonInKm(
+            location.lat, location.lng, cl.lat, cl.lng);
+        return distance < radius;
+      }).toList();
     });
+  }
+
+  double getDistanceFromLatLonInKm(
+      double lat1, double lon1, double lat2, double lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2 - lat1); // deg2rad below
+    var dLon = deg2rad(lon2 - lon1);
+    var a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * sin(dLon / 2) * sin(dLon / 2);
+    var c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    var d = R * c; // Distance in km
+    return d;
+  }
+
+  double deg2rad(deg) {
+    return deg * (pi / 180);
   }
 
   @override
@@ -102,7 +126,7 @@ class InMemoryCafeRepository implements CafeRepository {
               "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/ab243c8c-2719-4986-b869-d83256692e17.jpg"),
         ],
         openNow: true,
-        location: _location(),
+        location: LocationEntity(50.104917, 14.389526),
         tags: mock.mapTags(['wifi', 'outside', 'food'])),
     CafeEntity(
         id: "2",
@@ -114,7 +138,7 @@ class InMemoryCafeRepository implements CafeRepository {
               "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg"),
         ],
         openNow: true,
-        location: _location(),
+        location: LocationEntity(50.103946, 14.390296),
         tags: mock.mapTags(['wifi', 'outside', 'food', 'beer'])),
     CafeEntity(
         id: "3",
@@ -126,7 +150,7 @@ class InMemoryCafeRepository implements CafeRepository {
               "https://media-cdn.tripadvisor.com/media/photo-s/14/98/8f/1e/interier.jpg"),
         ],
         openNow: true,
-        location: _location(),
+        location: LocationEntity(50.105598, 14.395324),
         tags: mock.mapTags(['wifi'])),
   ];
 
