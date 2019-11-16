@@ -137,6 +137,7 @@ class InMemoryCafeRepository implements CafeRepository {
           phone: '111 222 333',
         ),
         comments: mock.getRandomComments(3),
+        cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
         additionalPhotos: [
           _photo(
               "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
@@ -150,6 +151,7 @@ class InMemoryCafeRepository implements CafeRepository {
           website: 'https://cafe.prostoru.cz',
         ),
         comments: mock.getRandomComments(3),
+        cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
         additionalPhotos: [
           _photo(
               "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
@@ -162,6 +164,7 @@ class InMemoryCafeRepository implements CafeRepository {
           phone: '111 222 333',
         ),
         comments: mock.getRandomComments(3),
+        cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
         additionalPhotos: [
           _photo(
               "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),

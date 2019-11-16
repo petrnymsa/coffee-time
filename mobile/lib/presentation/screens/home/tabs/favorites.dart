@@ -53,18 +53,18 @@ class FavoritesTab extends StatelessWidget {
       itemCount: model.cafes.length,
       itemBuilder: (_, i) => ChangeNotifierProvider.value(
         value: model.cafes[i],
-        child: CafeTile(
-          onFavoriteTap: () {
-            model.removeFavorite(i);
-          },
-          onTap: () => Navigator.push(
+        child: CafeTile(onFavoriteTap: () {
+          model.removeFavorite(i);
+        }, onTap: () async {
+          await Navigator.push(
             context,
             MaterialPageRoute(
                 //todo push named route
                 builder: (_) => DetailScreen(),
                 settings: RouteSettings(arguments: model.cafes[i].entity.id)),
-          ),
-        ),
+          );
+          model.load();
+        }),
       ),
     );
   }

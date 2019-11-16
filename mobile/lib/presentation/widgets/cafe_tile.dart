@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
+import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
 import 'package:coffee_time/presentation/widgets/rating.dart';
 import 'package:coffee_time/presentation/widgets/tag_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // todo text styles
 // todo color styles
@@ -28,8 +30,12 @@ class CafeTile extends StatelessWidget {
     if (onFavoriteTap != null) onFavoriteTap();
   }
 
-  void _onMapTap() {
+  void _onMapTap(CafeEntity cafe) async {
     if (onMapTap != null) onMapTap();
+    //final scheme = 'geo:${loc.lat},${loc.lng}';
+
+    final scheme = 'geo:0,0?q=${cafe.address}';
+    if (await canLaunch(scheme)) launch(scheme);
   }
 
   @override
@@ -100,16 +106,20 @@ class CafeTile extends StatelessWidget {
                           padding:
                               const EdgeInsets.only(left: 2.0, bottom: 2.0),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
+                            color:
+                                Theme.of(context).primaryColor.withAlpha(200),
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(radius),
                               topRight: Radius.circular(radius),
                             ),
                           ),
                           child: IconButton(
-                            icon: Icon(cafe.isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border),
+                            icon: Icon(
+                              cafe.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 30,
+                            ),
                             onPressed: _onFavoriteTap,
                           ),
                         ),
@@ -120,15 +130,18 @@ class CafeTile extends StatelessWidget {
                           padding:
                               const EdgeInsets.only(left: 2.0, bottom: 2.0),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).accentColor.withAlpha(200),
                             borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(radius),
                               topLeft: Radius.circular(radius),
                             ),
                           ),
                           child: IconButton(
-                            icon: Icon(Icons.map),
-                            onPressed: _onMapTap,
+                            icon: Icon(
+                              Icons.map,
+                              size: 30,
+                            ),
+                            onPressed: () => _onMapTap(cafe),
                           ),
                         ),
                       ),

@@ -49,15 +49,18 @@ class DetailScreen extends StatelessWidget {
                       Positioned(
                         bottom: 10,
                         right: 10,
-                        child: IconButton(
-                            iconSize: 36,
-                            icon: Icon(cafe.isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border),
-                            onPressed: () {
-                              print('FAVORITE ');
-                              model.toggleFavorite();
-                            }),
+                        child: CircleAvatar(
+                          radius: 26,
+                          child: IconButton(
+                              iconSize: 36,
+                              icon: Icon(cafe.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border),
+                              onPressed: () {
+                                print('FAVORITE ');
+                                model.toggleFavorite();
+                              }),
+                        ),
                       ),
                       AppBar(
                         backgroundColor: Colors.transparent,
@@ -81,8 +84,10 @@ class DetailScreen extends StatelessWidget {
                         _CafeNameContainer(
                           title: cafe.name,
                           address: cafe.address,
-                          onShowMap: () {
+                          onShowMap: () async {
                             logger.i('Show map for ${cafe.name}');
+                            if (await canLaunch(cafe.cafeUrl))
+                              launch(cafe.cafeUrl);
                           },
                         ),
                         Divider(),
@@ -98,21 +103,24 @@ class DetailScreen extends StatelessWidget {
                         SectionHeader(
                           icon: FontAwesomeIcons.comments,
                           title: 'Hodnocení',
-                          after: <Widget>[
-                            FlatButton(
-                              onPressed: () {},
-                              child: FittedBox(
-                                child: Text('Přidat hodnocení'),
-                              ),
-                            )
-                          ],
                         ),
+                        // * comments
                         ListView.builder(
+                          padding: const EdgeInsets.only(top: 0),
                           primary: false,
                           shrinkWrap: true,
                           itemCount: cafe.comments.length,
                           itemBuilder: (_, i) =>
                               CommentTile(comment: cafe.comments[i]),
+                        ),
+                        RaisedButton(
+                          onPressed: () async {
+                            if (await canLaunch(cafe.cafeUrl))
+                              launch(cafe.cafeUrl);
+                            else
+                              logger.w('Can\'t launch url ${cafe.cafeUrl}');
+                          },
+                          child: Text('Přidat hodnocení'),
                         )
                       ],
                     ),
