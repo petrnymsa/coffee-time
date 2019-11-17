@@ -1,11 +1,12 @@
 import 'package:coffee_time/data/repositories/cafe_repository.dart';
+import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/location.dart';
+import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
 
 enum CafeListMode { Location, Search }
 
-//todo split this to CafeListTab provider, MapProvider and TabProvider
 class CafeListProvider<WithoutError> extends BaseProvider {
   InMemoryCafeRepository _cafeRepository = InMemoryCafeRepository.instance;
 
@@ -24,9 +25,21 @@ class CafeListProvider<WithoutError> extends BaseProvider {
   String _searchQuery;
   String get searchQuery => _searchQuery;
 
+  LocationEntity _defaultLocation = LocationEntity(50.105306, 14.389719);
+
   CafeListProvider() {
-    _currentLocation = LocationEntity(50.105306, 14.389719);
+    _currentLocation = _defaultLocation;
     _mode = CafeListMode.Location;
+  }
+
+  void setLocation(LocationEntity location) {
+    _currentLocation = location;
+    notifyListeners();
+  }
+
+  void resetLocation() {
+    _currentLocation = _defaultLocation;
+    notifyListeners();
   }
 
   void refresh() {
@@ -66,6 +79,11 @@ class CafeListProvider<WithoutError> extends BaseProvider {
 
   void toggleFavorite(Cafe entity) async {
     entity.toggleFavorite();
-    refreshFavorites();
+    refresh();
+  }
+
+  Future addTags(CafeDetailEntity detail, List<TagEntity> chosenTags) async {
+    await _cafeRepository.addTags(detail, chosenTags);
+    refresh();
   }
 }

@@ -52,6 +52,8 @@ class MockData {
     return tags;
   }
 
+  List<TagEntity> get tags => _tags.values.toList();
+
   Map<String, TagEntity> _tags = {
     'wifi': TagEntity(title: 'WiFi', icon: Icons.wifi),
     'beer': TagEntity(title: 'Pivo', icon: FontAwesomeIcons.beer),

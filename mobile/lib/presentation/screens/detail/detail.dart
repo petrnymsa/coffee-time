@@ -11,6 +11,7 @@ import 'package:coffee_time/presentation/screens/detail/widgets/carousel_slider.
 import 'package:coffee_time/presentation/screens/detail/widgets/comment_tile.dart';
 import 'package:coffee_time/presentation/screens/detail/widgets/opening_hours_table.dart';
 import 'package:coffee_time/presentation/screens/detail/widgets/section_header.dart';
+import 'package:coffee_time/presentation/screens/tags/add/tag_add_screen.dart';
 import 'package:coffee_time/presentation/widgets/expandable_panel.dart';
 import 'package:coffee_time/presentation/widgets/rating.dart';
 import 'package:coffee_time/presentation/widgets/tag_container.dart';
@@ -101,7 +102,17 @@ class DetailScreen extends StatelessWidget {
                         Divider(),
                         _TagsContainer(
                           tags: cafe.tags,
-                          onAddTag: () => logger.i('Add tag'),
+                          onAddTag: () async {
+                            final result = await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        ChangeNotifierProvider.value(
+                                            value: model,
+                                            child: TagAddScreen())));
+                            Provider.of<CafeListProvider>(context).refresh();
+                            model.loadDetail();
+                            print(result);
+                          },
                         ),
                         Divider(),
                         SectionHeader(
@@ -110,12 +121,15 @@ class DetailScreen extends StatelessWidget {
                         ),
                         // * comments
                         ListView.builder(
-                          padding: const EdgeInsets.only(top: 0),
+                          padding: const EdgeInsets.only(top: 10),
                           primary: false,
                           shrinkWrap: true,
                           itemCount: cafe.comments.length,
                           itemBuilder: (_, i) =>
                               CommentTile(comment: cafe.comments[i]),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         RaisedButton(
                           onPressed: () async {
@@ -125,7 +139,10 @@ class DetailScreen extends StatelessWidget {
                               logger.w('Can\'t launch url ${cafe.cafeUrl}');
                           },
                           child: Text('Přidat hodnocení'),
-                        )
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
                       ],
                     ),
                   )

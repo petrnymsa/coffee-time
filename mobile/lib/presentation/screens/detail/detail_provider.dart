@@ -25,7 +25,7 @@ class DetailProvider extends BaseProvider<WithoutError> {
   }
 
   toggleFavorite() async {
-    await repository.updateEntity(
+    await repository.toggleFavorite(
         _detailEntity.copyWith(isFavorite: !_detailEntity.isFavorite));
     _detailEntity = await repository.getDetail(cafeId);
     notifyListeners();

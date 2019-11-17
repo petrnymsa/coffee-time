@@ -8,6 +8,7 @@ import 'package:coffee_time/domain/entities/comment.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/photo.dart';
+import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/domain/repositories/cafe_repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -79,7 +80,12 @@ class InMemoryCafeRepository implements CafeRepository {
   }
 
   @override
-  Future<bool> updateEntity(CafeEntity entity) {
+  Future<List<TagEntity>> getAllTags() {
+    return Future.delayed(Duration(milliseconds: 1), () => tags);
+  }
+
+  @override
+  Future<bool> toggleFavorite(CafeEntity entity) {
     return Future.delayed(Duration(milliseconds: 1), () {
       var i = cafes.indexWhere((e) => e.id == entity.id);
       cafes[i] = cafes[i].copyWith(isFavorite: entity.isFavorite);
@@ -87,6 +93,15 @@ class InMemoryCafeRepository implements CafeRepository {
       details[i] = details[i].copyWith(isFavorite: entity.isFavorite);
 
       return true;
+    });
+  }
+
+  Future addTags(CafeEntity entity, List<TagEntity> tags) async {
+    return Future.delayed(Duration(milliseconds: 1), () {
+      var i = cafes.indexWhere((e) => e.id == entity.id);
+      cafes[i] = cafes[i].copyWith(tags: [...entity.tags, ...tags]);
+      i = details.indexWhere((e) => e.id == entity.id);
+      details[i] = details[i].copyWith(tags: [...entity.tags, ...tags]);
     });
   }
 
@@ -102,12 +117,15 @@ class InMemoryCafeRepository implements CafeRepository {
     details.addAll(moreDetails);
 
     addresses = details.map((d) => d.contact.address).toSet().toList();
+
+    tags = mock.tags;
   }
 
   bool initialized = false;
   List<CafeEntity> cafes = [];
   List<CafeDetailEntity> details = [];
   List<String> addresses = [];
+  List<TagEntity> tags = [];
 
   static Uuid uuid = Uuid();
   static PhotoEntity _photo(String url) => PhotoEntity(url: url);
@@ -155,19 +173,21 @@ class InMemoryCafeRepository implements CafeRepository {
   ];
 
   Map<String, CafeDetailEntity> _cafeDetails = {
-    "1": CafeDetailEntity.fromCafe(_predefinedCafes[0],
-        contact: ContactEntity(
-          address: _predefinedCafes[0].address,
-          phone: '111 222 333',
-        ),
-        comments: mock.getRandomComments(3),
-        cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
-        additionalPhotos: [
-          _photo(
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
-          _photo(
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
-        ]),
+    "1": CafeDetailEntity.fromCafe(
+      _predefinedCafes[0],
+      contact: ContactEntity(
+        address: _predefinedCafes[0].address,
+        phone: '111 222 333',
+      ),
+      comments: mock.getRandomComments(3),
+      cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
+      additionalPhotos: [
+        _photo(
+            "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
+        _photo(
+            "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
+      ],
+    ),
     "2": CafeDetailEntity.fromCafe(_predefinedCafes[1],
         contact: ContactEntity(
           address: _predefinedCafes[0].address,

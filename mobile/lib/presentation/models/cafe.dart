@@ -13,7 +13,7 @@ class Cafe with ChangeNotifier {
     _entity = _entity.copyWith(isFavorite: !_entity.isFavorite);
     //todo call to repository to update
     InMemoryCafeRepository.instance
-        .updateEntity(_entity.copyWith(isFavorite: _entity.isFavorite));
+        .toggleFavorite(_entity.copyWith(isFavorite: _entity.isFavorite));
     notifyListeners();
   }
 }

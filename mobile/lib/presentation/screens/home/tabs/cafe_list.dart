@@ -3,6 +3,7 @@ import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail.dart';
+import 'package:coffee_time/presentation/screens/home/tabs_provider.dart';
 import 'package:coffee_time/presentation/widgets/cafe_tile.dart';
 
 import 'package:flutter/material.dart';
@@ -65,22 +66,22 @@ class _CafeListTabState extends State<CafeListTab> {
       itemCount: data.length,
       itemBuilder: (_, i) => ChangeNotifierProvider.value(
         value: data[i],
-        child: CafeTile(
-            onFavoriteTap: () {
-              Provider.of<CafeListProvider>(context, listen: false)
-                  .toggleFavorite(data[i]);
-            },
-            onMapTap: () {},
-            onTap: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                    //todo push named route
-                    builder: (_) => DetailScreen(),
-                    settings: RouteSettings(arguments: data[i].entity.id)),
-              );
-              Provider.of<CafeListProvider>(context, listen: false).refresh();
-            }),
+        child: CafeTile(onFavoriteTap: () {
+          Provider.of<CafeListProvider>(context, listen: false)
+              .toggleFavorite(data[i]);
+        }, onMapTap: () {
+          // Provider.of<TabsProvider>(context, listen: false)
+          //     .changeTab(CurrentTab.Map);
+        }, onTap: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+                //todo push named route
+                builder: (_) => DetailScreen(),
+                settings: RouteSettings(arguments: data[i].entity.id)),
+          );
+          Provider.of<CafeListProvider>(context, listen: false).refresh();
+        }),
       ),
     );
   }

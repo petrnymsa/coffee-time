@@ -11,4 +11,10 @@ class TagEntity extends Equatable {
 
   @override
   List<Object> get props => [title];
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'Tag: $title';
+  }
 }
