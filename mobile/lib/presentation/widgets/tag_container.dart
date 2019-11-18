@@ -40,6 +40,7 @@ class TagContainer extends StatelessWidget {
           : Icon(
               icon,
               color: Colors.white,
+              size: 16,
             ),
     );
   }
