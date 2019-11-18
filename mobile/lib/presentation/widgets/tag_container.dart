@@ -9,10 +9,10 @@ class TagContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
+      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 6.0),
       decoration: BoxDecoration(
         color: const Color(0xFF63A69F), //todo hardcoded color
-        borderRadius: BorderRadius.circular(6.0),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       child: showTitle
           ? Row(
@@ -23,6 +23,7 @@ class TagContainer extends StatelessWidget {
                   Icon(
                     icon,
                     color: Colors.white,
+                    size: 16,
                   ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),

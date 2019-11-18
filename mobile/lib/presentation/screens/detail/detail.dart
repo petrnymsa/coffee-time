@@ -12,6 +12,7 @@ import 'package:coffee_time/presentation/screens/detail/widgets/comment_tile.dar
 import 'package:coffee_time/presentation/screens/detail/widgets/opening_hours_table.dart';
 import 'package:coffee_time/presentation/screens/detail/widgets/section_header.dart';
 import 'package:coffee_time/presentation/screens/tags/add/tag_add_screen.dart';
+import 'package:coffee_time/presentation/screens/tags/edit/tag_edit_screen.dart';
 import 'package:coffee_time/presentation/widgets/expandable_panel.dart';
 import 'package:coffee_time/presentation/widgets/rating.dart';
 import 'package:coffee_time/presentation/widgets/tag_container.dart';
@@ -104,11 +105,11 @@ class DetailScreen extends StatelessWidget {
                           tags: cafe.tags,
                           onAddTag: () async {
                             final result = await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (_) =>
-                                        ChangeNotifierProvider.value(
-                                            value: model,
-                                            child: TagAddScreen())));
+                              MaterialPageRoute(
+                                builder: (_) => ChangeNotifierProvider.value(
+                                    value: model, child: TagEditScreen()),
+                              ),
+                            );
                             Provider.of<CafeListProvider>(context).refresh();
                             model.loadDetail();
                             print(result);
@@ -131,14 +132,15 @@ class DetailScreen extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
-                        RaisedButton(
+                        RaisedButton.icon(
                           onPressed: () async {
                             if (await canLaunch(cafe.cafeUrl))
                               launch(cafe.cafeUrl);
                             else
                               logger.w('Can\'t launch url ${cafe.cafeUrl}');
                           },
-                          child: Text('Přidat hodnocení'),
+                          label: Text('Přidat hodnocení'),
+                          icon: Icon(FontAwesomeIcons.comment),
                         ),
                         SizedBox(
                           height: 10,
@@ -226,13 +228,16 @@ class _TagsContainer extends StatelessWidget {
         SectionHeader(
           icon: FontAwesomeIcons.tags,
           title: 'Štítky',
-          after: [
-            FlatButton(
-              child: Text(tags.isNotEmpty ? 'Přidat štítek' : 'Přidat nový.'),
-              //  textColor: Theme.of(context).primaryColor,
-              onPressed: onAddTag,
-            )
-          ],
+          // after: [
+          //   FlatButton(
+          //     child: Text(tags.isNotEmpty ? 'Přidat štítek' : 'Přidat nový.'),
+          //     //  textColor: Theme.of(context).primaryColor,
+          //     onPressed: onAddTag,
+          //   )
+          // ],
+        ),
+        SizedBox(
+          height: 20.0,
         ),
         if (tags.isNotEmpty)
           Align(
@@ -251,21 +256,34 @@ class _TagsContainer extends StatelessWidget {
             ),
           ),
         if (tags.isNotEmpty)
-          Align(
-            alignment: Alignment.centerRight,
-            child: Row(
-              children: <Widget>[
-                Text('Štítky neodpovídají realitě?'),
-                FlatButton(
-                  child: Text(
-                    'Navrhnout změnu',
-                  ),
-                  // textColor: Theme.of(context).accentColor,
-                  onPressed: null,
-                ),
-              ],
+          RaisedButton.icon(
+            label: Text(
+              'Navrhnout změnu',
+              style: TextStyle(fontSize: 14),
             ),
-          ),
+            icon: Icon(
+              FontAwesomeIcons.edit,
+              size: 16,
+            ),
+            onPressed: onAddTag,
+            color: Theme.of(context).accentColor,
+            textColor: Colors.white,
+          )
+        // Align(
+        //   alignment: Alignment.centerRight,
+        //   child: Row(
+        //     children: <Widget>[
+        //       Text('Štítky neodpovídají realitě?'),
+        //       FlatButton(
+        //         child: Text(
+        //           'Navrhnout změnu',
+        //         ),
+        //         // textColor: Theme.of(context).accentColor,
+        //         onPressed: null,
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }
@@ -339,7 +357,10 @@ class _ContactCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: InkWell(
-                      child: Text(contact.phone),
+                      child: Text(
+                        contact.phone,
+                        style: TextStyle(fontSize: 16),
+                      ),
                       onTap: () async {
                         if (await canLaunch("tel:${contact.phone}")) {
                           await launch("tel:${contact.phone}");

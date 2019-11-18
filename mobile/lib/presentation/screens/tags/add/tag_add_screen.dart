@@ -7,13 +7,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class TagAddScreen extends StatelessWidget {
+  final List<TagEntity> availableTags;
+
+  TagAddScreen(this.availableTags);
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<DetailProvider>(
-      builder: (ctx, detailModel, _) => Scaffold(
+    return Scaffold(
         appBar: AppBar(title: Text('Přidat štítky')),
         body: ChangeNotifierProvider(
-          builder: (_) => TagAddProvider(detailModel.detail.tags)..init(),
+          builder: (_) => TagAddProvider(availableTags)..init(),
           child: Consumer<TagAddProvider>(
             builder: (ctx, model, _) => Container(
               padding: const EdgeInsets.all(8),
@@ -38,10 +41,10 @@ class TagAddScreen extends StatelessWidget {
                     child: Text('Přidat'),
                     padding: const EdgeInsets.symmetric(horizontal: 86.0),
                     onPressed: () async {
-                      await Provider.of<CafeListProvider>(context,
-                              listen: false)
-                          .addTags(detailModel.detail, model.chosenTags);
-                      Navigator.pop(context);
+                      // await Provider.of<CafeListProvider>(context,
+                      //         listen: false)
+                      //     .addTags(detailModel.detail, model.chosenTags);
+                      Navigator.pop(context, model.chosenTags);
                     },
                   ),
                 ],
