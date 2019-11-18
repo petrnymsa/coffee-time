@@ -1,5 +1,6 @@
 import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
+import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
@@ -12,6 +13,10 @@ class CafeListProvider<WithoutError> extends BaseProvider {
 
   List<Cafe> _cafes;
   List<Cafe> get cafes => _cafes;
+
+  FilterEntity _currentFilter = FilterEntity.defaultFilter;
+
+  FilterEntity get currentFilter => _currentFilter;
 
   List<Cafe> _favoriteCafes;
   List<Cafe> get favoriteCafes => _favoriteCafes;
@@ -42,33 +47,35 @@ class CafeListProvider<WithoutError> extends BaseProvider {
     notifyListeners();
   }
 
-  void refresh() {
+  Future refresh() async {
     if (_mode == CafeListMode.Location)
-      refreshByLocation();
+      await refreshByLocation();
     else
-      refreshBySearch(_searchQuery);
+      await refreshBySearch(_searchQuery);
 
-    refreshFavorites();
+    await refreshFavorites();
   }
 
-  void refreshByLocation() async {
+  Future refreshByLocation() async {
     _mode = CafeListMode.Location;
     setBusy();
-    final _cafeEntities = await _cafeRepository.getByLocation(currentLocation);
+    final _cafeEntities = await _cafeRepository.getByLocation(currentLocation,
+        filter: _currentFilter);
     _cafes = _cafeEntities.map((e) => Cafe(e)).toList();
     setReady();
   }
 
-  void refreshBySearch(String search) async {
+  Future refreshBySearch(String search) async {
     setBusy();
     _mode = CafeListMode.Search;
     _searchQuery = search;
-    final _cafeEntities = await _cafeRepository.getBySearch(search);
+    final _cafeEntities =
+        await _cafeRepository.getBySearch(search, filter: _currentFilter);
     _cafes = _cafeEntities.map((e) => Cafe(e)).toList();
     setReady();
   }
 
-  void refreshFavorites() async {
+  Future refreshFavorites() async {
     setBusy();
     final favList = await _cafeRepository.getFavorites();
     _favoriteCafes = favList
@@ -85,5 +92,11 @@ class CafeListProvider<WithoutError> extends BaseProvider {
   Future addTags(CafeDetailEntity detail, List<TagEntity> chosenTags) async {
     await _cafeRepository.addTags(detail, chosenTags);
     refresh();
+  }
+
+  void updateFilter(FilterEntity filter) async {
+    _currentFilter = filter;
+    await refresh();
+    notifyListeners();
   }
 }

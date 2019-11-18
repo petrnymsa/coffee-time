@@ -1,10 +1,7 @@
 import 'dart:math';
 
-import 'package:coffee_time/core/app_logger.dart';
-import 'package:coffee_time/data/models/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
-import 'package:coffee_time/domain/entities/comment.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/domain/entities/location.dart';
@@ -31,7 +28,7 @@ class InMemoryCafeRepository implements CafeRepository {
       if (!initialized) {
         await init();
       }
-      const radius = 5;
+      const radius = 20;
 
       return cafes.where((cafe) {
         final cl = cafe.location;
@@ -182,6 +179,18 @@ class InMemoryCafeRepository implements CafeRepository {
         openNow: false,
         location: LocationEntity(50.105598, 14.395324),
         tags: mock.mapTags(['wifi'])),
+    CafeEntity(
+        id: "4",
+        name: 'U lišaka',
+        address: 'Nám. Interbrigády',
+        rating: 3.2,
+        photos: [
+          _photo(
+              "https://media-cdn.tripadvisor.com/media/photo-s/14/98/8f/1e/interier.jpg"),
+        ],
+        openNow: true,
+        location: LocationEntity(50.107598, 14.3425324),
+        tags: mock.mapTags(['beer', 'parking', 'children'])),
   ];
 
   Map<String, CafeDetailEntity> _cafeDetails = {
@@ -202,7 +211,7 @@ class InMemoryCafeRepository implements CafeRepository {
     ),
     "2": CafeDetailEntity.fromCafe(_predefinedCafes[1],
         contact: ContactEntity(
-          address: _predefinedCafes[0].address,
+          address: _predefinedCafes[1].address,
           phone: '111 222 333',
           website: 'https://cafe.prostoru.cz',
         ),
@@ -216,7 +225,20 @@ class InMemoryCafeRepository implements CafeRepository {
         ]),
     "3": CafeDetailEntity.fromCafe(_predefinedCafes[2],
         contact: ContactEntity(
-          address: _predefinedCafes[0].address,
+          address: _predefinedCafes[2].address,
+          phone: '111 222 333',
+        ),
+        comments: mock.getRandomComments(3),
+        cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
+        additionalPhotos: [
+          _photo(
+              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
+          _photo(
+              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
+        ]),
+    "4": CafeDetailEntity.fromCafe(_predefinedCafes[2],
+        contact: ContactEntity(
+          address: _predefinedCafes[3].address,
           phone: '111 222 333',
         ),
         comments: mock.getRandomComments(3),

@@ -1,12 +1,15 @@
 import 'package:coffee_time/core/app_logger.dart';
+import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail.dart';
 import 'package:coffee_time/presentation/screens/home/tabs_provider.dart';
+import 'package:coffee_time/presentation/shared/icons/hand_draw_icons_named.dart';
 import 'package:coffee_time/presentation/widgets/cafe_tile.dart';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class CafeListTab extends StatefulWidget {
@@ -31,11 +34,36 @@ class _CafeListTabState extends State<CafeListTab> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            if (!model.currentFilter.isDefault())
+              Center(
+                child: Container(
+                  padding: EdgeInsets.only(left: 30, top: 0, bottom: 0),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'Aktivní filtrování',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      SizedBox(
+                        width: 4.0,
+                      ),
+                      IconButton(
+                        padding: const EdgeInsets.all(0),
+                        icon: Icon(Icons.cancel),
+                        onPressed: () {
+                          model.updateFilter(FilterEntity.defaultFilter);
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              ),
             if (model.mode == CafeListMode.Search)
               Center(
                 child: Container(
-                  padding: EdgeInsets.only(left: 30),
+                  padding: EdgeInsets.only(left: 30, top: 0, bottom: 0),
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text(
                         'Kavárny na adrese ${model.searchQuery}',
@@ -45,6 +73,7 @@ class _CafeListTabState extends State<CafeListTab> {
                         width: 4.0,
                       ),
                       IconButton(
+                        padding: const EdgeInsets.all(0),
                         icon: Icon(Icons.cancel),
                         onPressed: () {
                           model.refreshByLocation();
@@ -54,7 +83,19 @@ class _CafeListTabState extends State<CafeListTab> {
                   ),
                 ),
               ),
-            Expanded(child: _buildCafeList(ctx, model.cafes)),
+            if (model.cafes == null || model.cafes.length == 0)
+              Center(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Icon(HandDrawnIconsNamed.Cafe),
+                      Text('Žádné kavárny neodpovídají hledání')
+                    ],
+                  ),
+                ),
+              ),
+            if (model.cafes != null && model.cafes.length > 0)
+              Expanded(child: _buildCafeList(ctx, model.cafes)),
           ],
         );
       },
@@ -62,7 +103,6 @@ class _CafeListTabState extends State<CafeListTab> {
   }
 
   Widget _buildCafeList(BuildContext context, List<Cafe> data) {
-    if (data == null) return Container(); // ! hacky fix
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (_, i) => ChangeNotifierProvider.value(

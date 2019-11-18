@@ -1,9 +1,11 @@
 import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
+import 'package:coffee_time/presentation/screens/filter/filter_screen.dart';
 import 'package:coffee_time/presentation/screens/home/bottom_nav_bar.dart';
 import 'package:coffee_time/presentation/screens/home/tabs/tabs.dart';
 import 'package:coffee_time/presentation/screens/home/tabs_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,8 +42,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(Icons.search),
               ),
               IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.list),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => FilterScreen(),
+                    ),
+                  );
+                },
+                icon: Icon(
+                  FontAwesomeIcons.filter,
+                  size: 16,
+                ),
               )
             ],
           ),
@@ -68,6 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       case CurrentTab.Favorites:
         return FavoritesTab();
+        break;
+      case CurrentTab.Settings:
+        return SettingsTab();
         break;
       default:
         return Center(
