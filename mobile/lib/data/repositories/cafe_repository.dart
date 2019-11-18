@@ -6,6 +6,7 @@ import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/comment.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
+import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/photo.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
@@ -24,7 +25,8 @@ class InMemoryCafeRepository implements CafeRepository {
   }
 
   @override
-  Future<List<CafeEntity>> getByLocation(LocationEntity location) {
+  Future<List<CafeEntity>> getByLocation(LocationEntity location,
+      {FilterEntity filter = FilterEntity.defaultFilter}) {
     return Future.delayed(Duration(milliseconds: 1), () async {
       if (!initialized) {
         await init();
@@ -35,7 +37,12 @@ class InMemoryCafeRepository implements CafeRepository {
         final cl = cafe.location;
         final distance = getDistanceFromLatLonInKm(
             location.lat, location.lng, cl.lat, cl.lng);
-        return distance < radius;
+        if (distance < radius) {
+          if (filter != null && !filter.apply(cafe)) return false;
+
+          return true;
+        }
+        return false;
       }).toList();
     });
   }
@@ -64,13 +71,18 @@ class InMemoryCafeRepository implements CafeRepository {
   }
 
   @override
-  Future<List<CafeEntity>> getBySearch(String search) {
+  Future<List<CafeEntity>> getBySearch(String search,
+      {FilterEntity filter = FilterEntity.defaultFilter}) {
     return Future.delayed(
         Duration(milliseconds: 100),
-        () => cafes
-            .where(
-                (c) => c.address.toLowerCase().contains(search.toLowerCase()))
-            .toList());
+        () => cafes.where((c) {
+              if (c.address.toLowerCase().contains(search.toLowerCase())) {
+                if (filter != null && !filter.apply(c)) return false;
+
+                return true;
+              }
+              return false;
+            }).toList());
   }
 
   @override
@@ -167,7 +179,7 @@ class InMemoryCafeRepository implements CafeRepository {
           _photo(
               "https://media-cdn.tripadvisor.com/media/photo-s/14/98/8f/1e/interier.jpg"),
         ],
-        openNow: true,
+        openNow: false,
         location: LocationEntity(50.105598, 14.395324),
         tags: mock.mapTags(['wifi'])),
   ];

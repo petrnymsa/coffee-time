@@ -6,7 +6,9 @@ class FilterEntity {
   final bool onlyOpen;
   final List<TagEntity> tags;
 
-  FilterEntity({this.onlyOpen = true, this.tags});
+  const FilterEntity({this.onlyOpen = true, this.tags});
+
+  static const FilterEntity defaultFilter = const FilterEntity();
 
   bool apply(CafeEntity entity) {
     if (onlyOpen && !entity.openNow) return false;
