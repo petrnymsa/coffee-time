@@ -1,10 +1,7 @@
 import 'dart:convert';
 
 import 'package:coffee_time/data/models/comment.dart';
-import 'package:coffee_time/data/models/photo.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../../fixtures/fixture_helper.dart';
 
 void main() {
   group('fromJson', () {
@@ -26,16 +23,4 @@ void main() {
       expect(result, model);
     });
   });
-
-  // group('toJson', () {
-  //   test('Given photo, valid json should return', () {
-  //     var model = PhotoModel(url: "test.url", width: 100, height: 60);
-  //     var expected =
-  //         r'''{"photo_reference":"test.url","width":100,"height":60}''';
-
-  //     var result = jsonEncode(model);
-
-  //     expect(result, expected);
-  //   });
-  // });
 }
