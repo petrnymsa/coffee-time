@@ -62,6 +62,7 @@ class _CafeListTabState extends State<CafeListTab> {
   }
 
   Widget _buildCafeList(BuildContext context, List<Cafe> data) {
+    if (data == null) return Container(); // ! hacky fix
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (_, i) => ChangeNotifierProvider.value(
