@@ -14,7 +14,7 @@ class ExpandablePanel extends StatefulWidget {
 
 class _ExpandablePanelState extends State<ExpandablePanel>
     with SingleTickerProviderStateMixin {
-  bool _expanded = false;
+  bool _expanded;
 
   @override
   void initState() {
