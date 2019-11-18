@@ -14,41 +14,40 @@ class TagAddScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Přidat štítky')),
-        body: ChangeNotifierProvider(
-          builder: (_) => TagAddProvider(availableTags)..init(),
-          child: Consumer<TagAddProvider>(
-            builder: (ctx, model, _) => Container(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text('Vyberte jeden nebo víc štítků'),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      alignment: WrapAlignment.center,
-                      children: model.availableTags
-                          .map((t) => _buildTag(t, model))
-                          .toList(),
-                    ),
+      appBar: AppBar(title: Text('Přidat štítky')),
+      body: ChangeNotifierProvider(
+        builder: (_) => TagAddProvider(availableTags)..init(),
+        child: Consumer<TagAddProvider>(
+          builder: (ctx, model, _) => Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text('Vyberte jeden nebo víc štítků'),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.center,
+                    children: model.availableTags
+                        .map((t) => _buildTag(t, model))
+                        .toList(),
                   ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  RaisedButton(
-                    child: Text('Přidat'),
-                    padding: const EdgeInsets.symmetric(horizontal: 86.0),
-                    onPressed: () async {
-                      // await Provider.of<CafeListProvider>(context,
-                      //         listen: false)
-                      //     .addTags(detailModel.detail, model.chosenTags);
-                      Navigator.pop(context, model.chosenTags);
-                    },
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                RaisedButton(
+                  child: Text('Přidat'),
+                  padding: const EdgeInsets.symmetric(horizontal: 86.0),
+                  onPressed: () async {
+                    // await Provider.of<CafeListProvider>(context,
+                    //         listen: false)
+                    //     .addTags(detailModel.detail, model.chosenTags);
+                    Navigator.pop(context, model.chosenTags);
+                  },
+                ),
+              ],
             ),
           ),
         ),

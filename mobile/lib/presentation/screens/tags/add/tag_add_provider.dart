@@ -4,23 +4,20 @@ import 'package:flutter/foundation.dart';
 
 class TagAddProvider with ChangeNotifier {
   List<TagEntity> chosenTags = [];
-  List<TagEntity> _availableTags = [];
-
-  List<TagEntity> get availableTags => _availableTags;
 
   InMemoryCafeRepository _cafeRepository = InMemoryCafeRepository.instance;
 
-  List<TagEntity> entityTags;
+  List<TagEntity> availableTags;
 
-  TagAddProvider(this.entityTags);
+  TagAddProvider(this.availableTags);
 
   void init() async {
-    final all = await _cafeRepository.getAllTags();
-    print(all);
-    all.forEach((t) {
-      if (!entityTags.contains(t)) _availableTags.add(t);
-    });
-    notifyListeners();
+    // final all = await _cafeRepository.getAllTags();
+    // print(all);
+    // all.forEach((t) {
+    //   if (!entityTags.contains(t)) _availableTags.add(t);
+    // });
+    // notifyListeners();
   }
 
   void update(TagEntity tag) {

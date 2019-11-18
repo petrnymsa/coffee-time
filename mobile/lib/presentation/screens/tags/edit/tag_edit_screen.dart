@@ -27,131 +27,116 @@ class TagEditScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     _buildHeadline(context),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Table(
-                      defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
-                      // border: TableBorder.symmetric(
-                      //     inside: BorderSide(color: Colors.)),
-                      children: [
-                        TableRow(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(color: Colors.black12)),
-                            ),
-                            children: [
-                              Container(),
-                              Text(
-                                'Pravda',
-                                textAlign: TextAlign.center,
+                    if (model.entityTags.isNotEmpty)
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    if (model.entityTags.isNotEmpty)
+                      Table(
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
+                        // border: TableBorder.symmetric(
+                        //     inside: BorderSide(color: Colors.)),
+                        children: [
+                          TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(color: Colors.black12)),
                               ),
-                              Text(
-                                'Není pravda',
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                'Nehodnotím',
-                                textAlign: TextAlign.center,
-                              ),
-                            ]),
-                        ...model.entityTags
-                            .map(
-                              (t) => TableRow(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.black12)),
+                              children: [
+                                Container(),
+                                Text(
+                                  'Pravda',
+                                  textAlign: TextAlign.center,
                                 ),
-                                children: [
-                                  TableCell(
-                                    child: Text(
-                                      t.title,
-                                      textAlign: TextAlign.center,
-                                    ),
+                                Text(
+                                  'Není pravda',
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  'Nehodnotím',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                          ...model.entityTags
+                              .map(
+                                (t) => TableRow(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom:
+                                            BorderSide(color: Colors.black12)),
                                   ),
-                                  _buildReviewIcon(t, FontAwesomeIcons.thumbsUp,
-                                      true, model, context),
-                                  _buildReviewIcon(
-                                      t,
-                                      FontAwesomeIcons.thumbsDown,
-                                      false,
-                                      model,
-                                      context),
-                                  _buildReviewIcon(t, FontAwesomeIcons.minus,
-                                      null, model, context),
-                                ],
-                              ),
-                            )
-                            .toList()
-                      ],
-                    ),
+                                  children: [
+                                    TableCell(
+                                      child: Text(
+                                        t.title,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    _buildReviewIcon(
+                                        t,
+                                        FontAwesomeIcons.thumbsUp,
+                                        true,
+                                        model,
+                                        context),
+                                    _buildReviewIcon(
+                                        t,
+                                        FontAwesomeIcons.thumbsDown,
+                                        false,
+                                        model,
+                                        context),
+                                    _buildReviewIcon(t, FontAwesomeIcons.minus,
+                                        null, model, context),
+                                  ],
+                                ),
+                              )
+                              .toList()
+                        ],
+                      ),
                     const SizedBox(
                       height: 30,
                     ),
                     // * add more
                     if (model.addedTags.length > 0)
                       ..._buildTagsToAdd(context, model),
-                    if (model.addedTags.length == 0)
-                      ..._buildNoTagsToAdd(context, model),
-                    // Text(
-                    //   'Některý štítek chybí?',
-                    //   style: Theme.of(context).textTheme.subhead,
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        RaisedButton.icon(
-                          label: Text('Přidat štítky'),
-                          icon: Icon(FontAwesomeIcons.plus),
+                    if (model.notAddedTagsYet.length > 0)
+                      RaisedButton.icon(
+                        label: Text('Přidat štítky'),
+                        icon: Icon(FontAwesomeIcons.plus),
+                        onPressed: () async {
+                          final addedTags = await Navigator.of(context)
+                              .push(MaterialPageRoute(
+                            builder: (_) => ChangeNotifierProvider.value(
+                              value: detailModel,
+                              child: TagAddScreen(model.notAddedTagsYet),
+                            ),
+                          ));
+                          if (addedTags != null) model.addTags(addedTags);
+                        },
+                      ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 25.0),
+                        child: RaisedButton.icon(
+                          color: Colors.green,
+                          label: Text('Potvrdit'),
+                          icon: Icon(FontAwesomeIcons.check),
                           onPressed: () async {
-                            final addedTags = await Navigator.of(context)
-                                .push(MaterialPageRoute(
-                              builder: (_) => ChangeNotifierProvider.value(
-                                value: detailModel,
-                                child: TagAddScreen(model.notAddedTagsYet),
-                              ),
-                            ));
-                            getLogger('TagEditScreen')
-                                .i('add new tags $addedTags');
-                            if (addedTags != null) model.addTags(addedTags);
+                            await Provider.of<CafeListProvider>(context,
+                                    listen: false)
+                                .addTags(detailModel.detail, model.addedTags);
+                            Navigator.of(context).pop();
                           },
                         ),
-                        SizedBox(
-                          width: 26,
-                        ),
-                        if (model.addedTags.length > 0)
-                          RaisedButton.icon(
-                            label: Text('Vyčistit'),
-                            icon: Icon(FontAwesomeIcons.recycle),
-                            onPressed: () {
-                              model.clearTags();
-                            },
-                          )
-                      ],
+                      ),
                     ),
-
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    // RaisedButton.icon(
-                    //   label: Text('Potvrdit'),
-                    //   icon: Icon(FontAwesomeIcons.check),
-                    //   onPressed: () {},
-                    // )
                   ],
                 ),
               ),
             ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            FontAwesomeIcons.check,
-            color: Colors.white,
-          ),
-          onPressed: () {},
         ),
       ),
     );
@@ -159,37 +144,38 @@ class TagEditScreen extends StatelessWidget {
 
   List<Widget> _buildTagsToAdd(BuildContext context, TagEditProvider model) {
     return <Widget>[
-      Text(
-        'Štítky k přidání',
-        style: Theme.of(context).textTheme.subhead,
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Štítky k přidání',
+            style: Theme.of(context).textTheme.subhead,
+          ),
+          FlatButton.icon(
+            label: Text('Vyčistit'),
+            icon: Icon(Icons.clear_all),
+            onPressed: () {
+              model.clearTags();
+            },
+          )
+        ],
       ),
       Divider(),
-      const SizedBox(
-        height: 4,
-      ),
       Wrap(
         alignment: WrapAlignment.start,
+        spacing: 6.0,
+        runSpacing: 0.0,
         children: model.addedTags
-            .map((t) => TagContainer(
-                  icon: t.icon,
-                  title: t.title,
-                ))
+            .map(
+              (t) => _buildTag(t, model),
+            )
             .toList(),
       ),
       const SizedBox(
         height: 4,
       ),
     ];
-  }
-
-  List<Widget> _buildNoTagsToAdd(BuildContext context, TagEditProvider model) {
-    // return <Widget>[
-    //   Text(
-    //     'Některý štítek chybí?',
-    //     style: Theme.of(context).textTheme.subhead,
-    //   ),
-    // ];
-    return [];
   }
 
   Widget _buildReviewIcon(TagEntity tag, IconData icon, bool reviewType,
@@ -206,20 +192,18 @@ class TagEditScreen extends StatelessWidget {
     ));
   }
 
-  Widget _buildTag(TagEntity tag, TagAddProvider model) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      child: ChoiceChip(
-          padding: const EdgeInsets.all(10.0),
-          label: Text(tag.title),
-          selected: model.chosenTags.contains(tag),
-          avatar: model.chosenTags.contains(tag)
-              ? Icon(
-                  FontAwesomeIcons.check,
-                  size: 16,
-                )
-              : Icon(tag.icon, size: 16),
-          onSelected: (bool _) => model.update(tag)),
+  Widget _buildTag(TagEntity tag, TagEditProvider model) {
+    return InputChip(
+      padding: const EdgeInsets.all(0.0),
+      labelPadding: const EdgeInsets.all(0),
+      label: Text(tag.title),
+      avatar: Icon(
+        tag.icon,
+        size: 14,
+      ),
+      deleteIcon: Icon(FontAwesomeIcons.times, size: 12),
+      onDeleted: () => model.removeTag(tag),
+      onPressed: () => model.removeTag(tag),
     );
   }
 

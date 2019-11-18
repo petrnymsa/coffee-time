@@ -6,11 +6,11 @@ class TagEditProvider with ChangeNotifier {
   InMemoryCafeRepository _cafeRepository = InMemoryCafeRepository.instance;
 
   List<TagEntity> _addedTags = [];
+
   Map<String, bool> _reviews = {};
 
   Map<String, bool> get reviews => _reviews;
   List<TagEntity> get addedTags => _addedTags;
-
   List<TagEntity> entityTags;
 
   TagEditProvider(this.entityTags);
@@ -18,11 +18,12 @@ class TagEditProvider with ChangeNotifier {
   List<TagEntity> _allTags = [];
 
   List<TagEntity> get notAddedTagsYet {
-    final res = []; //TODO not working
+    final List<TagEntity> res = [];
     _allTags.forEach((t) {
-      if (!entityTags.contains(t) && !_addedTags.contains(t)) res.add(t);
+      if (!entityTags.contains(t) && !_addedTags.contains(t)) {
+        res.add(t);
+      }
     });
-
     return res;
   }
 
@@ -38,7 +39,12 @@ class TagEditProvider with ChangeNotifier {
   }
 
   void addTags(List<TagEntity> tags) {
-    _addedTags = tags;
+    _addedTags = [..._addedTags, ...tags];
+    notifyListeners();
+  }
+
+  void removeTag(TagEntity tag) {
+    _addedTags.remove(tag);
     notifyListeners();
   }
 
