@@ -100,7 +100,10 @@ class DetailScreen extends StatelessWidget {
                         _ContactCard(contact: cafe.contact),
                         const SizedBox(height: 10.0),
                         _OpeningHoursContainer(),
-                        Divider(),
+                        // Divider(),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
                         _TagsContainer(
                           tags: cafe.tags,
                           onAddTag: () async {
@@ -177,6 +180,7 @@ class _OpeningHoursContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpandablePanel(
+      expanded: true,
       header: SectionHeader(
         icon: FontAwesomeIcons.clock,
         title: 'Otevírací doba',
@@ -228,17 +232,16 @@ class _TagsContainer extends StatelessWidget {
         SectionHeader(
           icon: FontAwesomeIcons.tags,
           title: 'Štítky',
-          // after: [
-          //   FlatButton(
-          //     child: Text(tags.isNotEmpty ? 'Přidat štítek' : 'Přidat nový.'),
-          //     //  textColor: Theme.of(context).primaryColor,
-          //     onPressed: onAddTag,
-          //   )
-          // ],
         ),
-        SizedBox(
-          height: 20.0,
-        ),
+        if (tags.isEmpty)
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Text('Žádné štítky prozatím nepřidány.'),
+          ),
+        if (tags.isNotEmpty)
+          SizedBox(
+            height: 20.0,
+          ),
         if (tags.isNotEmpty)
           Align(
             alignment: Alignment.topLeft,
@@ -255,20 +258,17 @@ class _TagsContainer extends StatelessWidget {
                   .toList(),
             ),
           ),
-        if (tags.isNotEmpty)
-          RaisedButton.icon(
-            label: Text(
-              'Navrhnout změnu',
-              style: TextStyle(fontSize: 14),
-            ),
-            icon: Icon(
-              FontAwesomeIcons.edit,
-              size: 16,
-            ),
-            onPressed: onAddTag,
-            color: Theme.of(context).accentColor,
-            textColor: Colors.white,
-          )
+        FlatButton.icon(
+          label: Text(
+            'Navrhnout změnu',
+            style: TextStyle(fontSize: 14),
+          ),
+          icon: Icon(
+            FontAwesomeIcons.edit,
+            size: 16,
+          ),
+          onPressed: onAddTag,
+        )
         // Align(
         //   alignment: Alignment.centerRight,
         //   child: Row(

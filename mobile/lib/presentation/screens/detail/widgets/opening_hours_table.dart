@@ -28,19 +28,20 @@ class OpeningHoursTable extends StatelessWidget {
       final day = weekDays[i];
       final dayIndex = i + 1;
       final time = openingHours[i + 1]?.toString() ?? 'Zavřeno';
+      var color = Colors.black;
+      var weight = FontWeight.normal;
+      if (openingHours[i + 1] == null) {
+        color = Theme.of(context).accentColor;
+      } else if (today == dayIndex) {
+        color = Colors.cyan;
+        weight = FontWeight.bold;
+      }
+
       rows.add(TableRow(children: [
-        Text(
-          day,
-          style: today == dayIndex
-              ? TextStyle(fontSize: 16, color: Theme.of(context).primaryColor)
-              : TextStyle(fontSize: 16),
-        ),
-        Text(
-          time,
-          style: today == dayIndex
-              ? TextStyle(fontSize: 16, color: Theme.of(context).primaryColor)
-              : TextStyle(fontSize: 16),
-        ),
+        Text(day,
+            style: TextStyle(fontSize: 16, color: color, fontWeight: weight)),
+        Text(time,
+            style: TextStyle(fontSize: 16, color: color, fontWeight: weight)),
       ]));
     }
 
