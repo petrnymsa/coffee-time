@@ -59,11 +59,12 @@ class MockData {
     'beer': TagEntity(title: 'Pivo', icon: FontAwesomeIcons.beer),
     'outside': TagEntity(title: 'Venkovní sezení', icon: FontAwesomeIcons.sun),
     'parking': TagEntity(title: 'Parkování', icon: FontAwesomeIcons.parking),
-    'handicap': TagEntity(title: 'Handicap', icon: FontAwesomeIcons.wheelchair),
+    'handicap': TagEntity(
+        title: 'Bezbariérový přístup', icon: FontAwesomeIcons.wheelchair),
     'card':
         TagEntity(title: 'Platba kartou', icon: FontAwesomeIcons.creditCard),
     'children':
-        TagEntity(title: 'Dětský koutek', icon: FontAwesomeIcons.fortAwesome),
+        TagEntity(title: 'Baby friendly', icon: FontAwesomeIcons.fortAwesome),
     'dog': TagEntity(title: 'Dog friendly', icon: FontAwesomeIcons.dog),
     'food': TagEntity(title: 'Občerstvení', icon: FontAwesomeIcons.hamburger),
   };
