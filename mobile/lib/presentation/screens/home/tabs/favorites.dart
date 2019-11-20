@@ -3,7 +3,7 @@ import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail.dart';
 import 'package:coffee_time/presentation/shared/icons/hand_draw_icons_named.dart';
-import 'package:coffee_time/presentation/widgets/cafe_tile.dart';
+import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

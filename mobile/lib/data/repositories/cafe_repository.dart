@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
@@ -119,8 +117,6 @@ class InMemoryCafeRepository implements CafeRepository {
   List<TagEntity> tags = [];
 
   static Uuid uuid = Uuid();
-  static PhotoEntity _photo(String url) => PhotoEntity(url: url);
-  static LocationEntity _location() => LocationEntity(17.56, 20.53);
 
   static MockData mock = MockData();
 
@@ -131,8 +127,9 @@ class InMemoryCafeRepository implements CafeRepository {
         address: 'Thákurova 9',
         rating: 4.7,
         photos: [
-          _photo(
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/ab243c8c-2719-4986-b869-d83256692e17.jpg"),
+          PhotoEntity(
+              url:
+                  "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/ab243c8c-2719-4986-b869-d83256692e17.jpg"),
         ],
         openNow: true,
         location: LocationEntity(50.104917, 14.389526),
@@ -143,8 +140,9 @@ class InMemoryCafeRepository implements CafeRepository {
         address: 'Technická 270/6',
         rating: 4.3,
         photos: [
-          _photo(
-              "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg"),
+          PhotoEntity(
+              url:
+                  "https://static8.fotoskoda.cz/data/cache/thumb_700-392-24-0-1/articles/2317/1542705898/fotosoutez_prostor_ntk_cafe_prostoru_uvod.jpg"),
         ],
         openNow: true,
         location: LocationEntity(50.103946, 14.390296),
@@ -155,8 +153,9 @@ class InMemoryCafeRepository implements CafeRepository {
         address: 'Nám. Interbrigády',
         rating: 3.2,
         photos: [
-          _photo(
-              "https://media-cdn.tripadvisor.com/media/photo-s/14/98/8f/1e/interier.jpg"),
+          PhotoEntity(
+              url:
+                  "https://media-cdn.tripadvisor.com/media/photo-s/14/98/8f/1e/interier.jpg"),
         ],
         openNow: false,
         location: LocationEntity(50.105598, 14.395324),
@@ -167,8 +166,9 @@ class InMemoryCafeRepository implements CafeRepository {
         address: 'Nám. Interbrigády',
         rating: 3.2,
         photos: [
-          _photo(
-              "https://media-cdn.tripadvisor.com/media/photo-s/14/98/8f/1e/interier.jpg"),
+          PhotoEntity(
+              url:
+                  "https://media-cdn.tripadvisor.com/media/photo-s/14/98/8f/1e/interier.jpg"),
         ],
         openNow: true,
         location: LocationEntity(50.107598, 14.3425324),
@@ -185,10 +185,12 @@ class InMemoryCafeRepository implements CafeRepository {
       comments: mock.getRandomComments(3),
       cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
       additionalPhotos: [
-        _photo(
-            "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
-        _photo(
-            "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
+        PhotoEntity(
+            url:
+                "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
+        PhotoEntity(
+            url:
+                "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
       ],
     ),
     "2": CafeDetailEntity.fromCafe(_predefinedCafes[1],
@@ -200,10 +202,12 @@ class InMemoryCafeRepository implements CafeRepository {
         comments: mock.getRandomComments(3),
         cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
         additionalPhotos: [
-          _photo(
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
-          _photo(
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
+          PhotoEntity(
+              url:
+                  "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
+          PhotoEntity(
+              url:
+                  "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
         ]),
     "3": CafeDetailEntity.fromCafe(_predefinedCafes[2],
         contact: ContactEntity(
@@ -213,10 +217,12 @@ class InMemoryCafeRepository implements CafeRepository {
         comments: mock.getRandomComments(3),
         cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
         additionalPhotos: [
-          _photo(
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
-          _photo(
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
+          PhotoEntity(
+              url:
+                  "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
+          PhotoEntity(
+              url:
+                  "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
         ]),
     "4": CafeDetailEntity.fromCafe(_predefinedCafes[3],
         contact: ContactEntity(
@@ -226,10 +232,12 @@ class InMemoryCafeRepository implements CafeRepository {
         comments: mock.getRandomComments(3),
         cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
         additionalPhotos: [
-          _photo(
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
-          _photo(
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
+          PhotoEntity(
+              url:
+                  "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/c3860f08-c013-48cd-bdf2-7819843ad579.jpg"),
+          PhotoEntity(
+              url:
+                  "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
         ]),
   };
 }

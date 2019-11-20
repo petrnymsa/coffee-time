@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail.dart';

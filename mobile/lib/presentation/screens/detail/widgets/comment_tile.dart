@@ -1,5 +1,5 @@
 import 'package:coffee_time/domain/entities/comment.dart';
-import 'package:coffee_time/presentation/widgets/rating.dart';
+import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';

@@ -6,7 +6,6 @@ import 'package:coffee_time/data/models/comment.dart';
 import 'package:coffee_time/data/models/contact.dart';
 import 'package:coffee_time/data/models/location.dart';
 import 'package:coffee_time/data/models/photo.dart';
-import 'package:coffee_time/domain/entities/cafe_detail.dart';
 
 String readFixture(String name) =>
     File('test/fixtures/$name').readAsStringSync();

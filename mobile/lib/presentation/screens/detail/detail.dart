@@ -1,21 +1,13 @@
 import 'package:coffee_time/core/app_logger.dart';
-import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/models/opening_hour.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail_provider.dart';
-import 'package:coffee_time/presentation/screens/detail/widgets/carousel_slider.dart';
-import 'package:coffee_time/presentation/screens/detail/widgets/comment_tile.dart';
-import 'package:coffee_time/presentation/screens/detail/widgets/opening_hours_table.dart';
-import 'package:coffee_time/presentation/screens/detail/widgets/section_header.dart';
-import 'package:coffee_time/presentation/screens/tags/add/tag_add_screen.dart';
+import 'package:coffee_time/presentation/screens/detail/widgets/detail_widgets.dart';
 import 'package:coffee_time/presentation/screens/tags/edit/tag_edit_screen.dart';
-import 'package:coffee_time/presentation/widgets/expandable_panel.dart';
-import 'package:coffee_time/presentation/widgets/rating.dart';
-import 'package:coffee_time/presentation/widgets/tag_container.dart';
+import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
@@ -23,9 +15,9 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailScreen extends StatelessWidget {
-  DetailScreen({Key key}) : super(key: key);
-
   final Logger logger = getLogger('DetailScreen');
+
+  DetailScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -172,131 +164,14 @@ class DetailScreen extends StatelessWidget {
   }
 }
 
-class _OpeningHoursContainer extends StatelessWidget {
-  const _OpeningHoursContainer({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ExpandablePanel(
-      expanded: true,
-      header: SectionHeader(
-        icon: FontAwesomeIcons.clock,
-        title: 'Otevírací doba',
-      ),
-      body: Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 40.0),
-          child: OpeningHoursTable(
-            openingHours: {
-              1: const OpeningTime(
-                  opening: const HourMinute(8, 0),
-                  closing: const HourMinute(16, 0)),
-              2: const OpeningTime(
-                  opening: const HourMinute(8, 0),
-                  closing: const HourMinute(16, 0)),
-              3: const OpeningTime(
-                  opening: const HourMinute(8, 0),
-                  closing: const HourMinute(16, 0)),
-              4: const OpeningTime(
-                  opening: const HourMinute(8, 0),
-                  closing: const HourMinute(16, 0)),
-              5: const OpeningTime(
-                  opening: const HourMinute(8, 0),
-                  closing: const HourMinute(16, 0)),
-              6: const OpeningTime(
-                  opening: const HourMinute(8, 0),
-                  closing: const HourMinute(16, 0)),
-              7: null,
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TagsContainer extends StatelessWidget {
-  const _TagsContainer({Key key, @required this.tags, this.onAddTag})
-      : super(key: key);
-
-  final List<TagEntity> tags;
-  final Function onAddTag;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        SectionHeader(
-          icon: FontAwesomeIcons.tags,
-          title: 'Štítky',
-        ),
-        if (tags.isEmpty)
-          Padding(
-            padding: EdgeInsets.all(4.0),
-            child: Text('Žádné štítky prozatím nepřidány.'),
-          ),
-        if (tags.isNotEmpty)
-          SizedBox(
-            height: 20.0,
-          ),
-        if (tags.isNotEmpty)
-          Align(
-            alignment: Alignment.topLeft,
-            child: Wrap(
-              alignment: WrapAlignment.start,
-              crossAxisAlignment: WrapCrossAlignment.start,
-              direction: Axis.horizontal,
-              spacing: 5.0,
-              runSpacing: 5.0,
-              children: tags
-                  .map(
-                    (tag) => TagContainer(title: tag.title, icon: tag.icon),
-                  )
-                  .toList(),
-            ),
-          ),
-        FlatButton.icon(
-          label: Text(
-            'Navrhnout změnu',
-            style: TextStyle(fontSize: 14),
-          ),
-          icon: Icon(
-            FontAwesomeIcons.edit,
-            size: 16,
-          ),
-          onPressed: onAddTag,
-        )
-        // Align(
-        //   alignment: Alignment.centerRight,
-        //   child: Row(
-        //     children: <Widget>[
-        //       Text('Štítky neodpovídají realitě?'),
-        //       FlatButton(
-        //         child: Text(
-        //           'Navrhnout změnu',
-        //         ),
-        //         // textColor: Theme.of(context).accentColor,
-        //         onPressed: null,
-        //       ),
-        //     ],
-        //   ),
-        // ),
-      ],
-    );
-  }
-}
-
 class _CafeNameContainer extends StatelessWidget {
+  final String title;
+
+  final String address;
+  final Function onShowMap;
   const _CafeNameContainer(
       {Key key, @required this.title, @required this.address, this.onShowMap})
       : super(key: key);
-
-  final String title;
-  final String address;
-  final Function onShowMap;
 
   @override
   Widget build(BuildContext context) {
@@ -393,6 +268,123 @@ class _ContactCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _OpeningHoursContainer extends StatelessWidget {
+  const _OpeningHoursContainer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpandablePanel(
+      expanded: true,
+      header: SectionHeader(
+        icon: FontAwesomeIcons.clock,
+        title: 'Otevírací doba',
+      ),
+      body: Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 40.0),
+          child: OpeningHoursTable(
+            openingHours: {
+              1: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              2: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              3: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              4: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              5: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              6: const OpeningTime(
+                  opening: const HourMinute(8, 0),
+                  closing: const HourMinute(16, 0)),
+              7: null,
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TagsContainer extends StatelessWidget {
+  final List<TagEntity> tags;
+
+  final Function onAddTag;
+  const _TagsContainer({Key key, @required this.tags, this.onAddTag})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        SectionHeader(
+          icon: FontAwesomeIcons.tags,
+          title: 'Štítky',
+        ),
+        if (tags.isEmpty)
+          Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Text('Žádné štítky prozatím nepřidány.'),
+          ),
+        if (tags.isNotEmpty)
+          SizedBox(
+            height: 20.0,
+          ),
+        if (tags.isNotEmpty)
+          Align(
+            alignment: Alignment.topLeft,
+            child: Wrap(
+              alignment: WrapAlignment.start,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              direction: Axis.horizontal,
+              spacing: 5.0,
+              runSpacing: 5.0,
+              children: tags
+                  .map(
+                    (tag) => TagContainer(title: tag.title, icon: tag.icon),
+                  )
+                  .toList(),
+            ),
+          ),
+        FlatButton.icon(
+          label: Text(
+            'Navrhnout změnu',
+            style: TextStyle(fontSize: 14),
+          ),
+          icon: Icon(
+            FontAwesomeIcons.edit,
+            size: 16,
+          ),
+          onPressed: onAddTag,
+        )
+        // Align(
+        //   alignment: Alignment.centerRight,
+        //   child: Row(
+        //     children: <Widget>[
+        //       Text('Štítky neodpovídají realitě?'),
+        //       FlatButton(
+        //         child: Text(
+        //           'Navrhnout změnu',
+        //         ),
+        //         // textColor: Theme.of(context).accentColor,
+        //         onPressed: null,
+        //       ),
+        //     ],
+        //   ),
+        // ),
+      ],
     );
   }
 }

@@ -7,7 +7,7 @@ class AppTheme {
   static const secondary_color = const Color(0xFFF2836B);
   static const background_color = const Color(0xFFF7F7F7);
 
-  static Map<int, Color> primary_swatch = {
+  static Map<int, Color> primarySwatch = {
     50: Color.fromRGBO(242, 89, 75, .1),
     100: Color.fromRGBO(242, 89, 75, .2),
     200: Color.fromRGBO(242, 89, 75, .3),
@@ -23,7 +23,7 @@ class AppTheme {
   static ThemeData apply(BuildContext context) {
     return ThemeData(
       primaryColor: main_color,
-      primarySwatch: MaterialColor(0xFFF2594B, primary_swatch),
+      primarySwatch: MaterialColor(0xFFF2594B, primarySwatch),
       accentColor: secondary_color,
       backgroundColor: background_color,
       scaffoldBackgroundColor: background_color,

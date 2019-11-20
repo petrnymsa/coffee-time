@@ -2,14 +2,14 @@ import 'dart:ui';
 
 import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
-import 'package:coffee_time/presentation/widgets/rating.dart';
-import 'package:coffee_time/presentation/widgets/tag_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'rating.dart';
+import 'tag/tag_widgets.dart';
 
 // todo text styles
 // todo color styles

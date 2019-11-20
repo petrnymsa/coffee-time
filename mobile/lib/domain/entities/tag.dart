@@ -14,7 +14,7 @@ class TagEntity extends Equatable {
 
   @override
   String toString() {
-    // TODO: implement toString
+    // todo: implement toString
     return 'Tag: $title';
   }
 }

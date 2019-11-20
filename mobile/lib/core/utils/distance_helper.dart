@@ -1,7 +1,7 @@
 import 'dart:math';
 
 class DistanceHelper {
-  //TODO can i use it?
+  //todo can i use it?
   static double getDistanceFromLatLonInKm(
       double lat1, double lon1, double lat2, double lon2) {
     var R = 6371; // Radius of the earth in km

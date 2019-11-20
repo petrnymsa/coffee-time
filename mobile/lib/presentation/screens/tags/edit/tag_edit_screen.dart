@@ -1,11 +1,8 @@
-import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail_provider.dart';
-import 'package:coffee_time/presentation/screens/tags/add/tag_add_provider.dart';
 import 'package:coffee_time/presentation/screens/tags/add/tag_add_screen.dart';
-import 'package:coffee_time/presentation/widgets/full_width_button.dart';
-import 'package:coffee_time/presentation/widgets/tag_container.dart';
+import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -136,6 +133,61 @@ class TagEditScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildHeadline(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Text(
+          'Štítky jsou tvořeny uživateli.',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.subhead,
+        ),
+        RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+              text: 'Pomozte nám ',
+              style: Theme.of(context).textTheme.subhead,
+              children: [
+                TextSpan(
+                    text: 'zlepšit',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(
+                  text: ' jejich přesnost.',
+                )
+              ]),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReviewIcon(TagEntity tag, IconData icon, bool reviewType,
+      TagEditProvider model, BuildContext context) {
+    return TableCell(
+        child: IconButton(
+      icon: Icon(icon),
+      color: model.reviewOfTag(tag) == reviewType
+          ? Theme.of(context).primaryColor
+          : Colors.grey,
+      onPressed: () {
+        model.updateReview(tag, reviewType);
+      },
+    ));
+  }
+
+  Widget _buildTag(TagEntity tag, TagEditProvider model) {
+    return InputChip(
+      padding: const EdgeInsets.all(0.0),
+      labelPadding: const EdgeInsets.all(0),
+      label: Text(tag.title),
+      avatar: Icon(
+        tag.icon,
+        size: 14,
+      ),
+      deleteIcon: Icon(FontAwesomeIcons.times, size: 12),
+      onDeleted: () => model.removeTag(tag),
+      onPressed: () => model.removeTag(tag),
+    );
+  }
+
   List<Widget> _buildTagsToAdd(BuildContext context, TagEditProvider model) {
     return <Widget>[
       Row(
@@ -170,60 +222,5 @@ class TagEditScreen extends StatelessWidget {
         height: 4,
       ),
     ];
-  }
-
-  Widget _buildReviewIcon(TagEntity tag, IconData icon, bool reviewType,
-      TagEditProvider model, BuildContext context) {
-    return TableCell(
-        child: IconButton(
-      icon: Icon(icon),
-      color: model.reviewOfTag(tag) == reviewType
-          ? Theme.of(context).primaryColor
-          : Colors.grey,
-      onPressed: () {
-        model.updateReview(tag, reviewType);
-      },
-    ));
-  }
-
-  Widget _buildTag(TagEntity tag, TagEditProvider model) {
-    return InputChip(
-      padding: const EdgeInsets.all(0.0),
-      labelPadding: const EdgeInsets.all(0),
-      label: Text(tag.title),
-      avatar: Icon(
-        tag.icon,
-        size: 14,
-      ),
-      deleteIcon: Icon(FontAwesomeIcons.times, size: 12),
-      onDeleted: () => model.removeTag(tag),
-      onPressed: () => model.removeTag(tag),
-    );
-  }
-
-  Widget _buildHeadline(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text(
-          'Štítky jsou tvořeny uživateli.',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subhead,
-        ),
-        RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-              text: 'Pomozte nám ',
-              style: Theme.of(context).textTheme.subhead,
-              children: [
-                TextSpan(
-                    text: 'zlepšit',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(
-                  text: ' jejich přesnost.',
-                )
-              ]),
-        ),
-      ],
-    );
   }
 }

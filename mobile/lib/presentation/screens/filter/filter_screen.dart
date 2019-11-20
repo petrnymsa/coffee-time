@@ -1,10 +1,8 @@
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
-import 'package:coffee_time/presentation/screens/detail/widgets/section_header.dart';
 import 'package:coffee_time/presentation/screens/filter/filter_provider.dart';
 import 'package:coffee_time/presentation/screens/tags/add/tag_add_screen.dart';
-import 'package:coffee_time/presentation/screens/tags/edit/tag_edit_provider.dart';
-import 'package:coffee_time/presentation/widgets/tag/tag_input.dart';
+import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -91,6 +89,14 @@ class FilterScreen extends StatelessWidget {
     ];
   }
 
+  Widget _buildTag(TagEntity tag, FilterProvider model) {
+    return TagInput(
+      tag: tag,
+      onDeleted: () => model.updateChosenTag(tag),
+      onPressed: () => model.updateChosenTag(tag),
+    );
+  }
+
   List<Widget> _buildTagsToAdd(BuildContext context, FilterProvider model) {
     return <Widget>[
       if (model.filter.tags.length > 0)
@@ -126,13 +132,5 @@ class FilterScreen extends StatelessWidget {
         height: 4,
       ),
     ];
-  }
-
-  Widget _buildTag(TagEntity tag, FilterProvider model) {
-    return TagInput(
-      tag: tag,
-      onDeleted: () => model.updateChosenTag(tag),
-      onPressed: () => model.updateChosenTag(tag),
-    );
   }
 }
