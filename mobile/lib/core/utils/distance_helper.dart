@@ -17,6 +17,13 @@ class DistanceHelper {
     return d;
   }
 
+  static String getFormattedDistanceFromKm(double distance) {
+    if (distance < 1)
+      return '${distance * 100} m';
+    else
+      return '$distance km';
+  }
+
   static double _deg2rad(deg) {
     return deg * (pi / 180);
   }

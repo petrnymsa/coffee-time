@@ -199,11 +199,7 @@ class CafeTile extends StatelessWidget {
         children: tags
             .map((t) => Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: TagContainer(
-                    title: t.title,
-                    icon: t.icon,
-                    showTitle: false,
-                  ),
+                  child: TagContainer(icon: t.icon),
                 ))
             .toList(),
       ),

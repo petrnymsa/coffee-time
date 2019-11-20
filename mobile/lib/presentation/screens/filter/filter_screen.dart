@@ -4,6 +4,7 @@ import 'package:coffee_time/presentation/screens/detail/widgets/section_header.d
 import 'package:coffee_time/presentation/screens/filter/filter_provider.dart';
 import 'package:coffee_time/presentation/screens/tags/add/tag_add_screen.dart';
 import 'package:coffee_time/presentation/screens/tags/edit/tag_edit_provider.dart';
+import 'package:coffee_time/presentation/widgets/tag/tag_input.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -49,13 +50,15 @@ class FilterScreen extends StatelessWidget {
                 if (model.filter.tags != null) ..._buildTagsToAdd(ctx, model),
                 if (model.notAddedTagsYet.length > 0)
                   RaisedButton.icon(
-                    label: Text('Přidat štítky'),
+                    label: Text('Vybrat štítky'),
                     icon: Icon(FontAwesomeIcons.plus),
                     onPressed: () async {
                       final List<TagEntity> addedTags =
                           await Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) =>
-                                  TagAddScreen(model.notAddedTagsYet)));
+                              builder: (_) => TagAddScreen(
+                                    model.notAddedTagsYet,
+                                    title: 'Vybrat štítky',
+                                  )));
                       if (addedTags != null) model.updateChosenTags(addedTags);
                     },
                   ),
@@ -126,15 +129,8 @@ class FilterScreen extends StatelessWidget {
   }
 
   Widget _buildTag(TagEntity tag, FilterProvider model) {
-    return InputChip(
-      padding: const EdgeInsets.all(0.0),
-      labelPadding: const EdgeInsets.all(0),
-      label: Text(tag.title),
-      avatar: Icon(
-        tag.icon,
-        size: 14,
-      ),
-      deleteIcon: Icon(FontAwesomeIcons.times, size: 12),
+    return TagInput(
+      tag: tag,
       onDeleted: () => model.updateChosenTag(tag),
       onPressed: () => model.updateChosenTag(tag),
     );

@@ -4,6 +4,7 @@ import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail_provider.dart';
 import 'package:coffee_time/presentation/screens/tags/add/tag_add_provider.dart';
 import 'package:coffee_time/presentation/screens/tags/add/tag_add_screen.dart';
+import 'package:coffee_time/presentation/widgets/full_width_button.dart';
 import 'package:coffee_time/presentation/widgets/tag_container.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -114,23 +115,16 @@ class TagEditScreen extends StatelessWidget {
                           if (addedTags != null) model.addTags(addedTags);
                         },
                       ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 25.0),
-                        child: RaisedButton.icon(
-                          color: Colors.green,
-                          label: Text('Potvrdit'),
-                          icon: Icon(FontAwesomeIcons.check),
-                          onPressed: () async {
-                            await Provider.of<CafeListProvider>(context,
-                                    listen: false)
-                                .addTags(detailModel.detail, model.addedTags);
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ),
+                    FullWidthButton(
+                      text: 'Potvrdit',
+                      color: Colors.green,
+                      icon: Icon(FontAwesomeIcons.check),
+                      onPressed: () async {
+                        await Provider.of<CafeListProvider>(context,
+                                listen: false)
+                            .addTags(detailModel.detail, model.addedTags);
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ],
                 ),

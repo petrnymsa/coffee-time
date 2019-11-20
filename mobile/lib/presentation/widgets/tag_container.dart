@@ -3,18 +3,22 @@ import 'package:flutter/material.dart';
 class TagContainer extends StatelessWidget {
   final IconData icon;
   final String title;
-  final bool showTitle;
-  TagContainer({this.title, this.icon, this.showTitle = true});
+  final EdgeInsets padding;
+  TagContainer({
+    this.title,
+    this.icon,
+    this.padding = const EdgeInsets.symmetric(horizontal: 6.0, vertical: 6.0),
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 6.0),
+      padding: padding,
       decoration: BoxDecoration(
         color: const Color(0xFF63A69F), //todo hardcoded color
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: showTitle
+      child: title != null
           ? Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,

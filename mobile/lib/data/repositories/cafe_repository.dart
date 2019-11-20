@@ -218,7 +218,7 @@ class InMemoryCafeRepository implements CafeRepository {
           _photo(
               "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
         ]),
-    "4": CafeDetailEntity.fromCafe(_predefinedCafes[2],
+    "4": CafeDetailEntity.fromCafe(_predefinedCafes[3],
         contact: ContactEntity(
           address: _predefinedCafes[3].address,
           phone: '111 222 333',
