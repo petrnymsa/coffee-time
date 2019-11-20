@@ -1,3 +1,4 @@
+import 'package:coffee_time/core/utils/distance_helper.dart';
 import 'package:equatable/equatable.dart';
 
 class LocationEntity extends Equatable {
@@ -17,5 +18,10 @@ class LocationEntity extends Equatable {
       lat ?? this.lat,
       lng ?? this.lng,
     );
+  }
+
+  double distance(LocationEntity other) {
+    return DistanceHelper.getDistanceFromLatLonInKm(
+        lat, lng, other.lat, other.lng);
   }
 }

@@ -31,9 +31,7 @@ class InMemoryCafeRepository implements CafeRepository {
       const radius = 20;
 
       return cafes.where((cafe) {
-        final cl = cafe.location;
-        final distance = getDistanceFromLatLonInKm(
-            location.lat, location.lng, cl.lat, cl.lng);
+        final distance = location.distance(cafe.location);
         if (distance < radius) {
           if (filter != null && !filter.apply(cafe)) return false;
 
@@ -42,22 +40,6 @@ class InMemoryCafeRepository implements CafeRepository {
         return false;
       }).toList();
     });
-  }
-
-  double getDistanceFromLatLonInKm(
-      double lat1, double lon1, double lat2, double lon2) {
-    var R = 6371; // Radius of the earth in km
-    var dLat = deg2rad(lat2 - lat1); // deg2rad below
-    var dLon = deg2rad(lon2 - lon1);
-    var a = sin(dLat / 2) * sin(dLat / 2) +
-        cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * sin(dLon / 2) * sin(dLon / 2);
-    var c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    var d = R * c; // Distance in km
-    return d;
-  }
-
-  double deg2rad(deg) {
-    return deg * (pi / 180);
   }
 
   @override
