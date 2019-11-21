@@ -52,7 +52,6 @@ class DetailScreen extends StatelessWidget {
                                   ? Icons.favorite
                                   : Icons.favorite_border),
                               onPressed: () {
-                                print('FAVORITE ');
                                 model.toggleFavorite();
                                 Provider.of<CafeListProvider>(context,
                                         listen: false)
@@ -73,13 +72,13 @@ class DetailScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: <Widget>[
-                            _buildOpeningTime(context, cafe.openNow),
+                            OpensNowText(opensNow: cafe.openNow),
                             Spacer(),
                             Rating.large(cafe.rating),
                           ],
                         ),
                         const SizedBox(height: 20.0),
-                        _CafeNameContainer(
+                        CafeNameContainer(
                           title: cafe.name,
                           address: cafe.address,
                           onShowMap: () async {
@@ -89,16 +88,13 @@ class DetailScreen extends StatelessWidget {
                           },
                         ),
                         Divider(),
-                        _ContactCard(contact: cafe.contact),
+                        ContactCard(contact: cafe.contact),
                         const SizedBox(height: 10.0),
-                        _OpeningHoursContainer(),
-                        // Divider(),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        _TagsContainer(
+                        OpeningHoursContainer(),
+                        const SizedBox(height: 10.0),
+                        TagsContainer(
                           tags: cafe.tags,
-                          onAddTag: () async {
+                          onEdit: () async {
                             final result = await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) => ChangeNotifierProvider.value(
@@ -151,66 +147,12 @@ class DetailScreen extends StatelessWidget {
       ),
     );
   }
-
-  Text _buildOpeningTime(BuildContext context, bool opensNow) {
-    //final closingTime = DateFormat.Hm().format(cafe.closing);
-    return Text(
-      opensNow ? 'Otevřeno' : 'Zavřeno',
-      style: Theme.of(context)
-          .textTheme
-          .overline
-          .copyWith(fontWeight: FontWeight.w300, fontSize: 16),
-    );
-  }
 }
 
-class _CafeNameContainer extends StatelessWidget {
-  final String title;
-
-  final String address;
-  final Function onShowMap;
-  const _CafeNameContainer(
-      {Key key, @required this.title, @required this.address, this.onShowMap})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Align(
-          alignment: Alignment.center,
-          child: Column(
-            children: <Widget>[
-              SelectableText(
-                title,
-                style: Theme.of(context).textTheme.headline,
-              ),
-              SelectableText(
-                address,
-                style: Theme.of(context).textTheme.subhead,
-              ),
-            ],
-          ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: IconButton(
-              icon: Icon(FontAwesomeIcons.locationArrow),
-              onPressed: onShowMap,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ContactCard extends StatelessWidget {
+class ContactCard extends StatelessWidget {
   final ContactEntity contact;
 
-  const _ContactCard({Key key, @required this.contact}) : super(key: key);
+  const ContactCard({Key key, @required this.contact}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -272,8 +214,8 @@ class _ContactCard extends StatelessWidget {
   }
 }
 
-class _OpeningHoursContainer extends StatelessWidget {
-  const _OpeningHoursContainer({
+class OpeningHoursContainer extends StatelessWidget {
+  const OpeningHoursContainer({
     Key key,
   }) : super(key: key);
 
@@ -318,11 +260,11 @@ class _OpeningHoursContainer extends StatelessWidget {
   }
 }
 
-class _TagsContainer extends StatelessWidget {
+class TagsContainer extends StatelessWidget {
   final List<TagEntity> tags;
 
-  final Function onAddTag;
-  const _TagsContainer({Key key, @required this.tags, this.onAddTag})
+  final Function onEdit;
+  const TagsContainer({Key key, @required this.tags, this.onEdit})
       : super(key: key);
 
   @override
@@ -336,7 +278,7 @@ class _TagsContainer extends StatelessWidget {
         if (tags.isEmpty)
           Padding(
             padding: EdgeInsets.all(4.0),
-            child: Text('Žádné štítky prozatím nepřidány.'),
+            child: Text('Žádné štítky nepřidány.'),
           ),
         if (tags.isNotEmpty)
           SizedBox(
@@ -352,9 +294,7 @@ class _TagsContainer extends StatelessWidget {
               spacing: 5.0,
               runSpacing: 5.0,
               children: tags
-                  .map(
-                    (tag) => TagContainer(title: tag.title, icon: tag.icon),
-                  )
+                  .map((tag) => TagContainer(title: tag.title, icon: tag.icon))
                   .toList(),
             ),
           ),
@@ -367,23 +307,8 @@ class _TagsContainer extends StatelessWidget {
             FontAwesomeIcons.edit,
             size: 16,
           ),
-          onPressed: onAddTag,
+          onPressed: onEdit,
         )
-        // Align(
-        //   alignment: Alignment.centerRight,
-        //   child: Row(
-        //     children: <Widget>[
-        //       Text('Štítky neodpovídají realitě?'),
-        //       FlatButton(
-        //         child: Text(
-        //           'Navrhnout změnu',
-        //         ),
-        //         // textColor: Theme.of(context).accentColor,
-        //         onPressed: null,
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ],
     );
   }

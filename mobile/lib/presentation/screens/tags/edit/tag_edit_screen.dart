@@ -174,15 +174,8 @@ class TagEditScreen extends StatelessWidget {
   }
 
   Widget _buildTag(TagEntity tag, TagEditProvider model) {
-    return InputChip(
-      padding: const EdgeInsets.all(0.0),
-      labelPadding: const EdgeInsets.all(0),
-      label: Text(tag.title),
-      avatar: Icon(
-        tag.icon,
-        size: 14,
-      ),
-      deleteIcon: Icon(FontAwesomeIcons.times, size: 12),
+    return TagInput(
+      tag: tag,
       onDeleted: () => model.removeTag(tag),
       onPressed: () => model.removeTag(tag),
     );
