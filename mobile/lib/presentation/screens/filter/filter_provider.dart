@@ -25,9 +25,9 @@ class FilterProvider with ChangeNotifier {
         res.add(t);
       }
     });
-    print('all tags: $_allTags');
-    print('filter tags: ${filter.tags}');
-    print('not yet added: $res');
+    //print('all tags: $_allTags');
+    //print('filter tags: ${filter.tags}');
+    //print('not yet added: $res');
     return res;
   }
 
@@ -54,6 +54,11 @@ class FilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void changeOrdering(int orderingIndex) {
+    _filter = _filter.copyWith(ordering: FilterOrdering.values[orderingIndex]);
+    notifyListeners();
+  }
+
   void clearTags() {
     _filter = _filter.copyWith(tags: []);
     notifyListeners();
@@ -61,8 +66,10 @@ class FilterProvider with ChangeNotifier {
 
   void save() {
     getLogger('Filter Provider').i('Saving filter: $_filter');
-    cafeListProvider.updateFilter(
-        _filter.copyWith(onlyOpen: _filter.onlyOpen, tags: _filter.tags));
+    cafeListProvider.updateFilter(_filter.copyWith(
+        onlyOpen: _filter.onlyOpen,
+        tags: _filter.tags,
+        ordering: _filter.ordering));
     notifyListeners();
   }
 

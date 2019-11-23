@@ -1,3 +1,4 @@
+import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/filter/filter_provider.dart';
@@ -37,6 +38,39 @@ class FilterScreen extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   ..._buildOpening(ctx, model),
+                  SectionHeader(
+                    title: 'Řazení',
+                    icon: Icons.sort,
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Radio(
+                        groupValue: model.filter.ordering.index,
+                        value: FilterOrdering.distance.index,
+                        onChanged: (v) => model.changeOrdering(v),
+                      ),
+                      Text(
+                        'Podle vzdálenosti',
+                        style: Theme.of(context).textTheme.subhead,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Radio(
+                        groupValue: model.filter.ordering.index,
+                        value: FilterOrdering.rating.index,
+                        onChanged: (v) => model.changeOrdering(v),
+                      ),
+                      Text(
+                        'Podle hodnocení',
+                        style: Theme.of(context).textTheme.subhead,
+                      ),
+                    ],
+                  ),
                   SectionHeader(
                     icon: FontAwesomeIcons.tags,
                     title: 'Štítky',

@@ -26,9 +26,9 @@ class InMemoryCafeRepository implements CafeRepository {
       if (!initialized) {
         await init();
       }
-      const radius = 20;
+      const radius = 6; // km
 
-      return cafes.where((cafe) {
+      final result = cafes.where((cafe) {
         final distance = location.distance(cafe.location);
         if (distance < radius) {
           if (filter != null && !filter.apply(cafe)) return false;
@@ -37,6 +37,25 @@ class InMemoryCafeRepository implements CafeRepository {
         }
         return false;
       }).toList();
+
+      if (filter != null) {
+        result.sort((a, b) {
+          if (filter.ordering == FilterOrdering.distance) {
+            double distA = location.distance(a.location);
+            double distB = location.distance(b.location);
+
+            return (distA - distB).toInt();
+          }
+
+          if (a.rating > b.rating)
+            return -1;
+          else if (a.rating < b.rating) return 1;
+
+          return 0;
+        });
+      }
+
+      return result;
     });
   }
 

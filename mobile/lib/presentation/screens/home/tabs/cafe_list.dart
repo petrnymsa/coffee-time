@@ -118,6 +118,20 @@ class _CafeListTabState extends State<CafeListTab> {
                 ),
               ],
             ),
+            Row(
+              children: <Widget>[
+                Icon(Icons.sort),
+                const SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  filter.ordering == FilterOrdering.distance
+                      ? 'Podle vzdálenosti'
+                      : 'Podle hodnocení',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ],
+            ),
             if (filter.tags.length > 0) _buildFilterTags(model),
           ],
         ),
