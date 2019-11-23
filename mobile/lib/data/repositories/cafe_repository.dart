@@ -43,8 +43,12 @@ class InMemoryCafeRepository implements CafeRepository {
           if (filter.ordering == FilterOrdering.distance) {
             double distA = location.distance(a.location);
             double distB = location.distance(b.location);
+            if (distA > distB)
+              return 1;
+            else if (distA < distB) return -1;
 
-            return (distA - distB).toInt();
+            return 0;
+            //return (distA - distB).toInt();
           }
 
           if (a.rating > b.rating)
