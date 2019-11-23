@@ -19,9 +19,9 @@ class DistanceHelper {
 
   static String getFormattedDistanceFromKm(double distance) {
     if (distance < 1)
-      return '${distance * 100} m';
+      return '${(distance * 1000).toInt()} m';
     else
-      return '$distance km';
+      return '${distance.toStringAsFixed(2)} km';
   }
 
   static double _deg2rad(deg) {

@@ -1,4 +1,5 @@
 import 'package:coffee_time/data/repositories/cafe_repository.dart';
+import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/domain/entities/location.dart';
@@ -98,5 +99,9 @@ class CafeListProvider<WithoutError> extends BaseProvider {
     _currentFilter = filter;
     await refresh();
     notifyListeners();
+  }
+
+  double getDistance(CafeEntity cafeEntity) {
+    return currentLocation.distance(cafeEntity.location);
   }
 }

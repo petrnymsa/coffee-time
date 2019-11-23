@@ -2,11 +2,17 @@ import 'package:coffee_time/domain/entities/cafe.dart';
 
 import './tag.dart';
 
+enum FilterOrdering { distance, rating }
+
 class FilterEntity {
   final bool onlyOpen;
   final List<TagEntity> tags;
+  final FilterOrdering ordering;
 
-  const FilterEntity({this.onlyOpen = true, this.tags = const []});
+  const FilterEntity(
+      {this.onlyOpen = true,
+      this.tags = const [],
+      this.ordering = FilterOrdering.distance});
 
   static const FilterEntity defaultFilter = const FilterEntity();
 
@@ -23,17 +29,20 @@ class FilterEntity {
   FilterEntity copyWith({
     bool onlyOpen,
     List<TagEntity> tags,
+    FilterOrdering ordering,
   }) {
     return FilterEntity(
-      onlyOpen: onlyOpen ?? this.onlyOpen,
-      tags: tags ?? this.tags,
-    );
+        onlyOpen: onlyOpen ?? this.onlyOpen,
+        tags: tags ?? this.tags,
+        ordering: ordering ?? this.ordering);
   }
 
   bool isDefault() {
-    return onlyOpen == true && tags.length == 0;
+    return onlyOpen == true &&
+        tags.length == 0 &&
+        ordering == FilterOrdering.distance;
   }
 
   @override
-  String toString() => 'onlyOpen: $onlyOpen, tags: $tags';
+  String toString() => 'onlyOpen: $onlyOpen, tags: $tags, ordering: $ordering';
 }

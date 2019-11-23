@@ -31,36 +31,38 @@ class FilterScreen extends StatelessWidget {
           ),
         ),
         body: Consumer<FilterProvider>(
-          builder: (ctx, model, _) => Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            child: Column(
-              children: <Widget>[
-                ..._buildOpening(ctx, model),
-                SectionHeader(
-                  icon: FontAwesomeIcons.tags,
-                  title: 'Štítky',
-                ),
-                const SizedBox(
-                  height: 6.0,
-                ),
-                Text('Kavárna obsahuje alespoň jeden níže vybraný štítek'),
-                if (model.filter.tags != null) ..._buildTagsToAdd(ctx, model),
-                if (model.notAddedTagsYet.length > 0)
-                  RaisedButton.icon(
-                    label: Text('Vybrat štítky'),
-                    icon: Icon(FontAwesomeIcons.plus),
-                    onPressed: () async {
-                      final List<TagEntity> addedTags =
-                          await Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => TagAddScreen(
-                                    model.notAddedTagsYet,
-                                    title: 'Vybrat štítky',
-                                  )));
-                      if (addedTags != null) model.updateChosenTags(addedTags);
-                    },
+          builder: (ctx, model, _) => SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 60.0),
+              child: Column(
+                children: <Widget>[
+                  ..._buildOpening(ctx, model),
+                  SectionHeader(
+                    icon: FontAwesomeIcons.tags,
+                    title: 'Štítky',
                   ),
-              ],
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Text('Kavárna obsahuje alespoň jeden níže vybraný štítek'),
+                  if (model.filter.tags != null) ..._buildTagsToAdd(ctx, model),
+                  if (model.notAddedTagsYet.length > 0)
+                    RaisedButton.icon(
+                      label: Text('Vybrat štítky'),
+                      icon: Icon(FontAwesomeIcons.plus),
+                      onPressed: () async {
+                        final List<TagEntity> addedTags =
+                            await Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => TagAddScreen(
+                                      model.notAddedTagsYet,
+                                      title: 'Vybrat štítky',
+                                    )));
+                        if (addedTags != null)
+                          model.updateChosenTags(addedTags);
+                      },
+                    ),
+                ],
+              ),
             ),
           ),
         ),

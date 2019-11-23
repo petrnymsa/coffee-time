@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:coffee_time/core/app_logger.dart';
+import 'package:coffee_time/core/utils/distance_helper.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
+import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -166,8 +168,27 @@ class CafeTile extends StatelessWidget {
                                   Rating(cafe.rating),
                                 ],
                               ),
-                              _buildClosing(context, cafe.openNow),
-                              if (cafe.tags.isNotEmpty) _buildTags(cafe.tags),
+                              //  _buildClosing(context, cafe.openNow),
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                      "Vzdálenost ${DistanceHelper.getFormattedDistanceFromKm(Provider.of<CafeListProvider>(context, listen: false).getDistance(cafe))}"),
+                                  Spacer(),
+                                  Text(
+                                    cafe.openNow ? 'Otevřeno' : 'Zavřeno',
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ],
+                              ),
+                              // Align(
+                              //   alignment: Alignment.topLeft,
+                              //   child: Text("Vzdalenost 500m"),
+                              // ),
+                              if (cafe.tags.isNotEmpty)
+                                _buildTags(cafe.tags),
                             ],
                           ),
                         ),
