@@ -21,44 +21,45 @@ class ContactCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.phone),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: InkWell(
+            InkWell(
+              onTap: () async {
+                if (await canLaunch("tel:${contact.phone}")) {
+                  await launch("tel:${contact.phone}");
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 2.0),
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.phone),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
                       child: Text(
                         contact.phone,
                         style: TextStyle(fontSize: 16),
                       ),
-                      onTap: () async {
-                        if (await canLaunch("tel:${contact.phone}")) {
-                          await launch("tel:${contact.phone}");
-                        }
-                      },
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             if (contact.website != null)
-              Container(
-                child: Row(
-                  children: <Widget>[
-                    Icon(FontAwesomeIcons.globe),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: InkWell(
+              InkWell(
+                onTap: () async {
+                  if (await canLaunch(contact.website)) {
+                    await launch(contact.website);
+                  }
+                },
+                child: Container(
+                  child: Row(
+                    children: <Widget>[
+                      Icon(FontAwesomeIcons.globe),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(urlWithoutHttps),
-                        onTap: () async {
-                          if (await canLaunch(contact.website)) {
-                            await launch(contact.website);
-                          }
-                        },
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
           ],
