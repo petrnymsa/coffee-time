@@ -7,6 +7,7 @@ import 'package:coffee_time/domain/entities/comment.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:coffee_time/core/utils/asset_loader.dart' as asset_loader;
@@ -57,7 +58,7 @@ class MockData {
   Map<String, TagEntity> _tags = {
     'wifi': TagEntity(title: 'WiFi', icon: Icons.wifi),
     'beer': TagEntity(title: 'Pivo', icon: FontAwesomeIcons.beer),
-    'outside': TagEntity(title: 'Venkovní sezení', icon: FontAwesomeIcons.sun),
+    'outside': TagEntity(title: 'Venkovní sezení', icon: MdiIcons.beach),
     'parking': TagEntity(title: 'Parkování', icon: FontAwesomeIcons.parking),
     'handicap': TagEntity(
         title: 'Bezbariérový přístup', icon: FontAwesomeIcons.wheelchair),
@@ -66,7 +67,7 @@ class MockData {
     'children':
         TagEntity(title: 'Baby friendly', icon: FontAwesomeIcons.fortAwesome),
     'dog': TagEntity(title: 'Dog friendly', icon: FontAwesomeIcons.dog),
-    'food': TagEntity(title: 'Občerstvení', icon: FontAwesomeIcons.hamburger),
+    'food': TagEntity(title: 'Občerstvení', icon: MdiIcons.food),
   };
 
   List<CommentEntity> comments = [

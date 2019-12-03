@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   font_awesome_flutter: ^8.5.0
+  material_design_icons_flutter: 3.4.4595
   uuid: ^2.0.2
   page_indicator: ^0.3.0
   expandable: ^3.0.1
