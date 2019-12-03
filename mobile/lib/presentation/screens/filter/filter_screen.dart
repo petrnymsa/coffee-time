@@ -52,9 +52,13 @@ class FilterScreen extends StatelessWidget {
                         value: FilterOrdering.distance.index,
                         onChanged: (v) => model.changeOrdering(v),
                       ),
-                      Text(
-                        'Podle vzdálenosti',
-                        style: Theme.of(context).textTheme.subhead,
+                      GestureDetector(
+                        onTap: () =>
+                            model.changeOrdering(FilterOrdering.distance.index),
+                        child: Text(
+                          'Podle vzdálenosti',
+                          style: Theme.of(context).textTheme.subhead,
+                        ),
                       ),
                     ],
                   ),
@@ -65,9 +69,13 @@ class FilterScreen extends StatelessWidget {
                         value: FilterOrdering.rating.index,
                         onChanged: (v) => model.changeOrdering(v),
                       ),
-                      Text(
-                        'Podle hodnocení',
-                        style: Theme.of(context).textTheme.subhead,
+                      GestureDetector(
+                        onTap: () =>
+                            model.changeOrdering(FilterOrdering.rating.index),
+                        child: Text(
+                          'Podle hodnocení',
+                          style: Theme.of(context).textTheme.subhead,
+                        ),
                       ),
                     ],
                   ),
@@ -112,9 +120,12 @@ class FilterScreen extends StatelessWidget {
       ),
       Row(
         children: <Widget>[
-          Text(
-            'Pouze otevřené',
-            style: Theme.of(context).textTheme.subhead,
+          GestureDetector(
+            onTap: () => model.changeOnlyNow(!model.filter.onlyOpen),
+            child: Text(
+              'Pouze otevřené',
+              style: Theme.of(context).textTheme.subhead,
+            ),
           ),
           Switch(
             value: model.filter.onlyOpen,
