@@ -33,9 +33,13 @@ class CafeNameContainer extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: IconButton(
-              icon: Icon(FontAwesomeIcons.locationArrow),
-              onPressed: onShowMap,
+            child: Material(
+              borderRadius: BorderRadius.circular(25),
+              elevation: 1.0,
+              child: IconButton(
+                icon: Icon(FontAwesomeIcons.locationArrow),
+                onPressed: onShowMap,
+              ),
             ),
           ),
         ),
