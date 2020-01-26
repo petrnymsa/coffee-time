@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:coffee_time/data/models/comment.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   group('fromJson', () {
-    test('Given valid comment json, should return comment model', () {
+    test('Given valid comment json, should return comment model', () async {
+      await initializeDateFormatting('en');
       var jsonInput = r'''{ "author_name": "Cob Peasee",
                 "rating": 4,
                 "relative_time_description": "6/19/2019",

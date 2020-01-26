@@ -71,6 +71,6 @@ class CafeDetailModel extends CafeDetailEntity {
   }
 
   Map<String, dynamic> toJson() {
-    return null;
+    return null; //todo implement
   }
 }

@@ -7,8 +7,13 @@ import 'package:coffee_time/data/models/contact.dart';
 import 'package:coffee_time/data/models/location.dart';
 import 'package:coffee_time/data/models/photo.dart';
 
-String readFixture(String name) =>
-    File('test/fixtures/$name').readAsStringSync();
+String fixture(String name) {
+  var dir = Directory.current.path;
+  if (dir.endsWith('test')) {
+    dir = dir.replaceAll('test', '');
+  }
+  return File('$dir/test/fixtures/$name').readAsStringSync();
+}
 
 CafeModel exampleCafeModel() => CafeModel(
       id: "7157b595-d704-457f-8aae-539dd928bd0d",
