@@ -18,8 +18,8 @@
             </intent-filter>
         </activity>
 
-
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD8N9OGte_-1us--j7je7AbrzKhrpxoGOc"/>
+        
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="${googleMapApiKey}"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
