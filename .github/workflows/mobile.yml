@@ -12,24 +12,18 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
          channel: 'stable' # or: 'dev' or 'beta'
-    #- name: 'upgrade'
-    #  run: flutter upgrade
     # Get flutter packages
     - name: 'pub get'
-      run: |
-         cd mobile 
-         flutter pub get
+      working-directory: mobile
+      run: flutter pub get
     # Build
     - name: 'build'
-      run: |
-         cd mobile
-         flutter build aot
+      working-directory: mobile
+      run: flutter build aot
     - name: 'analyze'
-      run: |
-         cd mobile
-         flutter analyze --no-pub
+      working-directory: mobile
+      run: flutter analyze --no-pub
     - name: 'test'
       if: always()
-      run: |
-         cd mobile
-         flutter test
+      working-directory: mobile
+      run: flutter test
