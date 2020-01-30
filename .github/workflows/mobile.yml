@@ -3,6 +3,7 @@ name: 'Mobile - Build and test'
 on:
    push:
       paths: mobile/**
+      branches: [feature/**, dev]      
    pull_request:
       paths: mobile/**
 jobs:
