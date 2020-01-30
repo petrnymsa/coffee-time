@@ -12,3 +12,7 @@ A clear and concise description of what the problem is.
 
 **Proposed solution**
 A clear and concise description of what you want to happen.
+
+**Definition of done**
+
+- [x] Example 
