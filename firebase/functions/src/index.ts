@@ -1,5 +1,11 @@
-import * as functions from 'firebase-functions';
+import express = require('express');
+const app = express();
 
-export const helloWorld = functions.https.onRequest((request, response) => {
-    response.send("Hello from function!");
+app.get('/', (req, res) => {
+    res.send('hello dsgsdsgda');
+
+
 });
+
+
+app.listen(3000);
