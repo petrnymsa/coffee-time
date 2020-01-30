@@ -123,12 +123,14 @@ Coffee API is divided to two parts - `Places` and `Tags`.
 
 ### Places
 
-| Uri                      | Method | What                             | Application relevance            |
-| ------------------------ | ------ | -------------------------------- | -------------------------------- |
-| /nearby?parameters       | GET    | Neraby cafes                     | Cafe list                        |
-| /find?parameters         | GET    | Cafes within area based on query | Cafe list                        |
-| /detail/<place_id>       | GET    | Place's details.                 | Detail page                      |
-| /photo/<photo_reference> | GET    | Photo                            | Cafe tile / Detail page carousel |
+Each (besides /photo) place request has to start with `language` code. 
+
+| Uri                             | Method | What                             | Application relevance            |
+| ------------------------------- | ------ | -------------------------------- | -------------------------------- |
+| /\<language\>/nearby?parameters | GET    | Nearby cafes                     | Cafe list                        |
+| /\<language\>/find?parameters   | GET    | Cafes within area based on query | Cafe list                        |
+| /\<language\>/detail/<place_id> | GET    | Place's details.                 | Detail page                      |
+| /photo/<photo_reference>        | GET    | Photo                            | Cafe tile / Detail page carousel |
 
 ### Tags
 
