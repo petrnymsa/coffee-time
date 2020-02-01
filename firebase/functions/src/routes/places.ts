@@ -3,6 +3,8 @@ import * as google from '../google';
 import { logRequestError } from '../logger';
 import { TagsRepository } from '../firebase/tags';
 
+//todo documentation
+
 export const places = (tagsRepository: TagsRepository): Router => {
 
     const router = Router();
@@ -36,10 +38,11 @@ export const places = (tagsRepository: TagsRepository): Router => {
 
             let places = await google.getNearby(language, location, radius, opennow, pagetoken);
 
-            //todo check status  first
+            //todo check status for OK  first
+
             for (let place of places.results) {
-                //todo read tags for each place
-                place.tags = ['wifi', 'beer'];
+                const tags = await tagsRepository.getByPlaceId(place.place_id);
+                place.tags = tags;
             }
 
             res.send(places);
@@ -73,8 +76,8 @@ export const places = (tagsRepository: TagsRepository): Router => {
             let places = await google.findPlaces(input, language, location, radius);
             //todo check status  first
             for (let place of places.candidates) {
-                //todo read tags for each place
-                place.tags = ['wifi', 'beer'];
+                const tags = await tagsRepository.getByPlaceId(place.place_id);
+                place.tags = tags;
             }
 
             res.send(places);
