@@ -1,20 +1,62 @@
-import express = require('express');
+import { Router } from 'express';
+import { logRequestError } from '../logger';
+import { TagsRepository, NotFound } from '../firebase/tags';
+import { TagReputation } from '../models/tag';
 
-const router = express.Router();
+//todo document methods
 
-router.get('/', (req, res) => {
+export const tags = (tagsRepository: TagsRepository): Router => {
 
-    res.send('All tags');
-});
+    const router = Router();
 
-router.get('/:placeId', (req, res) => {
+    router.get('/', async (req, res) => {
+        try {
+            const tags = await tagsRepository.all();
+            res.json(tags);
+        }
+        catch (err) {
+            logRequestError(req, err);
+            res.status(500);
+            res.send(err.message);
+        }
+    });
 
-    res.send(`Getting tags for ${req.params.placeId}`);
-});
+    router.get('/:placeId', async (req, res) => {
+        try {
+            const tags = await tagsRepository.getByPlaceId(req.params.placeId);
+            res.json(tags)
+        }
+        catch (err) {
+            logRequestError(req, err);
 
-router.post('/:placeId', (req, res) => {
+            if (err instanceof NotFound) {
+                res.status(400);
+            } else {
+                res.status(500);
+            }
 
-    res.send(`Update tags for ${req.params.placeId}`);
-});
+            res.send(err.message);
+        }
 
-module.exports = router;
+    });
+
+    router.post('/:placeId', async (req, res) => {
+        console.log(req.body);
+        const data: TagReputation[] = req.body;
+        const tags = data.map((d) => new TagReputation(d.id, d.likes, d.dislikes));
+        try {
+            await tagsRepository.updateTags(req.params.placeId, tags);
+            res.status(204);
+            res.end();
+        } catch (err) {
+            logRequestError(req, err);
+
+            res.status(500);
+            res.send(err.message);
+        }
+
+
+    });
+
+    return router;
+}
