@@ -1,15 +1,19 @@
 
 declare module 'express-serve-static-core' {
     interface Request {
-        language?: string
+        language: string
     }
 }
 
-import express = require('express');
-const app = express();
-
+import * as express from 'express';
+import * as dotenv from 'dotenv';
+import { ValidationError, getPhoto } from './google';
 const places = require('./routes/places');
 const tags = require('./routes/tags');
+
+const app = express();
+// initialize dotenv
+dotenv.config();
 
 app.use(express.json());
 
@@ -22,15 +26,27 @@ app.param('language', (req, res, next, value) => {
 app.use('/:language', places);
 // Tags routes
 app.use('/tags', tags);
-// Detail
-app.get('/detail/:id', (req, res) => {
-    const id = req.params.id
-    res.send(`detail for ${id}`);
-});
 // Photo 
-app.get('/photo/:id', (req, res) => {
-    const id = req.params.id
-    res.send(`photo for ${id}`);
+app.get('/photo/:id', async (req, res) => {
+    try {
+        const maxHeight = req.query.maxheight;
+        const maxWidth = req.query.maxwidth;
+
+        const response = await getPhoto(req.params.id, maxHeight, maxWidth);
+        const photo = Buffer.from(response.body, 'base64');
+
+        res.header(response.headers);
+        res.send(photo);
+    }
+    catch (err) {
+        if (err instanceof ValidationError) {
+            res.status(400);
+            res.send(err.message);
+        } else {
+            res.status(500);
+            res.send(err.message);
+        }
+    }
 });
 
 app.listen(3000);
