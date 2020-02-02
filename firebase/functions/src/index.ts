@@ -13,6 +13,7 @@ import { placesRoute } from './routes/places';
 import { tagsRoute } from './routes/tags';
 import { TagsRepository } from './firebase/tags'
 import { db } from './firebase/connection';
+import { logError } from './logger';
 const cors = require('cors');
 
 
@@ -58,16 +59,20 @@ app.get('/photo/:id', async (req, res) => {
         res.send(photo);
     }
     catch (err) {
+        logError(err);
         if (err instanceof ValidationError) {
             res.status(400);
             res.send(err.message);
         } else {
-            res.status(500);
-            res.send(err.message);
+            if (err.statusCode < 500) {
+                //   console.log(err);
+                res.status(err.statusCode);
+                res.send('Bad usage. Check photoreference.');
+            } else {
+                res.status(500).send(err);
+            }
         }
     }
 });
-
-//app.listen(3000);
 
 export const api = firebase.https.onRequest(app);

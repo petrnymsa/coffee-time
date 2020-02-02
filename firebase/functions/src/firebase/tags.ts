@@ -16,7 +16,6 @@ export class TagsRepository {
 
         return snapshot.docs.map((doc) => {
             const data = doc.data();
-            console.log(data);
             return new Tag(doc.id, data.title, data.icon);
         });
     }
