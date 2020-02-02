@@ -16,7 +16,6 @@ import { db } from './firebase/connection';
 import { logError } from './logger';
 const cors = require('cors');
 
-
 //initialize app
 const app = express();
 //initialize tags repository
@@ -75,4 +74,4 @@ app.get('/photo/:id', async (req, res) => {
     }
 });
 
-export const api = firebase.https.onRequest(app);
+export const api = firebase.region('europe-west1').https.onRequest(app);
