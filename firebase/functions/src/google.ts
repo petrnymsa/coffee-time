@@ -1,5 +1,6 @@
 import * as rp from 'request-promise-native';
 import { stringify as queryString } from 'querystring';
+import { logInfo } from './logger';
 
 //todo documentation
 export class ValidationError extends Error {
@@ -23,35 +24,41 @@ async function getResponse(url: string): Promise<any> {
     return await rp(options);
 }
 
-export async function getNearby(language: string, location: string, radius: string, openNow?: boolean, pageToken?: string): Promise<any> {
-    const params = {
+export async function getNearby(language: string, location: string, radius: string, openNow?: string, pageToken?: string): Promise<any> {
+    const params: any = {
         type: 'cafe',
         language: language,
         location: location,
         radius: radius,
-        opennow: openNow,
-        pagetoken: pageToken,
         key: process.env.API_KEY
+    }
+    if (openNow || openNow === '') {
+        params.opennow = openNow;
+    }
+
+    if (pageToken) {
+        params.pagetoken = pageToken;
     }
 
     const url = nearbyBaseUri + queryString(params);
+    logInfo(`getNearby: ${url}`);
     return getResponse(url);
 }
 
 export async function findPlaces(input: string, language: string, location?: string, radius?: string): Promise<any> {
-    const params = {
+    const params: any = {
         input: encodeURIComponent(input),
         inputtype: 'textquery',
         language: language,
         fields: 'name,icon,formatted_address,place_id,types,photos,opening_hours,price_level,rating',
         key: process.env.API_KEY,
-        locationBias: '',
     }
 
     if (location && radius) {
-        params.locationBias = `circle:${radius}@${location}`;
+        params.locationbias = `circle:${radius}@${location}`;
     }
     const url = findPlaceBaseUri + queryString(params);
+    logInfo(`findPlaces: ${url}`);
     return getResponse(url);
 }
 
@@ -64,7 +71,7 @@ export async function getPlaceDetail(placeId: string, language: string) {
     }
 
     const url = detailBaseUri + queryString(params);
-
+    logInfo(`getPlaceDetail: ${url}`);
     return getResponse(url);
 }
 

@@ -9,3 +9,7 @@ export const logRequestError = (req: Request, err: Error) => {
 export const logError = (err: Error) => {
     console.error(err.message);
 }
+
+export const logInfo = (msg: string) => {
+    console.info(msg);
+}
