@@ -1,5 +1,6 @@
 import { Tag, TagReputation } from "../models/tag";
-import { logError } from "../logger";
+
+//todo documentation
 
 export class NotFound extends Error {
     constructor(message: string) {

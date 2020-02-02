@@ -7,11 +7,13 @@ declare module 'express-serve-static-core' {
 
 import * as express from 'express';
 import * as dotenv from 'dotenv';
+import * as firebase from 'firebase-functions';
 import { ValidationError, getPhoto } from './google';
 import { places } from './routes/places';
 import { tags } from './routes/tags';
 import { TagsRepository } from './firebase/tags'
 import { db } from './firebase/connection';
+const cors = require('cors');
 
 
 //initialize app
@@ -21,8 +23,17 @@ const tagsRepository = new TagsRepository(db);
 // initialize dotenv
 dotenv.config();
 
+app.use(cors({ origin: true }))
 // accept and parse JSON content-type
 app.use(express.json());
+
+// Rewrite Firebase hosting requests: /api/:path => /:path
+app.use((req, res, next) => {
+    if (req.url.indexOf(`/api/`) === 0) {
+        req.url = req.url.substring('api'.length + 1);
+    }
+    next();
+});
 
 // add language param to request
 app.param('language', (req, res, next, value) => {
@@ -57,6 +68,6 @@ app.get('/photo/:id', async (req, res) => {
     }
 });
 
-app.listen(3000);
+//app.listen(3000);
 
-//todo export to cloud function
+export const api = firebase.https.onRequest(app);

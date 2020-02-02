@@ -1,3 +1,5 @@
+//todo documentation
+
 export class Tag {
     constructor(
         public id: string,

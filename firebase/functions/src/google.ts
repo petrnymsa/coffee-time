@@ -1,7 +1,7 @@
 import * as rp from 'request-promise-native';
 import { stringify as queryString } from 'querystring';
 
-
+//todo documentation
 export class ValidationError extends Error {
     constructor(message: string) {
         super(message);
