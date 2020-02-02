@@ -38,11 +38,11 @@ export const places = (tagsRepository: TagsRepository): Router => {
 
             let places = await google.getNearby(language, location, radius, opennow, pagetoken);
 
-            //todo check status for OK  first
-
-            for (let place of places.results) {
-                const tags = await tagsRepository.getByPlaceId(place.place_id);
-                place.tags = tags;
+            if (places.status === 'OK') {
+                for (let place of places.results) {
+                    const tags = await tagsRepository.getByPlaceId(place.place_id);
+                    place.tags = tags;
+                }
             }
 
             res.send(places);
@@ -74,10 +74,12 @@ export const places = (tagsRepository: TagsRepository): Router => {
             const radius = req.query.radius;
 
             let places = await google.findPlaces(input, language, location, radius);
-            //todo check status  first
-            for (let place of places.candidates) {
-                const tags = await tagsRepository.getByPlaceId(place.place_id);
-                place.tags = tags;
+
+            if (places.status === 'OK') {
+                for (let place of places.candidates) {
+                    const tags = await tagsRepository.getByPlaceId(place.place_id);
+                    place.tags = tags;
+                }
             }
 
             res.send(places);
