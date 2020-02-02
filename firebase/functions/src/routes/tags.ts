@@ -5,7 +5,7 @@ import { TagReputation } from '../models/tag';
 
 //todo document methods
 
-export const tags = (tagsRepository: TagsRepository): Router => {
+export const tagsRoute = (tagsRepository: TagsRepository): Router => {
 
     const router = Router();
 

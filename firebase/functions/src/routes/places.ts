@@ -5,7 +5,7 @@ import { TagsRepository } from '../firebase/tags';
 
 //todo documentation
 
-export const places = (tagsRepository: TagsRepository): Router => {
+export const placesRoute = (tagsRepository: TagsRepository): Router => {
 
     const router = Router();
     /**
@@ -36,16 +36,16 @@ export const places = (tagsRepository: TagsRepository): Router => {
             const opennow = req.query.opennow;
             const pagetoken = req.query.pagetoken;
 
-            let places = await google.getNearby(language, location, radius, opennow, pagetoken);
+            const nearbyPlaces = await google.getNearby(language, location, radius, opennow, pagetoken);
 
-            if (places.status === 'OK') {
-                for (let place of places.results) {
+            if (nearbyPlaces.status === 'OK') {
+                for (const place of nearbyPlaces.results) {
                     const tags = await tagsRepository.getByPlaceId(place.place_id);
                     place.tags = tags;
                 }
             }
 
-            res.send(places);
+            res.send(nearbyPlaces);
         }
         catch (err) {
             logRequestError(req, err);
@@ -73,16 +73,16 @@ export const places = (tagsRepository: TagsRepository): Router => {
             const location = req.query.location;
             const radius = req.query.radius;
 
-            let places = await google.findPlaces(input, language, location, radius);
+            const foundPlaces = await google.findPlaces(input, language, location, radius);
 
-            if (places.status === 'OK') {
-                for (let place of places.candidates) {
+            if (foundPlaces.status === 'OK') {
+                for (const place of foundPlaces.candidates) {
                     const tags = await tagsRepository.getByPlaceId(place.place_id);
                     place.tags = tags;
                 }
             }
 
-            res.send(places);
+            res.send(foundPlaces);
         }
         catch (err) {
             logRequestError(req, err);

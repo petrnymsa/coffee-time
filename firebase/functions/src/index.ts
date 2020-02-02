@@ -9,8 +9,8 @@ import * as express from 'express';
 import * as dotenv from 'dotenv';
 import * as firebase from 'firebase-functions';
 import { ValidationError, getPhoto } from './google';
-import { places } from './routes/places';
-import { tags } from './routes/tags';
+import { placesRoute } from './routes/places';
+import { tagsRoute } from './routes/tags';
 import { TagsRepository } from './firebase/tags'
 import { db } from './firebase/connection';
 const cors = require('cors');
@@ -42,9 +42,9 @@ app.param('language', (req, res, next, value) => {
 });
 
 // Find places routes
-app.use('/:language', places(tagsRepository));
+app.use('/:language', placesRoute(tagsRepository));
 // Tags routes
-app.use('/tags', tags(tagsRepository));
+app.use('/tags', tagsRoute(tagsRepository));
 // Photo 
 app.get('/photo/:id', async (req, res) => {
     try {

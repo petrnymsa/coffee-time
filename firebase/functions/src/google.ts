@@ -14,7 +14,7 @@ const detailBaseUri = 'https://maps.googleapis.com/maps/api/place/details/json?'
 const photoBaseUri = 'https://maps.googleapis.com/maps/api/place/photo?'
 
 async function getResponse(url: string): Promise<any> {
-    var options = {
+    const options = {
         uri: url,
         method: 'GET',
         json: true
@@ -39,7 +39,7 @@ export async function getNearby(language: string, location: string, radius: stri
 }
 
 export async function findPlaces(input: string, language: string, location?: string, radius?: string): Promise<any> {
-    let params = {
+    const params = {
         input: encodeURIComponent(input),
         inputtype: 'textquery',
         language: language,
@@ -90,7 +90,7 @@ export async function getPhoto(photoId: string, maxHeight?: number, maxWidth?: n
 
     const url = photoBaseUri + queryString(params);
 
-    var options = {
+    const options = {
         uri: url,
         method: 'GET',
         resolveWithFullResponse: true,
