@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { logRequestError } from '../logger';
-import { TagsRepository, NotFound } from '../firebase/tags';
+import { TagsRepository } from '../firebase/tags';
 import { TagUpdate } from '../models/tag';
 
 //todo document methods
@@ -27,13 +27,7 @@ export const tagsRoute = (tagsRepository: TagsRepository): Router => {
         }
         catch (err) {
             logRequestError(req, err);
-
-            if (err instanceof NotFound) {
-                res.status(400);
-            } else {
-                res.status(500);
-            }
-
+            res.status(500);
             res.json(err.message);
         }
 

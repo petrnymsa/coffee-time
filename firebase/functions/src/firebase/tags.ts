@@ -2,11 +2,6 @@ import { Tag, TagReputation, TagUpdate, TagChange } from "../models/tag";
 const FieldValue = require('firebase-admin').firestore.FieldValue;
 //todo documentation
 
-export class NotFound extends Error {
-    constructor(message: string) {
-        super(message);
-    }
-}
 
 export class TagsRepository {
     constructor(private db: FirebaseFirestore.Firestore) { }
