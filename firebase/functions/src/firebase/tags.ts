@@ -1,11 +1,12 @@
 import { Tag, TagReputation, TagUpdate, TagChange } from "../models/tag";
 const FieldValue = require('firebase-admin').firestore.FieldValue;
-//todo documentation
-
 
 export class TagsRepository {
     constructor(private db: FirebaseFirestore.Firestore) { }
 
+    /**
+     * @returns All existing tags
+     */
     async all(): Promise<Tag[]> {
         const snapshot = await this.db.collection('tags').get();
 
@@ -15,6 +16,10 @@ export class TagsRepository {
         });
     }
 
+    /**
+     * @param placeId place_id obtained from Google Places API search
+     * @returns All asocitaed tags with given placeId
+     */
     async getByPlaceId(placeId: string): Promise<TagReputation[]> {
         const cafeRef = this.db.collection('cafeTags').doc(placeId);
 
@@ -27,6 +32,11 @@ export class TagsRepository {
         });
     }
 
+    /**
+     * Updates given tags at place identified by placeId
+     * @param placeId place_id obtained from Google Places API search
+     * @param tags All updated tags
+     */
     async updateTags(placeId: string, tags: TagUpdate[]) {
         const cafeRef = this.db.collection('cafeTags').doc(placeId);
 

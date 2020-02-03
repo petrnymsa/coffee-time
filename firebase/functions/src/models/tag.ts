@@ -1,5 +1,6 @@
-//todo documentation
-
+/**
+ * Represents basic Tag structure
+ */
 export class Tag {
     constructor(
         public id: string,
@@ -7,6 +8,10 @@ export class Tag {
         public icon: string) { }
 }
 
+/**
+ * Asociated tag with place. 
+ * Contains information about likes and dislikes and computed score.
+ */
 export class TagReputation {
 
     public score: number;
@@ -26,11 +31,17 @@ export class TagReputation {
     }
 }
 
+/**
+ * Represents tag update - like or dislike
+ */
 export enum TagChange {
     like = 'like',
     dislike = 'dislike'
 }
 
+/**
+ * Represents concrete tag update. 
+ */
 export class TagUpdate {
     constructor(
         public id: string,

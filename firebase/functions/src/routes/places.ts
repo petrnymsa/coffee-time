@@ -3,8 +3,6 @@ import * as google from '../google';
 import { logRequestError } from '../logger';
 import { TagsRepository } from '../firebase/tags';
 
-//todo documentation
-
 export const placesRoute = (tagsRepository: TagsRepository): Router => {
 
     const router = Router();

@@ -2,7 +2,6 @@ import * as rp from 'request-promise-native';
 import { stringify as queryString } from 'querystring';
 import { logInfo } from './logger';
 
-//todo documentation
 export class ValidationError extends Error {
     constructor(message: string) {
         super(message);
@@ -14,6 +13,7 @@ const findPlaceBaseUri = 'https://maps.googleapis.com/maps/api/place/findplacefr
 const detailBaseUri = 'https://maps.googleapis.com/maps/api/place/details/json?';
 const photoBaseUri = 'https://maps.googleapis.com/maps/api/place/photo?'
 
+// call given url - expect GET endpoint, with json
 async function getResponse(url: string): Promise<any> {
     const options = {
         uri: url,
@@ -24,6 +24,14 @@ async function getResponse(url: string): Promise<any> {
     return await rp(options);
 }
 
+/**
+ * Search neraby cafes base on location and radius.  
+ * @param language Language to use
+ * @param location Search at given location
+ * @param radius Circular radius in meters
+ * @param openNow [optional] Return place only if is currently open
+ * @param pageToken [optional] If provided returns next page. Other parameters are ignored. 
+ */
 export async function getNearby(language: string, location: string, radius: string, openNow?: string, pageToken?: string): Promise<any> {
     const params: any = {
         type: 'cafe',
@@ -44,7 +52,13 @@ export async function getNearby(language: string, location: string, radius: stri
     logInfo(`getNearby: ${url}`);
     return getResponse(url);
 }
-
+/**
+ * Search places based on user text query
+ * @param input Text input to search
+ * @param language Language to use
+ * @param location [optional] If provided, circular locaitonbias is used at given location
+ * @param radius [optional] Must be provided together with location. Circular radius in meters
+ */
 export async function findPlaces(input: string, language: string, location?: string, radius?: string): Promise<any> {
     const params: any = {
         input: encodeURIComponent(input),
@@ -61,8 +75,12 @@ export async function findPlaces(input: string, language: string, location?: str
     logInfo(`findPlaces: ${url}`);
     return getResponse(url);
 }
-
-export async function getPlaceDetail(placeId: string, language: string) {
+/**
+ * Returns place details
+ * @param placeId Obtained place_id from google api
+ * @param language Language to use
+ */
+export async function getPlaceDetail(placeId: string, language: string): Promise<any> {
     const params = {
         place_id: placeId,
         language: language,
@@ -74,8 +92,13 @@ export async function getPlaceDetail(placeId: string, language: string) {
     logInfo(`getPlaceDetail: ${url}`);
     return getResponse(url);
 }
-
-export async function getPhoto(photoId: string, maxHeight?: number, maxWidth?: number) {
+/**
+ * 
+ * @param photoId photoreference obtained from google api
+ * @param maxHeight Max height which photo should have. Value must be at interval [1, 1600]
+ * @param maxWidth Max width which photo should have. Value must be at interval [1, 1600]
+ */
+export async function getPhoto(photoId: string, maxHeight?: number, maxWidth?: number): Promise<any> {
     if (!maxHeight && !maxWidth) {
         throw new ValidationError('Either maxheight or maxwidth must be provided');
     }

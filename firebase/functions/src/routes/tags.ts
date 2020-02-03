@@ -3,8 +3,6 @@ import { logRequestError } from '../logger';
 import { TagsRepository } from '../firebase/tags';
 import { TagUpdate } from '../models/tag';
 
-//todo document methods
-
 export const tagsRoute = (tagsRepository: TagsRepository): Router => {
 
     const router = Router();
