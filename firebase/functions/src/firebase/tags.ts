@@ -1,5 +1,5 @@
-import { Tag, TagReputation } from "../models/tag";
-
+import { Tag, TagReputation, TagUpdate, TagChange } from "../models/tag";
+const FieldValue = require('firebase-admin').firestore.FieldValue;
 //todo documentation
 
 export class NotFound extends Error {
@@ -32,12 +32,22 @@ export class TagsRepository {
         });
     }
 
-    async updateTags(placeId: string, tags: TagReputation[]) {
+    async updateTags(placeId: string, tags: TagUpdate[]) {
         const cafeRef = this.db.collection('cafeTags').doc(placeId);
 
         return Promise.all(tags.map((tag) => {
-            const map = tag.toUpdateMap();
-            return cafeRef.collection('tags').doc(tag.id).set(map, { merge: true });
+            const docRef = cafeRef.collection('tags').doc(tag.id);
+
+            if (tag.change === TagChange.like) {
+                const inc = FieldValue.increment(1);
+                return docRef.set({
+                    likes: inc
+                }, { merge: true });
+            } else {
+                return docRef.set({
+                    dislikes: FieldValue.increment(1)
+                }, { merge: true });
+            }
         }));
     }
 }

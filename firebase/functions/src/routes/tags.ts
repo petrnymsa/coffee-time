@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { logRequestError } from '../logger';
 import { TagsRepository, NotFound } from '../firebase/tags';
-import { TagReputation } from '../models/tag';
+import { TagUpdate } from '../models/tag';
 
 //todo document methods
 
@@ -41,21 +41,22 @@ export const tagsRoute = (tagsRepository: TagsRepository): Router => {
     });
 
     router.post('/:placeId', async (req, res) => {
-        console.log(req.body);
-        const data: TagReputation[] = req.body;
-        const tags = data.map((d) => new TagReputation(d.id, d.likes, d.dislikes));
+        const data: TagUpdate[] = req.body;
+        const updates = data.map((d) => {
+
+            if (d.change !== 'like' && d.change !== 'dislike') {
+                res.status(400).json(`Provided tag update: ${d.id},${d.change} does not have valid change value.`);
+            }
+
+            return new TagUpdate(d.id, d.change);
+        });
         try {
-            await tagsRepository.updateTags(req.params.placeId, tags);
-            res.status(204);
-            res.end();
+            await tagsRepository.updateTags(req.params.placeId, updates);
+            res.status(204).end();
         } catch (err) {
             logRequestError(req, err);
-
-            res.status(500);
-            res.send(err.message);
+            res.status(500).send(err.message);
         }
-
-
     });
 
     return router;

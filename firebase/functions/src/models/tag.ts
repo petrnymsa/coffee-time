@@ -25,3 +25,15 @@ export class TagReputation {
         }
     }
 }
+
+export enum TagChange {
+    like = 'like',
+    dislike = 'dislike'
+}
+
+export class TagUpdate {
+    constructor(
+        public id: string,
+        public change: TagChange
+    ) { }
+}
