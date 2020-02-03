@@ -18,15 +18,13 @@ export const placesRoute = (tagsRepository: TagsRepository): Router => {
      */
     router.get('/nearby', async (req, res) => {
         if (!req.query.location) {
-            res.status(400)
-            res.send('location parameter is missing');
-            return;
+            res.status(400);
+            res.json('location parameter is missing');
         }
 
         if (!req.query.radius) {
-            res.status(400)
-            res.send('radius parameter is missing');
-            return;
+            res.status(400);
+            res.json('radius parameter is missing');
         }
 
         try {
@@ -45,12 +43,11 @@ export const placesRoute = (tagsRepository: TagsRepository): Router => {
                 }
             }
 
-            res.send(nearbyPlaces);
+            res.json(nearbyPlaces);
         }
         catch (err) {
             logRequestError(req, err);
-            res.status(500);
-            res.send(err.message);
+            res.status(500).json(err.message);
         }
     });
 
@@ -62,9 +59,7 @@ export const placesRoute = (tagsRepository: TagsRepository): Router => {
      */
     router.get('/find', async (req, res) => {
         if (!req.query.input) {
-            res.status(400)
-            res.send('input parameter is missing');
-            return;
+            res.status(400).json('input parameter is missing');
         }
 
         try {
@@ -82,12 +77,11 @@ export const placesRoute = (tagsRepository: TagsRepository): Router => {
                 }
             }
 
-            res.send(foundPlaces);
+            res.json(foundPlaces);
         }
         catch (err) {
             logRequestError(req, err);
-            res.status(500);
-            res.send(err.message);
+            res.status(500).json(err.message);
         }
     });
 
@@ -98,12 +92,11 @@ export const placesRoute = (tagsRepository: TagsRepository): Router => {
     router.get('/detail/:id', async (req, res) => {
         try {
             const detail = await google.getPlaceDetail(req.params.id, req.language);
-            res.send(detail);
+            res.json(detail);
         }
         catch (err) {
             logRequestError(req, err);
-            res.status(500);
-            res.send(err.message);
+            res.status(500).json(err.message);
         }
     });
 

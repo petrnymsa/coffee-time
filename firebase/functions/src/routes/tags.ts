@@ -16,8 +16,7 @@ export const tagsRoute = (tagsRepository: TagsRepository): Router => {
         }
         catch (err) {
             logRequestError(req, err);
-            res.status(500);
-            res.send(err.message);
+            res.status(500).json(err.message);
         }
     });
 
@@ -35,7 +34,7 @@ export const tagsRoute = (tagsRepository: TagsRepository): Router => {
                 res.status(500);
             }
 
-            res.send(err.message);
+            res.json(err.message);
         }
 
     });
@@ -55,7 +54,7 @@ export const tagsRoute = (tagsRepository: TagsRepository): Router => {
             res.status(204).end();
         } catch (err) {
             logRequestError(req, err);
-            res.status(500).send(err.message);
+            res.status(500).json(err.message);
         }
     });
 
