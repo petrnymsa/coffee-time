@@ -21,7 +21,7 @@ async function getResponse(url: string): Promise<any> {
         json: true
     };
 
-    return await rp(options);
+    return rp(options);
 }
 
 /**
