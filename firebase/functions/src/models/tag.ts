@@ -1,14 +1,4 @@
 /**
- * Represents basic Tag structure
- */
-export class Tag {
-    constructor(
-        public id: string,
-        public title: string,
-        public icon: string) { }
-}
-
-/**
  * Asociated tag with place. 
  * Contains information about likes and dislikes and computed score.
  */

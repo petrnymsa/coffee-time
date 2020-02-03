@@ -1,4 +1,4 @@
-import { Tag, TagReputation, TagUpdate, TagChange } from "../models/tag";
+import { TagReputation, TagUpdate, TagChange } from "../models/tag";
 const FieldValue = require('firebase-admin').firestore.FieldValue;
 
 export class TagsRepository {
@@ -7,12 +7,12 @@ export class TagsRepository {
     /**
      * @returns All existing tags
      */
-    async all(): Promise<Tag[]> {
+    async all(): Promise<FirebaseFirestore.DocumentData[]> {
         const snapshot = await this.db.collection('tags').get();
 
         return snapshot.docs.map((doc) => {
             const data = doc.data();
-            return new Tag(doc.id, data.title, data.icon);
+            return data;
         });
     }
 
