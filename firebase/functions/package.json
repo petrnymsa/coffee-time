@@ -3,10 +3,11 @@
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
+    "watch": "tsc --watch",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
-    "dev": "nodemon --inspect src/index.ts",
+    "monitor": "nodemon --inspect src/index.ts",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
