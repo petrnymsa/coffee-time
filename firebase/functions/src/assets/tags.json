@@ -3,8 +3,7 @@
         "id": "accessible",
         "title": "accessible",
         "icon": {
-            "hex": "f193",
-            "dec": 61843,
+            "code": 61843,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },
@@ -16,8 +15,7 @@
         "id": "baby_friendly",
         "title": "baby friendly",
         "icon": {
-            "hex": "f286",
-            "dec": 62086,
+            "code": 62086,
             "family": "FontAwesomeBrands",
             "package": "font_awesome_flutter"
         }
@@ -26,8 +24,7 @@
         "id": "brunch",
         "title": "brunch",
         "icon": {
-            "hex": "f7ec",
-            "dec": 63468,
+            "code": 63468,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         }
@@ -36,8 +33,7 @@
         "id": "beer",
         "title": "beer",
         "icon": {
-            "hex": "F0FC",
-            "dec": 61692,
+            "code": 61692,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },
@@ -49,8 +45,7 @@
         "id": "credit_card",
         "title": "accept credit card",
         "icon": {
-            "hex": "f09d",
-            "dec": 61597,
+            "code": 61597,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },
@@ -62,8 +57,7 @@
         "id": "dog_friendly",
         "title": "dog friendly",
         "icon": {
-            "hex": "f6d3",
-            "dec": 63187,
+            "code": 63187,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         }
@@ -72,8 +66,7 @@
         "id": "icecream",
         "title": "icecream",
         "icon": {
-            "hex": "f810",
-            "dec": 63504,
+            "code": 63504,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },
@@ -85,8 +78,7 @@
         "id": "no_smoking",
         "title": "no smoking",
         "icon": {
-            "hex": "f54d",
-            "dec": 62797,
+            "code": 62797,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },
@@ -98,8 +90,7 @@
         "id": "parking",
         "title": "parking",
         "icon": {
-            "hex": "f540",
-            "dec": 62784,
+            "code": 62784,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },
@@ -111,8 +102,7 @@
         "id": "quiet_place",
         "title": "quiet place",
         "icon": {
-            "hex": "f4b3",
-            "dec": 62643,
+            "code": 62643,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },
@@ -124,8 +114,7 @@
         "id": "refreshment",
         "title": "refreshment",
         "icon": {
-            "hex": "f2e7",
-            "dec": 62183,
+            "code": 62183,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },
@@ -137,8 +126,7 @@
         "id": "terrace",
         "title": "terrace",
         "icon": {
-            "hex": "",
-            "dec": 0,
+            "code": 0,
             "family": "",
             "package": ""
         },
@@ -150,8 +138,7 @@
         "id": "smoking",
         "title": "smoking",
         "icon": {
-            "hex": "f48d",
-            "dec": 62605,
+            "code": 62605,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },
@@ -163,8 +150,7 @@
         "id": "vegan_friendly",
         "title": "vegan_friendly",
         "icon": {
-            "hex": "f5d1",
-            "dec": 62929,
+            "code": 62929,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         }
@@ -173,8 +159,7 @@
         "id": "wifi",
         "title": "wifi",
         "icon": {
-            "hex": "F1EB",
-            "dec": 61931,
+            "code": 61931,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         }
@@ -183,8 +168,7 @@
         "id": "wine",
         "title": "wine",
         "icon": {
-            "hex": "F4E3",
-            "dec": 62691,
+            "code": 62691,
             "family": "FontAwesomeSolid",
             "package": "font_awesome_flutter"
         },

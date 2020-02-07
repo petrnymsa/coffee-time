@@ -13,11 +13,18 @@ async function exec() {
         let i = 1;
         const count = data.length;
 
+        if (process.argv.length > 2 && process.argv[2] === '-d') {
+            console.warn("Performing collection cleanup...");
+
+            const docs = await db.collection('tags').listDocuments();
+            await Promise.all(docs.map(d => {
+                return d.delete();
+            }));
+        }
+
         data.forEach((d) => {
             const ref = db.collection('tags').doc(d.id);
-
             delete d.id;
-
             batch.set(ref, d, { merge: true });
             console.log(`Processed ${i}\\${count}`);
             i++;
