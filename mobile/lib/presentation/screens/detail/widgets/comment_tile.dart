@@ -1,11 +1,10 @@
-import 'package:coffee_time/domain/entities/comment.dart';
+import 'package:coffee_time/domain/entities/review.dart';
 import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 
 class CommentTile extends StatelessWidget {
-  final CommentEntity comment;
+  final Review comment;
 
   const CommentTile({
     Key key,
@@ -29,20 +28,20 @@ class CommentTile extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  comment.user,
+                  comment.authorName,
                   style: TextStyle(
                     fontSize: 18,
                   ),
                 ),
                 Spacer(),
                 Rating.small(
-                  comment.rating,
+                  comment.rating.toDouble(),
                   displayRating: false,
                 ),
               ],
             ),
             Text(
-              DateFormat.yMMMd().format(comment.posted),
+              comment.relativeTimeDescription,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12.0,
@@ -55,7 +54,7 @@ class CommentTile extends StatelessWidget {
         subtitle: Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: Text(
-            comment.content,
+            comment.text,
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),

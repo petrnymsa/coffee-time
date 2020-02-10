@@ -1,23 +1,30 @@
 import 'package:equatable/equatable.dart';
 
-class ContactEntity extends Equatable {
+class Contact extends Equatable {
   final String address;
-  final String phone;
+  final String formattedPhone;
+  final String internationalPhone;
   final String website;
 
-  ContactEntity({this.address, this.phone, this.website});
+  Contact(
+      {this.address,
+      this.formattedPhone,
+      this.internationalPhone,
+      this.website});
 
   @override
-  List<Object> get props => [address, phone, website];
+  List<Object> get props => [address, formattedPhone, website];
 
-  ContactEntity copyWith({
+  Contact copyWith({
     String address,
-    String phone,
+    String formattedPhone,
+    String internationalPhone,
     String website,
   }) {
-    return ContactEntity(
+    return Contact(
       address: address ?? this.address,
-      phone: phone ?? this.phone,
+      formattedPhone: formattedPhone ?? this.formattedPhone,
+      internationalPhone: internationalPhone ?? this.internationalPhone,
       website: website ?? this.website,
     );
   }

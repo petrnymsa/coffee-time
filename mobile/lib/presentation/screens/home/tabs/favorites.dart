@@ -58,8 +58,8 @@ class FavoritesTab extends StatelessWidget {
             MaterialPageRoute(
                 //todo push named route
                 builder: (_) => DetailScreen(),
-                settings:
-                    RouteSettings(arguments: model.favoriteCafes[i].entity.id)),
+                settings: RouteSettings(
+                    arguments: model.favoriteCafes[i].entity.placeId)),
           );
           model.refreshFavorites(); //! this
         }),

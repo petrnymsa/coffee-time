@@ -1,88 +1,66 @@
 import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/entities/comment.dart';
 import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:coffee_time/domain/entities/location.dart';
+import 'package:coffee_time/domain/entities/opening_hour.dart';
 import 'package:coffee_time/domain/entities/photo.dart';
-import 'package:coffee_time/domain/entities/tag.dart';
+import 'package:coffee_time/domain/entities/review.dart';
+import 'package:coffee_time/domain/entities/tag_reputation.dart';
 
-class CafeDetailEntity extends CafeEntity {
-  final ContactEntity contact;
-  final String cafeUrl;
-  final List<CommentEntity> comments;
+class CafeDetail extends Cafe {
+  final Contact contact;
+  final String url;
+  final int utcOffset;
+  final OpeningHours openingHours;
+  final List<Review> reviews;
 
-  CafeDetailEntity(
-      {String id,
+  CafeDetail(
+      {String placeId,
       String name,
       String address,
       double rating,
-      bool openNow,
       bool isFavorite = false,
-      LocationEntity location,
+      Location location,
       List<PhotoEntity> photos,
-      List<TagEntity> tags,
+      List<TagReputation> tags,
       this.contact,
-      this.cafeUrl,
-      this.comments})
+      this.url,
+      this.openingHours,
+      this.utcOffset,
+      this.reviews})
       : super(
-            id: id,
+            placeId: placeId,
             name: name,
             address: address,
             rating: rating,
-            openNow: openNow,
+            openNow: openingHours.openNow,
             isFavorite: isFavorite,
             location: location,
             photos: photos,
             tags: tags);
 
-  CafeDetailEntity copyWith(
-      {String id,
-      String name,
-      String address,
-      double rating,
-      bool openNow,
-      LocationEntity location,
-      List<PhotoEntity> photos,
-      List<TagEntity> tags,
-      bool isFavorite,
-      ContactEntity contact,
+  factory CafeDetail.fromCafe(Cafe entity,
+      {Contact contact,
       String cafeUrl,
-      List<CommentEntity> comments}) {
-    return CafeDetailEntity(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        address: address ?? this.address,
-        rating: rating ?? this.rating,
-        openNow: openNow ?? this.openNow,
-        location: location ?? this.location,
-        photos: photos ?? this.photos,
-        tags: tags ?? this.tags,
-        isFavorite: isFavorite ?? this.isFavorite,
-        contact: contact ?? this.contact,
-        cafeUrl: cafeUrl ?? this.cafeUrl,
-        comments: comments ?? this.comments);
-  }
-
-  factory CafeDetailEntity.fromCafe(CafeEntity entity,
-      {ContactEntity contact,
-      String cafeUrl,
-      List<CommentEntity> comments,
+      int utcOffset,
+      OpeningHours openingHours,
+      List<Review> reviews,
       List<PhotoEntity> additionalPhotos}) {
-    return CafeDetailEntity(
-      id: entity.id,
-      name: entity.name,
-      address: entity.address,
-      rating: entity.rating,
-      openNow: entity.openNow,
-      isFavorite: entity.isFavorite,
-      location: entity.location,
-      photos: [...entity.photos, ...additionalPhotos],
-      tags: entity.tags,
-      contact: contact,
-      cafeUrl: cafeUrl,
-      comments: comments,
-    );
+    return CafeDetail(
+        placeId: entity.placeId,
+        name: entity.name,
+        address: entity.address,
+        rating: entity.rating,
+        isFavorite: entity.isFavorite,
+        location: entity.location,
+        photos: [...entity.photos, ...additionalPhotos],
+        tags: entity.tags,
+        contact: contact,
+        url: cafeUrl,
+        reviews: reviews,
+        utcOffset: utcOffset,
+        openingHours: openingHours);
   }
 
   @override
-  List<Object> get props => [...super.props, contact, cafeUrl, comments];
+  List<Object> get props => [...super.props, contact, url, reviews];
 }

@@ -18,7 +18,7 @@ class DetailScreen extends StatelessWidget {
 
   DetailScreen({Key key}) : super(key: key);
 
-  String getDistance(CafeEntity cafe, BuildContext context) {
+  String getDistance(Cafe cafe, BuildContext context) {
     double distance =
         Provider.of<CafeListProvider>(context, listen: false).getDistance(cafe);
     return DistanceHelper.getFormattedDistanceFromKm(distance);
@@ -90,8 +90,7 @@ class DetailScreen extends StatelessWidget {
                           address: cafe.address,
                           onShowMap: () async {
                             logger.i('Show map for ${cafe.name}');
-                            if (await canLaunch(cafe.cafeUrl))
-                              launch(cafe.cafeUrl);
+                            if (await canLaunch(cafe.url)) launch(cafe.url);
                           },
                         ),
                         Divider(),
@@ -100,7 +99,7 @@ class DetailScreen extends StatelessWidget {
                         OpeningHoursContainer(),
                         const SizedBox(height: 10.0),
                         TagsContainer(
-                          tags: cafe.tags,
+                          tags: [], //todo obtain tags view model
                           onEdit: () async {
                             final result = await Navigator.of(context).push(
                               MaterialPageRoute(
@@ -123,9 +122,9 @@ class DetailScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 10),
                           primary: false,
                           shrinkWrap: true,
-                          itemCount: cafe.comments.length,
+                          itemCount: cafe.reviews.length,
                           itemBuilder: (_, i) =>
-                              CommentTile(comment: cafe.comments[i]),
+                              CommentTile(comment: cafe.reviews[i]),
                         ),
                         SizedBox(
                           height: 10,
@@ -133,10 +132,10 @@ class DetailScreen extends StatelessWidget {
                         Center(
                           child: RaisedButton.icon(
                             onPressed: () async {
-                              if (await canLaunch(cafe.cafeUrl))
-                                launch(cafe.cafeUrl);
+                              if (await canLaunch(cafe.url))
+                                launch(cafe.url);
                               else
-                                logger.w('Can\'t launch url ${cafe.cafeUrl}');
+                                logger.w('Can\'t launch url ${cafe.url}');
                             },
                             label: Text('Přidat hodnocení'),
                             icon: Icon(FontAwesomeIcons.comment),

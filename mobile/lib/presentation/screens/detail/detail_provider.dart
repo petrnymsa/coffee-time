@@ -7,9 +7,9 @@ class DetailProvider extends BaseProvider<WithoutError> {
   final CafeRepository repository = InMemoryCafeRepository.instance;
   final String cafeId;
 
-  CafeDetailEntity _detailEntity;
+  CafeDetail _detailEntity;
 
-  CafeDetailEntity get detail => _detailEntity;
+  CafeDetail get detail => _detailEntity;
 
   DetailProvider({this.cafeId}) {
     setBusy();

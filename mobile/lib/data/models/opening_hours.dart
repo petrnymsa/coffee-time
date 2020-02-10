@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-//TODO weekday
-
 class DayTimeModel extends Equatable {
   final int day;
   final String time;

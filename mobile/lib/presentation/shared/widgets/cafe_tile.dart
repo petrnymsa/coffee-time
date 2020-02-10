@@ -2,8 +2,9 @@ import 'dart:ui';
 
 import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/core/utils/distance_helper.dart';
-import 'package:coffee_time/domain/entities/cafe.dart';
+import 'package:coffee_time/domain/entities/cafe.dart' as CafeEntity;
 import 'package:coffee_time/domain/entities/tag.dart';
+import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:coffee_time/presentation/models/cafe.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class CafeTile extends StatelessWidget {
     if (onFavoriteTap != null) onFavoriteTap();
   }
 
-  void _onMapTap(CafeEntity cafe) async {
+  void _onMapTap(CafeEntity.Cafe cafe) async {
     if (onMapTap != null) onMapTap();
     //final scheme = 'geo:${loc.lat},${loc.lng}';
 
@@ -80,7 +81,7 @@ class CafeTile extends StatelessWidget {
                             ClipRRect(
                               borderRadius: borderRadius,
                               child: Image.network(
-                                cafe.photos.first?.url,
+                                cafe.photos.first?.url, //todo
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                               ),
@@ -214,14 +215,14 @@ class CafeTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTags(List<TagEntity> tags) {
+  Widget _buildTags(List<TagReputation> tags) {
     return Padding(
       padding: const EdgeInsets.only(left: 2.0, top: 8.0),
       child: Row(
         children: tags
             .map((t) => Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: TagContainer(icon: t.icon),
+                  child: TagContainer(icon: t.tag.icon),
                 ))
             .toList(),
       ),

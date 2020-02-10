@@ -1,13 +1,13 @@
 import 'package:coffee_time/data/repositories/cafe_repository.dart';
-import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:coffee_time/domain/entities/cafe.dart' as CafeEntity;
+import 'package:flutter/foundation.dart';
 
 class Cafe with ChangeNotifier {
-  CafeEntity _entity;
+  CafeEntity.Cafe _entity;
 
   Cafe(this._entity);
 
-  CafeEntity get entity => _entity;
+  CafeEntity.Cafe get entity => _entity;
 
   void toggleFavorite() {
     _entity = _entity.copyWith(isFavorite: !_entity.isFavorite);

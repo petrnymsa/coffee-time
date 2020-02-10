@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactCard extends StatelessWidget {
-  final ContactEntity contact;
+  final Contact contact;
 
   const ContactCard({Key key, @required this.contact}) : super(key: key);
 
@@ -23,8 +23,8 @@ class ContactCard extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () async {
-                if (await canLaunch("tel:${contact.phone}")) {
-                  await launch("tel:${contact.phone}");
+                if (await canLaunch("tel:${contact.formattedPhone}")) {
+                  await launch("tel:${contact.formattedPhone}");
                 }
               },
               child: Container(
@@ -35,7 +35,7 @@ class ContactCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        contact.phone,
+                        contact.formattedPhone,
                         style: TextStyle(fontSize: 16),
                       ),
                     ),

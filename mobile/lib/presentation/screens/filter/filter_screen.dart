@@ -93,7 +93,7 @@ class FilterScreen extends StatelessWidget {
                       label: Text('Vybrat štítky'),
                       icon: Icon(FontAwesomeIcons.plus),
                       onPressed: () async {
-                        final List<TagEntity> addedTags =
+                        final List<Tag> addedTags =
                             await Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => TagAddScreen(
                                       model.notAddedTagsYet,
@@ -136,7 +136,7 @@ class FilterScreen extends StatelessWidget {
     ];
   }
 
-  Widget _buildTag(TagEntity tag, FilterProvider model) {
+  Widget _buildTag(Tag tag, FilterProvider model) {
     return TagInput(
       tag: tag,
       onDeleted: () => model.updateChosenTag(tag),

@@ -99,7 +99,7 @@ class _CafeListTabState extends State<CafeListTab> {
               ),
               IconButton(
                 icon: Icon(FontAwesomeIcons.timesCircle, size: 16),
-                onPressed: () => model.updateFilter(FilterEntity.defaultFilter),
+                onPressed: () => model.updateFilter(Filter.defaultFilter),
               ),
             ],
           ),
@@ -142,7 +142,7 @@ class _CafeListTabState extends State<CafeListTab> {
   Widget _buildFilterTags(CafeListProvider model) {
     final tags = model.currentFilter.tags;
 
-    _removeTag(TagEntity t) {
+    _removeTag(Tag t) {
       tags.remove(t);
       model.updateFilter(model.currentFilter.copyWith(tags: tags));
     }
@@ -186,8 +186,8 @@ class _CafeListTabState extends State<CafeListTab> {
                   MaterialPageRoute(
                       //todo push named route
                       builder: (_) => DetailScreen(),
-                      settings:
-                          RouteSettings(arguments: data[cafeIndex].entity.id)),
+                      settings: RouteSettings(
+                          arguments: data[cafeIndex].entity.placeId)),
                 );
                 Provider.of<CafeListProvider>(context, listen: false).refresh();
               }),
