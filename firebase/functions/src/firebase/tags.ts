@@ -12,6 +12,7 @@ export class TagsRepository {
 
         return snapshot.docs.map((doc) => {
             const data = doc.data();
+            data.id = doc.id;
             return data;
         });
     }
