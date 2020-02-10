@@ -29,6 +29,6 @@ jobs:
       working-directory: mobile
       run: flutter analyze --no-pub
     - name: 'test'
-      if: always()
+      if: always() && !cancelled()
       working-directory: mobile
       run: flutter test
