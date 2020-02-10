@@ -25,9 +25,9 @@ jobs:
     - name: 'build'
       working-directory: mobile
       run: flutter build aot
-    - name: 'analyze'
-      working-directory: mobile
-      run: flutter analyze --no-pub
+    #- name: 'analyze'
+    #  working-directory: mobile
+    #  run: flutter analyze --no-pub
     - name: 'test'
       if: always() && !cancelled()
       working-directory: mobile
