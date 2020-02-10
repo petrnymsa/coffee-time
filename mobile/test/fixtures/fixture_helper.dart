@@ -33,6 +33,14 @@ OpeningHoursModel openingHoursExample() {
     PeriodModel(
         close: DayTimeModel(day: 2, time: "0000"),
         open: DayTimeModel(day: 1, time: "0700"))
+  ], weekdayText: [
+    "pondělí: 7:00–24:00",
+    "úterý: 7:00–24:00",
+    "středa: 7:00–24:00",
+    "čtvrtek: 7:00–24:00",
+    "pátek: 7:00–24:00",
+    "sobota: 7:00–24:00",
+    "neděle: 7:00–24:00"
   ]);
 }
 

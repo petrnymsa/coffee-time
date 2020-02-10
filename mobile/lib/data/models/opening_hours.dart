@@ -99,16 +99,15 @@ class PeriodModel extends Equatable {
 class OpeningHoursModel extends Equatable {
   final bool openNow;
   final List<PeriodModel> periods;
+  final List<String> weekdayText;
 
-  OpeningHoursModel({
-    this.openNow,
-    this.periods,
-  });
+  OpeningHoursModel({this.openNow, this.periods, this.weekdayText});
 
   Map<String, dynamic> toMap() {
     return {
       'open_now': openNow,
       'periods': List<dynamic>.from(periods.map((x) => x.toMap())),
+      'weekday_text': weekdayText
     };
   }
 
@@ -116,10 +115,10 @@ class OpeningHoursModel extends Equatable {
     if (map == null) return null;
 
     return OpeningHoursModel(
-      openNow: map['open_now'],
-      periods: List<PeriodModel>.from(
-          map['periods']?.map((x) => PeriodModel.fromMap(x))),
-    );
+        openNow: map['open_now'],
+        periods: List<PeriodModel>.from(
+            map['periods']?.map((x) => PeriodModel.fromMap(x))),
+        weekdayText: List<String>.from(map['weekday_text']?.map((x) => x)));
   }
 
   String toJson() => json.encode(toMap());
@@ -128,18 +127,17 @@ class OpeningHoursModel extends Equatable {
       fromMap(json.decode(source));
 
   @override
-  String toString() => 'OpeningHoursModel openNow: $openNow, periods: $periods';
+  String toString() =>
+      'OpeningHoursModel openNow: $openNow, periods: $periods, weekday: $weekdayText';
 
-  OpeningHoursModel copyWith({
-    bool openNow,
-    List<PeriodModel> periods,
-  }) {
+  OpeningHoursModel copyWith(
+      {bool openNow, List<PeriodModel> periods, List<String> weekdayText}) {
     return OpeningHoursModel(
-      openNow: openNow ?? this.openNow,
-      periods: periods ?? this.periods,
-    );
+        openNow: openNow ?? this.openNow,
+        periods: periods ?? this.periods,
+        weekdayText: weekdayText ?? this.weekdayText);
   }
 
   @override
-  List<Object> get props => [openNow, periods];
+  List<Object> get props => [openNow, periods, weekdayText];
 }
