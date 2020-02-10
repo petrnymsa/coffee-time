@@ -1,20 +1,49 @@
-import 'package:coffee_time/domain/entities/location.dart';
-import 'package:meta/meta.dart';
+import 'dart:convert';
 
-class LocationModel extends LocationEntity {
-  LocationModel({
-    @required double lat,
-    @required double lng,
-  }) : super(lat, lng);
+import 'package:equatable/equatable.dart';
 
-  factory LocationModel.fromJson(Map<String, dynamic> json) {
+class LocationModel extends Equatable {
+  final double lat;
+  final double lng;
+
+  const LocationModel({
+    this.lat,
+    this.lng,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'lat': lat,
+      'lng': lng,
+    };
+  }
+
+  static LocationModel fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
     return LocationModel(
-      lat: json['lat'].toDouble(),
-      lng: json['lng'].toDouble(),
+      lat: map['lat'],
+      lng: map['lng'],
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {'lat': lat, 'lng': lng};
+  String toJson() => json.encode(toMap());
+
+  static LocationModel fromJson(String source) => fromMap(json.decode(source));
+
+  LocationModel copyWith({
+    double lat,
+    double lng,
+  }) {
+    return LocationModel(
+      lat: lat ?? this.lat,
+      lng: lng ?? this.lng,
+    );
   }
+
+  @override
+  String toString() => 'LocationModel lat: $lat, lng: $lng';
+
+  @override
+  List<Object> get props => [lat, lng];
 }

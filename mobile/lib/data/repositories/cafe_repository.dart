@@ -120,13 +120,13 @@ class InMemoryCafeRepository implements CafeRepository {
   Future init() async {
     initialized = true;
     cafes = _predefinedCafes;
-    cafes.addAll(await mock.readCafeData());
+    cafes.addAll([]);
 
     for (final pd in _cafeDetails.keys) {
       details.add(_cafeDetails[pd]);
     }
     final moreDetails = await mock.readCadeDetailData();
-    details.addAll(moreDetails);
+    details.addAll([]);
 
     addresses = details.map((d) => d.contact.address).toSet().toList();
 

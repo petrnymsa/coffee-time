@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-class TagModel {
+class TagModel extends Equatable {
   final String id;
   final String title;
   final IconData icon;
@@ -73,18 +74,5 @@ class TagModel {
   }
 
   @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is TagModel &&
-        o.id == id &&
-        o.title == title &&
-        o.icon == icon &&
-        o.translations == translations;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^ title.hashCode ^ icon.hashCode ^ translations.hashCode;
-  }
+  List<Object> get props => [id, title, icon, translations];
 }

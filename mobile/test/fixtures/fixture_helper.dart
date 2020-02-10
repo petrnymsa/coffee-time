@@ -1,11 +1,8 @@
 import 'dart:io';
 
-import 'package:coffee_time/data/models/cafe.dart';
-import 'package:coffee_time/data/models/cafe_detail.dart';
-import 'package:coffee_time/data/models/comment.dart';
-import 'package:coffee_time/data/models/contact.dart';
-import 'package:coffee_time/data/models/location.dart';
-import 'package:coffee_time/data/models/photo.dart';
+import 'package:coffee_time/data/models/models.dart';
+import 'package:coffee_time/data/models/tag_reputation.dart';
+import 'package:flutter/cupertino.dart';
 
 String fixture(String name) {
   var dir = Directory.current.path;
@@ -15,64 +12,82 @@ String fixture(String name) {
   return File('$dir/test/fixtures/$name').readAsStringSync();
 }
 
-CafeModel exampleCafeModel() => CafeModel(
-      id: "7157b595-d704-457f-8aae-539dd928bd0d",
-      name: "Hodkiewicz, Brekke and Harvey Cafe",
-      address: "24 Elka Lane",
-      openNow: true,
-      location: LocationModel(lat: 46.946681, lng: 142.0144982),
-      photos: [
-        PhotoModel(
-          url:
-              "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/ab243c8c-2719-4986-b869-d83256692e17.jpg",
-          height: 456,
-          width: 684,
-        ),
-      ],
-      rating: 3.5,
-      isFavorite: true,
-      tags: [],
-    );
+ReviewModel reviewExample() {
+  return ReviewModel(
+      authorName: 'John Doe',
+      authorUrl: 'https://www.google.com/maps/contrib/10/reviews',
+      language: 'cs',
+      profilePhotoUrl: 'https://lh3.ggpht.com/-1fDyAWQ1M-4/photo.jpg',
+      rating: 1,
+      relativeTimeDescription: 'před 8 měsíci',
+      text: 'Sample text',
+      time: 1559130144);
+}
 
-CafeDetailModel exampleCafeDetailModel() => CafeDetailModel(
-    id: "7157b595-d704-457f-8aae-539dd928bd0d",
-    name: "Hodkiewicz, Brekke and Harvey Cafe",
-    address: "24 Elka Lane",
+OpeningHoursModel openingHoursExample() {
+  //todo weekday
+  return OpeningHoursModel(openNow: true, periods: [
+    PeriodModel(
+        close: DayTimeModel(day: 1, time: "0000"),
+        open: DayTimeModel(day: 0, time: "0700")),
+    PeriodModel(
+        close: DayTimeModel(day: 2, time: "0000"),
+        open: DayTimeModel(day: 1, time: "0700"))
+  ]);
+}
+
+TagModel tagExample() {
+  return TagModel(
+    id: 'beer',
+    title: 'beer',
+    translations: {'cs': 'pivo'},
+    icon: IconData(61692,
+        fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter'),
+  );
+}
+
+TagReputationModel tagReputationExample() {
+  return TagReputationModel(id: 'beer', likes: 5, dislikes: 1);
+}
+
+CafeModel cafeExample() {
+  return CafeModel(
+    address: 'address',
+    iconUrl: 'https://maps/71.png',
+    name: 'Joe',
     openNow: true,
-    location: LocationModel(lat: 46.946681, lng: 142.0144982),
+    photo: PhotoModel(height: 2160, width: 3840, reference: 'CmRaAAAA'),
+    location: LocationModel(lat: 50.399608, lng: 16.0532),
+    placeId: 'ChIJ4',
+    rating: 4.5,
+    tags: [tagReputationExample()],
+  );
+}
+
+CafeModel cafeNoPhotoExample() {
+  return CafeModel(
+    address: 'address',
+    iconUrl: 'https://maps/71.png',
+    name: 'Joe',
+    openNow: true,
+    location: LocationModel(lat: 50.399608, lng: 16.0532),
+    placeId: 'ChIJ4',
+    rating: 4.5,
+    tags: [tagReputationExample()],
+  );
+}
+
+CafeDetailModel cafeDetailExample() {
+  return CafeDetailModel(
+    formattedPhoneNumber: '224 219 501',
+    internationalPhoneNumber: '+420 224 219 501',
+    openingHours: openingHoursExample(),
+    reviews: [reviewExample(), reviewExample()],
     photos: [
-      PhotoModel(
-        url: "https://media.cvut.cz/10.jpg",
-        height: 456,
-        width: 684,
-      ),
-      PhotoModel(
-        url: "https://media.cvut.cz/1.jpg",
-        height: 439,
-        width: 700,
-      ),
+      PhotoModel(height: 2160, width: 3840, reference: 'CmRaAAAA'),
+      PhotoModel(height: 2160, width: 3840, reference: 'CmRaAAAA')
     ],
-    rating: 3.5,
-    isFavorite: true,
-    tags: [],
-    contact: ContactModel(
-      address: '24 Elka Lane',
-      phone: '291-921-0831',
-      website: 'http://cafeprostoru.cz',
-    ),
-    cafeUrl: "https://goo.gl/maps/gLopcuff9KpZ9NYS8",
-    comments: [
-      CommentModel(
-          user: "Cob Peasee",
-          rating: 4,
-          posted: DateTime(2019, 6, 19),
-          content: "disintermediate real-time infomediaries",
-          avatar: "https://robohash.org/eosetfuga.bmp?size=50x50&set=set1"),
-      CommentModel(
-          user: "Sharlene Lisle",
-          rating: 5,
-          posted: DateTime(2018, 11, 24),
-          content: "architect innovative mindshare",
-          avatar:
-              "https://robohash.org/autemmaioreset.png?size=50x50&set=set1"),
-    ]);
+    url: 'https://maps.google.com',
+    utcOffset: 60,
+  );
+}
