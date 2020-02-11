@@ -1,12 +1,15 @@
 import 'package:coffee_time/core/app_logger.dart';
 import 'package:coffee_time/data/services/api_base.dart';
-import 'package:logger/logger.dart';
+import 'package:meta/meta.dart';
+import 'package:http/http.dart' as http;
 
 abstract class PhotoService {
   String getPhotoUrl(String photoReference, {int maxWidth, int maxHeight});
 }
 
 class PhotoServiceImpl extends ApiBase implements PhotoService {
+  PhotoServiceImpl({@required http.Client client}) : super(client: client);
+
   @override
   String getPhotoUrl(String photoReference, {int maxWidth, int maxHeight}) {
     if (maxWidth == null && maxHeight == null) {

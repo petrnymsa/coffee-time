@@ -27,9 +27,13 @@ abstract class ApiBase {
   static const String API_BASE_URL =
       "https://europe-west1-coffeetime-1571221579778.cloudfunctions.net/api";
 
+  final http.Client client;
+
+  ApiBase({@required this.client});
+
   Future<http.Response> getRequest(String url) async {
     //todo add auth
-    final response = await http.get(url);
+    final response = await client.get(url);
 
     if (response.statusCode != 200) {
       throw ApiException(statusCode: response.statusCode, body: response.body);

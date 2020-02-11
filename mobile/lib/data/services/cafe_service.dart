@@ -23,6 +23,8 @@ abstract class CafeService {
 }
 
 class CafeServiceImpl extends ApiBase implements CafeService {
+  CafeServiceImpl({@required http.Client client}) : super(client: client);
+
   @override
   Future<List<CafeModel>> findByQuery(
     String query, {

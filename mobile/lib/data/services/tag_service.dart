@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:coffee_time/data/models/models.dart';
 import 'package:coffee_time/data/services/api_base.dart';
+import 'package:meta/meta.dart';
 
 abstract class TagService {
   Future<List<TagModel>> getAll();
@@ -10,6 +12,8 @@ abstract class TagService {
 }
 
 class TagServiceImpl extends ApiBase implements TagService {
+  TagServiceImpl({@required http.Client client}) : super(client: client);
+
   @override
   Future<List<TagModel>> getAll() async {
     final url = '${ApiBase.API_BASE_URL}/tags';
