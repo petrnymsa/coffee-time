@@ -16,7 +16,7 @@ class TagAddScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: ChangeNotifierProvider(
-        builder: (_) => TagAddProvider(availableTags),
+        create: (_) => TagAddProvider(availableTags),
         child: Consumer<TagAddProvider>(
           builder: (ctx, model, _) => Container(
             padding: const EdgeInsets.all(8),

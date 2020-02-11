@@ -16,7 +16,7 @@ class TagEditScreen extends StatelessWidget {
       builder: (ctx, detailModel, _) => Scaffold(
         appBar: AppBar(title: Text('Navrhnout změnu')),
         body: ChangeNotifierProvider<TagEditProvider>(
-          builder: (_) => TagEditProvider([])..init(), //todo fix
+          create: (_) => TagEditProvider([])..init(), //todo fix
           child: Consumer<TagEditProvider>(
             builder: (ctx, model, _) => Container(
               padding: const EdgeInsets.all(8),
