@@ -54,6 +54,15 @@ TagModel tagExample() {
   );
 }
 
+TagModel tagNoTranslationExample() {
+  return TagModel(
+    id: 'beer',
+    title: 'beer',
+    icon: IconData(61692,
+        fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter'),
+  );
+}
+
 TagReputationModel tagReputationExample() {
   return TagReputationModel(id: 'beer', likes: 5, dislikes: 1);
 }

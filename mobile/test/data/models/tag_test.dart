@@ -11,5 +11,12 @@ void main() {
       final result = TagModel.fromJson(json);
       expect(result, model);
     });
+
+    test('Given no translations, should return tag model', () {
+      final json = fixture('tag_no_translations.json');
+      final model = tagNoTranslationExample();
+      final result = TagModel.fromJson(json);
+      expect(result, model);
+    });
   });
 }

@@ -14,7 +14,7 @@ class TagModel extends Equatable {
     @required this.id,
     @required this.title,
     @required this.icon,
-    @required this.translations,
+    this.translations,
   });
 
   TagModel copyWith({
@@ -60,7 +60,7 @@ class TagModel extends Equatable {
       id: map['id'],
       title: map['title'],
       icon: _iconFromMap(map['icon']),
-      translations: Map<String, String>.from(map['translations']),
+      translations: map['translations'],
     );
   }
 
