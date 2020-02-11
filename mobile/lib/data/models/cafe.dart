@@ -49,8 +49,10 @@ class CafeModel extends Equatable {
       name: map['name'],
       location: LocationModel.fromMap(map['geometry']['location']),
       iconUrl: map['icon'],
-      rating: map['rating'],
-      openNow: map['opening_hours']['open_now'],
+      rating: map['rating'].toDouble(),
+      openNow: map['opening_hours'] != null
+          ? map['opening_hours']['open_now']
+          : null,
       address: map['formatted_address'] != null
           ? map['formatted_address']
           : map['vicinity'],

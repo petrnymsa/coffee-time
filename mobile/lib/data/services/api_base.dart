@@ -44,7 +44,7 @@ abstract class ApiBase {
     final data = json.decode(response.body);
     final status = data['status'];
 
-    if (status != 'OK') {
+    if (status != 'OK' && status != 'ZERO_RESULTS') {
       throw GoogleApiException(
           code: status, errorMessage: data['error_message']);
     }

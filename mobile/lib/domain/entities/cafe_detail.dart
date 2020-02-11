@@ -32,7 +32,7 @@ class CafeDetail extends Cafe {
             name: name,
             address: address,
             rating: rating,
-            openNow: openingHours.openNow,
+            openNow: openingHours?.openNow,
             isFavorite: isFavorite,
             location: location,
             photos: photos,
