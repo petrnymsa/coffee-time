@@ -64,7 +64,7 @@ export async function findPlaces(input: string, language: string, location?: str
         input: encodeURIComponent(input),
         inputtype: 'textquery',
         language: language,
-        fields: 'name,icon,formatted_address,place_id,types,photos,opening_hours,price_level,rating',
+        fields: 'name,icon,formatted_address,place_id,types,photos,opening_hours,price_level,rating,geometry',
         key: process.env.API_KEY,
     }
 

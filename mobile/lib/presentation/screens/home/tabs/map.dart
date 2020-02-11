@@ -47,7 +47,7 @@ class _MapTabState extends State<MapTab> {
       final cafe = m.entity;
       markers.add(
         Marker(
-          markerId: MarkerId(cafe.id),
+          markerId: MarkerId(cafe.placeId),
           position: LatLng(cafe.location.lat, cafe.location.lng),
           infoWindow: InfoWindow(
               title: cafe.name,
@@ -56,7 +56,7 @@ class _MapTabState extends State<MapTab> {
                 await Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => DetailScreen(),
-                    settings: RouteSettings(arguments: cafe.id),
+                    settings: RouteSettings(arguments: cafe.placeId),
                   ),
                 );
               }),

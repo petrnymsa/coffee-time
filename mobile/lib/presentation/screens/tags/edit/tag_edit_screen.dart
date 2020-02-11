@@ -16,7 +16,7 @@ class TagEditScreen extends StatelessWidget {
       builder: (ctx, detailModel, _) => Scaffold(
         appBar: AppBar(title: Text('Navrhnout změnu')),
         body: ChangeNotifierProvider<TagEditProvider>(
-          builder: (_) => TagEditProvider(detailModel.detail.tags)..init(),
+          builder: (_) => TagEditProvider([])..init(), //todo fix
           child: Consumer<TagEditProvider>(
             builder: (ctx, model, _) => Container(
               padding: const EdgeInsets.all(8),
@@ -119,7 +119,8 @@ class TagEditScreen extends StatelessWidget {
                       onPressed: () async {
                         await Provider.of<CafeListProvider>(context,
                                 listen: false)
-                            .addTags(detailModel.detail, model.addedTags);
+                            .addTags(
+                                detailModel.detail, []); //todo fix empty []
                         Navigator.of(context).pop();
                       },
                     ),
@@ -159,7 +160,7 @@ class TagEditScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildReviewIcon(TagEntity tag, IconData icon, bool reviewType,
+  Widget _buildReviewIcon(Tag tag, IconData icon, bool reviewType,
       TagEditProvider model, BuildContext context) {
     return TableCell(
         child: IconButton(
@@ -173,7 +174,7 @@ class TagEditScreen extends StatelessWidget {
     ));
   }
 
-  Widget _buildTag(TagEntity tag, TagEditProvider model) {
+  Widget _buildTag(Tag tag, TagEditProvider model) {
     return TagInput(
       tag: tag,
       onDeleted: () => model.removeTag(tag),

@@ -5,20 +5,20 @@ import 'package:flutter/foundation.dart';
 class TagEditProvider with ChangeNotifier {
   InMemoryCafeRepository _cafeRepository = InMemoryCafeRepository.instance;
 
-  List<TagEntity> _addedTags = [];
+  List<Tag> _addedTags = [];
 
   Map<String, bool> _reviews = {};
 
   Map<String, bool> get reviews => _reviews;
-  List<TagEntity> get addedTags => _addedTags;
-  List<TagEntity> entityTags;
+  List<Tag> get addedTags => _addedTags;
+  List<Tag> entityTags;
 
   TagEditProvider(this.entityTags);
 
-  List<TagEntity> _allTags = [];
+  List<Tag> _allTags = [];
 
-  List<TagEntity> get notAddedTagsYet {
-    final List<TagEntity> res = [];
+  List<Tag> get notAddedTagsYet {
+    final List<Tag> res = [];
     _allTags.forEach((t) {
       if (!entityTags.contains(t) && !_addedTags.contains(t)) {
         res.add(t);
@@ -33,17 +33,17 @@ class TagEditProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateReview(TagEntity tag, bool review) {
+  void updateReview(Tag tag, bool review) {
     _reviews[tag.title] = review;
     notifyListeners();
   }
 
-  void addTags(List<TagEntity> tags) {
+  void addTags(List<Tag> tags) {
     _addedTags = [..._addedTags, ...tags];
     notifyListeners();
   }
 
-  void removeTag(TagEntity tag) {
+  void removeTag(Tag tag) {
     _addedTags.remove(tag);
     notifyListeners();
   }
@@ -53,7 +53,7 @@ class TagEditProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool reviewOfTag(TagEntity tag) {
+  bool reviewOfTag(Tag tag) {
     return _reviews[tag.title];
   }
 }

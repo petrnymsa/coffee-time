@@ -1,20 +1,38 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-//todo reputation score
-class TagEntity extends Equatable {
+class Tag extends Equatable {
+  final String id;
   final String title;
-  final IconData
-      icon; // ! do not belong here - dependency on material (UI) layer - give isntead DEC int value
+  final IconData icon;
+  final Map<String, String> translations;
 
-  TagEntity({this.title, this.icon});
+  Tag({
+    this.id,
+    this.title,
+    this.icon,
+    this.translations,
+  });
 
-  @override
-  List<Object> get props => [title];
+  Tag copyWith({
+    String id,
+    String title,
+    IconData icon,
+    Map<String, String> translations,
+  }) {
+    return Tag(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      icon: icon ?? this.icon,
+      translations: translations ?? this.translations,
+    );
+  }
 
   @override
   String toString() {
-    // todo: implement toString
-    return 'Tag: $title';
+    return 'TagEntity id: $id, title: $title, icon: $icon, translations: $translations';
   }
+
+  @override
+  List<Object> get props => [id, title, icon, translations];
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TagsContainer extends StatelessWidget {
-  final List<TagEntity> tags;
+  final List<Tag> tags;
 
   final Function onEdit;
   const TagsContainer({Key key, @required this.tags, this.onEdit})

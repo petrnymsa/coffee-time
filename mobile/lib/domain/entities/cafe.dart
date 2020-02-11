@@ -1,57 +1,76 @@
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/photo.dart';
-import 'package:coffee_time/domain/entities/tag.dart';
+import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:equatable/equatable.dart';
 
-class CafeEntity extends Equatable {
-  final String id;
+class Cafe extends Equatable {
+  final String placeId;
   final String name;
-  final String address;
+  final Location location;
+  final String iconUrl;
   final double rating;
   final bool openNow;
-  final LocationEntity location;
-
+  final String address;
+  final List<TagReputation> tags;
   final List<PhotoEntity> photos;
-  final List<TagEntity> tags;
 
   final bool isFavorite;
 
-  CafeEntity(
-      {this.id,
-      this.name,
-      this.address,
-      this.rating,
-      this.openNow,
-      this.isFavorite = false,
-      this.location,
-      this.photos,
-      this.tags});
+  Cafe({
+    this.placeId,
+    this.name,
+    this.location,
+    this.iconUrl,
+    this.rating,
+    this.openNow,
+    this.address,
+    this.tags,
+    this.photos,
+    this.isFavorite,
+  });
 
-  @override
-  List<Object> get props =>
-      [id, name, address, rating, openNow, isFavorite, location, photos, tags];
-
-  CafeEntity copyWith({
-    String id,
+  Cafe copyWith({
+    String placeId,
     String name,
-    String address,
+    Location location,
+    String iconUrl,
     double rating,
     bool openNow,
-    LocationEntity location,
+    String address,
+    List<TagReputation> tags,
     List<PhotoEntity> photos,
-    List<TagEntity> tags,
     bool isFavorite,
   }) {
-    return CafeEntity(
-      id: id ?? this.id,
+    return Cafe(
+      placeId: placeId ?? this.placeId,
       name: name ?? this.name,
-      address: address ?? this.address,
+      location: location ?? this.location,
+      iconUrl: iconUrl ?? this.iconUrl,
       rating: rating ?? this.rating,
       openNow: openNow ?? this.openNow,
-      location: location ?? this.location,
-      photos: photos ?? this.photos,
+      address: address ?? this.address,
       tags: tags ?? this.tags,
+      photos: photos ?? this.photos,
       isFavorite: isFavorite ?? this.isFavorite,
     );
   }
+
+  @override
+  String toString() {
+    return 'CafeEntity placeId: $placeId, name: $name, location: $location, iconUrl: $iconUrl, rating: $rating, openNow: $openNow, address: $address, tags: $tags, photos: $photos, isFavorite: $isFavorite';
+  }
+
+  @override
+  List<Object> get props => [
+        placeId,
+        name,
+        location,
+        iconUrl,
+        rating,
+        openNow,
+        address,
+        tags,
+        photos,
+        isFavorite
+      ];
 }

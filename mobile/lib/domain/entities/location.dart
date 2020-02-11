@@ -1,26 +1,26 @@
 import 'package:coffee_time/core/utils/distance_helper.dart';
 import 'package:equatable/equatable.dart';
 
-class LocationEntity extends Equatable {
+class Location extends Equatable {
   final double lat;
   final double lng;
 
-  LocationEntity(this.lat, this.lng);
+  Location(this.lat, this.lng);
 
   @override
   List<Object> get props => [lat, lng];
 
-  LocationEntity copyWith({
+  Location copyWith({
     double lat,
     double lng,
   }) {
-    return LocationEntity(
+    return Location(
       lat ?? this.lat,
       lng ?? this.lng,
     );
   }
 
-  double distance(LocationEntity other) {
+  double distance(Location other) {
     return DistanceHelper.getDistanceFromLatLonInKm(
         lat, lng, other.lat, other.lng);
   }

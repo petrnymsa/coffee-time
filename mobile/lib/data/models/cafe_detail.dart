@@ -1,76 +1,103 @@
-import 'package:coffee_time/domain/entities/cafe_detail.dart';
+import 'dart:convert';
 
-import './contact.dart';
-import './location.dart';
-import './photo.dart';
-import './tag.dart';
-import './comment.dart';
+import 'package:coffee_time/data/models/models.dart';
+import 'package:coffee_time/data/models/opening_hours.dart';
+import 'package:coffee_time/data/models/review.dart';
+import 'package:equatable/equatable.dart';
 
-class CafeDetailModel extends CafeDetailEntity {
-  CafeDetailModel(
-      {String id,
-      String name,
-      String address,
-      double rating,
-      bool openNow,
-      bool isFavorite = false,
-      LocationModel location,
-      List<PhotoModel> photos,
-      List<TagModel> tags,
-      ContactModel contact,
-      String cafeUrl,
-      List<CommentModel> comments})
-      : super(
-          id: id,
-          name: name,
-          address: address,
-          rating: rating,
-          openNow: openNow,
-          isFavorite: isFavorite,
-          location: location,
-          photos: photos,
-          tags: tags,
-          contact: contact,
-          cafeUrl: cafeUrl,
-          comments: comments,
-        );
+class CafeDetailModel extends Equatable {
+  final String formattedPhoneNumber;
+  final String internationalPhoneNumber;
+  final String url;
+  final int utcOffset;
+  final String website; //optional
+  final List<ReviewModel> reviews;
+  final List<PhotoModel> photos;
+  final OpeningHoursModel openingHours;
 
-  factory CafeDetailModel.fromJson(Map<String, dynamic> json) {
-    final photos = (json['photos'] as List<dynamic>)
-            ?.map((m) => PhotoModel.fromJson(m))
-            ?.toList() ??
-        [];
+  CafeDetailModel({
+    this.formattedPhoneNumber,
+    this.internationalPhoneNumber,
+    this.url,
+    this.utcOffset,
+    this.website,
+    this.reviews,
+    this.photos,
+    this.openingHours,
+  });
 
-    final tags = (json['tags'] as List<dynamic>)
-            ?.map((m) => TagModel.fromJson(m))
-            ?.toList() ??
-        [];
-
-    final reviews = (json['reviews'] as List<dynamic>)
-            ?.map((m) => CommentModel.fromJson(m))
-            ?.toList() ??
-        [];
-    final model = CafeDetailModel(
-      id: json['place_id'],
-      name: json['name'],
-      address: json['address'],
-      rating: json['rating'],
-      openNow: json['opening_hours']['open_now'],
-      location: LocationModel.fromJson(json['location']),
-      photos: photos,
-      tags: tags,
-      isFavorite: false, //todo IsFavorite reading,
-      contact: ContactModel(
-          address: json['address'],
-          website: json['website'],
-          phone: json['formatted_phone_number']),
-      cafeUrl: json['url'],
-      comments: reviews,
+  CafeDetailModel copyWith({
+    String formattedPhoneNumber,
+    String internationalPhoneNumber,
+    String url,
+    int utcOffset,
+    String website,
+    List<ReviewModel> reviews,
+    List<PhotoModel> photos,
+    OpeningHoursModel openingHours,
+  }) {
+    return CafeDetailModel(
+      formattedPhoneNumber: formattedPhoneNumber ?? this.formattedPhoneNumber,
+      internationalPhoneNumber:
+          internationalPhoneNumber ?? this.internationalPhoneNumber,
+      url: url ?? this.url,
+      utcOffset: utcOffset ?? this.utcOffset,
+      website: website ?? this.website,
+      reviews: reviews ?? this.reviews,
+      photos: photos ?? this.photos,
+      openingHours: openingHours ?? this.openingHours,
     );
-    return model;
   }
 
-  Map<String, dynamic> toJson() {
-    return null; //todo implement
+  Map<String, dynamic> toMap() {
+    return {
+      'formatted_phone_number': formattedPhoneNumber,
+      'international_phone_number': internationalPhoneNumber,
+      'url': url,
+      'utc_offset': utcOffset,
+      'website': website,
+      'reviews': List<dynamic>.from(reviews.map((x) => x.toMap())),
+      'photos': List<dynamic>.from(photos.map((x) => x.toMap())),
+      'opening_hours': openingHours.toMap(),
+    };
   }
+
+  static CafeDetailModel fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return CafeDetailModel(
+      formattedPhoneNumber: map['formatted_phone_number'],
+      internationalPhoneNumber: map['international_phone_number'],
+      url: map['url'],
+      utcOffset: map['utc_offset'],
+      website: map['website'],
+      reviews: List<ReviewModel>.from(
+          map['reviews']?.map((x) => ReviewModel.fromMap(x))),
+      photos: List<PhotoModel>.from(
+          map['photos']?.map((x) => PhotoModel.fromMap(x))),
+      openingHours: OpeningHoursModel.fromMap(map['opening_hours']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  static CafeDetailModel fromJson(String source) =>
+      fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'CafeDetailModel formattedPhoneNumber: $formattedPhoneNumber, internationalPhoneNumber: $internationalPhoneNumber, url: $url, utcOffset: $utcOffset, website: $website, reviews: $reviews, photos: $photos, openingHours: $openingHours';
+  }
+
+  @override
+  List<Object> get props => [
+        formattedPhoneNumber,
+        internationalPhoneNumber,
+        url,
+        utcOffset,
+        website,
+        reviews,
+        photos,
+        openingHours,
+      ];
 }

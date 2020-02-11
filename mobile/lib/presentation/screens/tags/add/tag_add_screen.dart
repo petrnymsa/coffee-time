@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class TagAddScreen extends StatelessWidget {
-  final List<TagEntity> availableTags;
+  final List<Tag> availableTags;
   final String title;
 
   TagAddScreen(this.availableTags, {this.title = 'Přidat štítky'});
@@ -53,7 +53,7 @@ class TagAddScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTag(TagEntity tag, TagAddProvider model) {
+  Widget _buildTag(Tag tag, TagAddProvider model) {
     return TagChoice(
       tag: tag,
       selected: model.chosenTags.contains(tag),

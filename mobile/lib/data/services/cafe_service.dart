@@ -3,6 +3,6 @@ import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 
 abstract class CafeService {
-  Future<List<CafeEntity>> getNearBy(LocationEntity location);
-  Future<CafeDetailEntity> getDetail(String cafeId);
+  Future<List<Cafe>> getNearBy(Location location);
+  Future<CafeDetail> getDetail(String cafeId);
 }

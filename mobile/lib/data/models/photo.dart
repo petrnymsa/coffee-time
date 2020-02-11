@@ -1,23 +1,55 @@
-import 'package:coffee_time/domain/entities/photo.dart';
-import 'package:meta/meta.dart';
+import 'dart:convert';
 
-class PhotoModel extends PhotoEntity {
-  PhotoModel({@required String url, @required int width, @required int height})
-      : super(url: url, width: width, height: height);
+import 'package:equatable/equatable.dart';
 
-  factory PhotoModel.fromJson(Map<String, dynamic> json) {
+class PhotoModel extends Equatable {
+  final int width;
+  final int height;
+  final String reference;
+  PhotoModel({
+    this.width,
+    this.height,
+    this.reference,
+  });
+
+  PhotoModel copyWith({
+    int width,
+    int height,
+    String reference,
+  }) {
     return PhotoModel(
-        url: json['photo_reference'],
-        width: json['width'],
-        height: json['height']);
+      width: width ?? this.width,
+      height: height ?? this.height,
+      reference: reference ?? this.reference,
+    );
   }
 
-  Map<String, dynamic> toJson() {
-    return {'photo_reference': url, 'width': width, 'height': height};
+  Map<String, dynamic> toMap() {
+    return {
+      'width': width,
+      'height': height,
+      'photo_reference': reference,
+    };
   }
+
+  static PhotoModel fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return PhotoModel(
+      width: map['width'],
+      height: map['height'],
+      reference: map['photo_reference'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  static PhotoModel fromJson(String source) => fromMap(json.decode(source));
 
   @override
-  String toString() {
-    return '$url,$width,$height';
-  }
+  String toString() =>
+      'PhotoModel width: $width, height: $height, reference: $reference';
+
+  @override
+  List<Object> get props => [width, height, reference];
 }

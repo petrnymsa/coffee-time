@@ -8,16 +8,16 @@ import 'package:flutter/foundation.dart';
 class FilterProvider with ChangeNotifier {
   CafeListProvider cafeListProvider;
 
-  FilterEntity _filter;
+  Filter _filter;
 
-  FilterEntity get filter => _filter;
+  Filter get filter => _filter;
 
-  List<TagEntity> _allTags = [];
+  List<Tag> _allTags = [];
 
   FilterProvider(this.cafeListProvider);
 
-  List<TagEntity> get notAddedTagsYet {
-    final List<TagEntity> res = [];
+  List<Tag> get notAddedTagsYet {
+    final List<Tag> res = [];
     _allTags.forEach((t) {
       if (filter.tags == null ||
           filter.tags.length == 0 ||
@@ -38,13 +38,13 @@ class FilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateChosenTag(TagEntity tag) {
+  void updateChosenTag(Tag tag) {
     _updateFilterTags(tag);
 
     notifyListeners();
   }
 
-  void updateChosenTags(List<TagEntity> tags) {
+  void updateChosenTags(List<Tag> tags) {
     tags.forEach((t) => _updateFilterTags(t));
     notifyListeners();
   }
@@ -73,7 +73,7 @@ class FilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void _updateFilterTags(TagEntity tag) {
+  void _updateFilterTags(Tag tag) {
     if (_filter.tags.contains(tag))
       _filter.tags.remove(tag);
     else

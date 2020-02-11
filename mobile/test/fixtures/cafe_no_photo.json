@@ -1,0 +1,43 @@
+{
+    "formatted_address": "address",
+    "geometry": {
+        "location": {
+            "lat": 50.399608,
+            "lng": 16.0532
+        },
+        "viewport": {
+            "northeast": {
+                "lat": 50.40105842989273,
+                "lng": 16.05425792989272
+            },
+            "southwest": {
+                "lat": 50.39835877010728,
+                "lng": 16.05155827010728
+            }
+        }
+    },
+    "icon": "https://maps/71.png",
+    "name": "Joe",
+    "opening_hours": {
+        "open_now": true
+    },
+    "place_id": "ChIJ4",
+    "rating": 4.5,
+    "types": [
+        "restaurant",
+        "cafe",
+        "lodging",
+        "food",
+        "point_of_interest",
+        "store",
+        "establishment"
+    ],
+    "tags": [
+        {
+            "id": "beer",
+            "likes": 5,
+            "dislikes": 1,
+            "score": 4
+        }
+    ]
+}

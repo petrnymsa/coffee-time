@@ -1,30 +1,20 @@
-import 'dart:convert';
-
 import 'package:coffee_time/data/models/photo.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('fromJson', () {
     test('Given valid photo json, should return photo model', () {
-      var jsonInput =
-          r'''{"photo_reference": "test.url", "width": 100, "height": 60}''';
-      var model = PhotoModel(url: "test.url", width: 100, height: 60);
+      const reference = 'abc12';
+      const width = 100;
+      const height = 60;
+      const json =
+          '{"photo_reference": "$reference", "width": $width, "height": $height}';
+      var model =
+          PhotoModel(reference: reference, width: width, height: height);
 
-      var result = PhotoModel.fromJson(json.decode(jsonInput));
+      var result = PhotoModel.fromJson(json);
 
       expect(result, model);
-    });
-  });
-
-  group('toJson', () {
-    test('Given photo, valid json should return', () {
-      var model = PhotoModel(url: "test.url", width: 100, height: 60);
-      var expected =
-          r'''{"photo_reference":"test.url","width":100,"height":60}''';
-
-      var result = jsonEncode(model);
-
-      expect(result, expected);
     });
   });
 }

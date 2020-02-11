@@ -4,19 +4,19 @@ import './tag.dart';
 
 enum FilterOrdering { distance, rating }
 
-class FilterEntity {
+class Filter {
   final bool onlyOpen;
-  final List<TagEntity> tags;
+  final List<Tag> tags;
   final FilterOrdering ordering;
 
-  const FilterEntity(
+  const Filter(
       {this.onlyOpen = true,
       this.tags = const [],
       this.ordering = FilterOrdering.distance});
 
-  static const FilterEntity defaultFilter = const FilterEntity();
+  static const Filter defaultFilter = const Filter();
 
-  bool apply(CafeEntity entity) {
+  bool apply(Cafe entity) {
     if (onlyOpen && !entity.openNow) return false;
 
     if (tags != null &&
@@ -26,12 +26,12 @@ class FilterEntity {
     return true;
   }
 
-  FilterEntity copyWith({
+  Filter copyWith({
     bool onlyOpen,
-    List<TagEntity> tags,
+    List<Tag> tags,
     FilterOrdering ordering,
   }) {
-    return FilterEntity(
+    return Filter(
         onlyOpen: onlyOpen ?? this.onlyOpen,
         tags: tags ?? this.tags,
         ordering: ordering ?? this.ordering);

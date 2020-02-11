@@ -1,20 +1,22 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:coffee_time/data/models/cafe.dart';
-import 'package:flutter_test/flutter_test.dart' as t;
+import 'package:coffee_time/data/models/models.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 import '../../fixtures/fixture_helper.dart';
 
 void main() {
-  t.group('CafeModel', () {
-    t.test("Given valid json, should return model", () {
-      final jsonSample = fixture('cafe_example.json');
-      final model = exampleCafeModel();
-      final j = json.decode(jsonSample);
-      final result = CafeModel.fromJson(j);
+  group('fromJson', () {
+    test('Given valid cafe json, should return cafe model', () {
+      final json = fixture('cafe.json');
+      final model = cafeExample();
+      final result = CafeModel.fromJson(json);
+      expect(result, model);
+    });
 
-      t.expect(result, model);
+    test('Given response without photo, should return cafe model', () {
+      final json = fixture('cafe_no_photo.json');
+      final model = cafeNoPhotoExample();
+      final result = CafeModel.fromJson(json);
+      expect(result, model);
     });
   });
 }

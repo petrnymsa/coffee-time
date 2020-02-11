@@ -5,10 +5,10 @@ import '../../fixtures/fixture_helper.dart';
 
 void main() {
   group('fromJson', () {
-    test('Given valid cafe detail json, should return cafe detail model', () {
-      final json = fixture('cafe_detail.json');
-      final model = cafeDetailExample();
-      final result = CafeDetailModel.fromJson(json);
+    test('Given valid opening_hour json, should return opening hour model', () {
+      final json = fixture('opening_hours.json');
+      final model = openingHoursExample();
+      final result = OpeningHoursModel.fromJson(json);
       expect(result, model);
     });
   });
