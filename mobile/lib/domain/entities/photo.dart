@@ -14,18 +14,17 @@ class PhotoEntity extends Equatable {
   PhotoEntity copyWith({
     int width,
     int height,
-    String reference,
+    String url,
   }) {
     return PhotoEntity(
       width: width ?? this.width,
       height: height ?? this.height,
-      url: reference ?? this.url,
+      url: url ?? this.url,
     );
   }
 
   @override
-  String toString() =>
-      'PhotoEntity width: $width, height: $height, reference: $url';
+  String toString() => 'PhotoEntity width: $width, height: $height, url: $url';
 
   @override
   List<Object> get props => [url, width, height];
