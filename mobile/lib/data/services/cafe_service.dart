@@ -41,17 +41,17 @@ class CafeServiceImpl extends ApiBase implements CafeService {
       queryString..add('location', location.toString())..add('radius', radius);
     }
 
-    final url = '${ApiBase.API_BASE_URL}/$language/find?${queryString.build()}';
+    final url = '${ApiBase.apiBaseUrl}/$language/find?${queryString.build()}';
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['candidates'];
-
+    //ignore: unnecessary_lambdas
     return results.map((x) => CafeModel.fromMap(x)).toList();
   }
 
   @override
   Future<CafeDetailModel> getDetail(String placeId,
       {@required String language}) async {
-    final url = '${ApiBase.API_BASE_URL}/$language/detail/$placeId';
+    final url = '${ApiBase.apiBaseUrl}/$language/detail/$placeId';
 
     final data = await placesGetRequest(url);
     final result = data['result'];
@@ -76,12 +76,11 @@ class CafeServiceImpl extends ApiBase implements CafeService {
       queryString.add('pagetoken', pageToken);
     }
 
-    final url =
-        '${ApiBase.API_BASE_URL}/$language/nearby?${queryString.build()}';
+    final url = '${ApiBase.apiBaseUrl}/$language/nearby?${queryString.build()}';
 
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['results'];
-
+    //ignore: unnecessary_lambdas
     return results.map((x) => CafeModel.fromMap(x)).toList();
   }
 }

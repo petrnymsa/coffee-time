@@ -24,7 +24,7 @@ class GoogleApiException implements Exception {
 }
 
 abstract class ApiBase {
-  static const String API_BASE_URL =
+  static const String apiBaseUrl =
       "https://europe-west1-coffeetime-1571221579778.cloudfunctions.net/api";
 
   final http.Client client;

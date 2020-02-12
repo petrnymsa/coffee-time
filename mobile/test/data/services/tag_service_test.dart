@@ -39,7 +39,7 @@ void main() {
   group('getAll', () {
     test('Should call GET request on right url', () {
       setupHttpClientResponseOk();
-      final url = '${ApiBase.API_BASE_URL}/tags';
+      final url = '${ApiBase.apiBaseUrl}/tags';
 
       tagService.getAll();
 
@@ -71,4 +71,6 @@ void main() {
       expect(action, throwsA(isInstanceOf<ApiException>()));
     });
   });
+
+  //todo forCafe tests
 }

@@ -51,7 +51,7 @@ void main() {
       service.getNearBy(Location(1, 1), language: 'en-US');
 
       verify(mockHttpClient.get(
-          '${ApiBase.API_BASE_URL}/en-US/nearby?location=1.0%2C1.0&radius=2500'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500'));
     });
 
     test('With opennow parameter proper URL is called', () {
@@ -60,7 +60,7 @@ void main() {
       service.getNearBy(Location(1, 1), language: 'en-US', openNow: true);
 
       verify(mockHttpClient.get(
-          '${ApiBase.API_BASE_URL}/en-US/nearby?location=1.0%2C1.0&radius=2500&opennow'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500&opennow'));
     });
 
     test('With pagetoken parameter proper URL is called', () {
@@ -69,7 +69,7 @@ void main() {
       service.getNearBy(Location(1, 1), language: 'en-US', pageToken: 'abc');
 
       verify(mockHttpClient.get(
-          '${ApiBase.API_BASE_URL}/en-US/nearby?location=1.0%2C1.0&radius=2500&pagetoken=abc'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500&pagetoken=abc'));
     });
 
     test('With all parameters proper URL is called', () {
@@ -79,7 +79,7 @@ void main() {
           language: 'en-US', openNow: true, pageToken: 'abc');
 
       verify(mockHttpClient.get(
-          '${ApiBase.API_BASE_URL}/en-US/nearby?location=1.0%2C1.0&radius=2500&opennow&pagetoken=abc'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500&opennow&pagetoken=abc'));
     });
   });
 
@@ -119,7 +119,7 @@ void main() {
       service.findByQuery('query', language: 'en-US');
 
       verify(
-          mockHttpClient.get('${ApiBase.API_BASE_URL}/en-US/find?input=query'));
+          mockHttpClient.get('${ApiBase.apiBaseUrl}/en-US/find?input=query'));
     });
 
     test('With location and radius parameters proper URL is called', () {
@@ -129,7 +129,7 @@ void main() {
           language: 'en-US', location: Location(1, 1), radius: 2500);
 
       verify(mockHttpClient.get(
-          '${ApiBase.API_BASE_URL}/en-US/find?input=query&location=1.0%2C1.0&radius=2500'));
+          '${ApiBase.apiBaseUrl}/en-US/find?input=query&location=1.0%2C1.0&radius=2500'));
     });
   });
 
@@ -168,7 +168,7 @@ void main() {
 
       service.getDetail('abc', language: 'en-US');
 
-      verify(mockHttpClient.get('${ApiBase.API_BASE_URL}/en-US/detail/abc'));
+      verify(mockHttpClient.get('${ApiBase.apiBaseUrl}/en-US/detail/abc'));
     });
 
     test('With required parameters and sucessfull request model is returned',

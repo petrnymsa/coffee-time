@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-import 'package:coffee_time/data/models/models.dart';
-import 'package:coffee_time/data/services/api_base.dart';
 import 'package:meta/meta.dart';
+
+import '../models/models.dart';
+import 'api_base.dart';
 
 abstract class TagService {
   Future<List<TagModel>> getAll();
@@ -16,21 +16,21 @@ class TagServiceImpl extends ApiBase implements TagService {
 
   @override
   Future<List<TagModel>> getAll() async {
-    final url = '${ApiBase.API_BASE_URL}/tags';
+    final url = '${ApiBase.apiBaseUrl}/tags';
     final response = await getRequest(url);
 
     final List<dynamic> data = json.decode(response.body);
-
+    //ignore: unnecessary_lambdas
     return data.map((x) => TagModel.fromMap(x)).toList();
   }
 
   @override
   Future<List<TagReputationModel>> getForCafe(String placeId) async {
-    final url = '${ApiBase.API_BASE_URL}/tags/$placeId';
+    final url = '${ApiBase.apiBaseUrl}/tags/$placeId';
     final response = await getRequest(url);
 
     final List<dynamic> data = json.decode(response.body);
-
+    //ignore: unnecessary_lambdas
     return data.map((x) => TagReputationModel.fromMap(x)).toList();
   }
 }
