@@ -1,5 +1,6 @@
-import 'package:coffee_time/core/utils/distance_helper.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../core/utils/distance_helper.dart';
 
 class Location extends Equatable {
   final double lat;

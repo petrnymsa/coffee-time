@@ -1,7 +1,8 @@
-import 'package:coffee_time/domain/entities/location.dart';
-import 'package:coffee_time/domain/entities/photo.dart';
-import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:equatable/equatable.dart';
+
+import 'location.dart';
+import 'photo.dart';
+import 'tag_reputation.dart';
 
 class Cafe extends Equatable {
   final String placeId;

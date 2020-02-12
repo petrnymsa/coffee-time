@@ -1,10 +1,10 @@
-import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/entities/contact.dart';
-import 'package:coffee_time/domain/entities/location.dart';
-import 'package:coffee_time/domain/entities/opening_hour.dart';
-import 'package:coffee_time/domain/entities/photo.dart';
-import 'package:coffee_time/domain/entities/review.dart';
-import 'package:coffee_time/domain/entities/tag_reputation.dart';
+import 'cafe.dart';
+import 'contact.dart';
+import 'location.dart';
+import 'opening_hour.dart';
+import 'photo.dart';
+import 'review.dart';
+import 'tag_reputation.dart';
 
 class CafeDetail extends Cafe {
   final Contact contact;
