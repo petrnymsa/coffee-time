@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:coffee_time/data/models/models.dart';
@@ -10,6 +11,11 @@ String fixture(String name) {
     dir = dir.replaceAll('test', '');
   }
   return File('$dir/test/fixtures/$name').readAsStringSync();
+}
+
+String apiResponseFixture(String name, String status) {
+  var json = fixture(name);
+  return json.replaceAll(RegExp(r'"status": *"OK"'), '"status": "$status"');
 }
 
 ReviewModel reviewExample() {

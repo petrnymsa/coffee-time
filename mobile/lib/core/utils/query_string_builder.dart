@@ -3,9 +3,8 @@ class QueryStringBuilder {
 
   bool get isNotEmpty => _map.isNotEmpty;
 
-  QueryStringBuilder add(String key, dynamic value) {
+  void add(String key, dynamic value) {
     _map[key] = value;
-    return this;
   }
 
   String build({bool clear = true}) {

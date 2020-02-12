@@ -1,8 +1,10 @@
-import 'package:coffee_time/data/models/models.dart';
-import 'package:coffee_time/data/services/api_base.dart';
-import 'package:coffee_time/domain/entities/location.dart';
-import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
+
+import '../../core/utils/query_string_builder.dart';
+import '../../domain/entities/location.dart';
+import '../models/models.dart';
+import 'api_base.dart';
 
 abstract class CafeService {
   Future<List<CafeModel>> getNearBy(Location location,
@@ -32,12 +34,14 @@ class CafeServiceImpl extends ApiBase implements CafeService {
     Location location,
     int radius = 2500,
   }) async {
-    var url = '${ApiBase.API_BASE_URL}/$language/find?input=$query';
+    var queryString = QueryStringBuilder();
+    queryString.add('input', query);
 
     if (location != null) {
-      url += '&location=$location&radius=$radius';
+      queryString..add('location', location.toString())..add('radius', radius);
     }
 
+    final url = '${ApiBase.API_BASE_URL}/$language/find?${queryString.build()}';
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['candidates'];
 
@@ -61,16 +65,19 @@ class CafeServiceImpl extends ApiBase implements CafeService {
       int radius = 2500,
       bool openNow,
       String pageToken}) async {
-    var url =
-        '${ApiBase.API_BASE_URL}/$language/nearby?location=$location&radius=$radius';
+    final queryString = QueryStringBuilder();
+    queryString..add('location', location.toString())..add('radius', radius);
 
     if (openNow != null) {
-      url += "&opennow";
+      queryString.add('opennow', null);
     }
 
     if (pageToken != null) {
-      url += "&pageToken";
+      queryString.add('pagetoken', pageToken);
     }
+
+    final url =
+        '${ApiBase.API_BASE_URL}/$language/nearby?${queryString.build()}';
 
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['results'];
