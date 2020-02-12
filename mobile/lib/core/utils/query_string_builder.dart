@@ -11,9 +11,14 @@ class QueryStringBuilder {
   String build({bool clear = true}) {
     if (_map.isEmpty) return '';
 
-    List<String> params = [];
-    _map.forEach(
-        (k, v) => params.add('$k=${Uri.encodeComponent(v.toString())}'));
+    final params = [];
+    _map.forEach((k, v) {
+      if (v != null) {
+        params.add('$k=${Uri.encodeComponent(v.toString())}');
+      } else {
+        params.add(k);
+      }
+    });
 
     if (clear) _map = {};
 
