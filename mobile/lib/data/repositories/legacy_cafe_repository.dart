@@ -9,8 +9,6 @@ import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:coffee_time/domain/repositories/cafe_repository.dart';
 import 'package:uuid/uuid.dart';
 
-import 'mock.dart';
-
 class InMemoryCafeRepository implements CafeRepository {
   static InMemoryCafeRepository _instance;
 
@@ -25,7 +23,7 @@ class InMemoryCafeRepository implements CafeRepository {
       {Filter filter = Filter.defaultFilter}) {
     return Future.delayed(Duration(milliseconds: 1), () async {
       if (!initialized) {
-        await init();
+        //await init();
       }
       const radius = 6; // km
 
@@ -97,17 +95,17 @@ class InMemoryCafeRepository implements CafeRepository {
     return Future.delayed(Duration(milliseconds: 1), () => tags);
   }
 
-  @override
-  Future<bool> toggleFavorite(Cafe entity) {
-    return Future.delayed(Duration(milliseconds: 1), () {
-      var i = cafes.indexWhere((e) => e.placeId == entity.placeId);
-      cafes[i] = cafes[i].copyWith(isFavorite: entity.isFavorite);
-      i = details.indexWhere((e) => e.placeId == entity.placeId);
-      details[i] = details[i].copyWith(isFavorite: entity.isFavorite);
+  // @override
+  // Future<bool> toggleFavorite(Cafe entity) {
+  //   return Future.delayed(Duration(milliseconds: 1), () {
+  //     var i = cafes.indexWhere((e) => e.placeId == entity.placeId);
+  //     cafes[i] = cafes[i].copyWith(isFavorite: entity.isFavorite);
+  //     i = details.indexWhere((e) => e.placeId == entity.placeId);
+  //     details[i] = details[i].copyWith(isFavorite: entity.isFavorite);
 
-      return true;
-    });
-  }
+  //     return true;
+  //   });
+  // }
 
   Future addTags(Cafe entity, List<TagReputation> tags) async {
     return Future.delayed(Duration(milliseconds: 1), () {
@@ -126,12 +124,9 @@ class InMemoryCafeRepository implements CafeRepository {
     for (final pd in _cafeDetails.keys) {
       details.add(_cafeDetails[pd]);
     }
-    final moreDetails = await mock.readCadeDetailData();
     details.addAll([]);
 
     addresses = details.map((d) => d.contact.address).toSet().toList();
-
-    tags = mock.tags;
   }
 
   bool initialized = false;
@@ -141,8 +136,6 @@ class InMemoryCafeRepository implements CafeRepository {
   List<Tag> tags = [];
 
   static Uuid uuid = Uuid();
-
-  static MockData mock = MockData();
 
   static List<Cafe> _predefinedCafes = [
     Cafe(
@@ -210,7 +203,7 @@ class InMemoryCafeRepository implements CafeRepository {
         address: _predefinedCafes[0].address,
         formattedPhone: '111 222 333',
       ),
-      reviews: mock.getRandomComments(3),
+      reviews: [],
       cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
       additionalPhotos: [
         PhotoEntity(
@@ -227,7 +220,7 @@ class InMemoryCafeRepository implements CafeRepository {
           formattedPhone: '111 222 333',
           website: 'https://cafe.prostoru.cz',
         ),
-        reviews: mock.getRandomComments(3),
+        reviews: [],
         cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
         additionalPhotos: [
           PhotoEntity(
@@ -242,7 +235,7 @@ class InMemoryCafeRepository implements CafeRepository {
           address: _predefinedCafes[2].address,
           formattedPhone: '111 222 333',
         ),
-        reviews: mock.getRandomComments(3),
+        reviews: [],
         cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
         additionalPhotos: [
           PhotoEntity(
@@ -257,7 +250,7 @@ class InMemoryCafeRepository implements CafeRepository {
           address: _predefinedCafes[3].address,
           formattedPhone: '111 222 333',
         ),
-        reviews: mock.getRandomComments(3),
+        reviews: [],
         cafeUrl: 'https://goo.gl/maps/gLopcuff9KpZ9NYS8',
         additionalPhotos: [
           PhotoEntity(
@@ -268,4 +261,22 @@ class InMemoryCafeRepository implements CafeRepository {
                   "https://media.cvut.cz/sites/media/files/styles/full_preview/public/content/photos/c7d30a0b-bc5e-47f7-9ad6-5dbd43150159/a6099310-6f4e-447e-b7a7-e8c073d3b0ea.jpg"),
         ]),
   };
+
+  @override
+  Future<List<Cafe>> getNearby(Location location, {Filter filter}) {
+    // TODO: implement getNearby
+    return null;
+  }
+
+  @override
+  Future<List<Cafe>> search(String search, {Filter filter}) {
+    // TODO: implement search
+    return null;
+  }
+
+  @override
+  Future<Cafe> toggleFavorite(Cafe cafe) {
+    // TODO: implement toggleFavorite
+    return null;
+  }
 }

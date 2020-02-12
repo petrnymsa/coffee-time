@@ -1,4 +1,4 @@
-import 'package:coffee_time/data/repositories/cafe_repository.dart';
+import 'package:coffee_time/data/repositories/legacy_cafe_repository.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/repositories/cafe_repository.dart';
 import 'package:coffee_time/presentation/core/base_provider.dart';
