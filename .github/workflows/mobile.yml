@@ -21,6 +21,10 @@ jobs:
     - name: 'pub get'
       working-directory: mobile
       run: flutter pub get
+   # Build runner
+    - name: 'pub runner'
+      working-directory: mobile
+      run: flutter pub run build_runner --delete-conflicting-outputs
     # Build
     - name: 'build'
       working-directory: mobile
