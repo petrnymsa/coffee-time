@@ -43,6 +43,7 @@ Parameters:
 | ----------------- | ----------------------- |
 | name              |                         |
 | icon              |                         |
+| geometry          |                         |
 | formatted_address |                         |
 | place_id          |                         |
 | types             |                         |
