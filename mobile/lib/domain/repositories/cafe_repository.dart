@@ -1,18 +1,23 @@
-import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/entities/cafe_detail.dart';
-import 'package:coffee_time/domain/entities/filter.dart';
-import 'package:coffee_time/domain/entities/location.dart';
-import 'package:coffee_time/domain/entities/tag.dart';
-import 'package:coffee_time/domain/entities/tag_reputation.dart';
+import '../../core/either.dart';
+import '../entities/cafe.dart';
+import '../entities/cafe_detail.dart';
+import '../entities/filter.dart';
+import '../entities/location.dart';
+import '../failure.dart';
 
-//todo totally rewrite this ==> get rid of it
+//todo documentation
 abstract class CafeRepository {
-  Future<List<Cafe>> getByLocation(Location location, {Filter filter});
-  Future<List<Cafe>> getBySearch(String search, {Filter filter});
-  Future<List<Cafe>> getFavorites();
-  Future<CafeDetail> getDetail(String id);
-  Future<List<Tag>> getAllTags();
+  Future<Either<List<Cafe>, Failure>> getNearby(Location location,
+      {Filter filter});
 
-  Future<bool> toggleFavorite(Cafe entity);
-  Future addTags(Cafe entity, List<TagReputation> tags);
+  Future<Either<List<Cafe>, Failure>> search(String search, {Filter filter});
+
+  Future<Either<List<Cafe>, Failure>> getFavorites();
+
+  Future<Either<CafeDetail, Failure>> getDetail(String id);
+
+  Future<Either<Cafe, Failure>> toggleFavorite(Cafe cafe);
+
+  //todo update cafe tags, add TagUpdate entity
+  //Future addTags(String cafeId, List<TagReputation> tags);
 }

@@ -1,6 +1,5 @@
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/filter.dart';
-import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

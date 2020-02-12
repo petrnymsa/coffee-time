@@ -28,7 +28,7 @@ class TagEditProvider with ChangeNotifier {
   }
 
   void init() async {
-    _allTags = await _cafeRepository.getAllTags();
+    //_allTags = await _cafeRepository.getAllTags();
     entityTags.forEach((t) => _reviews[t.title] = null);
     notifyListeners();
   }

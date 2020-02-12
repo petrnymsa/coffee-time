@@ -18,14 +18,14 @@ class DetailProvider extends BaseProvider<WithoutError> {
 
   loadDetail() async {
     setBusy();
-    _detailEntity = await repository.getDetail(cafeId);
+    // _detailEntity = await repository.getDetail(cafeId);
     setReady();
   }
 
   toggleFavorite() async {
     await repository.toggleFavorite(
         _detailEntity.copyWith(isFavorite: !_detailEntity.isFavorite));
-    _detailEntity = await repository.getDetail(cafeId);
+    // _detailEntity = await repository.getDetail(cafeId);
     notifyListeners();
   }
 }

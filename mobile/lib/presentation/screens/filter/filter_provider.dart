@@ -34,7 +34,7 @@ class FilterProvider with ChangeNotifier {
   void init() async {
     _filter = cafeListProvider.currentFilter;
     if (_filter.tags == null) _filter.copyWith(tags: []);
-    _allTags = await InMemoryCafeRepository.instance.getAllTags();
+    //_allTags = await InMemoryCafeRepository.instance.getAllTags();
     notifyListeners();
   }
 
