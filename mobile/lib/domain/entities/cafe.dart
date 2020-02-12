@@ -13,7 +13,7 @@ class Cafe extends Equatable {
   final bool openNow;
   final String address;
   final List<TagReputation> tags;
-  final List<PhotoEntity> photos;
+  final List<Photo> photos;
 
   final bool isFavorite;
 
@@ -39,7 +39,7 @@ class Cafe extends Equatable {
     bool openNow,
     String address,
     List<TagReputation> tags,
-    List<PhotoEntity> photos,
+    List<Photo> photos,
     bool isFavorite,
   }) {
     return Cafe(

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
 class Review extends Equatable {
   final String authorName;
@@ -11,14 +12,14 @@ class Review extends Equatable {
   final int time;
 
   Review({
-    this.authorName,
-    this.authorUrl,
-    this.language,
-    this.profilePhotoUrl,
-    this.rating,
-    this.relativeTimeDescription,
-    this.text,
-    this.time,
+    @required this.authorName,
+    @required this.authorUrl,
+    @required this.language,
+    @required this.profilePhotoUrl,
+    @required this.rating,
+    @required this.relativeTimeDescription,
+    @required this.text,
+    @required this.time,
   });
 
   Review copyWith({

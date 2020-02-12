@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../domain/entities/tag.dart';
+
 class TagModel extends Equatable {
   final String id;
   final String title;
@@ -33,14 +35,14 @@ class TagModel extends Equatable {
 
   Map<String, dynamic> _iconToMap() {
     return {
-      "code": this.icon.codePoint,
-      "family": this.icon.fontFamily,
-      "package": this.icon.fontPackage
+      "code": icon.codePoint,
+      "family": icon.fontFamily,
+      "package": icon.fontPackage
     };
   }
 
   static IconData _iconFromMap(Map<String, dynamic> map) {
-    return new IconData(map['code'],
+    return IconData(map['code'],
         fontFamily: map['family'], fontPackage: map['package']);
   }
 
@@ -74,4 +76,11 @@ class TagModel extends Equatable {
 
   @override
   List<Object> get props => [id, title, icon, translations];
+
+  Tag toEntity() => Tag(
+        id: id,
+        title: title,
+        icon: icon,
+        translations: translations,
+      );
 }

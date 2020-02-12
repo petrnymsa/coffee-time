@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
+import '../../domain/entities/photo.dart';
+
 class PhotoModel extends Equatable {
   final int width;
   final int height;
@@ -52,4 +54,6 @@ class PhotoModel extends Equatable {
 
   @override
   List<Object> get props => [width, height, reference];
+
+  Photo toEntity(String url) => Photo(height: height, width: width, url: url);
 }

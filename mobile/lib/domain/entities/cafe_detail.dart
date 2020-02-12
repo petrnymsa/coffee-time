@@ -20,7 +20,7 @@ class CafeDetail extends Cafe {
       double rating,
       bool isFavorite = false,
       Location location,
-      List<PhotoEntity> photos,
+      List<Photo> photos,
       List<TagReputation> tags,
       this.contact,
       this.url,
@@ -44,7 +44,7 @@ class CafeDetail extends Cafe {
       int utcOffset,
       OpeningHours openingHours,
       List<Review> reviews,
-      List<PhotoEntity> additionalPhotos}) {
+      List<Photo> additionalPhotos}) {
     return CafeDetail(
         placeId: entity.placeId,
         name: entity.name,
