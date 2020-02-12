@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/domain/entities/location.dart';
+import 'package:coffee_time/domain/exceptions/exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
