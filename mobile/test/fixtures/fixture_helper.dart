@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:coffee_time/data/models/models.dart';
@@ -10,6 +11,11 @@ String fixture(String name) {
     dir = dir.replaceAll('test', '');
   }
   return File('$dir/test/fixtures/$name').readAsStringSync();
+}
+
+String apiResponseFixture(String name, String status) {
+  var json = fixture(name);
+  return json.replaceAll(RegExp(r'"status": *"OK"'), '"status": "$status"');
 }
 
 ReviewModel reviewExample() {
@@ -49,6 +55,15 @@ TagModel tagExample() {
     id: 'beer',
     title: 'beer',
     translations: {'cs': 'pivo'},
+    icon: IconData(61692,
+        fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter'),
+  );
+}
+
+TagModel tagNoTranslationExample() {
+  return TagModel(
+    id: 'beer',
+    title: 'beer',
     icon: IconData(61692,
         fontFamily: 'FontAwesomeSolid', fontPackage: 'font_awesome_flutter'),
   );

@@ -13,7 +13,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (_) => CafeListProvider()..refresh(),
+      create: (_) => CafeListProvider()..refresh(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: AppTheme.apply(context),

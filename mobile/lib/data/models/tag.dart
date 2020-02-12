@@ -14,7 +14,7 @@ class TagModel extends Equatable {
     @required this.id,
     @required this.title,
     @required this.icon,
-    @required this.translations,
+    this.translations = const {},
   });
 
   TagModel copyWith({
@@ -57,11 +57,10 @@ class TagModel extends Equatable {
     if (map == null) return null;
 
     return TagModel(
-      id: map['id'],
-      title: map['title'],
-      icon: _iconFromMap(map['icon']),
-      translations: Map<String, String>.from(map['translations']),
-    );
+        id: map['id'],
+        title: map['title'],
+        icon: _iconFromMap(map['icon']),
+        translations: Map<String, String>.from(map['translations'] ?? {}));
   }
 
   String toJson() => json.encode(toMap());

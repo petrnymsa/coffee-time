@@ -113,13 +113,13 @@ export async function getPhoto(photoId: string, maxHeight?: number, maxWidth?: n
 
     const params = {
         maxwidth: maxWidth,
-        maxHeight: maxHeight,
+        maxheight: maxHeight,
         photoreference: photoId,
         key: process.env.API_KEY
     };
 
     const url = photoBaseUri + queryString(params);
-
+    logInfo(`getPhoto: ${url}`);
     const options = {
         uri: url,
         method: 'GET',

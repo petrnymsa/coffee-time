@@ -28,7 +28,7 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cafeId = ModalRoute.of(context).settings.arguments;
     return ChangeNotifierProvider(
-      builder: (_) => DetailProvider(cafeId: cafeId),
+      create: (_) => DetailProvider(cafeId: cafeId),
       child: Scaffold(
         body: Consumer<DetailProvider>(
           builder: (ctx, model, _) {

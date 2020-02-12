@@ -24,4 +24,9 @@ class Location extends Equatable {
     return DistanceHelper.getDistanceFromLatLonInKm(
         lat, lng, other.lat, other.lng);
   }
+
+  @override
+  String toString() {
+    return '$lat,$lng';
+  }
 }
