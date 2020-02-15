@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class ApiException implements Exception {
+class ApiException extends Equatable implements Exception {
   final String body;
   final int statusCode;
 
@@ -8,9 +9,12 @@ class ApiException implements Exception {
     @required this.statusCode,
     @required this.body,
   });
+
+  @override
+  List<Object> get props => [body, statusCode];
 }
 
-class GoogleApiException implements Exception {
+class GoogleApiException extends Equatable implements Exception {
   final String code;
   final String errorMessage;
 
@@ -18,4 +22,7 @@ class GoogleApiException implements Exception {
     @required this.code,
     this.errorMessage,
   });
+
+  @override
+  List<Object> get props => [code, errorMessage];
 }
