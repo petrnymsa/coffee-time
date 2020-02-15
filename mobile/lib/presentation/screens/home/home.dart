@@ -1,4 +1,3 @@
-import 'package:coffee_time/data/repositories/legacy_cafe_repository.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/filter/filter_screen.dart';
 import 'package:coffee_time/presentation/screens/home/bottom_nav_bar.dart';
@@ -116,9 +115,8 @@ class HomeSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final addresses = InMemoryCafeRepository.instance.addresses
-        .where((a) => a.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+    final addresses =
+        [].where((a) => a.toLowerCase().contains(query.toLowerCase())).toList();
 
     return ListView.builder(
       itemCount: addresses.length,
@@ -128,9 +126,8 @@ class HomeSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final addresses = InMemoryCafeRepository.instance.addresses
-        .where((a) => a.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+    final addresses =
+        [].where((a) => a.toLowerCase().contains(query.toLowerCase())).toList();
 
     return Container(
       padding: const EdgeInsets.all(8.0),
