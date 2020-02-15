@@ -130,5 +130,6 @@ class CafeModel extends Equatable {
                 allTags.firstWhere((t) => t.id == x.id, orElse: () => null)))
             .toList(),
         photos: [photo.toEntity(photoUrl)],
+        isFavorite: isFavorite,
       );
 }

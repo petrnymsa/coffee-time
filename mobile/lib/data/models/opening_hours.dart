@@ -111,7 +111,9 @@ class OpeningHoursModel extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'open_now': openNow,
-      'periods': List<dynamic>.from(periods.map((x) => x.toMap())),
+      'periods': List<dynamic>.from(
+        periods.map((x) => x.toMap()),
+      ),
       'weekday_text': weekdayText
     };
   }
@@ -147,7 +149,8 @@ class OpeningHoursModel extends Equatable {
   List<Object> get props => [openNow, periods, weekdayText];
 
   OpeningHours toEntity() => OpeningHours(
-      openNow: openNow,
-      weekdayText: weekdayText,
-      periods: periods.map((x) => x.toEntity()));
+        openNow: openNow,
+        weekdayText: weekdayText,
+        periods: periods.map((x) => x.toEntity()).toList(),
+      );
 }

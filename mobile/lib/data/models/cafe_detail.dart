@@ -1,9 +1,11 @@
 import 'dart:convert';
-
-import 'package:coffee_time/data/models/models.dart';
-import 'package:coffee_time/data/models/opening_hours.dart';
-import 'package:coffee_time/data/models/review.dart';
+import 'package:coffee_time/domain/entities/cafe_detail.dart';
+import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:equatable/equatable.dart';
+
+import 'models.dart';
+import 'opening_hours.dart';
+import 'review.dart';
 
 class CafeDetailModel extends Equatable {
   final String formattedPhoneNumber;
@@ -100,4 +102,19 @@ class CafeDetailModel extends Equatable {
         photos,
         openingHours,
       ];
+
+  CafeDetail toEntity(Map<String, String> photoReferenceUrlMap) => CafeDetail(
+        contact: Contact(
+          formattedPhone: formattedPhoneNumber,
+          internationalPhone: internationalPhoneNumber,
+          website: website,
+        ),
+        url: url,
+        openingHours: openingHours.toEntity(),
+        utcOffset: utcOffset,
+        photos: photos
+            .map((p) => p.toEntity(photoReferenceUrlMap[p.reference]))
+            .toList(),
+        reviews: reviews.map((r) => r.toEntity()).toList(),
+      );
 }
