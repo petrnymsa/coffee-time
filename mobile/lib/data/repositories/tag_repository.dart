@@ -19,6 +19,7 @@ class TagRepositoryImpl implements TagRepository {
   TagRepositoryImpl({@required this.tagService});
 
   Future<List<Tag>> _getAllTags() async {
+    //todo add cache store, use Facade pattern - ideally about 10 minutes
     final tagModels = await tagService.getAll();
     final tags = tagModels.map((x) => x.toEntity()).toList();
     _cachedTags = tags;
