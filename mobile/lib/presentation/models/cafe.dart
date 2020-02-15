@@ -1,4 +1,3 @@
-import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/domain/entities/cafe.dart' as CafeEntity;
 import 'package:flutter/foundation.dart';
 
@@ -12,8 +11,8 @@ class Cafe with ChangeNotifier {
   void toggleFavorite() {
     _entity = _entity.copyWith(isFavorite: !_entity.isFavorite);
     //todo call to repository to update
-    InMemoryCafeRepository.instance
-        .toggleFavorite(_entity.copyWith(isFavorite: _entity.isFavorite));
+    // InMemoryCafeRepository.instance
+    //     .toggleFavorite(_entity.copyWith(isFavorite: _entity.isFavorite));
     notifyListeners();
   }
 }

@@ -1,22 +1,23 @@
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
-class PhotoEntity extends Equatable {
+class Photo extends Equatable {
   final int width;
   final int height;
   final String url; //todo map from service to REST API url
 
-  PhotoEntity({
-    this.width,
-    this.height,
-    this.url,
+  Photo({
+    @required this.width,
+    @required this.height,
+    @required this.url,
   });
 
-  PhotoEntity copyWith({
+  Photo copyWith({
     int width,
     int height,
     String url,
   }) {
-    return PhotoEntity(
+    return Photo(
       width: width ?? this.width,
       height: height ?? this.height,
       url: url ?? this.url,

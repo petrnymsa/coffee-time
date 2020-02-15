@@ -8,10 +8,10 @@ class Tag extends Equatable {
   final Map<String, String> translations;
 
   Tag({
-    this.id,
-    this.title,
-    this.icon,
-    this.translations,
+    @required this.id,
+    @required this.title,
+    @required this.icon,
+    this.translations = const {},
   });
 
   Tag copyWith({

@@ -1,14 +1,17 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+
+import '../../domain/entities/opening_hour.dart';
 
 class DayTimeModel extends Equatable {
   final int day;
   final String time;
 
   DayTimeModel({
-    this.day,
-    this.time,
+    @required this.day,
+    @required this.time,
   });
 
   Map<String, dynamic> toMap() {
@@ -46,6 +49,8 @@ class DayTimeModel extends Equatable {
 
   @override
   List<Object> get props => [day, time];
+
+  DayTime toEntity() => DayTime(day: day, time: time);
 }
 
 class PeriodModel extends Equatable {
@@ -53,8 +58,8 @@ class PeriodModel extends Equatable {
   final DayTimeModel close;
 
   PeriodModel({
-    this.open,
-    this.close,
+    @required this.open,
+    @required this.close,
   });
 
   Map<String, dynamic> toMap() {
@@ -92,6 +97,8 @@ class PeriodModel extends Equatable {
 
   @override
   List<Object> get props => [open, close];
+
+  Period toEntity() => Period(close: close.toEntity(), open: open.toEntity());
 }
 
 class OpeningHoursModel extends Equatable {
@@ -104,7 +111,9 @@ class OpeningHoursModel extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'open_now': openNow,
-      'periods': List<dynamic>.from(periods.map((x) => x.toMap())),
+      'periods': List<dynamic>.from(
+        periods.map((x) => x.toMap()),
+      ),
       'weekday_text': weekdayText
     };
   }
@@ -138,4 +147,10 @@ class OpeningHoursModel extends Equatable {
 
   @override
   List<Object> get props => [openNow, periods, weekdayText];
+
+  OpeningHours toEntity() => OpeningHours(
+        openNow: openNow,
+        weekdayText: weekdayText,
+        periods: periods.map((x) => x.toEntity()).toList(),
+      );
 }

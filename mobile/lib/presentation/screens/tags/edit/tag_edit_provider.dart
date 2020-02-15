@@ -1,10 +1,7 @@
-import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:flutter/foundation.dart';
 
 class TagEditProvider with ChangeNotifier {
-  InMemoryCafeRepository _cafeRepository = InMemoryCafeRepository.instance;
-
   List<Tag> _addedTags = [];
 
   Map<String, bool> _reviews = {};
@@ -28,7 +25,7 @@ class TagEditProvider with ChangeNotifier {
   }
 
   void init() async {
-    _allTags = await _cafeRepository.getAllTags();
+    //_allTags = await _cafeRepository.getAllTags();
     entityTags.forEach((t) => _reviews[t.title] = null);
     notifyListeners();
   }

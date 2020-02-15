@@ -15,7 +15,7 @@ class FilterScreen extends StatelessWidget {
         Provider.of<CafeListProvider>(context, listen: false);
 
     return ChangeNotifierProvider(
-      builder: (_) => FilterProvider(cafeListProvider)..init(),
+      create: (_) => FilterProvider(cafeListProvider)..init(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('Upravit filtr'),

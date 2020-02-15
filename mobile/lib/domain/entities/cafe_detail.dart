@@ -1,66 +1,29 @@
-import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/entities/contact.dart';
-import 'package:coffee_time/domain/entities/location.dart';
-import 'package:coffee_time/domain/entities/opening_hour.dart';
-import 'package:coffee_time/domain/entities/photo.dart';
-import 'package:coffee_time/domain/entities/review.dart';
-import 'package:coffee_time/domain/entities/tag_reputation.dart';
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
-class CafeDetail extends Cafe {
+import 'contact.dart';
+import 'opening_hour.dart';
+import 'photo.dart';
+import 'review.dart';
+
+class CafeDetail extends Equatable {
   final Contact contact;
   final String url;
   final int utcOffset;
   final OpeningHours openingHours;
   final List<Review> reviews;
+  final List<Photo> photos;
 
-  CafeDetail(
-      {String placeId,
-      String name,
-      String address,
-      double rating,
-      bool isFavorite = false,
-      Location location,
-      List<PhotoEntity> photos,
-      List<TagReputation> tags,
-      this.contact,
-      this.url,
-      this.openingHours,
-      this.utcOffset,
-      this.reviews})
-      : super(
-            placeId: placeId,
-            name: name,
-            address: address,
-            rating: rating,
-            openNow: openingHours?.openNow,
-            isFavorite: isFavorite,
-            location: location,
-            photos: photos,
-            tags: tags);
-
-  factory CafeDetail.fromCafe(Cafe entity,
-      {Contact contact,
-      String cafeUrl,
-      int utcOffset,
-      OpeningHours openingHours,
-      List<Review> reviews,
-      List<PhotoEntity> additionalPhotos}) {
-    return CafeDetail(
-        placeId: entity.placeId,
-        name: entity.name,
-        address: entity.address,
-        rating: entity.rating,
-        isFavorite: entity.isFavorite,
-        location: entity.location,
-        photos: [...entity.photos, ...additionalPhotos],
-        tags: entity.tags,
-        contact: contact,
-        url: cafeUrl,
-        reviews: reviews,
-        utcOffset: utcOffset,
-        openingHours: openingHours);
-  }
+  CafeDetail({
+    @required this.contact,
+    @required this.url,
+    @required this.openingHours,
+    @required this.utcOffset,
+    @required this.photos,
+    @required this.reviews,
+  });
 
   @override
-  List<Object> get props => [...super.props, contact, url, reviews];
+  List<Object> get props =>
+      [contact, url, utcOffset, openingHours, reviews, photos];
 }

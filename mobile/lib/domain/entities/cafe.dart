@@ -1,7 +1,8 @@
-import 'package:coffee_time/domain/entities/location.dart';
-import 'package:coffee_time/domain/entities/photo.dart';
-import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:equatable/equatable.dart';
+
+import 'location.dart';
+import 'photo.dart';
+import 'tag_reputation.dart';
 
 class Cafe extends Equatable {
   final String placeId;
@@ -12,7 +13,7 @@ class Cafe extends Equatable {
   final bool openNow;
   final String address;
   final List<TagReputation> tags;
-  final List<PhotoEntity> photos;
+  final List<Photo> photos;
 
   final bool isFavorite;
 
@@ -38,7 +39,7 @@ class Cafe extends Equatable {
     bool openNow,
     String address,
     List<TagReputation> tags,
-    List<PhotoEntity> photos,
+    List<Photo> photos,
     bool isFavorite,
   }) {
     return Cafe(

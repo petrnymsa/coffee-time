@@ -1,5 +1,4 @@
 import 'package:coffee_time/core/app_logger.dart';
-import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
@@ -34,7 +33,7 @@ class FilterProvider with ChangeNotifier {
   void init() async {
     _filter = cafeListProvider.currentFilter;
     if (_filter.tags == null) _filter.copyWith(tags: []);
-    _allTags = await InMemoryCafeRepository.instance.getAllTags();
+    //_allTags = await InMemoryCafeRepository.instance.getAllTags();
     notifyListeners();
   }
 

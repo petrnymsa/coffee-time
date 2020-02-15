@@ -53,7 +53,7 @@ class DetailScreen extends StatelessWidget {
                           radius: 26,
                           child: IconButton(
                               iconSize: 36,
-                              icon: Icon(cafe.isFavorite
+                              icon: Icon(true
                                   ? Icons.favorite
                                   : Icons.favorite_border),
                               onPressed: () {
@@ -78,18 +78,18 @@ class DetailScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: <Widget>[
-                            OpensNowText(opensNow: cafe.openNow),
+                            OpensNowText(opensNow: true),
                             Spacer(),
-                            Rating.large(cafe.rating),
+                            Rating.large(10),
                           ],
                         ),
-                        Text('Vzdálenost ${getDistance(cafe, context)}'),
+                        //Text('Vzdálenost ${getDistance(null, context)}'),
                         const SizedBox(height: 20.0),
                         CafeNameContainer(
-                          title: cafe.name,
-                          address: cafe.address,
+                          title: 'cafe todo',
+                          address: 'address todo',
                           onShowMap: () async {
-                            logger.i('Show map for ${cafe.name}');
+                            logger.i('Show map for $cafe');
                             if (await canLaunch(cafe.url)) launch(cafe.url);
                           },
                         ),

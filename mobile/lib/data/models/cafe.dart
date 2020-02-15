@@ -1,9 +1,13 @@
 import 'dart:convert';
 
-import 'package:coffee_time/data/models/location.dart';
-import 'package:coffee_time/data/models/photo.dart';
-import 'package:coffee_time/data/models/tag_reputation.dart';
+import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+
+import '../../domain/entities/cafe.dart';
+import 'location.dart';
+import 'photo.dart';
+import 'tag_reputation.dart';
 
 class CafeModel extends Equatable {
   final String placeId;
@@ -16,15 +20,15 @@ class CafeModel extends Equatable {
   final List<TagReputationModel> tags;
   final PhotoModel photo;
   CafeModel({
-    this.placeId,
-    this.name,
-    this.location,
-    this.iconUrl,
-    this.rating,
-    this.openNow,
-    this.address,
-    this.tags,
-    this.photo,
+    @required this.placeId,
+    @required this.name,
+    @required this.location,
+    @required this.iconUrl,
+    @required this.rating,
+    @required this.openNow,
+    @required this.address,
+    @required this.tags,
+    @required this.photo,
   });
 
   Map<String, dynamic> toMap() {
@@ -108,4 +112,24 @@ class CafeModel extends Equatable {
         tags,
         photo,
       ];
+
+  Cafe toEntity(
+          {@required bool isFavorite,
+          @required List<Tag> allTags,
+          @required String photoUrl}) =>
+      Cafe(
+        placeId: placeId,
+        name: name,
+        location: location.toEntity(),
+        iconUrl: iconUrl,
+        rating: rating,
+        openNow: openNow,
+        address: address,
+        tags: tags
+            .map((x) => x.toEntity(
+                allTags.firstWhere((t) => t.id == x.id, orElse: () => null)))
+            .toList(),
+        photos: [photo.toEntity(photoUrl)],
+        isFavorite: isFavorite,
+      );
 }

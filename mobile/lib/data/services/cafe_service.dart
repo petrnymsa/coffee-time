@@ -68,7 +68,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
     final queryString = QueryStringBuilder();
     queryString..add('location', location.toString())..add('radius', radius);
 
-    if (openNow != null) {
+    if (openNow != null && openNow == true) {
       queryString.add('opennow', null);
     }
 

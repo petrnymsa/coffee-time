@@ -1,6 +1,7 @@
 import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
+
+import '../../domain/entities/location.dart';
 
 class LocationModel extends Equatable {
   final double lat;
@@ -46,4 +47,6 @@ class LocationModel extends Equatable {
 
   @override
   List<Object> get props => [lat, lng];
+
+  Location toEntity() => Location(lat, lng);
 }

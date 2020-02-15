@@ -1,6 +1,5 @@
-import 'package:coffee_time/domain/entities/cafe.dart';
-
-import './tag.dart';
+import 'cafe.dart';
+import 'tag.dart';
 
 enum FilterOrdering { distance, rating }
 

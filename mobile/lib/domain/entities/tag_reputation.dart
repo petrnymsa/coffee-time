@@ -1,5 +1,6 @@
-import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:equatable/equatable.dart';
+
+import 'tag.dart';
 
 class TagReputation extends Equatable {
   final String id;

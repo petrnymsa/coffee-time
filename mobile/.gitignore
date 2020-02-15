@@ -30,6 +30,10 @@
 .pub/
 /build/
 
+# Generated files
+**.freezed.dart*
+**.g.dart*
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle

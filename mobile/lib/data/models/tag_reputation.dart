@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:coffee_time/domain/entities/tag.dart';
+import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:equatable/equatable.dart';
 
 class TagReputationModel extends Equatable {
@@ -54,4 +56,7 @@ class TagReputationModel extends Equatable {
 
   @override
   List<Object> get props => [id, likes, dislikes];
+
+  TagReputation toEntity(Tag tag) =>
+      TagReputation(id: id, likes: likes, dislikes: dislikes, tag: tag);
 }
