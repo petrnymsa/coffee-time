@@ -28,7 +28,7 @@ class CafeModel extends Equatable {
     @required this.openNow,
     @required this.address,
     @required this.tags,
-    @required this.photo,
+    this.photo,
   });
 
   Map<String, dynamic> toMap() {

@@ -1,4 +1,3 @@
-import 'package:coffee_time/domain/exceptions/api.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/either.dart';
@@ -7,6 +6,7 @@ import '../../domain/entities/cafe_detail.dart';
 import '../../domain/entities/filter.dart';
 import '../../domain/entities/location.dart';
 import '../../domain/entities/tag.dart';
+import '../../domain/exceptions/api.dart';
 import '../../domain/failure.dart';
 import '../../domain/repositories/cafe_repository.dart';
 import '../../domain/repositories/tags_repository.dart';

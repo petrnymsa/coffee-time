@@ -91,7 +91,7 @@ void main() {
 
       final result = await service.getNearBy(Location(1, 1), language: 'en-US');
 
-      expect(result, equals([cafeExample()]));
+      expect(result, equals([cafeModelExample()]));
     });
 
     test('Request returned other status than OK or ZERO_RESULTS', () {
@@ -141,7 +141,7 @@ void main() {
 
       final result = await service.findByQuery('query', language: 'en-US');
 
-      expect(result, equals([cafeExample()]));
+      expect(result, equals([cafeModelExample()]));
     });
 
     test('Request returned other status than OK or ZERO_RESULTS', () {
@@ -178,7 +178,7 @@ void main() {
 
       final result = await service.getDetail('abc', language: 'en-US');
 
-      expect(result, equals(cafeDetailExample()));
+      expect(result, equals(cafeModelDetailExample()));
     });
 
     test('Request returned other status than OK or ZERO_RESULTS', () {

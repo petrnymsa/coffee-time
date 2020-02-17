@@ -49,11 +49,11 @@ void main() {
       tagRepository: mockTagRepository,
     );
 
-    final cafeModel = cafeExample();
+    final cafeModel = cafeModelExample();
     allTags = [tagExample().toEntity()];
     referenceToUrlMap = {cafeModel.photo.reference: photoUrl};
 
-    final detailModel = cafeDetailExample();
+    final detailModel = cafeModelDetailExample();
 
     for (final p in detailModel.photos) {
       referenceToUrlMap[p.reference] = photoUrl;
@@ -73,7 +73,7 @@ void main() {
 
   group('getNearby', () {
     test('When service returns data, should return entities', () async {
-      final model = cafeExample();
+      final model = cafeModelExample();
 
       when(
         mockCafeService.getNearBy(Location(1, 1),
@@ -111,7 +111,7 @@ void main() {
     });
 
     test('When passed filter, filter is applied', () async {
-      final openedCafe = cafeExample(openNow: true);
+      final openedCafe = cafeModelExample(openNow: true);
 
       when(
         mockCafeService.getNearBy(Location(1, 1),
@@ -134,8 +134,8 @@ void main() {
 
   group('detail', () {
     test('When service returns data, should return entities', () async {
-      final model = cafeExample();
-      final detailModel = cafeDetailExample();
+      final model = cafeModelExample();
+      final detailModel = cafeModelDetailExample();
       when(
         mockCafeService.getDetail(
           model.placeId,
