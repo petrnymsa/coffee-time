@@ -1,21 +1,25 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../domain/entities/location.dart';
+import '../entities/location.dart';
 
 abstract class LocationService {
   Future<Location> getCurrentLocation();
-  Stream<Location> listen();
+  Stream<Location> getLocationStream();
   Future<double> distanceBetween(Location start, Location end);
 }
 
 //todo check permission
 class GeolocatorLocationService implements LocationService {
-  final Geolocator _geolocator = Geolocator();
+  final Geolocator _geolocator;
 
   StreamSubscription<Position> _geolocatorStream;
   StreamController<Location> _locationController;
+
+  GeolocatorLocationService({@required Geolocator geolocator})
+      : _geolocator = geolocator;
 
   @override
   Future<Location> getCurrentLocation() async {
@@ -24,7 +28,7 @@ class GeolocatorLocationService implements LocationService {
   }
 
   @override
-  Stream<Location> listen({int distanceFilter = 10}) {
+  Stream<Location> getLocationStream({int distanceFilter = 10}) {
     _locationController = StreamController<Location>(
         onListen: () => _startListen(distanceFilter),
         onPause: () => _geolocatorStream?.pause(),
