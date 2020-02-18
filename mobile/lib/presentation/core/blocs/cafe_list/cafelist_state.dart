@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain/entities/cafe.dart';
+import '../../../../domain/entities/cafe.dart';
 
 part 'cafelist_state.freezed.dart';
 

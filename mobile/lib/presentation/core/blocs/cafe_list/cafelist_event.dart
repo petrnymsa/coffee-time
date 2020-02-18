@@ -1,7 +1,7 @@
-import 'package:coffee_time/domain/entities/location.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain/entities/filter.dart';
+import '../../../../domain/entities/filter.dart';
+import '../../../../domain/entities/location.dart';
 
 part 'cafelist_event.freezed.dart';
 
