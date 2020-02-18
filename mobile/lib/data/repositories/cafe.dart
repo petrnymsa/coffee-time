@@ -41,6 +41,11 @@ class CafeRepositoryImpl implements CafeRepository {
     );
   }
 
+  Future<List<String>> _getFavoriteIds() async {
+    //todo getUserId
+    return favoriteService.getFavorites('user');
+  }
+
   @override
   Future<Either<CafeDetail, Failure>> getDetail(String id) async {
     try {
@@ -89,12 +94,19 @@ class CafeRepositoryImpl implements CafeRepository {
 
       // todo get isFavorite
       final tags = await _getTags();
+      final favoriteIds = await _getFavoriteIds();
 
-      final cafes = result.map((x) {
-        final photoUrl = photoService.getPhotoUrl(x.photo.reference,
-            maxWidth: x.photo.width, maxHeight: x.photo.height);
-        return x.toEntity(isFavorite: false, allTags: tags, photoUrl: photoUrl);
-      }).toList();
+      final cafes = result.map(
+        (x) {
+          final photoUrl = photoService.getPhotoUrl(x.photo.reference,
+              maxWidth: x.photo.width, maxHeight: x.photo.height);
+          return x.toEntity(
+            isFavorite: favoriteIds.contains(x.placeId),
+            allTags: tags,
+            photoUrl: photoUrl,
+          );
+        },
+      ).toList();
 
       return Left(cafes);
     } on ApiException catch (e) {

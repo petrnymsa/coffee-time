@@ -88,7 +88,7 @@ void main() {
           result,
           equals(Left<List<Cafe>, Failure>([
             model.toEntity(
-                isFavorite: false, allTags: allTags, photoUrl: photoUrl)
+                isFavorite: true, allTags: allTags, photoUrl: photoUrl)
           ])));
     });
 
@@ -127,7 +127,7 @@ void main() {
           result,
           equals(Left<List<Cafe>, Failure>([
             openedCafe.toEntity(
-                isFavorite: false, allTags: allTags, photoUrl: photoUrl)
+                isFavorite: true, allTags: allTags, photoUrl: photoUrl)
           ])));
     });
   });
