@@ -124,6 +124,6 @@ Cafe cafeEntityExample(
   if (allTags.length == 0) {
     allTags = [tagExample().toEntity()];
   }
-  cafeModelExample()
+  return cafeModelExample()
       .toEntity(isFavorite: isFavorite, allTags: allTags, photoUrl: photoUrl);
 }

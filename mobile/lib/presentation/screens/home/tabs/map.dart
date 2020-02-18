@@ -15,55 +15,56 @@ class MapTab extends StatefulWidget {
 }
 
 class _MapTabState extends State<MapTab> {
-  Completer<GoogleMapController> _controller = Completer();
+  // Completer<GoogleMapController> _controller = Completer();
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: Consumer<CafeListProvider>(builder: (ctx, model, _) {
-        return GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: CameraPosition(
-            target:
-                LatLng(model.currentLocation.lat, model.currentLocation.lng),
-            zoom: 16,
-          ),
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-          markers:
-              model.state == ProviderState.ready ? _buildMarkers(model) : null,
-          mapToolbarEnabled: true,
-          compassEnabled: true,
-          rotateGesturesEnabled: true,
-        );
-      }),
-    );
+    return Text('Map');
+    // return new Scaffold(
+    //   body: Consumer<CafeListProvider>(builder: (ctx, model, _) {
+    //     return GoogleMap(
+    //       mapType: MapType.normal,
+    //       initialCameraPosition: CameraPosition(
+    //         target:
+    //             LatLng(model.currentLocation.lat, model.currentLocation.lng),
+    //         zoom: 16,
+    //       ),
+    //       onMapCreated: (GoogleMapController controller) {
+    //         _controller.complete(controller);
+    //       },
+    //       markers:
+    //           model.state == ProviderState.ready ? _buildMarkers(model) : null,
+    //       mapToolbarEnabled: true,
+    //       compassEnabled: true,
+    //       rotateGesturesEnabled: true,
+    //     );
+    //   }),
+    // );
   }
 
-  _buildMarkers(CafeListProvider model) {
-    final Set<Marker> markers = {};
-    model.cafes.forEach((m) {
-      final cafe = m.entity;
-      markers.add(
-        Marker(
-          markerId: MarkerId(cafe.placeId),
-          position: LatLng(cafe.location.lat, cafe.location.lng),
-          infoWindow: InfoWindow(
-              title: cafe.name,
-              snippet: cafe.address,
-              onTap: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => DetailScreen(),
-                    settings: RouteSettings(arguments: cafe.placeId),
-                  ),
-                );
-              }),
-          onTap: () {},
-        ),
-      );
-    });
-    return markers;
-  }
+  // _buildMarkers(CafeListProvider model) {
+  //   final Set<Marker> markers = {};
+  //   model.cafes.forEach((m) {
+  //     final cafe = m.entity;
+  //     markers.add(
+  //       Marker(
+  //         markerId: MarkerId(cafe.placeId),
+  //         position: LatLng(cafe.location.lat, cafe.location.lng),
+  //         infoWindow: InfoWindow(
+  //             title: cafe.name,
+  //             snippet: cafe.address,
+  //             onTap: () async {
+  //               await Navigator.of(context).push(
+  //                 MaterialPageRoute(
+  //                   builder: (_) => DetailScreen(),
+  //                   settings: RouteSettings(arguments: cafe.placeId),
+  //                 ),
+  //               );
+  //             }),
+  //         onTap: () {},
+  //       ),
+  //     );
+  //   });
+  //   return markers;
+  // }
 }

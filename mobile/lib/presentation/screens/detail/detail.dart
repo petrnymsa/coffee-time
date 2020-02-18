@@ -5,8 +5,8 @@ import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:coffee_time/presentation/screens/detail/detail_provider.dart';
 import 'package:coffee_time/presentation/screens/detail/widgets/detail_widgets.dart';
-import 'package:coffee_time/presentation/screens/tags/edit/tag_edit_screen.dart';
-import 'package:coffee_time/presentation/shared/shared_widgets.dart';
+import '../tags/edit/tag_edit_screen.dart';
+import '../../shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
@@ -19,9 +19,10 @@ class DetailScreen extends StatelessWidget {
   DetailScreen({Key key}) : super(key: key);
 
   String getDistance(Cafe cafe, BuildContext context) {
-    double distance =
-        Provider.of<CafeListProvider>(context, listen: false).getDistance(cafe);
-    return DistanceHelper.getFormattedDistanceFromKm(distance);
+    //todo
+    // double distance =
+    //     Provider.of<CafeListProvider>(context, listen: false).getDistance(cafe);
+    return DistanceHelper.getFormattedDistanceFromKm(0);
   }
 
   @override
@@ -58,9 +59,9 @@ class DetailScreen extends StatelessWidget {
                                   : Icons.favorite_border),
                               onPressed: () {
                                 model.toggleFavorite();
-                                Provider.of<CafeListProvider>(context,
-                                        listen: false)
-                                    .refresh();
+                                // Provider.of<CafeListProvider>(context,
+                                //         listen: false)
+                                //     .refresh();
                               }),
                         ),
                       ),
@@ -107,7 +108,7 @@ class DetailScreen extends StatelessWidget {
                                     value: model, child: TagEditScreen()),
                               ),
                             );
-                            Provider.of<CafeListProvider>(context).refresh();
+                            //      Provider.of<CafeListProvider>(context).refresh();
                             model.loadDetail();
                             print(result);
                           },

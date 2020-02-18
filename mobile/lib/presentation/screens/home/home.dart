@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -22,48 +22,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TabsProvider(),
-      child: Builder(
-        builder: (ctx) => Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-            title: Text('Kavárny v okolí'),
-            actions: <Widget>[
-              IconButton(
-                onPressed: () async {
-                  final result = await showSearch(
-                      context: context, delegate: HomeSearchDelegate());
-                  if (result != null)
-                    Provider.of<CafeListProvider>(context, listen: false)
-                        .refreshBySearch(result);
-                },
-                icon: Icon(Icons.search),
+    return Builder(
+      builder: (ctx) => Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: Text('Kavárny v okolí'),
+          actions: <Widget>[
+            IconButton(
+              onPressed: () async {
+                final result = await showSearch(
+                    context: context, delegate: HomeSearchDelegate());
+                // if (result != null)
+                //   Provider.of<CafeListProvider>(context, listen: false)
+                //       .refreshBySearch(result);
+              },
+              icon: Icon(Icons.search),
+            ),
+            IconButton(
+              onPressed: () {
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (ctx) => FilterScreen(),
+                //   ),
+                // );
+              },
+              icon: Icon(
+                FontAwesomeIcons.filter,
+                size: 16,
               ),
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => FilterScreen(),
-                    ),
-                  );
-                },
-                icon: Icon(
-                  FontAwesomeIcons.filter,
-                  size: 16,
-                ),
-              )
-            ],
-          ),
-          body: SafeArea(
-            child: Container(
-              child: Consumer<TabsProvider>(
-                builder: (ctx, model, _) => _buildCurrentTab(context, model),
-              ),
+            )
+          ],
+        ),
+        body: SafeArea(
+          child: Container(
+            child: Consumer<TabsProvider>(
+              builder: (ctx, model, _) => _buildCurrentTab(context, model),
             ),
           ),
-          bottomNavigationBar: HomeBottomNavigationBar(),
         ),
+        bottomNavigationBar: HomeBottomNavigationBar(),
       ),
     );
   }

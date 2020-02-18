@@ -117,11 +117,11 @@ class TagEditScreen extends StatelessWidget {
                       color: Colors.green,
                       icon: Icon(FontAwesomeIcons.check),
                       onPressed: () async {
-                        await Provider.of<CafeListProvider>(context,
-                                listen: false)
-                            .addTags(
-                                detailModel.detail, []); //todo fix empty []
-                        Navigator.of(context).pop();
+                        // await Provider.of<CafeListProvider>(context,
+                        //         listen: false)
+                        //     .addTags(
+                        //         detailModel.detail, []); //todo fix empty []
+                        // Navigator.of(context).pop();
                       },
                     ),
                   ],
