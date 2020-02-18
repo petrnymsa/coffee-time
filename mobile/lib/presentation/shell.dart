@@ -89,7 +89,7 @@ class _BottomTabSelector extends StatelessWidget {
       items: AppTab.values
           .map(
             (t) => BottomNavigationBarItem(
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: AppTheme.main_color,
               icon: Icon(ShellConfiguration.tabIcon(t)),
               title: Text(ShellConfiguration.tabTitle(t)),
             ),
