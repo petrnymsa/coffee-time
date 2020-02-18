@@ -8,7 +8,7 @@ import 'package:coffee_time/presentation/core/blocs/cafe_list/bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../fixtures/fixture_helper.dart';
+import '../../fixtures/fixture_helper.dart';
 
 class MockCafeRepository extends Mock implements CafeRepository {}
 
@@ -36,7 +36,7 @@ void main() {
     blocTest(
       'Emits Loading and Loaded when is successfull',
       build: () {
-        when(cafeRepository.getNearby(any))
+        when(cafeRepository.getNearby(any, filter: anyNamed('filter')))
             .thenAnswer((_) async => Left([cafeEntityExample()]));
         return createBloc();
       },
@@ -51,7 +51,7 @@ void main() {
     blocTest(
       'Emits Loading and Failure when is successfull',
       build: () {
-        when(cafeRepository.getNearby(any))
+        when(cafeRepository.getNearby(any, filter: anyNamed('filter')))
             .thenAnswer((_) async => Right(CommonFailure('Network failure')));
         return createBloc();
       },
