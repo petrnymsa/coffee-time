@@ -1,5 +1,7 @@
+export 'widgets/bottom_tab_selector.dart';
 export 'widgets/cafe_tile.dart';
 export 'widgets/expandable_panel.dart';
+export 'widgets/failure_message.dart';
 export 'widgets/full_width_button.dart';
 export 'widgets/opens_now_text.dart';
 export 'widgets/pricing.dart';
