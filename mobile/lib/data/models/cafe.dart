@@ -53,7 +53,7 @@ class CafeModel extends Equatable {
       name: map['name'],
       location: LocationModel.fromMap(map['geometry']['location']),
       iconUrl: map['icon'],
-      rating: map['rating'].toDouble(),
+      rating: map['rating']?.toDouble(),
       openNow: map['opening_hours'] != null
           ? map['opening_hours']['open_now']
           : null,
@@ -129,7 +129,7 @@ class CafeModel extends Equatable {
             .map((x) => x.toEntity(
                 allTags.firstWhere((t) => t.id == x.id, orElse: () => null)))
             .toList(),
-        photos: [photo.toEntity(photoUrl)],
+        photos: [photo?.toEntity(photoUrl)],
         isFavorite: isFavorite,
       );
 }

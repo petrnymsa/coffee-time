@@ -172,7 +172,9 @@ class CafeTile extends StatelessWidget {
                               //     "Vzdálenost ${DistanceHelper.getFormattedDistanceFromKm(Provider.of<CafeListProvider>(context, listen: false).getDistance(cafe))}"),
                               Spacer(),
                               Text(
-                                cafe.openNow ? 'Otevřeno' : 'Zavřeno',
+                                cafe.openNow != null && cafe.openNow
+                                    ? 'Otevřeno'
+                                    : 'Zavřeno',
                                 style: TextStyle(
                                     color: Colors.black54,
                                     fontSize: 14,

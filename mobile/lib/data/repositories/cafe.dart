@@ -98,8 +98,12 @@ class CafeRepositoryImpl implements CafeRepository {
 
       final cafes = result.map(
         (x) {
-          final photoUrl = photoService.getPhotoUrl(x.photo.reference,
-              maxWidth: x.photo.width, maxHeight: x.photo.height);
+          var photoUrl = null;
+          if (x.photo != null) {
+            photoUrl = photoService.getPhotoUrl(x.photo.reference,
+                maxWidth: x.photo.width, maxHeight: x.photo.height);
+          }
+
           return x.toEntity(
             isFavorite: favoriteIds.contains(x.placeId),
             allTags: tags,
