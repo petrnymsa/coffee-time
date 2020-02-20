@@ -77,7 +77,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
     }
 
     final url = '${ApiBase.apiBaseUrl}/$language/nearby?${queryString.build()}';
-
+    //todo next pagetoken recieved
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['results'];
     //ignore: unnecessary_lambdas

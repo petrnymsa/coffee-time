@@ -26,14 +26,6 @@ import 'shell.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return ChangeNotifierProvider(
-    //   create: (_) => CafeListProvider()..refresh(),
-    //   child: MaterialApp(
-    //     title: 'Flutter Demo',
-    //     theme: AppTheme.apply(context),
-    //     home: HomeScreen(),
-    //   ),
-    // );
     final client = Client();
     return MaterialApp(
       title: 'Coffee Time',
