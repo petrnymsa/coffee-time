@@ -5,8 +5,8 @@ import '../../shell_config.dart';
 import '../theme.dart';
 
 class BottomTabSelector extends StatelessWidget {
-  final AppTab currentTab;
-  final Function(AppTab) tabSelected;
+  final AppTabKey currentTab;
+  final Function(AppTabKey) tabSelected;
 
   BottomTabSelector({
     @required this.currentTab,
@@ -16,8 +16,8 @@ class BottomTabSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: AppTab.values.indexOf(currentTab),
-      items: AppTab.values
+      currentIndex: AppTabKey.values.indexOf(currentTab),
+      items: AppTabKey.values
           .map(
             (t) => BottomNavigationBarItem(
               backgroundColor: AppTheme.main_color,
@@ -26,7 +26,7 @@ class BottomTabSelector extends StatelessWidget {
             ),
           )
           .toList(),
-      onTap: (index) => tabSelected(AppTab.values[index]),
+      onTap: (index) => tabSelected(AppTabKey.values[index]),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../core/utils/string_utils.dart';
 import 'core/blocs/tabs/bloc.dart';
 import 'models/app_tab.dart';
 import 'screens/cafe_list/screen.dart';
@@ -13,11 +14,11 @@ import 'shell_config.dart';
 class Shell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TabsBloc, AppTab>(
+    return BlocBuilder<TabsBloc, AppTabKey>(
       builder: (context, tab) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(ShellConfiguration.tabTitle(tab)),
+            title: Text(ShellConfiguration.tabTitle(tab).capitalize()),
           ),
           body: _mapTabToScreen(tab),
           bottomNavigationBar: BottomTabSelector(
@@ -30,18 +31,18 @@ class Shell extends StatelessWidget {
     );
   }
 
-  Widget _mapTabToScreen(AppTab currentTab) {
+  Widget _mapTabToScreen(AppTabKey currentTab) {
     switch (currentTab) {
-      case AppTab.cafeList:
+      case AppTabKey.cafeList:
         return CafeListScreen();
         break;
-      case AppTab.map:
+      case AppTabKey.map:
         return MapScreen();
         break;
-      case AppTab.favorites:
+      case AppTabKey.favorites:
         return FavoritesScreen();
         break;
-      case AppTab.settings:
+      case AppTabKey.settings:
         return SettingsScreen();
         break;
       default:

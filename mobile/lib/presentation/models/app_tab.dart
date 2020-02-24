@@ -1,1 +1,1 @@
-enum AppTab { cafeList, favorites, map, settings }
+enum AppTabKey { cafeList, favorites, map, settings }

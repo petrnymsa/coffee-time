@@ -6,5 +6,5 @@ part 'tab_event.freezed.dart';
 
 @freezed
 abstract class TabEvent with _$TabEvent {
-  const factory TabEvent.setTab(AppTab tab) = SetTab;
+  const factory TabEvent.setTab(AppTabKey tab) = SetTab;
 }

@@ -5,19 +5,30 @@ import 'models/app_tab.dart';
 
 class ShellConfiguration {
   //todo maybe read from some .json config, translation config
-  static String tabTitle(AppTab tab) {
-    return tab.toString();
+  static String tabTitle(AppTabKey tab) {
+    switch (tab) {
+      case AppTabKey.cafeList:
+        return 'cafes';
+      case AppTabKey.favorites:
+        return 'favorites';
+      case AppTabKey.map:
+        return 'map';
+      case AppTabKey.settings:
+        return 'settings';
+      default:
+        return 'unknown';
+    }
   }
 
-  static IconData tabIcon(AppTab tab) {
+  static IconData tabIcon(AppTabKey tab) {
     switch (tab) {
-      case AppTab.cafeList:
+      case AppTabKey.cafeList:
         return FontAwesomeIcons.coffee;
-      case AppTab.favorites:
+      case AppTabKey.favorites:
         return FontAwesomeIcons.heart;
-      case AppTab.map:
+      case AppTabKey.map:
         return FontAwesomeIcons.map;
-      case AppTab.settings:
+      case AppTabKey.settings:
         return FontAwesomeIcons.cog;
       default:
         return FontAwesomeIcons.question;
