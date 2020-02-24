@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:coffee_time/data/models/models.dart';
 import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/domain/entities/location.dart';
@@ -91,7 +92,7 @@ void main() {
 
       final result = await service.getNearBy(Location(1, 1), language: 'en-US');
 
-      expect(result, equals([cafeModelExample()]));
+      expect(result, equals(NearbyResultModel(cafes: [cafeModelExample()])));
     });
 
     test('Request returned other status than OK or ZERO_RESULTS', () {

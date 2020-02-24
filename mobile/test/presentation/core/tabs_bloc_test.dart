@@ -6,13 +6,13 @@ void main() {
   blocTest(
     'Should emit cafeList as default',
     build: () => TabsBloc(),
-    expect: [AppTab.cafeList],
+    expect: [AppTabKey.cafeList],
   );
 
   blocTest(
     'Emits passed tab',
     build: () => TabsBloc(),
-    act: (bloc) => bloc.add(SetTab(AppTab.settings)),
-    expect: [AppTab.cafeList, AppTab.settings],
+    act: (bloc) => bloc.add(SetTab(AppTabKey.settings)),
+    expect: [AppTabKey.cafeList, AppTabKey.settings],
   );
 }

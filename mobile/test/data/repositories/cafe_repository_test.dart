@@ -1,15 +1,16 @@
 import 'package:coffee_time/core/either.dart';
+import 'package:coffee_time/data/models/models.dart';
 import 'package:coffee_time/data/repositories/cafe.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/data/services/favorite_service.dart';
 import 'package:coffee_time/data/services/photo_service.dart';
-import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/domain/exceptions/api.dart';
 import 'package:coffee_time/domain/failure.dart';
+import 'package:coffee_time/domain/repositories/nearby_result.dart';
 import 'package:coffee_time/domain/repositories/tags_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -80,16 +81,43 @@ void main() {
             language: argThat(isInstanceOf<String>(), named: 'language'),
             openNow: anyNamed('openNow'),
             pageToken: anyNamed('pageToken')),
-      ).thenAnswer((_) async => [model]);
+      ).thenAnswer((_) async => NearbyResultModel(cafes: [model]));
 
       final result = await repository.getNearby(Location(1, 1));
 
       expect(
           result,
-          equals(Left<List<Cafe>, Failure>([
-            model.toEntity(
-                isFavorite: true, allTags: allTags, photoUrl: photoUrl)
-          ])));
+          equals(
+            Left<NearbyResult, Failure>(NearbyResult(cafes: [
+              model.toEntity(
+                  isFavorite: true, allTags: allTags, photoUrl: photoUrl)
+            ])),
+          ));
+    });
+
+    test('When service returns data with token, should return data with token',
+        () async {
+      final model = cafeModelExample();
+
+      when(
+        mockCafeService.getNearBy(Location(1, 1),
+            language: argThat(isInstanceOf<String>(), named: 'language'),
+            openNow: anyNamed('openNow'),
+            pageToken: anyNamed('pageToken')),
+      ).thenAnswer(
+        (_) async => NearbyResultModel(cafes: [model], nextPageToken: 'token'),
+      );
+
+      final result = await repository.getNearby(Location(1, 1));
+
+      expect(
+          result,
+          equals(
+            Left<NearbyResult, Failure>(NearbyResult(cafes: [
+              model.toEntity(
+                  isFavorite: true, allTags: allTags, photoUrl: photoUrl)
+            ], nextPageToken: 'token')),
+          ));
     });
 
     test('When service fails, should return failure', () async {
@@ -104,7 +132,7 @@ void main() {
 
       expect(
           result,
-          equals(Right<List<Cafe>, Failure>(
+          equals(Right<NearbyResult, Failure>(
             ServiceFailure('Call to nearby service failed',
                 inner: ApiException(body: 'fail', statusCode: 400)),
           )));
@@ -118,17 +146,18 @@ void main() {
             language: argThat(isInstanceOf<String>(), named: 'language'),
             openNow: anyNamed('openNow'),
             pageToken: anyNamed('pageToken')),
-      ).thenAnswer((_) async => [openedCafe]);
+      ).thenAnswer((_) async => NearbyResultModel(cafes: [openedCafe]));
 
       final result = await repository.getNearby(Location(1, 1),
           filter: Filter(onlyOpen: true));
 
       expect(
-          result,
-          equals(Left<List<Cafe>, Failure>([
-            openedCafe.toEntity(
-                isFavorite: true, allTags: allTags, photoUrl: photoUrl)
-          ])));
+        result,
+        equals(Left<NearbyResult, Failure>(NearbyResult(cafes: [
+          openedCafe.toEntity(
+              isFavorite: true, allTags: allTags, photoUrl: photoUrl)
+        ]))),
+      );
     });
   });
 

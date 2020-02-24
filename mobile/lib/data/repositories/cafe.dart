@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../../core/app_logger.dart';
 import '../../core/either.dart';
 import '../../domain/entities/cafe.dart';
 import '../../domain/entities/cafe_detail.dart';
@@ -9,6 +10,7 @@ import '../../domain/entities/tag.dart';
 import '../../domain/exceptions/api.dart';
 import '../../domain/failure.dart';
 import '../../domain/repositories/cafe_repository.dart';
+import '../../domain/repositories/nearby_result.dart';
 import '../../domain/repositories/tags_repository.dart';
 import '../services/cafe_service.dart';
 import '../services/favorite_service.dart';
@@ -77,10 +79,10 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<Either<List<Cafe>, Failure>> getNearby(Location location,
+  Future<Either<NearbyResult, Failure>> getNearby(Location location,
       {Filter filter = const Filter()}) async {
     try {
-      //todo handle errors
+      getLogger('CafeRepository').i('getNearby at location: $location');
 
       //todo get current language
       //todo apply filter - tags
@@ -96,9 +98,9 @@ class CafeRepositoryImpl implements CafeRepository {
       final tags = await _getTags();
       final favoriteIds = await _getFavoriteIds();
 
-      final cafes = result.map(
+      final cafes = result.cafes.map(
         (x) {
-          var photoUrl = null;
+          var photoUrl;
           if (x.photo != null) {
             photoUrl = photoService.getPhotoUrl(x.photo.reference,
                 maxWidth: x.photo.width, maxHeight: x.photo.height);
@@ -112,7 +114,8 @@ class CafeRepositoryImpl implements CafeRepository {
         },
       ).toList();
 
-      return Left(cafes);
+      return Left(
+          NearbyResult(cafes: cafes, nextPageToken: result.nextPageToken));
     } on ApiException catch (e) {
       return Right(ServiceFailure('Call to nearby service failed', inner: e));
     } on GoogleApiException catch (e) {

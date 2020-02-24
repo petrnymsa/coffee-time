@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../domain/entities/cafe.dart';
+import '../../domain/entities/tag.dart';
 import 'location.dart';
 import 'photo.dart';
 import 'tag_reputation.dart';

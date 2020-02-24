@@ -3,6 +3,7 @@ import 'package:coffee_time/core/either.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/failure.dart';
 import 'package:coffee_time/domain/repositories/cafe_repository.dart';
+import 'package:coffee_time/domain/repositories/nearby_result.dart';
 import 'package:coffee_time/domain/services/location_service.dart';
 import 'package:coffee_time/presentation/core/blocs/cafe_list/bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -34,10 +35,12 @@ void main() {
 
   group('LoadNearby', () {
     blocTest(
-      'Emits Loading and Loaded when is successfull',
+      'Emits Loading and Loaded when is successful',
       build: () {
         when(cafeRepository.getNearby(any, filter: anyNamed('filter')))
-            .thenAnswer((_) async => Left([cafeEntityExample()]));
+            .thenAnswer(
+          (_) async => Left(NearbyResult(cafes: [cafeEntityExample()])),
+        );
         return createBloc();
       },
       act: (bloc) => bloc.add(LoadNearby(Location(1, 1))),
@@ -47,9 +50,9 @@ void main() {
       ],
     );
 
-    // todo handle concrete NetworkFailure
+    // // todo handle concrete NetworkFailure
     blocTest(
-      'Emits Loading and Failure when is successfull',
+      'Emits Loading and Failure when error',
       build: () {
         when(cafeRepository.getNearby(any, filter: anyNamed('filter')))
             .thenAnswer((_) async => Right(CommonFailure('Network failure')));

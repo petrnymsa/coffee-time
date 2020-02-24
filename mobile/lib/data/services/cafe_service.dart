@@ -7,7 +7,7 @@ import '../models/models.dart';
 import 'api_base.dart';
 
 abstract class CafeService {
-  Future<List<CafeModel>> getNearBy(Location location,
+  Future<NearbyResultModel> getNearBy(Location location,
       {@required String language,
       int radius = 2500,
       bool openNow,
@@ -60,7 +60,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
   }
 
   @override
-  Future<List<CafeModel>> getNearBy(Location location,
+  Future<NearbyResultModel> getNearBy(Location location,
       {@required String language,
       int radius = 2500,
       bool openNow,
@@ -77,10 +77,13 @@ class CafeServiceImpl extends ApiBase implements CafeService {
     }
 
     final url = '${ApiBase.apiBaseUrl}/$language/nearby?${queryString.build()}';
-    //todo next pagetoken recieved
+
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['results'];
     //ignore: unnecessary_lambdas
-    return results.map((x) => CafeModel.fromMap(x)).toList();
+    final cafes = results.map((x) => CafeModel.fromMap(x)).toList();
+
+    return NearbyResultModel(
+        cafes: cafes, nextPageToken: data['next_page_token']);
   }
 }
