@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 
+import '../../core/app_logger.dart';
 import '../../domain/exceptions/exceptions.dart';
 
 abstract class ApiBase {
@@ -11,9 +13,12 @@ abstract class ApiBase {
 
   final http.Client client;
 
+  final Logger _logger = getLogger('Api');
+
   ApiBase({@required this.client});
 
   Future<http.Response> getRequest(String url) async {
+    _logger.i('GET request: $url');
     //todo add auth
     final response = await client.get(url);
 
