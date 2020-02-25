@@ -1,6 +1,6 @@
-import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
+import '../../core/http_client_factory.dart';
 import '../../core/utils/query_string_builder.dart';
 import '../../domain/entities/location.dart';
 import '../models/models.dart';
@@ -25,7 +25,8 @@ abstract class CafeService {
 }
 
 class CafeServiceImpl extends ApiBase implements CafeService {
-  CafeServiceImpl({@required http.Client client}) : super(client: client);
+  CafeServiceImpl({@required HttpClientFactory clientFactory})
+      : super(clientFactory: clientFactory);
 
   @override
   Future<List<CafeModel>> findByQuery(

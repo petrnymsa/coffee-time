@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:meta/meta.dart';
 
+import '../../core/http_client_factory.dart';
 import '../models/models.dart';
 import 'api_base.dart';
 
@@ -12,7 +13,8 @@ abstract class TagService {
 }
 
 class TagServiceImpl extends ApiBase implements TagService {
-  TagServiceImpl({@required http.Client client}) : super(client: client);
+  TagServiceImpl({@required HttpClientFactory clientFactory})
+      : super(clientFactory: clientFactory);
 
   @override
   Future<List<TagModel>> getAll() async {
