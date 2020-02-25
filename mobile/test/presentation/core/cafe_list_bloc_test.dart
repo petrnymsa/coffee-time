@@ -20,6 +20,8 @@ void main() {
   LocationService locationService;
 
   setUp(() {
+    noLogger();
+
     cafeRepository = MockCafeRepository();
     locationService = MockLocationService();
   });
@@ -46,7 +48,7 @@ void main() {
       act: (bloc) => bloc.add(LoadNearby(Location(1, 1))),
       expect: [
         Loading(),
-        Loaded([cafeEntityExample()])
+        Loaded(cafes: [cafeEntityExample()])
       ],
     );
 

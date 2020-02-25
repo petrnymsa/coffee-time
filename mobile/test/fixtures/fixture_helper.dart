@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:coffee_time/data/models/models.dart';
@@ -6,6 +5,9 @@ import 'package:coffee_time/data/models/tag_reputation.dart';
 import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:logger/logger.dart';
+
+void noLogger() => Logger.level = Level.nothing;
 
 String fixture(String name) {
   var dir = Directory.current.path;
@@ -118,7 +120,7 @@ CafeDetailModel cafeModelDetailExample() {
 }
 
 Cafe cafeEntityExample(
-    {bool isFavorite,
+    {bool isFavorite = false,
     List<Tag> allTags = const [],
     String photoUrl = 'photoUrl'}) {
   if (allTags.length == 0) {

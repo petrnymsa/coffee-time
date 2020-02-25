@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:coffee_time/core/http_client_factory.dart';
 import 'package:coffee_time/data/models/models.dart';
 import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
@@ -7,19 +8,28 @@ import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/exceptions/exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
+import 'package:logger/logger.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../fixtures/fixture_helper.dart';
 
 class MockHttpClient extends Mock implements Client {}
 
+class MockHttpClientFactory extends Mock implements HttpClientFactory {}
+
 void main() {
   MockHttpClient mockHttpClient;
   CafeServiceImpl service;
+  MockHttpClientFactory mockHttpClientFactory;
 
   setUp(() {
+    noLogger();
+
     mockHttpClient = MockHttpClient();
-    service = CafeServiceImpl(client: mockHttpClient);
+    mockHttpClientFactory = MockHttpClientFactory();
+    service = CafeServiceImpl(clientFactory: mockHttpClientFactory);
+
+    when(mockHttpClientFactory.create()).thenReturn(mockHttpClient);
   });
 
   void mockHttpClientWithStatusCode200(String fixtureName, String status) {

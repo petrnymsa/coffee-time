@@ -38,6 +38,7 @@ void main() {
   List<Tag> allTags;
 
   setUp(() {
+    noLogger();
     mockCafeService = MockCafeService();
     mockPhotoService = MockPhotoService();
     mockFavoriteService = MockFavoriteService();
