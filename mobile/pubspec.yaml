@@ -24,6 +24,7 @@ dependencies:
   shared_preferences: ^0.5.6+1
   flutter_bloc: ^3.2.0
   geolocator: ^5.2.1
+  cached_network_image: ^2.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -51,6 +52,7 @@ flutter:
   assets:
     - assets/mock/cafe.json
     - assets/mock/cafe_detail.json
+    - assets/table.jpg
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

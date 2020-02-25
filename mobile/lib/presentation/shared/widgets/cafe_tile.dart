@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,7 +14,7 @@ import 'tag/tag_widgets.dart';
 // todo text styles
 // todo color styles
 
-//todo REFACTOR
+//todo REFACTOR to smaller, self contained widgets
 
 class CafeTile extends StatelessWidget {
   final Cafe cafe;
@@ -54,7 +55,7 @@ class CafeTile extends StatelessWidget {
       topRight: Radius.circular(radius),
     );
     final tileHeight = cafe.tags.isNotEmpty ? 216.0 : 180.0;
-    getLogger('CafeTile ${cafe.name}').i('Build');
+    // getLogger('CafeTile ${cafe.name}').i('Build');
 
     return Theme(
       data: Theme.of(context).copyWith(
@@ -77,13 +78,9 @@ class CafeTile extends StatelessWidget {
                     height: imageHegiht,
                     child: Stack(
                       children: <Widget>[
-                        ClipRRect(
+                        TileCoverImage(
                           borderRadius: borderRadius,
-                          child: Image.network(
-                            cafe.photos.first?.url, //todo
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
+                          url: cafe.photos.first?.url,
                         ),
                         Center(
                           child: Container(
@@ -156,18 +153,28 @@ class CafeTile extends StatelessWidget {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Text(
-                                cafe.address,
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w300),
+                              Expanded(
+                                flex: 10, //! how?
+                                // fit: FlexFit.tight,
+                                child: Container(
+                                  child: Text(
+                                    cafe.address,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ),
                               ),
                               Spacer(),
-                              Rating(cafe.rating),
+                              if (cafe.rating != null) Rating(cafe.rating),
                             ],
                           ),
                           //  _buildClosing(context, cafe.openNow),
                           Row(
                             children: <Widget>[
+                              //todo distance
                               // Text(
                               //     "Vzdálenost ${DistanceHelper.getFormattedDistanceFromKm(Provider.of<CafeListProvider>(context, listen: false).getDistance(cafe))}"),
                               Spacer(),
@@ -223,6 +230,37 @@ class CafeTile extends StatelessWidget {
                 ))
             .toList(),
       ),
+    );
+  }
+}
+
+class TileCoverImage extends StatelessWidget {
+  const TileCoverImage({
+    Key key,
+    @required this.borderRadius,
+    @required this.url,
+  }) : super(key: key);
+
+  final BorderRadius borderRadius;
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: borderRadius,
+      child: url != null
+          ? CachedNetworkImage(
+              imageUrl: url,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+              width: double.infinity,
+              fit: BoxFit.cover,
+            )
+          : Image.asset(
+              'assets/table.jpg',
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
     );
   }
 }
