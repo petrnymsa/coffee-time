@@ -11,11 +11,15 @@ class CafeListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CafeListBloc, CafeListState>(
       builder: (context, state) {
+        print('got new state');
         return state.when(
           loading: () => CenteredLoading(),
-          loaded: (cafes) => CafeList(
-            cafes: cafes,
-          ),
+          loaded: (cafes, token) {
+            return CafeList(
+              cafes: cafes,
+              nextPageToken: token,
+            );
+          },
           failure: (message) => FailureMessage(
             message: message,
           ),

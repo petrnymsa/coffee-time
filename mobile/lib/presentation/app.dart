@@ -3,6 +3,7 @@
 //todo add logger
 //todo life cycle manager
 
+import 'package:coffee_time/core/http_client_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,7 +27,6 @@ import 'shell.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final client = Client();
     return MaterialApp(
       title: 'Coffee Time',
       theme: AppTheme.apply(context),
@@ -35,15 +35,17 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (_) => CafeListBloc(
               cafeRepository: CafeRepositoryImpl(
-                cafeService: CafeServiceImpl(client: client),
+                cafeService:
+                    CafeServiceImpl(clientFactory: HttpClientFactoryImpl()),
                 favoriteService: FavoriteLocalService(),
                 photoService: PhotoServiceImpl(),
                 tagRepository: TagRepositoryImpl(
-                    tagService: TagServiceImpl(client: client)),
+                    tagService:
+                        TagServiceImpl(clientFactory: HttpClientFactoryImpl())),
               ),
               locationService:
                   GeolocatorLocationService(geolocator: Geolocator()),
-            ),
+            )..add(Refresh()),
           ),
           BlocProvider(
             create: (_) => TabsBloc(),
@@ -69,7 +71,7 @@ class Foo extends StatelessWidget {
         builder: (context, state) {
           return state.when(
             loading: () => _buildLoading(context),
-            loaded: (cafes) => _buildLoaded(context, cafes),
+            loaded: (cafes, token) => _buildLoaded(context, cafes),
             failure: (failure) => _buildFailure(context, failure),
           );
         },

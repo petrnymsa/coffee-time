@@ -80,7 +80,7 @@ class CafeRepositoryImpl implements CafeRepository {
 
   @override
   Future<Either<NearbyResult, Failure>> getNearby(Location location,
-      {Filter filter = const Filter()}) async {
+      {Filter filter = const Filter(), String pageToken}) async {
     try {
       getLogger('CafeRepository').i('getNearby at location: $location');
 
@@ -92,8 +92,9 @@ class CafeRepositoryImpl implements CafeRepository {
         location,
         language: 'en-US',
         openNow: filter.onlyOpen,
+        pageToken: pageToken,
       );
-
+      getLogger('CafeRepository').i('Got results ${result.cafes.length}');
       // todo get isFavorite
       final tags = await _getTags();
       final favoriteIds = await _getFavoriteIds();
@@ -105,7 +106,9 @@ class CafeRepositoryImpl implements CafeRepository {
             photoUrl = photoService.getPhotoUrl(x.photo.reference,
                 maxWidth: x.photo.width, maxHeight: x.photo.height);
           }
-
+          // if (photoUrl == null) {
+          //   getLogger('cafe').e(x);
+          // }
           return x.toEntity(
             isFavorite: favoriteIds.contains(x.placeId),
             allTags: tags,
