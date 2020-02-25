@@ -135,8 +135,13 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<Either<Cafe, Failure>> toggleFavorite(Cafe cafe) {
-    // todo: implement toggleFavorite
-    return null;
+  Future<Either<bool, Failure>> toggleFavorite(String cafeId) async {
+    try {
+      final result =
+          await favoriteService.setFavorite('user', cafeId); //todo get User
+      return Left(result);
+    } catch (e) {
+      return Right(CommonFailure(e));
+    }
   }
 }
