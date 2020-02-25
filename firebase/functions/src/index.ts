@@ -13,8 +13,8 @@ import { placesRoute } from './routes/places';
 import { tagsRoute } from './routes/tags';
 import { TagsRepository } from './firebase/tags'
 import { db } from './firebase/connection';
-import { logRequestError } from './logger';
-const cors = require('cors');
+import { logRequestError, logInfo } from './logger';
+//const cors = require('cors');
 
 //initialize app
 const app = express();
@@ -23,15 +23,15 @@ const tagsRepository = new TagsRepository(db);
 // initialize dotenv
 dotenv.config();
 
-app.use(cors({ origin: true }))
+//app.use(cors({ origin: true }))
 // accept and parse JSON content-type
 app.use(express.json());
 
-// Rewrite Firebase hosting requests: /api/:path => /:path
 app.use((req, res, next) => {
-    if (req.url.indexOf(`/api/`) === 0) {
-        req.url = req.url.substring('api'.length + 1);
-    }
+    // if (req.url.indexOf(`/api/`) === 0) {
+    //     req.url = req.url.substring('api'.length + 1);
+    // }
+    logInfo(`${req.method} request, url: ${req.url}`);
     next();
 });
 
@@ -65,7 +65,11 @@ app.get('/photo/:id', async (req, res) => {
         } else {
             if (err.statusCode < 500) {
                 res.status(err.statusCode);
-                res.json('Bad usage. Check photoreference.');
+                const msg = {
+                    'error': 'Bad usage. Check photoreference.',
+                    'internal': err
+                };
+                res.json(msg);
             } else {
                 res.status(500).json(err);
             }
