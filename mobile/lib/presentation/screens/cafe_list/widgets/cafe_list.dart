@@ -1,11 +1,11 @@
-import 'package:coffee_time/core/app_logger.dart';
-import 'package:coffee_time/presentation/core/blocs/cafe_list/bloc.dart';
-import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/app_logger.dart';
 import '../../../../domain/entities/cafe.dart';
+import '../../../core/blocs/cafe_list/bloc.dart';
+import '../../../shared/shared_widgets.dart';
+import 'no_data.dart';
 
 //todo add to current loaded state filter entity
 class CafeList extends StatefulWidget {
@@ -25,21 +25,6 @@ class CafeList extends StatefulWidget {
 class _CafeListState extends State<CafeList> {
   final _scrollController = ScrollController();
 
-  @override
-  void initState() {
-    getLogger('CafeList').i('initState');
-    //  _scrollController.addListener(_onScroll);
-    super.initState();
-  }
-
-  // void _onScroll() {
-  //   final maxScroll = _scrollController.position.maxScrollExtent;
-  //   final currentScroll = _scrollController.position.pixels;
-  //   if (maxScroll - currentScroll <= 200) {
-  //     context.bloc<CafeListBloc>().add(LoadNext(widget.nextPageToken));
-  //   }
-  // }
-
   bool _handleScrollNotification(ScrollNotification notification) {
     if (notification is ScrollEndNotification &&
         _scrollController.position.extentAfter == 0) {
@@ -54,7 +39,7 @@ class _CafeListState extends State<CafeList> {
   @override
   Widget build(BuildContext context) {
     getLogger('CafeList').i('rebuild');
-    if (widget.cafes.length == 0) return _buildNoData();
+    if (widget.cafes.length == 0) return NoData();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -80,21 +65,15 @@ class _CafeListState extends State<CafeList> {
                     return CafeTile(
                       cafe: widget.cafes[index],
                       onFavoriteTap: () {
-                        // Provider.of<CafeListProvider>(context, listen: false)
-                        //     .toggleFavorite(data[i]);
+                        context.bloc<CafeListBloc>().add(ToggleFavorite(
+                            cafeId: widget.cafes[index].placeId));
                       },
                       onTap: () async {
                         print('clicked show detail');
                       },
                     );
                   } else {
-                    return Center(
-                        child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: CircularProgressIndicator(
-                        strokeWidth: 1,
-                      ),
-                    ));
+                    return CircularLoader();
                   }
                 },
               ),
@@ -102,21 +81,6 @@ class _CafeListState extends State<CafeList> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildNoData() {
-    return Center(
-      child: Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          children: <Widget>[
-            Icon(FontAwesomeIcons.coffee),
-            Text('Žádné kavárny neodpovídají hledání') //todo translate
-          ],
-        ),
-      ),
     );
   }
 }

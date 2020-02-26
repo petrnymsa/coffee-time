@@ -12,5 +12,7 @@ abstract class CafeListEvent with _$CafeListEvent {
   const factory CafeListEvent.refresh() = Refresh;
   const factory CafeListEvent.loadQuery(Location location) = LoadQuery;
   const factory CafeListEvent.setFilter({@required Filter filter}) = SetFilter;
+  const factory CafeListEvent.toggleFavorite({@required String cafeId}) =
+      ToggleFavorite;
   //todo favorites
 }

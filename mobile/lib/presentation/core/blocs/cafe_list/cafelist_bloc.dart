@@ -1,18 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/repositories/nearby_result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
-import 'package:rxdart/rxdart.dart';
 
-import '../../../../core/either.dart';
 import '../../../../core/app_logger.dart';
-import '../../../../domain/entities/filter.dart';
-import '../../../../domain/entities/location.dart';
+import '../../../../core/either.dart';
 import '../../../../domain/failure.dart';
 import '../../../../domain/repositories/cafe_repository.dart';
+import '../../../../domain/repositories/nearby_result.dart';
 import '../../../../domain/services/location_service.dart';
 import './cafelist_event.dart';
 import './cafelist_state.dart';
@@ -21,9 +17,6 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
   final CafeRepository _cafeRepository;
   final LocationService _locationService;
   final Logger logger = getLogger('CafeListBloc');
-
-  List<String> _tokens = [];
-
   // StreamSubscription<Location> _locationStreamSubscription;
 
   CafeListBloc({
@@ -37,29 +30,22 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     //     .listen((location) {
     //   add(LoadNearby(location));
     // });
-
-    //  add(Refresh());
   }
 
   @override
   CafeListState get initialState => Loading();
 
-  // @override
-  // Stream<CafeListState> transformEvents(Stream<CafeListEvent> events,
-  //     Stream<CafeListState> Function(CafeListEvent) next) {
-  //   return super.transformEvents(
-  //       events.debounceTime(Duration(microseconds: 500)), next);
-  // }
-
   @override
   Stream<CafeListState> mapEventToState(CafeListEvent event) async* {
     //logger.d('got event: $event');
     yield* event.map(
-        loadNearby: _mapLoadNearby,
-        loadNext: _mapLoadNext,
-        loadQuery: _mapLoadQuery,
-        setFilter: _mapSetFilter,
-        refresh: _mapRefresh);
+      loadNearby: _mapLoadNearby,
+      loadNext: _mapLoadNext,
+      loadQuery: _mapLoadQuery,
+      setFilter: _mapSetFilter,
+      refresh: _mapRefresh,
+      toggleFavorite: _mapToggleFavorite,
+    );
   }
 
   Stream<CafeListState> _mapLoadNearby(LoadNearby event) async* {
@@ -73,13 +59,11 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
 
   Stream<CafeListState> _mapLoadNext(LoadNext event) async* {
     if (event.pageToken == null) {
-      logger.i('Ignoring LoadNext event');
+      logger.d('Ignoring LoadNext event');
       return;
     }
 
-    _tokens.add(event.pageToken);
-
-    logger.d('recieved LoadNext event');
+    //logger.d('recieved LoadNext event');
     final location = await _locationService.getCurrentLocation();
     final result = await _cafeRepository.getNearby(location,
         pageToken: event.pageToken); //todo filter
@@ -87,7 +71,7 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
         left: (res) {
           final existingCafes = state.maybeWhen(
               loaded: (cafes, t) {
-                logger.i('new token vs old token: ${res.nextPageToken == t}');
+                //logger.d('new token vs old token: ${res.nextPageToken == t}');
                 return cafes;
               },
               orElse: () => []);
@@ -98,11 +82,6 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
         },
         right: (failure) =>
             CafeListState.failure(_mapFailureToMessage(failure)));
-
-    // final existingCafes =
-    //     state.maybeWhen(loaded: (cafes, _) => cafes, orElse: () => []);
-    // existingCafes.shuffle();
-    // yield Loaded(cafes: [...existingCafes, ...existingCafes], nextPage: 'abc');
   }
 
   Stream<CafeListState> _mapLoadQuery(LoadQuery event) async* {
@@ -123,11 +102,34 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     yield s;
   }
 
+  Stream<CafeListState> _mapToggleFavorite(ToggleFavorite event) async* {
+    //logger.d('recieved refresh event');
+    final result = await _cafeRepository.toggleFavorite(event.cafeId);
+
+    yield result.when(
+      left: (isFavorite) => state.maybeWhen(
+          loaded: (cafes, token) {
+            final newCafes = cafes.map((cafe) {
+              if (cafe.placeId == event.cafeId) {
+                return cafe.copyWith(isFavorite: isFavorite);
+              }
+              return cafe;
+            }).toList();
+
+            return Loaded(cafes: newCafes, nextPage: token);
+          },
+          orElse: () => CafeListState.failure(
+              'Wrong state when ToggleFavorite called. State was: $state')),
+      right: (failure) => CafeListState.failure(_mapFailureToMessage(failure)),
+    );
+  }
+
   CafeListState _mapCafeResultToState(Either<NearbyResult, Failure> result) {
     return result.when(
       left: (nearby) {
-        logger.i(
-            'got ${nearby.cafes.length} cafes, token: ${nearby.nextPageToken != null}');
+        // logger.i(
+        //     'got ${nearby.cafes.length} cafes,
+        //token: ${nearby.nextPageToken != null}');
         return Loaded(cafes: nearby.cafes, nextPage: nearby.nextPageToken);
       },
       right: (failure) => CafeListState.failure(_mapFailureToMessage(failure)),
