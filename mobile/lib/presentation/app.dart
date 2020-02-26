@@ -4,13 +4,13 @@
 //todo life cycle manager
 
 import 'package:coffee_time/core/http_client_factory.dart';
+import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';
 
-import '../data/repositories/cafe.dart';
 import '../data/repositories/tag_repository.dart';
 import '../data/services/cafe_service.dart';
 import '../data/services/favorite_service.dart';

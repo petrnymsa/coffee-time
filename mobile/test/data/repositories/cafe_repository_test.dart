@@ -1,6 +1,6 @@
 import 'package:coffee_time/core/either.dart';
 import 'package:coffee_time/data/models/models.dart';
-import 'package:coffee_time/data/repositories/cafe.dart';
+import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/data/services/favorite_service.dart';
 import 'package:coffee_time/data/services/photo_service.dart';
