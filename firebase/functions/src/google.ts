@@ -46,15 +46,21 @@ export async function getNearby(
     type: 'cafe',
     language: language,
     location: location,
-    radius: radius,
     key: process.env.API_KEY
   };
+
   if (openNow || openNow === '') {
     params.opennow = openNow;
   }
 
   if (pageToken) {
     params.pagetoken = pageToken;
+  }
+
+  if (radius) {
+    params.radius = radius;
+  } else {
+    params.rankby = 'distance';
   }
 
   const url = nearbyBaseUri + queryString(params);
