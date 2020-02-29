@@ -8,20 +8,15 @@ export const placesRoute = (tagsRepository: TagsRepository): Router => {
   /**
    * Required params:
    * - location
-   * - radius
    * Optional params:
    * - opennow
    * - pagetoken
+   * - radius
    */
   router.get('/nearby', async (req, res) => {
     if (!req.query.location) {
       res.status(400);
       res.json('location parameter is missing');
-    }
-
-    if (!req.query.radius) {
-      res.status(400);
-      res.json('radius parameter is missing');
     }
 
     try {
