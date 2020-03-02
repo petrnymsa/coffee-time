@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
+
+import '../../../shared/shared_widgets.dart';
 
 class CarouselSlider extends StatefulWidget {
   final List<String> images;
@@ -24,9 +27,11 @@ class _CarouselSliderState extends State<CarouselSlider> {
         child: PageView.builder(
           itemCount: items.length,
           itemBuilder: (ctx, index) {
-            return Image.network(
-              items[index],
+            return CachedNetworkImage(
               fit: BoxFit.cover,
+              width: double.infinity,
+              imageUrl: items[index],
+              placeholder: (_, __) => CircularLoader(),
             );
           },
         ),

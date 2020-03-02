@@ -4,6 +4,6 @@ part 'detail_bloc_event.freezed.dart';
 
 @freezed
 abstract class DetailBlocEvent with _$DetailBlocEvent {
-  const factory DetailBlocEvent.load(String id) = Load;
+  const factory DetailBlocEvent.load() = Load;
   const factory DetailBlocEvent.toggleFavorite(String id) = ToggleFavorite;
 }

@@ -1,14 +1,16 @@
-import 'package:coffee_time/domain/entities/review.dart';
-import 'package:coffee_time/presentation/shared/shared_widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CommentTile extends StatelessWidget {
-  final Review comment;
+import '../../../../domain/entities/review.dart';
+import '../../../shared/shared_widgets.dart';
 
-  const CommentTile({
+class ReviewTile extends StatelessWidget {
+  final Review review;
+
+  const ReviewTile({
     Key key,
-    @required this.comment,
+    @required this.review,
   }) : super(key: key);
 
   @override
@@ -16,7 +18,13 @@ class CommentTile extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: CircleAvatar(
-          child: Icon(FontAwesomeIcons.solidUser),
+          child: ClipOval(
+            child: CachedNetworkImage(
+              imageUrl: review.profilePhotoUrl,
+              placeholder: (_, __) => CircularLoader(),
+              errorWidget: (_, __, ___) => Icon(FontAwesomeIcons.user),
+            ),
+          ),
           backgroundColor: Theme.of(context).accentColor,
           foregroundColor: Colors.white,
         ),
@@ -27,21 +35,26 @@ class CommentTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                Text(
-                  comment.authorName,
-                  style: TextStyle(
-                    fontSize: 18,
+                Expanded(
+                  child: Text(
+                    review.authorName,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
                 ),
-                Spacer(),
+                const SizedBox(
+                  width: 6,
+                ),
                 Rating.small(
-                  comment.rating.toDouble(),
+                  review.rating.toDouble(),
                   displayRating: false,
                 ),
               ],
             ),
             Text(
-              comment.relativeTimeDescription,
+              review.relativeTimeDescription,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12.0,
@@ -54,7 +67,7 @@ class CommentTile extends StatelessWidget {
         subtitle: Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: Text(
-            comment.text,
+            review.text,
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),

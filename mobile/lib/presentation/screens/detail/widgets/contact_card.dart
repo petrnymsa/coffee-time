@@ -1,7 +1,8 @@
-import 'package:coffee_time/domain/entities/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../domain/entities/contact.dart';
 
 class ContactCard extends StatelessWidget {
   final Contact contact;
@@ -10,8 +11,9 @@ class ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final urlWithoutHttps =
-        contact.website?.replaceAll(new RegExp('^https?://'), 'www.');
+    final urlWithoutHttps = contact.website
+        ?.replaceAll(RegExp('^https?://'), '')
+        ?.replaceAll('www', '');
 
     return Card(
       elevation: 2.0,
@@ -31,14 +33,15 @@ class ContactCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.phone),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        contact.formattedPhone,
-                        style: TextStyle(fontSize: 16),
+                    if (contact.formattedPhone != null) Icon(Icons.phone),
+                    if (contact.formattedPhone != null)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          contact.formattedPhone,
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),

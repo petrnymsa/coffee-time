@@ -154,20 +154,18 @@ class CafeTile extends StatelessWidget {
                           Row(
                             children: <Widget>[
                               Expanded(
-                                flex: 10, //! how?
-                                // fit: FlexFit.tight,
-                                child: Container(
-                                  child: Text(
-                                    cafe.address,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
-                                    ),
+                                child: Text(
+                                  cafe.address,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w300,
                                   ),
                                 ),
                               ),
-                              Spacer(),
+                              const SizedBox(
+                                width: 2,
+                              ),
                               if (cafe.rating != null) Rating(cafe.rating),
                             ],
                           ),

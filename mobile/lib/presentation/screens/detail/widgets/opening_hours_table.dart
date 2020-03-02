@@ -21,16 +21,19 @@ class OpeningHoursTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<TableRow> rows = [];
+    final rows = <TableRow>[];
     final weekDays = getWeekDays();
-    final today = DateTime.now().weekday;
-    for (int i = 0; i < weekDays.length; i++) {
+    final today = DateTime.now().weekday - 1;
+
+    for (var i = 0; i < weekDays.length; i++) {
       final day = weekDays[i];
-      final dayIndex = i + 1;
-      final time = openingHours[i + 1]?.toString() ?? 'Zavřeno';
+      final dayIndex = i;
+      final time =
+          openingHours[dayIndex]?.toString() ?? 'Zavřeno'; //todo translate
       var color = Colors.black;
       var weight = FontWeight.normal;
-      if (openingHours[i + 1] == null) {
+
+      if (openingHours[dayIndex] == null) {
         color = Theme.of(context).accentColor;
       } else if (today == dayIndex) {
         color = Colors.cyan;

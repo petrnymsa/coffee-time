@@ -24,6 +24,13 @@ class DayTime extends Equatable {
 
   @override
   List<Object> get props => [day, time];
+
+  List<int> toHourMinuteParts() {
+    final hoursPart = time.substring(0, 2);
+    final minutesPart = time.substring(2, 4);
+
+    return [int.parse(hoursPart), int.parse(minutesPart)];
+  }
 }
 
 class Period extends Equatable {

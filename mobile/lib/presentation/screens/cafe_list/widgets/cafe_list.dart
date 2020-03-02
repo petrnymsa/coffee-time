@@ -1,5 +1,18 @@
+import 'package:coffee_time/core/http_client_factory.dart';
+import 'package:coffee_time/data/repositories/cafe_repository.dart';
+import 'package:coffee_time/data/repositories/tag_repository.dart';
+import 'package:coffee_time/data/services/cafe_service.dart';
+import 'package:coffee_time/data/services/favorite_service.dart';
+import 'package:coffee_time/data/services/photo_service.dart';
+import 'package:coffee_time/data/services/tag_service.dart';
+import 'package:coffee_time/domain/services/location_service.dart';
+import 'package:coffee_time/presentation/screens/detail/bloc/detail_bloc.dart';
+import 'package:coffee_time/presentation/screens/detail/bloc/detail_bloc_event.dart'
+    as detailEvent;
+import 'package:coffee_time/presentation/screens/detail/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../../core/app_logger.dart';
 import '../../../../domain/entities/cafe.dart';
@@ -69,7 +82,27 @@ class _CafeListState extends State<CafeList> {
                             cafeId: widget.cafes[index].placeId));
                       },
                       onTap: () async {
-                        print('clicked show detail');
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => BlocProvider<DetailBloc>(
+                              create: (_) => DetailBloc(
+                                cafeListBloc: context.bloc<CafeListBloc>(),
+                                cafe: widget.cafes[index],
+                                cafeRepository: CafeRepositoryImpl(
+                                  cafeService: CafeServiceImpl(
+                                      clientFactory: HttpClientFactoryImpl()),
+                                  favoriteService: FavoriteLocalService(),
+                                  photoService: PhotoServiceImpl(),
+                                  tagRepository: TagRepositoryImpl(
+                                      tagService: TagServiceImpl(
+                                          clientFactory:
+                                              HttpClientFactoryImpl())),
+                                ),
+                              )..add(detailEvent.Load()),
+                              child: DetailScreen(),
+                            ),
+                          ),
+                        );
                       },
                     );
                   } else {

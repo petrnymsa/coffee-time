@@ -1,10 +1,11 @@
-import 'package:coffee_time/domain/entities/tag.dart';
-import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../domain/entities/tag_reputation.dart';
+import '../../../shared/shared_widgets.dart';
+
 class TagsContainer extends StatelessWidget {
-  final List<Tag> tags;
+  final List<TagReputation> tags;
 
   final Function onEdit;
   const TagsContainer({Key key, @required this.tags, this.onEdit})
@@ -16,12 +17,12 @@ class TagsContainer extends StatelessWidget {
       children: <Widget>[
         SectionHeader(
           icon: FontAwesomeIcons.tags,
-          title: 'Štítky',
+          title: 'Štítky', //todo translate
         ),
         if (tags.isEmpty)
           Padding(
             padding: EdgeInsets.all(4.0),
-            child: Text('Žádné štítky nepřidány.'),
+            child: Text('Žádné štítky nepřidány.'), //todo translate
           ),
         if (tags.isNotEmpty)
           SizedBox(
@@ -37,13 +38,16 @@ class TagsContainer extends StatelessWidget {
               spacing: 5.0,
               runSpacing: 5.0,
               children: tags
-                  .map((tag) => TagContainer(title: tag.title, icon: tag.icon))
+                  .map((x) => TagContainer(
+                        title: x.tag.title,
+                        icon: x.tag.icon,
+                      ))
                   .toList(),
             ),
           ),
         FlatButton.icon(
           label: Text(
-            'Navrhnout změnu',
+            'Navrhnout změnu', //todo translate
             style: TextStyle(fontSize: 14),
           ),
           icon: Icon(

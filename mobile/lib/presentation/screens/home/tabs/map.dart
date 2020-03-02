@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:coffee_time/presentation/core/base_provider.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
-import 'package:coffee_time/presentation/screens/detail/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';

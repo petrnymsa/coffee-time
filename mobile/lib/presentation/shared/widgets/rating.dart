@@ -2,7 +2,7 @@ import 'package:coffee_time/core/utils/rating_stars_count.dart';
 import 'package:flutter/material.dart';
 
 class Rating extends StatelessWidget {
-  final max = 5;
+  final int max = 5;
   final double rating;
   final double iconSize;
   final bool displayRating;
@@ -30,7 +30,7 @@ class Rating extends StatelessWidget {
 
     final ratingToStars = RatingStarsCount.fromRating(rating);
 
-    final List<Icon> stars = List<Icon>.generate(
+    final stars = List<Icon>.generate(
       ratingToStars.full,
       (i) => Icon(
         Icons.star,
