@@ -87,6 +87,7 @@ class CafeRepositoryImpl implements CafeRepository {
       //todo get current language
       //todo apply filter - tags
       //todo apply filter - ordering
+      //todo applz filter - radius
 
       final result = await cafeService.getNearBy(
         location,

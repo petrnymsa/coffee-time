@@ -8,10 +8,7 @@ import 'api_base.dart';
 
 abstract class CafeService {
   Future<NearbyResultModel> getNearBy(Location location,
-      {@required String language,
-      int radius = 2500,
-      bool openNow,
-      String pageToken});
+      {@required String language, int radius, bool openNow, String pageToken});
 
   Future<List<CafeModel>> findByQuery(
     String query, {
@@ -63,11 +60,11 @@ class CafeServiceImpl extends ApiBase implements CafeService {
   @override
   Future<NearbyResultModel> getNearBy(Location location,
       {@required String language,
-      int radius = 2500,
+      int radius,
       bool openNow,
       String pageToken}) async {
     final queryString = QueryStringBuilder();
-    queryString..add('location', location.toString())..add('radius', radius);
+    queryString.add('location', location.toString());
 
     if (openNow != null && openNow == true) {
       queryString.add('opennow', null);
@@ -75,6 +72,10 @@ class CafeServiceImpl extends ApiBase implements CafeService {
 
     if (pageToken != null) {
       queryString.add('pagetoken', pageToken);
+    }
+
+    if (radius != null) {
+      queryString.add('radius', radius);
     }
 
     final url = '${ApiBase.apiBaseUrl}/$language/nearby?${queryString.build()}';

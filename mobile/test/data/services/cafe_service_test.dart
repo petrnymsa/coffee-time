@@ -62,8 +62,8 @@ void main() {
 
       service.getNearBy(Location(1, 1), language: 'en-US');
 
-      verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500'));
+      verify(mockHttpClient
+          .get('${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0'));
     });
 
     test('With opennow parameter proper URL is called', () {
@@ -72,7 +72,7 @@ void main() {
       service.getNearBy(Location(1, 1), language: 'en-US', openNow: true);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500&opennow'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&opennow'));
     });
 
     test('With pagetoken parameter proper URL is called', () {
@@ -81,17 +81,26 @@ void main() {
       service.getNearBy(Location(1, 1), language: 'en-US', pageToken: 'abc');
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500&pagetoken=abc'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&pagetoken=abc'));
+    });
+
+    test('With radius parameter proper URL is called', () {
+      mockNearbyHttp200WithStatus("OK");
+
+      service.getNearBy(Location(1, 1), language: 'en-US', radius: 2000);
+
+      verify(mockHttpClient.get(
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2000'));
     });
 
     test('With all parameters proper URL is called', () {
       mockNearbyHttp200WithStatus("OK");
 
       service.getNearBy(Location(1, 1),
-          language: 'en-US', openNow: true, pageToken: 'abc');
+          language: 'en-US', openNow: true, pageToken: 'abc', radius: 2500);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500&opennow&pagetoken=abc'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&opennow&pagetoken=abc&radius=2500'));
     });
   });
 
