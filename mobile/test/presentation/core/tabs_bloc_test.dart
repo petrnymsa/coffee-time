@@ -5,14 +5,15 @@ import 'package:coffee_time/presentation/models/app_tab.dart';
 void main() {
   blocTest(
     'Should emit cafeList as default',
-    build: () => TabsBloc(),
+    build: () => Future.value(TabsBloc()),
+    skip: 0,
     expect: [AppTabKey.cafeList],
   );
 
   blocTest(
     'Emits passed tab',
-    build: () => TabsBloc(),
+    build: () => Future.value(TabsBloc()),
     act: (bloc) => bloc.add(SetTab(AppTabKey.settings)),
-    expect: [AppTabKey.cafeList, AppTabKey.settings],
+    expect: [AppTabKey.settings],
   );
 }
