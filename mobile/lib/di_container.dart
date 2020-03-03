@@ -1,3 +1,4 @@
+import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/repositories/tags_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
@@ -26,7 +27,7 @@ void setupContainer() {
     ),
   );
   sl.registerFactory(() => TabsBloc());
-  sl.registerFactoryParam(
+  sl.registerFactoryParam<DetailBloc, Cafe, dynamic>(
     (cafe, _) =>
         DetailBloc(cafe: cafe, cafeListBloc: sl(), cafeRepository: sl()),
   );
