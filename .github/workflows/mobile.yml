@@ -3,7 +3,7 @@ name: 'Mobile - Build and test'
 on:
    push:
       paths: mobile/**
-      branches: [feature/**, dev]      
+      branches: [feature/**, fix/**, dev]      
    #pull_request:
    #   paths: mobile/**
    #   branches: [dev, master]
