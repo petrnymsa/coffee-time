@@ -1,10 +1,9 @@
-import 'package:coffee_time/core/app_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/blocs/cafe_list/bloc.dart';
 import '../../shared/shared_widgets.dart';
-import 'widgets/cafe_list.dart';
+import 'widgets/widgets.dart';
 
 class CafeListScreen extends StatelessWidget {
   @override
@@ -14,7 +13,10 @@ class CafeListScreen extends StatelessWidget {
         return state.when(
           loading: () => CircularLoader(),
           loaded: (cafes, token) {
-            getLogger('CafeListScreen').i('got state ${cafes[0].isFavorite}');
+            if (cafes.length == 0) {
+              return NoData();
+            }
+
             return CafeList(
               cafes: cafes,
               nextPageToken: token,

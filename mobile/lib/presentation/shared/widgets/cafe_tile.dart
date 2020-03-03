@@ -56,7 +56,7 @@ class CafeTile extends StatelessWidget {
       topRight: Radius.circular(radius),
     );
     final tileHeight = cafe.tags.isNotEmpty ? 216.0 : 180.0;
-    getLogger('CafeTile ${cafe.placeId}').i('Build');
+    //getLogger('CafeTile ${cafe.placeId}').i('Build');
 
     return Theme(
       data: Theme.of(context).copyWith(

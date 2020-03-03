@@ -1,24 +1,14 @@
-import 'package:coffee_time/core/http_client_factory.dart';
-import 'package:coffee_time/data/repositories/cafe_repository.dart';
-import 'package:coffee_time/data/repositories/tag_repository.dart';
-import 'package:coffee_time/data/services/cafe_service.dart';
-import 'package:coffee_time/data/services/favorite_service.dart';
-import 'package:coffee_time/data/services/photo_service.dart';
-import 'package:coffee_time/data/services/tag_service.dart';
-import 'package:coffee_time/domain/services/location_service.dart';
-import 'package:coffee_time/presentation/screens/detail/bloc/detail_bloc.dart';
-import 'package:coffee_time/presentation/screens/detail/bloc/detail_bloc_event.dart'
-    as detailEvent;
-import 'package:coffee_time/presentation/screens/detail/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 
 import '../../../../core/app_logger.dart';
+import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
 import '../../../core/blocs/cafe_list/bloc.dart';
 import '../../../shared/shared_widgets.dart';
-import '../../../../di_container.dart';
+import '../../detail/bloc/detail_bloc.dart';
+import '../../detail/bloc/detail_bloc_event.dart' as detail_events;
+import '../../detail/screen.dart';
 import 'no_data.dart';
 
 //todo add to current loaded state filter entity
@@ -38,30 +28,6 @@ class CafeList extends StatefulWidget {
 
 class _CafeListState extends State<CafeList> {
   final _scrollController = ScrollController();
-
-  bool _handleScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollEndNotification &&
-        _scrollController.position.extentAfter == 0) {
-      context
-          .bloc<CafeListBloc>()
-          .add(LoadNext(pageToken: widget.nextPageToken));
-    }
-
-    return false;
-  }
-
-  void _onTileTap(BuildContext context, Cafe cafe) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => BlocProvider<DetailBloc>(
-          create: (_) => sl.get<DetailBloc>(
-            param1: cafe,
-          )..add(detailEvent.Load()),
-          child: DetailScreen(),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +54,6 @@ class _CafeListState extends State<CafeList> {
                     : widget.cafes.length,
                 itemBuilder: (_, index) {
                   if (index < widget.cafes.length) {
-                    //print('cafe i: $index');
                     return CafeTile(
                       cafe: widget.cafes[index],
                       onFavoriteTap: () {
@@ -106,6 +71,30 @@ class _CafeListState extends State<CafeList> {
           ),
         ),
       ],
+    );
+  }
+
+  bool _handleScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification &&
+        _scrollController.position.extentAfter == 0) {
+      context
+          .bloc<CafeListBloc>()
+          .add(LoadNext(pageToken: widget.nextPageToken));
+    }
+
+    return false;
+  }
+
+  void _onTileTap(BuildContext context, Cafe cafe) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => BlocProvider<DetailBloc>(
+          create: (_) => sl.get<DetailBloc>(
+            param1: cafe,
+          )..add(detail_events.Load()),
+          child: DetailScreen(),
+        ),
+      ),
     );
   }
 }

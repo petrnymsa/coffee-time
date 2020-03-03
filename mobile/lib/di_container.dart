@@ -1,5 +1,3 @@
-import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/repositories/tags_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 
@@ -10,11 +8,14 @@ import 'data/services/cafe_service.dart';
 import 'data/services/favorite_service.dart';
 import 'data/services/photo_service.dart';
 import 'data/services/tag_service.dart';
+import 'domain/entities/cafe.dart';
 import 'domain/repositories/cafe_repository.dart';
+import 'domain/repositories/tags_repository.dart';
 import 'domain/services/location_service.dart';
 import 'presentation/core/blocs/cafe_list/cafelist_bloc.dart';
 import 'presentation/core/blocs/tabs/bloc.dart';
 import 'presentation/screens/detail/bloc/detail_bloc.dart';
+import 'presentation/screens/favorites/bloc/bloc.dart';
 
 final GetIt sl = GetIt.I;
 
@@ -26,7 +27,10 @@ void setupContainer() {
       cafeRepository: sl(),
     ),
   );
-  sl.registerFactory(() => TabsBloc());
+  sl.registerLazySingleton(() => TabsBloc());
+  sl.registerFactory(
+    () => FavoritesBloc(cafeRepository: sl(), cafeListBloc: sl()),
+  );
   sl.registerFactoryParam<DetailBloc, Cafe, dynamic>(
     (cafe, _) =>
         DetailBloc(cafe: cafe, cafeListBloc: sl(), cafeRepository: sl()),
