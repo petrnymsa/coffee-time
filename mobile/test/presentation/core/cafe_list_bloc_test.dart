@@ -26,18 +26,19 @@ void main() {
     locationService = MockLocationService();
   });
 
-  CafeListBloc createBloc() => CafeListBloc(
-      cafeRepository: cafeRepository, locationService: locationService);
+  Future<CafeListBloc> createBloc() => Future.value(CafeListBloc(
+      cafeRepository: cafeRepository, locationService: locationService));
 
   blocTest(
     'Initial state should be Loading',
     build: createBloc,
+    skip: 0,
     expect: [Loading()],
   );
 
   group('LoadNearby', () {
     blocTest(
-      'Emits Loading and Loaded when is successful',
+      'Emits Loaded when is successful',
       build: () {
         when(cafeRepository.getNearby(any, filter: anyNamed('filter')))
             .thenAnswer(
@@ -47,12 +48,10 @@ void main() {
       },
       act: (bloc) => bloc.add(LoadNearby(Location(1, 1))),
       expect: [
-        Loading(),
         Loaded(cafes: [cafeEntityExample()])
       ],
     );
 
-    // // todo handle concrete NetworkFailure
     blocTest(
       'Emits Loading and Failure when error',
       build: () {
@@ -61,7 +60,7 @@ void main() {
         return createBloc();
       },
       act: (bloc) => bloc.add(LoadNearby(Location(1, 1))),
-      expect: [Loading(), CafeListState.failure('Network failure')],
+      expect: [CafeListState.failure('Network failure')],
     );
   });
 }
