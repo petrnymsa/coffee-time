@@ -117,6 +117,28 @@ export async function getPlaceDetail(
   logInfo(`getPlaceDetail: ${url}`);
   return getResponse(url);
 }
+
+/**
+ * Returns basic info about given place
+ * @param placeId Obtained place_id from google api
+ * @param language Language to use
+ */
+export async function getBasicInfo(
+  placeId: string,
+  language: string
+): Promise<any> {
+  const params = {
+    place_id: placeId,
+    language: language,
+    fields:
+      'place_id,name,geometry,icon,rating,opening_hours,formatted_address,photo',
+    key: process.env.API_KEY
+  };
+
+  const url = detailBaseUri + queryString(params);
+  logInfo(`getBasicInfo: ${url}`);
+  return getResponse(url);
+}
 /**
  *
  * @param photoId photoreference obtained from google api
