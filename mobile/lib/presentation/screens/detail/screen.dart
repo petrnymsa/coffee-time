@@ -74,12 +74,13 @@ class DetailScreen extends StatelessWidget {
                     },
                   ),
                   Divider(),
-                  ContactCard(contact: detail.contact),
+                  if (detail.contact.hasValues)
+                    ContactCard(contact: detail.contact),
                   const SizedBox(height: 10.0),
                   OpeningHoursContainer(openingHours: detail.openingHours),
                   const SizedBox(height: 10.0),
                   TagsContainer(
-                    tags: cafe.tags, //todo obtain tags view model
+                    tags: cafe.tags,
                     onEdit: () async {
                       // final result = await Navigator.of(context).push(
                       //   MaterialPageRoute(

@@ -20,29 +20,7 @@ class ContactCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             if (contact.formattedPhone != null) Phone(contact: contact),
-            if (contact.website != null)
-              Website(contact: contact),
-            // Container(
-            //   color: Colors.red,
-            //   child: Text('123 456 789'),
-            // ),
-            // Expanded(
-            //   child: Container(
-            //     color: Colors.green,
-            //     child: Row(
-            //       mainAxisSize: MainAxisSize.min,
-            //       children: <Widget>[
-            //         Icon(Icons.cloud),
-            //         Expanded(
-            //           child: Text(
-            //             'Hello from the other side of the dark side',
-            //             overflow: TextOverflow.ellipsis,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
+            if (contact.website != null) Website(contact: contact),
           ],
         ),
       ),

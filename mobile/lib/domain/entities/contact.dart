@@ -11,6 +11,8 @@ class Contact extends Equatable {
       ?.replaceAll('www.', '')
       ?.replaceAll('/', '');
 
+  bool get hasValues => formattedPhone != null && website != null;
+
   Contact(
       {@required this.formattedPhone,
       @required this.internationalPhone,
