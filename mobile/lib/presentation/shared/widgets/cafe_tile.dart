@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coffee_time/core/utils/launcher_helper.dart';
 import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,11 +41,15 @@ class CafeTile extends StatelessWidget {
   }
 
   void _onMapTap(Cafe cafe) async {
-    if (onMapTap != null) onMapTap();
+    if (onMapTap != null) {
+      onMapTap();
+      return;
+    }
     //final scheme = 'geo:${loc.lat},${loc.lng}';
 
-    final scheme = 'geo:0,0?q=${cafe.address}';
-    if (await canLaunch(scheme)) launch(scheme);
+    // final scheme = 'geo:0,0?q=${cafe.address}';
+    // if (await canLaunch(scheme)) launch(scheme);
+    await UrlLauncherHelper.launchNavigation(cafe.location);
   }
 
   @override
