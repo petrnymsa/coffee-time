@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -249,7 +250,7 @@ class TileCoverImage extends StatelessWidget {
       child: url != null
           ? CachedNetworkImage(
               imageUrl: url,
-              placeholder: (context, url) => CircularProgressIndicator(),
+              placeholder: (context, url) => CircularLoader(),
               errorWidget: (context, url, error) => Icon(Icons.error),
               width: double.infinity,
               fit: BoxFit.cover,
