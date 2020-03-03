@@ -8,7 +8,6 @@ import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/exceptions/exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
-import 'package:logger/logger.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../fixtures/fixture_helper.dart';
@@ -49,6 +48,10 @@ void main() {
 
   void mockDetailHttp200WithStatus(String status) {
     mockHttpClientWithStatusCode200('cafe_detail_response.json', status);
+  }
+
+  void mockBasicHttp200WithStatus(String status) {
+    mockHttpClientWithStatusCode200('cafe_basic_response.json', status);
   }
 
   void mockClientHttp400() {
@@ -214,6 +217,43 @@ void main() {
       mockClientHttp400();
 
       final action = service.getDetail;
+
+      expect(action('abc', language: 'en-US'),
+          throwsA(isInstanceOf<ApiException>()));
+    });
+  });
+
+  group('basic', () {
+    test('With required parameters, proper URL is called', () {
+      mockBasicHttp200WithStatus("OK");
+
+      service.getBasicInfo('abc', language: 'en-US');
+
+      verify(mockHttpClient.get('${ApiBase.apiBaseUrl}/en-US/basic/abc'));
+    });
+
+    test('With required parameters and sucessfull request model is returned',
+        () async {
+      mockBasicHttp200WithStatus("OK");
+
+      final result = await service.getBasicInfo('abc', language: 'en-US');
+
+      expect(result, equals(cafeModelExample()));
+    });
+
+    test('Request returned other status than OK or ZERO_RESULTS', () {
+      mockBasicHttp200WithStatus('INVALID_REQUEST');
+
+      final action = service.getBasicInfo;
+
+      expect(action('abc', language: 'en-US'),
+          throwsA(isInstanceOf<GoogleApiException>()));
+    });
+
+    test('Request returned other status code than 200', () async {
+      mockClientHttp400();
+
+      final action = service.getBasicInfo;
 
       expect(action('abc', language: 'en-US'),
           throwsA(isInstanceOf<ApiException>()));
