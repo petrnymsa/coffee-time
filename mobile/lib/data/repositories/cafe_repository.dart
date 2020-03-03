@@ -1,14 +1,16 @@
-import 'package:coffee_time/domain/exceptions/api.dart';
 import 'package:meta/meta.dart';
 
+import '../../core/app_logger.dart';
 import '../../core/either.dart';
 import '../../domain/entities/cafe.dart';
 import '../../domain/entities/cafe_detail.dart';
 import '../../domain/entities/filter.dart';
 import '../../domain/entities/location.dart';
 import '../../domain/entities/tag.dart';
+import '../../domain/exceptions/api.dart';
 import '../../domain/failure.dart';
 import '../../domain/repositories/cafe_repository.dart';
+import '../../domain/repositories/nearby_result.dart';
 import '../../domain/repositories/tags_repository.dart';
 import '../services/cafe_service.dart';
 import '../services/favorite_service.dart';
@@ -39,6 +41,11 @@ class CafeRepositoryImpl implements CafeRepository {
         orElse: () => throw Exception("Unexpected error"),
       ),
     );
+  }
+
+  Future<List<String>> _getFavoriteIds() async {
+    //todo getUserId
+    return favoriteService.getFavorites('user');
   }
 
   @override
@@ -72,31 +79,47 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<Either<List<Cafe>, Failure>> getNearby(Location location,
-      {Filter filter = const Filter()}) async {
+  Future<Either<NearbyResult, Failure>> getNearby(Location location,
+      {Filter filter = const Filter(), String pageToken}) async {
     try {
-      //todo handle errors
+      getLogger('CafeRepository').i('getNearby at location: $location');
 
       //todo get current language
       //todo apply filter - tags
       //todo apply filter - ordering
+      //todo applz filter - radius
 
       final result = await cafeService.getNearBy(
         location,
         language: 'en-US',
         openNow: filter.onlyOpen,
+        pageToken: pageToken,
       );
-
+      getLogger('CafeRepository').i('Got results ${result.cafes.length}');
       // todo get isFavorite
       final tags = await _getTags();
+      final favoriteIds = await _getFavoriteIds();
 
-      final cafes = result.map((x) {
-        final photoUrl = photoService.getPhotoUrl(x.photo.reference,
-            maxWidth: x.photo.width, maxHeight: x.photo.height);
-        return x.toEntity(isFavorite: false, allTags: tags, photoUrl: photoUrl);
-      }).toList();
+      final cafes = result.cafes.map(
+        (x) {
+          var photoUrl;
+          if (x.photo != null) {
+            photoUrl = photoService.getPhotoUrl(x.photo.reference,
+                maxWidth: x.photo.width, maxHeight: x.photo.height);
+          }
+          // if (photoUrl == null) {
+          //   getLogger('cafe').e(x);
+          // }
+          return x.toEntity(
+            isFavorite: favoriteIds.contains(x.placeId),
+            allTags: tags,
+            photoUrl: photoUrl,
+          );
+        },
+      ).toList();
 
-      return Left(cafes);
+      return Left(
+          NearbyResult(cafes: cafes, nextPageToken: result.nextPageToken));
     } on ApiException catch (e) {
       return Right(ServiceFailure('Call to nearby service failed', inner: e));
     } on GoogleApiException catch (e) {
@@ -113,8 +136,13 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<Either<Cafe, Failure>> toggleFavorite(Cafe cafe) {
-    // todo: implement toggleFavorite
-    return null;
+  Future<Either<bool, Failure>> toggleFavorite(String cafeId) async {
+    try {
+      final result =
+          await favoriteService.setFavorite('user', cafeId); //todo get User
+      return Left(result);
+    } catch (e) {
+      return Right(CommonFailure(e));
+    }
   }
 }

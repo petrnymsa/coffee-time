@@ -12,38 +12,70 @@ class CafeNameContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Align(
-          alignment: Alignment.center,
-          child: Column(
-            children: <Widget>[
-              SelectableText(
-                title,
-                style: Theme.of(context).textTheme.headline,
-              ),
-              SelectableText(
-                address,
-                style: Theme.of(context).textTheme.subhead,
-              ),
-            ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SelectableText(
+            title,
+            style: Theme.of(context).textTheme.headline,
           ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Material(
-              borderRadius: BorderRadius.circular(25),
-              elevation: 1.0,
-              child: IconButton(
-                icon: Icon(FontAwesomeIcons.locationArrow),
-                onPressed: onShowMap,
-              ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6.0),
+            child: SelectableText(
+              address,
+              style: Theme.of(context).textTheme.subhead,
             ),
           ),
-        ),
-      ],
+          // Material(
+          //   borderRadius: BorderRadius.circular(25),
+          //   elevation: 1.0,
+          //   child: IconButton(
+          //     icon: Icon(FontAwesomeIcons.locationArrow),
+          //     onPressed: onShowMap,
+          //   ),
+          // ),
+          FlatButton.icon(
+            icon: Icon(FontAwesomeIcons.locationArrow),
+            label: Text('Navigate'),
+            onPressed: onShowMap,
+          )
+        ],
+      ),
     );
+    // return Stack(
+    //   children: <Widget>[
+    //     Align(
+    //       alignment: Alignment.center,
+    //       child: Column(
+    //         children: <Widget>[
+    //           SelectableText(
+    //             title,
+    //             style: Theme.of(context).textTheme.headline,
+    //           ),
+    //           SelectableText(
+    //             address,
+    //             style: Theme.of(context).textTheme.subhead,
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //     Align(
+    //       alignment: Alignment.centerRight,
+    //       child: Padding(
+    //         padding: const EdgeInsets.only(right: 20),
+    //         child: Material(
+    //           borderRadius: BorderRadius.circular(25),
+    //           elevation: 1.0,
+    //           child: IconButton(
+    //             icon: Icon(FontAwesomeIcons.locationArrow),
+    //             onPressed: onShowMap,
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // );
   }
 }

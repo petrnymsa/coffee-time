@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 //ignore: one_member_abstracts
 abstract class FavoriteService {
   Future<List<String>> getFavorites(String userId);
-  Future<void> setFavorite(String userId, String placeId);
+  Future<bool> setFavorite(String userId, String placeId);
 }
 
 class FavoriteLocalService implements FavoriteService {
@@ -26,17 +26,17 @@ class FavoriteLocalService implements FavoriteService {
   }
 
   @override
-  Future<void> setFavorite(String userId, String placeId) async {
+  Future<bool> setFavorite(String userId, String placeId) async {
     final preferences = await SharedPreferences.getInstance();
 
     final data = _getData(preferences, userId);
-
     if (data.isEmpty) {
       preferences.setString(userId, json.encode([placeId]));
-      return;
+      return true;
     }
 
     final result = data.firstWhere((x) => x == placeId, orElse: () => null);
+    final isFavorited = result == null;
 
     if (result != null) {
       data.remove(result);
@@ -45,5 +45,7 @@ class FavoriteLocalService implements FavoriteService {
     }
 
     await preferences.setString(userId, json.encode(data));
+
+    return isFavorited;
   }
 }

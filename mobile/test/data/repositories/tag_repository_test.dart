@@ -17,6 +17,7 @@ void main() {
   TagRepositoryImpl repository;
 
   setUp(() {
+    noLogger();
     mockService = MockTagService();
     repository = TagRepositoryImpl(tagService: mockService);
   });

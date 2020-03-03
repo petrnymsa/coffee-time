@@ -1,26 +1,41 @@
 import 'dart:convert';
 
+import 'package:coffee_time/core/http_client_factory.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 
+import '../../core/app_logger.dart';
 import '../../domain/exceptions/exceptions.dart';
 
 abstract class ApiBase {
   static const String apiBaseUrl =
       "https://europe-west1-coffeetime-1571221579778.cloudfunctions.net/api";
 
-  final http.Client client;
+  final HttpClientFactory clientFactory;
 
-  ApiBase({@required this.client});
+  final Logger _logger = getLogger('Api');
+
+  ApiBase({@required this.clientFactory});
 
   Future<http.Response> getRequest(String url) async {
+    _logger.i('GET request: $url');
     //todo add auth
-    final response = await client.get(url);
+    final client = clientFactory.create();
+    // final client = http.Client();
+    http.Response response;
+    try {
+      response = await client.get(url);
+    } catch (e) {
+      _logger.e(e.toString());
+      rethrow;
+    } finally {
+      client.close();
+    }
 
     if (response.statusCode != 200) {
       throw ApiException(statusCode: response.statusCode, body: response.body);
     }
-
     return response;
   }
 

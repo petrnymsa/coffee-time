@@ -1,17 +1,14 @@
-import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
+import '../../core/http_client_factory.dart';
 import '../../core/utils/query_string_builder.dart';
 import '../../domain/entities/location.dart';
 import '../models/models.dart';
 import 'api_base.dart';
 
 abstract class CafeService {
-  Future<List<CafeModel>> getNearBy(Location location,
-      {@required String language,
-      int radius = 2500,
-      bool openNow,
-      String pageToken});
+  Future<NearbyResultModel> getNearBy(Location location,
+      {@required String language, int radius, bool openNow, String pageToken});
 
   Future<List<CafeModel>> findByQuery(
     String query, {
@@ -25,7 +22,8 @@ abstract class CafeService {
 }
 
 class CafeServiceImpl extends ApiBase implements CafeService {
-  CafeServiceImpl({@required http.Client client}) : super(client: client);
+  CafeServiceImpl({@required HttpClientFactory clientFactory})
+      : super(clientFactory: clientFactory);
 
   @override
   Future<List<CafeModel>> findByQuery(
@@ -60,13 +58,13 @@ class CafeServiceImpl extends ApiBase implements CafeService {
   }
 
   @override
-  Future<List<CafeModel>> getNearBy(Location location,
+  Future<NearbyResultModel> getNearBy(Location location,
       {@required String language,
-      int radius = 2500,
+      int radius,
       bool openNow,
       String pageToken}) async {
     final queryString = QueryStringBuilder();
-    queryString..add('location', location.toString())..add('radius', radius);
+    queryString.add('location', location.toString());
 
     if (openNow != null && openNow == true) {
       queryString.add('opennow', null);
@@ -76,11 +74,18 @@ class CafeServiceImpl extends ApiBase implements CafeService {
       queryString.add('pagetoken', pageToken);
     }
 
+    if (radius != null) {
+      queryString.add('radius', radius);
+    }
+
     final url = '${ApiBase.apiBaseUrl}/$language/nearby?${queryString.build()}';
 
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['results'];
     //ignore: unnecessary_lambdas
-    return results.map((x) => CafeModel.fromMap(x)).toList();
+    final cafes = results.map((x) => CafeModel.fromMap(x)).toList();
+
+    return NearbyResultModel(
+        cafes: cafes, nextPageToken: data['next_page_token']);
   }
 }

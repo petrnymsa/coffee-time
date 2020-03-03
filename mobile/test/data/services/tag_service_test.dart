@@ -1,3 +1,4 @@
+import 'package:coffee_time/core/http_client_factory.dart';
 import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/data/services/tag_service.dart';
 import 'package:coffee_time/domain/exceptions/exceptions.dart';
@@ -9,13 +10,21 @@ import '../../fixtures/fixture_helper.dart';
 
 class MockHttpClient extends Mock implements Client {}
 
+class MockHttpClientFactory extends Mock implements HttpClientFactory {}
+
 void main() {
   MockHttpClient httpClient;
   TagServiceImpl tagService;
+  MockHttpClientFactory mockHttpClientFactory;
 
   setUp(() {
+    noLogger();
+
     httpClient = MockHttpClient();
-    tagService = TagServiceImpl(client: httpClient);
+    mockHttpClientFactory = MockHttpClientFactory();
+    tagService = TagServiceImpl(clientFactory: mockHttpClientFactory);
+
+    when(mockHttpClientFactory.create()).thenReturn(httpClient);
   });
 
   void setupHttpClientResponseOk({bool empty = false}) {

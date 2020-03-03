@@ -1,9 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:coffee_time/data/models/models.dart';
 import 'package:coffee_time/data/models/tag_reputation.dart';
+import 'package:coffee_time/domain/entities/cafe.dart';
+import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:logger/logger.dart';
+
+void noLogger() => Logger.level = Level.nothing;
 
 String fixture(String name) {
   var dir = Directory.current.path;
@@ -73,7 +77,7 @@ TagReputationModel tagReputationExample() {
   return TagReputationModel(id: 'beer', likes: 5, dislikes: 1);
 }
 
-CafeModel cafeExample({bool openNow = true}) {
+CafeModel cafeModelExample({bool openNow = true}) {
   return CafeModel(
     address: 'address',
     iconUrl: 'https://maps/71.png',
@@ -87,7 +91,7 @@ CafeModel cafeExample({bool openNow = true}) {
   );
 }
 
-CafeModel cafeNoPhotoExample() {
+CafeModel cafeModelNoPhotoExample() {
   return CafeModel(
     address: 'address',
     iconUrl: 'https://maps/71.png',
@@ -100,7 +104,7 @@ CafeModel cafeNoPhotoExample() {
   );
 }
 
-CafeDetailModel cafeDetailExample() {
+CafeDetailModel cafeModelDetailExample() {
   return CafeDetailModel(
     formattedPhoneNumber: '224 219 501',
     internationalPhoneNumber: '+420 224 219 501',
@@ -113,4 +117,15 @@ CafeDetailModel cafeDetailExample() {
     url: 'https://maps.google.com',
     utcOffset: 60,
   );
+}
+
+Cafe cafeEntityExample(
+    {bool isFavorite = false,
+    List<Tag> allTags = const [],
+    String photoUrl = 'photoUrl'}) {
+  if (allTags.length == 0) {
+    allTags = [tagExample().toEntity()];
+  }
+  return cafeModelExample()
+      .toEntity(isFavorite: isFavorite, allTags: allTags, photoUrl: photoUrl);
 }

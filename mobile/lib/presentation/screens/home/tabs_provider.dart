@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 enum CurrentTab { CafeList, Map, Favorites, Settings }
 
+//todo refactor TabsProvider
 class TabsProvider with ChangeNotifier {
   CurrentTab _tab;
 

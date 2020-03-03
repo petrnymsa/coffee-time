@@ -6,6 +6,13 @@ class Contact extends Equatable {
   final String internationalPhone;
   final String website;
 
+  String get websiteWithoutProtocol => website
+      ?.replaceAll(RegExp('^https?://'), '')
+      ?.replaceAll('www.', '')
+      ?.replaceAll('/', '');
+
+  bool get hasValues => formattedPhone != null && website != null;
+
   Contact(
       {@required this.formattedPhone,
       @required this.internationalPhone,

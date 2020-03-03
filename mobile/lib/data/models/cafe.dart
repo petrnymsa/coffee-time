@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../domain/entities/cafe.dart';
+import '../../domain/entities/tag.dart';
 import 'location.dart';
 import 'photo.dart';
 import 'tag_reputation.dart';
@@ -28,7 +28,7 @@ class CafeModel extends Equatable {
     @required this.openNow,
     @required this.address,
     @required this.tags,
-    @required this.photo,
+    this.photo,
   });
 
   Map<String, dynamic> toMap() {
@@ -53,7 +53,7 @@ class CafeModel extends Equatable {
       name: map['name'],
       location: LocationModel.fromMap(map['geometry']['location']),
       iconUrl: map['icon'],
-      rating: map['rating'].toDouble(),
+      rating: map['rating']?.toDouble(),
       openNow: map['opening_hours'] != null
           ? map['opening_hours']['open_now']
           : null,
@@ -129,7 +129,7 @@ class CafeModel extends Equatable {
             .map((x) => x.toEntity(
                 allTags.firstWhere((t) => t.id == x.id, orElse: () => null)))
             .toList(),
-        photos: [photo.toEntity(photoUrl)],
+        photos: [photo?.toEntity(photoUrl)],
         isFavorite: isFavorite,
       );
 }

@@ -7,14 +7,14 @@ void main() {
   group('fromJson', () {
     test('Given valid cafe json, should return cafe model', () {
       final json = fixture('cafe.json');
-      final model = cafeExample();
+      final model = cafeModelExample();
       final result = CafeModel.fromJson(json);
       expect(result, model);
     });
 
     test('Given response without photo, should return cafe model', () {
       final json = fixture('cafe_no_photo.json');
-      final model = cafeNoPhotoExample();
+      final model = cafeModelNoPhotoExample();
       final result = CafeModel.fromJson(json);
       expect(result, model);
     });

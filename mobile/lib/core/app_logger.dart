@@ -5,6 +5,9 @@ Logger getLogger(String origin) => Logger(printer: AppPrinter(origin));
 
 class AppPrinter extends PrettyPrinter {
   final String origin;
+
+  static final fileNameRegex = RegExp(r'\(.*\/(.*)\)');
+
   AppPrinter(this.origin);
 
   @override
@@ -18,10 +21,18 @@ class AppPrinter extends PrettyPrinter {
     } else {
       trace = getOriginLine(event.stackTrace);
     }
-    String time = DateFormat.Hms().format(DateTime.now());
+    final time = DateFormat.Hms().format(DateTime.now());
     final levelStr = event.level.toString().split('.')[1];
-    println(color('[$time] $levelStr | $origin - ${event.message}'));
+    final originFile = getOriginFileName(trace);
+    println(
+        color('[$time] $levelStr | $origin - ${event.message} ($originFile)'));
+
     if (event.level.index >= Level.warning.index) println(color(trace));
+  }
+
+  String getOriginFileName(String line) {
+    final m = fileNameRegex.firstMatch(line);
+    return m.group(1);
   }
 
   String getOriginLine(StackTrace stackTrace) {
@@ -34,8 +45,9 @@ class AppPrinter extends PrettyPrinter {
         }
         var newLine = (" > ${match.group(1)} (${match.group(2)})");
         return newLine.replaceAll('<anonymous closure>', '()');
-      } else
+      } else {
         return line;
+      }
     }
 
     return null;

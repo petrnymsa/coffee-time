@@ -7,7 +7,7 @@ import '../entities/location.dart';
 
 abstract class LocationService {
   Future<Location> getCurrentLocation();
-  Stream<Location> getLocationStream();
+  Stream<Location> getLocationStream({int distanceFilter = 10});
   Future<double> distanceBetween(Location start, Location end);
 }
 

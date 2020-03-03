@@ -11,100 +11,96 @@ import 'package:provider/provider.dart';
 class FilterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final cafeListProvider =
-        Provider.of<CafeListProvider>(context, listen: false);
+    // final cafeListProvider =
+    //     Provider.of<CafeListProvider>(context, listen: false);
 
-    return ChangeNotifierProvider(
-      create: (_) => FilterProvider(cafeListProvider)..init(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Upravit filtr'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Upravit filtr'),
+      ),
+      floatingActionButton: Builder(
+        builder: (ctx) => FloatingActionButton.extended(
+          icon: Icon(Icons.check),
+          label: Text('Potvrdit'),
+          foregroundColor: Colors.white,
+          onPressed: () {
+            // Provider.of<FilterProvider>(ctx, listen: false).save();
+            // Navigator.of(context).pop();
+          },
         ),
-        floatingActionButton: Builder(
-          builder: (ctx) => FloatingActionButton.extended(
-            icon: Icon(Icons.check),
-            label: Text('Potvrdit'),
-            foregroundColor: Colors.white,
-            onPressed: () {
-              Provider.of<FilterProvider>(ctx, listen: false).save();
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
-        body: Consumer<FilterProvider>(
-          builder: (ctx, model, _) => SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 60.0),
-              child: Column(
-                children: <Widget>[
-                  ..._buildOpening(ctx, model),
-                  SectionHeader(
-                    title: 'Řazení',
-                    icon: Icons.sort,
-                  ),
-                  const SizedBox(
-                    height: 6.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        groupValue: model.filter.ordering.index,
-                        value: FilterOrdering.distance.index,
-                        onChanged: (v) => model.changeOrdering(v),
-                      ),
-                      GestureDetector(
-                        onTap: () =>
-                            model.changeOrdering(FilterOrdering.distance.index),
-                        child: Text(
-                          'Podle vzdálenosti',
-                          style: Theme.of(context).textTheme.subhead,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Radio(
-                        groupValue: model.filter.ordering.index,
-                        value: FilterOrdering.rating.index,
-                        onChanged: (v) => model.changeOrdering(v),
-                      ),
-                      GestureDetector(
-                        onTap: () =>
-                            model.changeOrdering(FilterOrdering.rating.index),
-                        child: Text(
-                          'Podle hodnocení',
-                          style: Theme.of(context).textTheme.subhead,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SectionHeader(
-                    icon: FontAwesomeIcons.tags,
-                    title: 'Štítky',
-                  ),
-                  const SizedBox(
-                    height: 6.0,
-                  ),
-                  Text('Kavárna obsahuje alespoň jeden níže vybraný štítek'),
-                  if (model.filter.tags != null) ..._buildTagsToAdd(ctx, model),
-                  if (model.notAddedTagsYet.length > 0)
-                    RaisedButton.icon(
-                      label: Text('Vybrat štítky'),
-                      icon: Icon(FontAwesomeIcons.plus),
-                      onPressed: () async {
-                        final List<Tag> addedTags =
-                            await Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => TagAddScreen(
-                                      model.notAddedTagsYet,
-                                      title: 'Vybrat štítky',
-                                    )));
-                        if (addedTags != null)
-                          model.updateChosenTags(addedTags);
-                      },
+      ),
+      body: Consumer<FilterProvider>(
+        builder: (ctx, model, _) => SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 60.0),
+            child: Column(
+              children: <Widget>[
+                ..._buildOpening(ctx, model),
+                SectionHeader(
+                  title: 'Řazení',
+                  icon: Icons.sort,
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                Row(
+                  children: <Widget>[
+                    Radio(
+                      groupValue: model.filter.ordering.index,
+                      value: FilterOrdering.distance.index,
+                      onChanged: (v) => model.changeOrdering(v),
                     ),
-                ],
-              ),
+                    GestureDetector(
+                      onTap: () =>
+                          model.changeOrdering(FilterOrdering.distance.index),
+                      child: Text(
+                        'Podle vzdálenosti',
+                        style: Theme.of(context).textTheme.subhead,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Radio(
+                      groupValue: model.filter.ordering.index,
+                      value: FilterOrdering.rating.index,
+                      onChanged: (v) => model.changeOrdering(v),
+                    ),
+                    GestureDetector(
+                      onTap: () =>
+                          model.changeOrdering(FilterOrdering.rating.index),
+                      child: Text(
+                        'Podle hodnocení',
+                        style: Theme.of(context).textTheme.subhead,
+                      ),
+                    ),
+                  ],
+                ),
+                SectionHeader(
+                  icon: FontAwesomeIcons.tags,
+                  title: 'Štítky',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                Text('Kavárna obsahuje alespoň jeden níže vybraný štítek'),
+                if (model.filter.tags != null) ..._buildTagsToAdd(ctx, model),
+                if (model.notAddedTagsYet.length > 0)
+                  RaisedButton.icon(
+                    label: Text('Vybrat štítky'),
+                    icon: Icon(FontAwesomeIcons.plus),
+                    onPressed: () async {
+                      // final List<Tag> addedTags =
+                      //     await Navigator.of(context).push(MaterialPageRoute(
+                      //         builder: (_) => TagAddScreen(
+                      //               model.notAddedTagsYet,
+                      //               title: 'Vybrat štítky',
+                      //             )));
+                      // if (addedTags != null) model.updateChosenTags(addedTags);
+                    },
+                  ),
+              ],
             ),
           ),
         ),

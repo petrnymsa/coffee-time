@@ -5,7 +5,7 @@ import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:flutter/foundation.dart';
 
 class FilterProvider with ChangeNotifier {
-  CafeListProvider cafeListProvider;
+  // CafeListProvider cafeListProvider;
 
   Filter _filter;
 
@@ -13,7 +13,7 @@ class FilterProvider with ChangeNotifier {
 
   List<Tag> _allTags = [];
 
-  FilterProvider(this.cafeListProvider);
+  // FilterProvider(this.cafeListProvider);
 
   List<Tag> get notAddedTagsYet {
     final List<Tag> res = [];
@@ -31,7 +31,7 @@ class FilterProvider with ChangeNotifier {
   }
 
   void init() async {
-    _filter = cafeListProvider.currentFilter;
+    //_filter = cafeListProvider.currentFilter;
     if (_filter.tags == null) _filter.copyWith(tags: []);
     //_allTags = await InMemoryCafeRepository.instance.getAllTags();
     notifyListeners();
@@ -65,10 +65,10 @@ class FilterProvider with ChangeNotifier {
 
   void save() {
     getLogger('Filter Provider').i('Saving filter: $_filter');
-    cafeListProvider.updateFilter(_filter.copyWith(
-        onlyOpen: _filter.onlyOpen,
-        tags: _filter.tags,
-        ordering: _filter.ordering));
+    // cafeListProvider.updateFilter(_filter.copyWith(
+    //     onlyOpen: _filter.onlyOpen,
+    //     tags: _filter.tags,
+    //     ordering: _filter.ordering));
     notifyListeners();
   }
 

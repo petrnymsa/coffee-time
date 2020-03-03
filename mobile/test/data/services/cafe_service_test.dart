@@ -1,24 +1,35 @@
 import 'dart:io';
 
+import 'package:coffee_time/core/http_client_factory.dart';
+import 'package:coffee_time/data/models/models.dart';
 import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/exceptions/exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
+import 'package:logger/logger.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../fixtures/fixture_helper.dart';
 
 class MockHttpClient extends Mock implements Client {}
 
+class MockHttpClientFactory extends Mock implements HttpClientFactory {}
+
 void main() {
   MockHttpClient mockHttpClient;
   CafeServiceImpl service;
+  MockHttpClientFactory mockHttpClientFactory;
 
   setUp(() {
+    noLogger();
+
     mockHttpClient = MockHttpClient();
-    service = CafeServiceImpl(client: mockHttpClient);
+    mockHttpClientFactory = MockHttpClientFactory();
+    service = CafeServiceImpl(clientFactory: mockHttpClientFactory);
+
+    when(mockHttpClientFactory.create()).thenReturn(mockHttpClient);
   });
 
   void mockHttpClientWithStatusCode200(String fixtureName, String status) {
@@ -51,8 +62,8 @@ void main() {
 
       service.getNearBy(Location(1, 1), language: 'en-US');
 
-      verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500'));
+      verify(mockHttpClient
+          .get('${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0'));
     });
 
     test('With opennow parameter proper URL is called', () {
@@ -61,7 +72,7 @@ void main() {
       service.getNearBy(Location(1, 1), language: 'en-US', openNow: true);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500&opennow'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&opennow'));
     });
 
     test('With pagetoken parameter proper URL is called', () {
@@ -70,17 +81,26 @@ void main() {
       service.getNearBy(Location(1, 1), language: 'en-US', pageToken: 'abc');
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500&pagetoken=abc'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&pagetoken=abc'));
+    });
+
+    test('With radius parameter proper URL is called', () {
+      mockNearbyHttp200WithStatus("OK");
+
+      service.getNearBy(Location(1, 1), language: 'en-US', radius: 2000);
+
+      verify(mockHttpClient.get(
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2000'));
     });
 
     test('With all parameters proper URL is called', () {
       mockNearbyHttp200WithStatus("OK");
 
       service.getNearBy(Location(1, 1),
-          language: 'en-US', openNow: true, pageToken: 'abc');
+          language: 'en-US', openNow: true, pageToken: 'abc', radius: 2500);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2500&opennow&pagetoken=abc'));
+          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&opennow&pagetoken=abc&radius=2500'));
     });
   });
 
@@ -91,7 +111,7 @@ void main() {
 
       final result = await service.getNearBy(Location(1, 1), language: 'en-US');
 
-      expect(result, equals([cafeExample()]));
+      expect(result, equals(NearbyResultModel(cafes: [cafeModelExample()])));
     });
 
     test('Request returned other status than OK or ZERO_RESULTS', () {
@@ -141,7 +161,7 @@ void main() {
 
       final result = await service.findByQuery('query', language: 'en-US');
 
-      expect(result, equals([cafeExample()]));
+      expect(result, equals([cafeModelExample()]));
     });
 
     test('Request returned other status than OK or ZERO_RESULTS', () {
@@ -178,7 +198,7 @@ void main() {
 
       final result = await service.getDetail('abc', language: 'en-US');
 
-      expect(result, equals(cafeDetailExample()));
+      expect(result, equals(cafeModelDetailExample()));
     });
 
     test('Request returned other status than OK or ZERO_RESULTS', () {

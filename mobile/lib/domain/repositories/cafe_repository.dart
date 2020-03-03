@@ -1,3 +1,5 @@
+import 'package:coffee_time/domain/repositories/nearby_result.dart';
+
 import '../../core/either.dart';
 import '../entities/cafe.dart';
 import '../entities/cafe_detail.dart';
@@ -8,8 +10,8 @@ import '../failure.dart';
 //todo documentation
 abstract class CafeRepository {
   //todo add pagetoken parameter
-  Future<Either<List<Cafe>, Failure>> getNearby(Location location,
-      {Filter filter});
+  Future<Either<NearbyResult, Failure>> getNearby(Location location,
+      {Filter filter, String pageToken});
 
   Future<Either<List<Cafe>, Failure>> search(String search, {Filter filter});
 
@@ -17,7 +19,7 @@ abstract class CafeRepository {
 
   Future<Either<CafeDetail, Failure>> getDetail(String id);
 
-  Future<Either<Cafe, Failure>> toggleFavorite(Cafe cafe);
+  Future<Either<bool, Failure>> toggleFavorite(String id);
 
   //todo update cafe tags, add TagUpdate entity
   //Future addTags(String cafeId, List<TagReputation> tags);

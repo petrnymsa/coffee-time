@@ -1,6 +1,6 @@
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/providers/cafe_list.dart';
-import 'package:coffee_time/presentation/screens/detail/detail_provider.dart';
+
 import 'package:coffee_time/presentation/screens/tags/add/tag_add_screen.dart';
 import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,126 +12,127 @@ import 'tag_edit_provider.dart';
 class TagEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DetailProvider>(
-      builder: (ctx, detailModel, _) => Scaffold(
-        appBar: AppBar(title: Text('Navrhnout změnu')),
-        body: ChangeNotifierProvider<TagEditProvider>(
-          create: (_) => TagEditProvider([])..init(), //todo fix
-          child: Consumer<TagEditProvider>(
-            builder: (ctx, model, _) => Container(
-              padding: const EdgeInsets.all(8),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    _buildHeadline(context),
-                    if (model.entityTags.isNotEmpty)
-                      const SizedBox(
-                        height: 30,
-                      ),
-                    if (model.entityTags.isNotEmpty)
-                      Table(
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        // border: TableBorder.symmetric(
-                        //     inside: BorderSide(color: Colors.)),
-                        children: [
-                          TableRow(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(color: Colors.black12)),
-                              ),
-                              children: [
-                                Container(),
-                                Text(
-                                  'Pravda',
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  'Není pravda',
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  'Nehodnotím',
-                                  textAlign: TextAlign.center,
-                                ),
-                              ]),
-                          ...model.entityTags
-                              .map(
-                                (t) => TableRow(
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom:
-                                            BorderSide(color: Colors.black12)),
-                                  ),
-                                  children: [
-                                    TableCell(
-                                      child: Text(
-                                        t.title,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    _buildReviewIcon(
-                                        t,
-                                        FontAwesomeIcons.thumbsUp,
-                                        true,
-                                        model,
-                                        context),
-                                    _buildReviewIcon(
-                                        t,
-                                        FontAwesomeIcons.thumbsDown,
-                                        false,
-                                        model,
-                                        context),
-                                    _buildReviewIcon(t, FontAwesomeIcons.minus,
-                                        null, model, context),
-                                  ],
-                                ),
-                              )
-                              .toList()
-                        ],
-                      ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    // * add more
-                    if (model.addedTags.length > 0)
-                      ..._buildTagsToAdd(context, model),
-                    if (model.notAddedTagsYet.length > 0)
-                      RaisedButton.icon(
-                        label: Text('Přidat štítky'),
-                        icon: Icon(FontAwesomeIcons.plus),
-                        onPressed: () async {
-                          final addedTags = await Navigator.of(context)
-                              .push(MaterialPageRoute(
-                            builder: (_) => ChangeNotifierProvider.value(
-                              value: detailModel,
-                              child: TagAddScreen(model.notAddedTagsYet),
-                            ),
-                          ));
-                          if (addedTags != null) model.addTags(addedTags);
-                        },
-                      ),
-                    FullWidthButton(
-                      text: 'Potvrdit',
-                      color: Colors.green,
-                      icon: Icon(FontAwesomeIcons.check),
-                      onPressed: () async {
-                        await Provider.of<CafeListProvider>(context,
-                                listen: false)
-                            .addTags(
-                                detailModel.detail, []); //todo fix empty []
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+    return Container();
+    // return Consumer<DetailProvider>(
+    //   builder: (ctx, detailModel, _) => Scaffold(
+    //     appBar: AppBar(title: Text('Navrhnout změnu')),
+    //     body: ChangeNotifierProvider<TagEditProvider>(
+    //       create: (_) => TagEditProvider([])..init(), //todo fix
+    //       child: Consumer<TagEditProvider>(
+    //         builder: (ctx, model, _) => Container(
+    //           padding: const EdgeInsets.all(8),
+    //           child: SingleChildScrollView(
+    //             child: Column(
+    //               crossAxisAlignment: CrossAxisAlignment.center,
+    //               children: <Widget>[
+    //                 _buildHeadline(context),
+    //                 if (model.entityTags.isNotEmpty)
+    //                   const SizedBox(
+    //                     height: 30,
+    //                   ),
+    //                 if (model.entityTags.isNotEmpty)
+    //                   Table(
+    //                     defaultVerticalAlignment:
+    //                         TableCellVerticalAlignment.middle,
+    //                     // border: TableBorder.symmetric(
+    //                     //     inside: BorderSide(color: Colors.)),
+    //                     children: [
+    //                       TableRow(
+    //                           decoration: BoxDecoration(
+    //                             border: Border(
+    //                                 bottom: BorderSide(color: Colors.black12)),
+    //                           ),
+    //                           children: [
+    //                             Container(),
+    //                             Text(
+    //                               'Pravda',
+    //                               textAlign: TextAlign.center,
+    //                             ),
+    //                             Text(
+    //                               'Není pravda',
+    //                               textAlign: TextAlign.center,
+    //                             ),
+    //                             Text(
+    //                               'Nehodnotím',
+    //                               textAlign: TextAlign.center,
+    //                             ),
+    //                           ]),
+    //                       ...model.entityTags
+    //                           .map(
+    //                             (t) => TableRow(
+    //                               decoration: BoxDecoration(
+    //                                 border: Border(
+    //                                     bottom:
+    //                                         BorderSide(color: Colors.black12)),
+    //                               ),
+    //                               children: [
+    //                                 TableCell(
+    //                                   child: Text(
+    //                                     t.title,
+    //                                     textAlign: TextAlign.center,
+    //                                   ),
+    //                                 ),
+    //                                 _buildReviewIcon(
+    //                                     t,
+    //                                     FontAwesomeIcons.thumbsUp,
+    //                                     true,
+    //                                     model,
+    //                                     context),
+    //                                 _buildReviewIcon(
+    //                                     t,
+    //                                     FontAwesomeIcons.thumbsDown,
+    //                                     false,
+    //                                     model,
+    //                                     context),
+    //                                 _buildReviewIcon(t, FontAwesomeIcons.minus,
+    //                                     null, model, context),
+    //                               ],
+    //                             ),
+    //                           )
+    //                           .toList()
+    //                     ],
+    //                   ),
+    //                 const SizedBox(
+    //                   height: 30,
+    //                 ),
+    //                 // * add more
+    //                 if (model.addedTags.length > 0)
+    //                   ..._buildTagsToAdd(context, model),
+    //                 if (model.notAddedTagsYet.length > 0)
+    //                   RaisedButton.icon(
+    //                     label: Text('Přidat štítky'),
+    //                     icon: Icon(FontAwesomeIcons.plus),
+    //                     onPressed: () async {
+    //                       final addedTags = await Navigator.of(context)
+    //                           .push(MaterialPageRoute(
+    //                         builder: (_) => ChangeNotifierProvider.value(
+    //                           value: detailModel,
+    //                           child: TagAddScreen(model.notAddedTagsYet),
+    //                         ),
+    //                       ));
+    //                       if (addedTags != null) model.addTags(addedTags);
+    //                     },
+    //                   ),
+    //                 FullWidthButton(
+    //                   text: 'Potvrdit',
+    //                   color: Colors.green,
+    //                   icon: Icon(FontAwesomeIcons.check),
+    //                   onPressed: () async {
+    //                     // await Provider.of<CafeListProvider>(context,
+    //                     //         listen: false)
+    //                     //     .addTags(
+    //                     //         detailModel.detail, []); //todo fix empty []
+    //                     // Navigator.of(context).pop();
+    //                   },
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   Widget _buildHeadline(BuildContext context) {

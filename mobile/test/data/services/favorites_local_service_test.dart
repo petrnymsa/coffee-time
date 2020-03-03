@@ -37,9 +37,9 @@ void main() {
 
       final service = FavoriteLocalService();
 
-      await service.setFavorite(userId, placeId);
+      final result = await service.setFavorite(userId, placeId);
       final data = await service.getFavorites(userId);
-
+      expect(result, isTrue);
       expect(data, equals([placeId]));
     });
 
@@ -52,9 +52,9 @@ void main() {
 
       final service = FavoriteLocalService();
 
-      await service.setFavorite(userId, placeId);
+      final result = await service.setFavorite(userId, placeId);
       final data = await service.getFavorites(userId);
-
+      expect(result, isTrue);
       expect(data, containsAll([placeId, 'foo']));
     });
 
@@ -67,9 +67,9 @@ void main() {
 
       final service = FavoriteLocalService();
 
-      await service.setFavorite(userId, placeId);
+      final result = await service.setFavorite(userId, placeId);
       final data = await service.getFavorites(userId);
-
+      expect(result, isFalse);
       expect(data, []);
     });
   });
