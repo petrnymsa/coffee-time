@@ -4,9 +4,9 @@ on:
    push:
       paths: mobile/**
       branches: [feature/**, dev]      
-   pull_request:
-      paths: mobile/**
-      branches: [dev, master]
+   #pull_request:
+   #   paths: mobile/**
+   #   branches: [dev, master]
 jobs:
    build-and-test: 
     runs-on: ubuntu-latest
