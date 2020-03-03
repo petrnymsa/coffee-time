@@ -88,6 +88,26 @@ export const placesRoute = (tagsRepository: TagsRepository): Router => {
 
   /**
    * Required params:
+   * - language
+   * - place_id
+   */
+  router.get('/basic/:id', async (req, res) => {
+    try {
+      const basic = await google.getBasicInfo(req.params.id, req.language);
+      if (basic.status === 'OK') {
+        const tags = await tagsRepository.getByPlaceId(basic.result.place_id);
+        basic.result.tags = tags;
+      }
+
+      res.json(basic);
+    } catch (err) {
+      logRequestError(req, err);
+      res.status(500).json(err.message);
+    }
+  });
+
+  /**
+   * Required params:
    * - place_id
    */
   router.get('/detail/:id', async (req, res) => {

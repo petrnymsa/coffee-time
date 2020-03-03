@@ -19,6 +19,8 @@ abstract class CafeService {
 
   Future<CafeDetailModel> getDetail(String placeId,
       {@required String language});
+
+  Future<CafeModel> getBasicInfo(String placeId, {@required String language});
 }
 
 class CafeServiceImpl extends ApiBase implements CafeService {
@@ -87,5 +89,16 @@ class CafeServiceImpl extends ApiBase implements CafeService {
 
     return NearbyResultModel(
         cafes: cafes, nextPageToken: data['next_page_token']);
+  }
+
+  @override
+  Future<CafeModel> getBasicInfo(String placeId,
+      {@required String language}) async {
+    final url = '${ApiBase.apiBaseUrl}/$language/basic/$placeId';
+
+    final data = await placesGetRequest(url);
+    final result = data['result'];
+
+    return CafeModel.fromMap(result);
   }
 }
