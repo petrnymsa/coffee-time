@@ -18,6 +18,7 @@ import '../../../../core/app_logger.dart';
 import '../../../../domain/entities/cafe.dart';
 import '../../../core/blocs/cafe_list/bloc.dart';
 import '../../../shared/shared_widgets.dart';
+import '../../../../di_container.dart';
 import 'no_data.dart';
 
 //todo add to current loaded state filter entity
@@ -47,6 +48,19 @@ class _CafeListState extends State<CafeList> {
     }
 
     return false;
+  }
+
+  void _onTileTap(BuildContext context, Cafe cafe) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => BlocProvider<DetailBloc>(
+          create: (_) => sl.get<DetailBloc>(
+            param1: cafe,
+          )..add(detailEvent.Load()),
+          child: DetailScreen(),
+        ),
+      ),
+    );
   }
 
   @override
@@ -81,29 +95,7 @@ class _CafeListState extends State<CafeList> {
                         context.bloc<CafeListBloc>().add(ToggleFavorite(
                             cafeId: widget.cafes[index].placeId));
                       },
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) => BlocProvider<DetailBloc>(
-                              create: (_) => DetailBloc(
-                                cafeListBloc: context.bloc<CafeListBloc>(),
-                                cafe: widget.cafes[index],
-                                cafeRepository: CafeRepositoryImpl(
-                                  cafeService: CafeServiceImpl(
-                                      clientFactory: HttpClientFactoryImpl()),
-                                  favoriteService: FavoriteLocalService(),
-                                  photoService: PhotoServiceImpl(),
-                                  tagRepository: TagRepositoryImpl(
-                                      tagService: TagServiceImpl(
-                                          clientFactory:
-                                              HttpClientFactoryImpl())),
-                                ),
-                              )..add(detailEvent.Load()),
-                              child: DetailScreen(),
-                            ),
-                          ),
-                        );
-                      },
+                      onTap: () => _onTileTap(context, widget.cafes[index]),
                     );
                   } else {
                     return CircularLoader();
