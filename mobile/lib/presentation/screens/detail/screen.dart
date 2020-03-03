@@ -1,3 +1,4 @@
+import 'package:coffee_time/core/utils/launcher_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -113,11 +114,12 @@ class DetailScreen extends StatelessWidget {
                   Center(
                     child: RaisedButton.icon(
                       onPressed: () async {
-                        if (await canLaunch(detail.url)) {
-                          launch(detail.url);
-                        } else {
-                          logger.w('Can\'t launch url ${detail.url}');
-                        }
+                        // if (await canLaunch(detail.url)) {
+                        //   launch(detail.url);
+                        // } else {
+                        //   logger.w('Can\'t launch url ${detail.url}');
+                        // }
+                        await UrlLauncherHelper.launchNavigation(cafe.location);
                       },
                       label: Text('Přidat hodnocení'),
                       icon: Icon(FontAwesomeIcons.comment),
