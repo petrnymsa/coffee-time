@@ -14,5 +14,7 @@ abstract class CafeListEvent with _$CafeListEvent {
   const factory CafeListEvent.setFilter({@required Filter filter}) = SetFilter;
   const factory CafeListEvent.toggleFavorite({@required String cafeId}) =
       ToggleFavorite;
+  const factory CafeListEvent.setFavorite(
+      {@required String cafeId, @required bool isFavorite}) = SetFavorite;
   //todo favorites
 }

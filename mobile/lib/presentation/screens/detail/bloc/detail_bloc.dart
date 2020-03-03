@@ -1,10 +1,11 @@
-import 'package:coffee_time/domain/entities/cafe.dart';
-import 'package:coffee_time/domain/failure.dart';
-import 'package:coffee_time/domain/repositories/cafe_repository.dart';
+import '../../../../domain/entities/cafe.dart';
+import '../../../../domain/failure.dart';
+import '../../../../domain/repositories/cafe_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/blocs/cafe_list/cafelist_bloc.dart';
+import '../../../core/blocs/cafe_list/cafelist_event.dart' as cafeListE;
 import 'detail_bloc_event.dart';
 import 'detail_bloc_state.dart';
 
@@ -39,7 +40,24 @@ class DetailBloc extends Bloc<DetailBlocEvent, DetailBlocState> {
             DetailBlocState.failure(_mapFailureToMessage(failure)));
   }
 
-  Stream<DetailBlocState> _mapToggleFavorite(ToggleFavorite event) {}
+  Stream<DetailBlocState> _mapToggleFavorite(ToggleFavorite event) async* {
+    final result = await cafeRepository.toggleFavorite(event.id);
+
+    yield result.when(
+        left: (isFavorite) {
+          //dispatch event to cafelist - refresh list
+          cafeListBloc.add(
+              cafeListE.SetFavorite(cafeId: event.id, isFavorite: isFavorite));
+
+          return state.maybeWhen(
+              loaded: (cafe, detail) => Loaded(
+                  cafe: cafe.copyWith(isFavorite: isFavorite), detail: detail),
+              orElse: () => DetailBlocState.failure(
+                  'Wrong state when ToggleFavorite called. State was: $state'));
+        },
+        right: (failure) =>
+            DetailBlocState.failure(_mapFailureToMessage(failure)));
+  }
 
   //todo move to base bloc class
   String _mapFailureToMessage(Failure failure) {

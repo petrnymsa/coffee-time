@@ -45,6 +45,7 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
       setFilter: _mapSetFilter,
       refresh: _mapRefresh,
       toggleFavorite: _mapToggleFavorite,
+      setFavorite: _mapSetFavorite,
     );
   }
 
@@ -103,7 +104,7 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
   }
 
   Stream<CafeListState> _mapToggleFavorite(ToggleFavorite event) async* {
-    //logger.d('recieved refresh event');
+    logger.i('recieved toggle favorite for id:  ${event.cafeId}');
     final result = await _cafeRepository.toggleFavorite(event.cafeId);
 
     yield result.when(
@@ -121,6 +122,23 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
           orElse: () => CafeListState.failure(
               'Wrong state when ToggleFavorite called. State was: $state')),
       right: (failure) => CafeListState.failure(_mapFailureToMessage(failure)),
+    );
+  }
+
+  Stream<CafeListState> _mapSetFavorite(SetFavorite event) async* {
+    yield state.maybeWhen(
+      loaded: (cafes, token) {
+        final newCafes = cafes.map((cafe) {
+          if (cafe.placeId == event.cafeId) {
+            return cafe.copyWith(isFavorite: event.isFavorite);
+          }
+          return cafe;
+        }).toList();
+
+        return Loaded(cafes: newCafes, nextPage: token);
+      },
+      orElse: () => CafeListState.failure(
+          'Wrong state when ToggleFavorite called. State was: $state'),
     );
   }
 

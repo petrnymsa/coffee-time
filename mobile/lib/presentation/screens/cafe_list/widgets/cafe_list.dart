@@ -81,8 +81,8 @@ class _CafeListState extends State<CafeList> {
                         context.bloc<CafeListBloc>().add(ToggleFavorite(
                             cafeId: widget.cafes[index].placeId));
                       },
-                      onTap: () async {
-                        await Navigator.of(context).push(
+                      onTap: () {
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (ctx) => BlocProvider<DetailBloc>(
                               create: (_) => DetailBloc(
