@@ -9,7 +9,6 @@ import '../failure.dart';
 
 //todo documentation
 abstract class CafeRepository {
-  //todo add pagetoken parameter
   Future<Either<NearbyResult, Failure>> getNearby(Location location,
       {Filter filter, String pageToken});
 

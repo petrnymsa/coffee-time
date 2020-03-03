@@ -4,6 +4,7 @@ import 'package:coffee_time/data/repositories/cafe_repository.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/data/services/favorite_service.dart';
 import 'package:coffee_time/data/services/photo_service.dart';
+import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/domain/entities/location.dart';
@@ -200,4 +201,50 @@ void main() {
       );
     });
   });
+
+  group('getFavorites', () {
+    test('When service returns data, should return entities', () async {
+      final model = cafeModelExample();
+      when(
+        mockCafeService.getBasicInfo(
+          model.placeId,
+          language: argThat(isInstanceOf<String>(), named: 'language'),
+        ),
+      ).thenAnswer((_) async => model);
+
+      final result = await repository.getFavorites();
+
+      expect(
+        result,
+        equals(
+          Left<List<Cafe>, Failure>([
+            model.toEntity(
+              isFavorite: true,
+              allTags: allTags,
+              photoUrl: photoUrl,
+            )
+          ]),
+        ),
+      );
+    });
+
+    test('When service failed, should return failure', () async {
+      when(
+        mockCafeService.getBasicInfo(
+          any,
+          language: argThat(isInstanceOf<String>(), named: 'language'),
+        ),
+      ).thenThrow(ApiException(body: 'fail', statusCode: 400));
+
+      final result = await repository.getFavorites();
+
+      expect(result, isInstanceOf<Right<List<Cafe>, Failure>>());
+      expect(
+        ((result as Right<List<Cafe>, Failure>).right as ServiceFailure).inner,
+        ApiException(body: 'fail', statusCode: 400),
+      );
+    });
+  });
+
+  //todo add toggleFavorite tests
 }

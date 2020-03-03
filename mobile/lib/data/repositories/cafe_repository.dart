@@ -73,9 +73,40 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<Either<List<Cafe>, Failure>> getFavorites() {
-    // todo: implement getFavorites
-    return null;
+  Future<Either<List<Cafe>, Failure>> getFavorites() async {
+    try {
+      final tags = await _getTags();
+      final favoriteIds = await _getFavoriteIds();
+
+      final cafes = <Cafe>[];
+      //todo get current language
+
+      for (final id in favoriteIds) {
+        final cafe = await cafeService.getBasicInfo(id, language: 'en-US');
+        var photoUrl;
+
+        if (cafe.photo != null) {
+          photoUrl = photoService.getPhotoUrl(cafe.photo.reference,
+              maxWidth: cafe.photo.width, maxHeight: cafe.photo.height);
+        }
+
+        cafes.add(cafe.toEntity(
+          isFavorite: true,
+          allTags: tags,
+          photoUrl: photoUrl,
+        ));
+      }
+
+      return Left(cafes);
+    } on ApiException catch (e) {
+      return Right(
+          ServiceFailure('Call to basicInfo service failed', inner: e));
+    } on GoogleApiException catch (e) {
+      return Right(
+          ServiceFailure('Call to basicInfo service failed', inner: e));
+    } catch (e) {
+      return Right(CommonFailure(e));
+    }
   }
 
   @override
