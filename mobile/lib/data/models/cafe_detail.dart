@@ -73,10 +73,14 @@ class CafeDetailModel extends Equatable {
       url: map['url'],
       utcOffset: map['utc_offset'],
       website: map['website'],
-      reviews: List<ReviewModel>.from(
-          map['reviews']?.map((x) => ReviewModel.fromMap(x))),
-      photos: List<PhotoModel>.from(
-          map['photos']?.map((x) => PhotoModel.fromMap(x))),
+      reviews: map['reviews'] != null
+          ? List<ReviewModel>.from(
+              map['reviews']?.map((x) => ReviewModel.fromMap(x)))
+          : [],
+      photos: map['photos'] != null
+          ? List<PhotoModel>.from(
+              map['photos']?.map((x) => PhotoModel.fromMap(x)))
+          : [],
       openingHours: OpeningHoursModel.fromMap(map['opening_hours']),
     );
   }
