@@ -54,9 +54,6 @@ flutter:
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   fonts:
-    - family: HandDrawnIcons
-      fonts:
-        - asset: assets/fonts/HandDrawnIcons.ttf
     - family: Amatic
       fonts:
         - asset: assets/fonts/AmaticSC-Regular.ttf
