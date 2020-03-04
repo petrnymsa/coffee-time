@@ -1,7 +1,7 @@
-import 'package:coffee_time/presentation/models/opening_hour.dart';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../../../models/opening_hour.dart';
 
 class OpeningHoursTable extends StatelessWidget {
   final Map<int, OpeningTime> openingHours;

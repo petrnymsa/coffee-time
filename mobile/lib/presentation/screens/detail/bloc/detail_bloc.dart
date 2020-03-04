@@ -1,11 +1,11 @@
-import '../../../../domain/entities/cafe.dart';
-import '../../../../domain/failure.dart';
-import '../../../../domain/repositories/cafe_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/entities/cafe.dart';
+import '../../../../domain/failure.dart';
+import '../../../../domain/repositories/cafe_repository.dart';
 import '../../../core/blocs/cafe_list/cafelist_bloc.dart';
-import '../../../core/blocs/cafe_list/cafelist_event.dart' as cafeListE;
+import '../../../core/blocs/cafe_list/cafelist_event.dart' as cafe_list_events;
 import 'detail_bloc_event.dart';
 import 'detail_bloc_state.dart';
 
@@ -47,7 +47,9 @@ class DetailBloc extends Bloc<DetailBlocEvent, DetailBlocState> {
         left: (isFavorite) {
           //dispatch event to cafelist - refresh list
           cafeListBloc.add(
-              cafeListE.SetFavorite(cafeId: event.id, isFavorite: isFavorite));
+            cafe_list_events.SetFavorite(
+                cafeId: event.id, isFavorite: isFavorite),
+          );
 
           return state.maybeWhen(
               loaded: (cafe, detail) => Loaded(

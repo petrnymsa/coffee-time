@@ -1,7 +1,11 @@
 export 'cafe_name_container.dart';
+export 'cafe_photos.dart';
 export 'carousel_slider.dart';
 export 'contact_card.dart';
+export 'detail_container.dart';
+export 'detail_header.dart';
+export 'favorite_button.dart';
 export 'opening_hours_container.dart';
 export 'opening_hours_table.dart';
-export 'review_tile.dart';
+export 'review/review_widgets.dart';
 export 'tags_container.dart';
