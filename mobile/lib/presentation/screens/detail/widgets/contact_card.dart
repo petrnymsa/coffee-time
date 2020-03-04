@@ -1,8 +1,7 @@
-import 'package:coffee_time/core/utils/launcher_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/utils/launcher_helper.dart';
 import '../../../../domain/entities/contact.dart';
 
 class ContactCard extends StatelessWidget {
@@ -56,7 +55,7 @@ class Website extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5),
                   child: Text(
-                    contact.websiteWithoutProtocol,
+                    'Web',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(decoration: TextDecoration.underline),
                   ),

@@ -1,9 +1,9 @@
-import 'package:coffee_time/domain/entities/opening_hour.dart';
-import 'package:coffee_time/presentation/models/opening_hour.dart';
-import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../domain/entities/opening_hour.dart';
+import '../../../models/opening_hour.dart';
+import '../../../shared/shared_widgets.dart';
 import 'opening_hours_table.dart';
 
 class OpeningHoursContainer extends StatelessWidget {

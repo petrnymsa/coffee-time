@@ -28,14 +28,6 @@ class CafeNameContainer extends StatelessWidget {
               style: Theme.of(context).textTheme.subhead,
             ),
           ),
-          // Material(
-          //   borderRadius: BorderRadius.circular(25),
-          //   elevation: 1.0,
-          //   child: IconButton(
-          //     icon: Icon(FontAwesomeIcons.locationArrow),
-          //     onPressed: onShowMap,
-          //   ),
-          // ),
           FlatButton.icon(
             icon: Icon(FontAwesomeIcons.locationArrow),
             label: Text('Navigate'),
@@ -44,38 +36,5 @@ class CafeNameContainer extends StatelessWidget {
         ],
       ),
     );
-    // return Stack(
-    //   children: <Widget>[
-    //     Align(
-    //       alignment: Alignment.center,
-    //       child: Column(
-    //         children: <Widget>[
-    //           SelectableText(
-    //             title,
-    //             style: Theme.of(context).textTheme.headline,
-    //           ),
-    //           SelectableText(
-    //             address,
-    //             style: Theme.of(context).textTheme.subhead,
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //     Align(
-    //       alignment: Alignment.centerRight,
-    //       child: Padding(
-    //         padding: const EdgeInsets.only(right: 20),
-    //         child: Material(
-    //           borderRadius: BorderRadius.circular(25),
-    //           elevation: 1.0,
-    //           child: IconButton(
-    //             icon: Icon(FontAwesomeIcons.locationArrow),
-    //             onPressed: onShowMap,
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ],
-    // );
   }
 }
