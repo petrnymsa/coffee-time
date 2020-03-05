@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,14 +14,21 @@ class FailureMessage extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          Icon(FontAwesomeIcons.exclamationCircle, color: AppTheme.main_color),
-          Text(
-            message,
-            style: TextStyle(
-              color: AppTheme.main_color,
-              fontWeight: FontWeight.bold,
-            ),
-          )
+          Icon(FontAwesomeIcons.dizzy, color: AppTheme.main_color),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Jejda, něco se pokazilo.'),
+          ),
+          if (kDebugMode)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                message,
+                style: TextStyle(
+                  color: Colors.black45,
+                ),
+              ),
+            )
         ],
       ),
     );
