@@ -22,8 +22,11 @@ class CafeListScreen extends StatelessWidget {
               nextPageToken: token,
             );
           },
-          failure: (message) => FailureMessage(
+          failure: (message) => FailureContainer(
             message: message,
+            onRefresh: () {
+              context.bloc<CafeListBloc>().add(Refresh());
+            },
           ),
         );
       },
