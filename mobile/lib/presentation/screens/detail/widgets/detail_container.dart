@@ -44,8 +44,7 @@ class DetailContainer extends StatelessWidget {
                 DetailHeader(cafe: cafe),
                 const SizedBox(height: 20.0),
                 CafeNameContainer(
-                  title: cafe.name,
-                  address: cafe.address,
+                  cafe: cafe,
                   onShowMap: _onShowMap,
                 ),
                 Divider(),

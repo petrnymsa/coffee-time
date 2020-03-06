@@ -1,13 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CafeNameContainer extends StatelessWidget {
-  final String title;
+import '../../../../domain/entities/cafe.dart';
 
-  final String address;
+class CafeNameContainer extends StatelessWidget {
+  final Cafe cafe;
   final Function onShowMap;
-  const CafeNameContainer(
-      {Key key, @required this.title, @required this.address, this.onShowMap})
+  const CafeNameContainer({Key key, @required this.cafe, this.onShowMap})
       : super(key: key);
 
   @override
@@ -18,16 +18,24 @@ class CafeNameContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SelectableText(
-            title,
+            cafe.name,
             style: Theme.of(context).textTheme.headline,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6.0),
             child: SelectableText(
-              address,
+              cafe.address,
               style: Theme.of(context).textTheme.subhead,
             ),
           ),
+          if (kDebugMode)
+            Container(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: SelectableText(
+                cafe.placeId,
+                style: TextStyle(color: Colors.black38),
+              ),
+            ),
           FlatButton.icon(
             icon: Icon(FontAwesomeIcons.locationArrow),
             label: Text('Navigate'),
