@@ -6,4 +6,10 @@ extension StringHelpers on String {
 
     return this[0].toUpperCase() + substring(1);
   }
+
+  String last(int n) {
+    if (n >= length) return this;
+
+    return substring(length - n, length);
+  }
 }
