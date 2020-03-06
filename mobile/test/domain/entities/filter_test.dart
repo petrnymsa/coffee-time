@@ -2,6 +2,7 @@ import 'package:coffee_time/domain/entities/cafe.dart';
 import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+//ignore_for_file: avoid_function_literals_in_foreach_calls
 void main() {
   group('FilterEntity.apply', () {
     test('Given default filter, only opened cafe can apply', () {
@@ -12,7 +13,7 @@ void main() {
         Cafe(openNow: false, tags: [])
       ];
 
-      final List<bool> results = [];
+      final results = <bool>[];
       cafes.forEach((c) => results.add(filter.apply(c)));
 
       expect(results, [true, false, false]);
@@ -26,13 +27,14 @@ void main() {
         Cafe(openNow: false, tags: [])
       ];
 
-      final List<bool> results = [];
+      final results = <bool>[];
       cafes.forEach((c) => results.add(filter.apply(c)));
 
       expect(results, [true, true, true]);
     });
 
     test(
+        //ignore: lines_longer_than_80_chars
         'Given tags to filter and onlyOpen=true, only cafes with given tag should apply',
         () {
       //todo repair

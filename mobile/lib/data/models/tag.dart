@@ -71,7 +71,7 @@ class TagModel extends Equatable {
 
   @override
   String toString() {
-    return 'TagModel id: $id, title: $title, icon: $icon, translations: $translations';
+    return '''TagModel id: $id, title: $title, icon: $icon, translations: $translations''';
   }
 
   @override

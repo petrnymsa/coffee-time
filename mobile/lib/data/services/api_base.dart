@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:coffee_time/core/http_client_factory.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/app_logger.dart';
+import '../../core/http_client_factory.dart';
 import '../../domain/exceptions/exceptions.dart';
 
 abstract class ApiBase {
@@ -26,6 +26,7 @@ abstract class ApiBase {
     http.Response response;
     try {
       response = await client.get(url);
+      //ignore: avoid_catches_without_on_clauses
     } catch (e) {
       _logger.e(e.toString());
       rethrow;

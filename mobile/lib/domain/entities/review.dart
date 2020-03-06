@@ -47,7 +47,7 @@ class Review extends Equatable {
 
   @override
   String toString() {
-    return 'ReviewEntity authorName: $authorName, authorUrl: $authorUrl, language: $language, profilePhotoUrl: $profilePhotoUrl, rating: $rating, relativeTimeDescription: $relativeTimeDescription, text: $text, time: $time';
+    return '''ReviewEntity authorName: $authorName, authorUrl: $authorUrl, language: $language, profilePhotoUrl: $profilePhotoUrl, rating: $rating, relativeTimeDescription: $relativeTimeDescription, text: $text, time: $time''';
   }
 
   @override

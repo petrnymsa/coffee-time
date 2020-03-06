@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 
 import '../../domain/entities/opening_hour.dart';
 
+//ignore_for_file: unnecessary_lambdas
 class DayTimeModel extends Equatable {
   final int day;
   final String time;
@@ -135,7 +136,7 @@ class OpeningHoursModel extends Equatable {
 
   @override
   String toString() =>
-      'OpeningHoursModel openNow: $openNow, periods: $periods, weekday: $weekdayText';
+      '''OpeningHoursModel openNow: $openNow, periods: $periods, weekday: $weekdayText''';
 
   OpeningHoursModel copyWith(
       {bool openNow, List<PeriodModel> periods, List<String> weekdayText}) {

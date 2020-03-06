@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:coffee_time/domain/entities/tag.dart';
-import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../domain/entities/tag.dart';
+import '../../domain/entities/tag_reputation.dart';
 
 class TagReputationModel extends Equatable {
   final String id;

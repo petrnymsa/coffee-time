@@ -30,7 +30,7 @@ class Tag extends Equatable {
 
   @override
   String toString() {
-    return 'TagEntity id: $id, title: $title, icon: $icon, translations: $translations';
+    return '''TagEntity id: $id, title: $title, icon: $icon, translations: $translations''';
   }
 
   @override

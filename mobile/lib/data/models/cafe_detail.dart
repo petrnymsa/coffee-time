@@ -1,12 +1,14 @@
 import 'dart:convert';
-import 'package:coffee_time/domain/entities/cafe_detail.dart';
-import 'package:coffee_time/domain/entities/contact.dart';
+
 import 'package:equatable/equatable.dart';
 
+import '../../domain/entities/cafe_detail.dart';
+import '../../domain/entities/contact.dart';
 import 'models.dart';
 import 'opening_hours.dart';
 import 'review.dart';
 
+//ignore_for_file: unnecessary_lambdas
 class CafeDetailModel extends Equatable {
   final String formattedPhoneNumber;
   final String internationalPhoneNumber;
@@ -92,7 +94,7 @@ class CafeDetailModel extends Equatable {
 
   @override
   String toString() {
-    return 'CafeDetailModel formattedPhoneNumber: $formattedPhoneNumber, internationalPhoneNumber: $internationalPhoneNumber, url: $url, utcOffset: $utcOffset, website: $website, reviews: $reviews, photos: $photos, openingHours: $openingHours';
+    return '''CafeDetailModel formattedPhoneNumber: $formattedPhoneNumber, internationalPhoneNumber: $internationalPhoneNumber, url: $url, utcOffset: $utcOffset, website: $website, reviews: $reviews, photos: $photos, openingHours: $openingHours''';
   }
 
   @override

@@ -9,6 +9,7 @@ import 'location.dart';
 import 'photo.dart';
 import 'tag_reputation.dart';
 
+//ignore_for_file: unnecessary_lambdas
 class CafeModel extends Equatable {
   final String placeId;
   final String name;
@@ -97,7 +98,8 @@ class CafeModel extends Equatable {
 
   @override
   String toString() {
-    return 'CafeModel placeId: $placeId, name: $name, location: $location, iconUrl: $iconUrl, rating: $rating, openNow: $openNow, address: $address, tags: $tags, photo: $photo';
+    return '''CafeModel placeId: $placeId, name: $name, location: $location, 
+    iconUrl: $iconUrl, rating: $rating, openNow: $openNow, address: $address, tags: $tags, photo: $photo''';
   }
 
   @override

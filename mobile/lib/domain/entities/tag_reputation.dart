@@ -22,7 +22,7 @@ class TagReputation extends Equatable {
         id: id ?? this.id,
         likes: likes ?? this.likes,
         dislikes: dislikes ?? this.dislikes,
-        tag: tagEntity ?? this.tag);
+        tag: tagEntity ?? tag);
   }
 
   @override

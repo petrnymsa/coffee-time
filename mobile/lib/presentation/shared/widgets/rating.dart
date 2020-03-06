@@ -1,5 +1,6 @@
-import 'package:coffee_time/core/utils/rating_stars_count.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/utils/rating_stars_count.dart';
 
 class Rating extends StatelessWidget {
   final int max = 5;

@@ -1,11 +1,10 @@
-import 'package:coffee_time/domain/repositories/nearby_result.dart';
-
 import '../../core/either.dart';
 import '../entities/cafe.dart';
 import '../entities/cafe_detail.dart';
 import '../entities/filter.dart';
 import '../entities/location.dart';
 import '../failure.dart';
+import 'nearby_result.dart';
 
 //todo documentation
 abstract class CafeRepository {

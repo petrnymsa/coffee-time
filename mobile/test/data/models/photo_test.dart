@@ -8,7 +8,7 @@ void main() {
       const width = 100;
       const height = 60;
       const json =
-          '{"photo_reference": "$reference", "width": $width, "height": $height}';
+          '''{"photo_reference": "$reference", "width": $width, "height": $height}''';
       var model =
           PhotoModel(reference: reference, width: width, height: height);
 

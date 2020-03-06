@@ -1,8 +1,8 @@
-import 'package:coffee_time/core/app_logger.dart';
-import 'package:coffee_time/domain/entities/filter.dart';
-import 'package:coffee_time/domain/entities/tag.dart';
-import 'package:coffee_time/presentation/providers/cafe_list.dart';
 import 'package:flutter/foundation.dart';
+
+import '../../../core/app_logger.dart';
+import '../../../domain/entities/filter.dart';
+import '../../../domain/entities/tag.dart';
 
 class FilterProvider with ChangeNotifier {
   // CafeListProvider cafeListProvider;

@@ -23,7 +23,7 @@ class TagContainer extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if (this.icon != null)
+                if (icon != null)
                   Icon(
                     icon,
                     color: Colors.white,
@@ -32,7 +32,7 @@ class TagContainer extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
-                    this.title,
+                    title,
                     style: TextStyle(
                         fontSize: 14,
                         color: Colors.white,

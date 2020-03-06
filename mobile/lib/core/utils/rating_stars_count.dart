@@ -9,9 +9,9 @@ class RatingStarsCount {
       (n - n.floorToDouble()) > 0.5 ? n.ceil() : n.toInt();
 
   factory RatingStarsCount.fromRating(double rating, {int max = 5}) {
-    final int full = _roundAt6(rating);
-    final int half = rating.ceil() - full;
-    final int empty = max - full - half;
+    final full = _roundAt6(rating);
+    final half = rating.ceil() - full;
+    final empty = max - full - half;
     return RatingStarsCount(full, half, empty);
   }
 }

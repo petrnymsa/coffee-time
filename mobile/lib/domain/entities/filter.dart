@@ -13,14 +13,14 @@ class Filter {
       this.tags = const [],
       this.ordering = FilterOrdering.distance});
 
-  static const Filter defaultFilter = const Filter();
+  static const Filter defaultFilter = Filter();
 
   bool apply(Cafe entity) {
     if (onlyOpen && !entity.openNow) return false;
 
-    if (tags != null &&
-        tags.length > 0 &&
-        !entity.tags.any((t) => tags.contains(t))) return false;
+    if (tags != null && tags.length > 0 && !entity.tags.any(tags.contains)) {
+      return false;
+    }
 
     return true;
   }

@@ -1,12 +1,11 @@
-import 'package:coffee_time/domain/entities/filter.dart';
-import 'package:coffee_time/domain/entities/tag.dart';
-import 'package:coffee_time/presentation/providers/cafe_list.dart';
-import 'package:coffee_time/presentation/screens/filter/filter_provider.dart';
-import 'package:coffee_time/presentation/screens/tags/add/tag_add_screen.dart';
-import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
+import '../../../domain/entities/filter.dart';
+import '../../../domain/entities/tag.dart';
+import '../../shared/shared_widgets.dart';
+import 'filter_provider.dart';
 
 class FilterScreen extends StatelessWidget {
   @override

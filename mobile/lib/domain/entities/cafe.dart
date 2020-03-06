@@ -58,7 +58,7 @@ class Cafe extends Equatable {
 
   @override
   String toString() {
-    return 'CafeEntity placeId: $placeId, name: $name, location: $location, iconUrl: $iconUrl, rating: $rating, openNow: $openNow, address: $address, tags: $tags, photos: $photos, isFavorite: $isFavorite';
+    return '''CafeEntity placeId: $placeId, name: $name, location: $location, iconUrl: $iconUrl, rating: $rating, openNow: $openNow, address: $address, tags: $tags, photos: $photos, isFavorite: $isFavorite''';
   }
 
   @override

@@ -1,6 +1,7 @@
-import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../../domain/entities/tag.dart';
 
 class TagInput extends StatelessWidget {
   final Tag tag;

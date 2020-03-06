@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 
+//ignore_for_file: avoid_classes_with_only_static_members
 class AppTheme {
-  static const main_color = const Color(0xFFF2594B);
-  static const secondary_color = const Color(0xFFF2836B);
-  static const background_color = const Color(0xFFF7F7F7);
+  static const main_color = Color(0xFFF2594B);
+  static const secondary_color = Color(0xFFF2836B);
+  static const background_color = Color(0xFFF7F7F7);
 
   static Map<int, Color> primarySwatch = {
     50: Color.fromRGBO(242, 89, 75, .1),

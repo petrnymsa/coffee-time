@@ -1,8 +1,7 @@
-import 'package:coffee_time/presentation/core/blocs/cafe_list/bloc.dart';
-import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../shared_widgets.dart';
 
 class FailureContainer extends StatelessWidget {
   final String message;

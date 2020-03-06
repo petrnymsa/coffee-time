@@ -6,7 +6,7 @@ Logger getLogger(String origin) => Logger(printer: AppPrinter(origin));
 class AppPrinter extends PrettyPrinter {
   final String origin;
 
-  static final fileNameRegex = RegExp(r'\(.*\/(.*)\)');
+  static final RegExp fileNameRegex = RegExp(r'\(.*\/(.*)\)');
 
   AppPrinter(this.origin);
 

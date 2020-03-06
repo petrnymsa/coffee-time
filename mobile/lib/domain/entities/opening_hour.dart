@@ -68,7 +68,7 @@ class OpeningHours extends Equatable {
 
   @override
   String toString() =>
-      'OpeningHours openNow: $openNow, periods: $periods, weekday: $weekdayText';
+      '''OpeningHours openNow: $openNow, periods: $periods, weekday: $weekdayText''';
 
   OpeningHours copyWith(
       {bool openNow, List<Period> periods, List<String> weekdayText}) {
