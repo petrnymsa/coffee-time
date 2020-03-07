@@ -15,6 +15,7 @@ import '../../../domain/repositories/cafe_repository.dart';
 import '../../../domain/repositories/nearby_result.dart';
 
 class MockedCafeRepository implements CafeRepository {
+  static final MockTagsDataSource dataSource = MockTagsDataSource();
   static List<Period> getPeriods() {
     var periods = <Period>[];
 
@@ -35,7 +36,7 @@ class MockedCafeRepository implements CafeRepository {
       name: 'Best Cafe',
       openNow: true,
       rating: 4,
-      tags: forCafe('1'),
+      tags: dataSource.forCafe('1'),
       photos: [],
     ),
     Cafe(
@@ -45,7 +46,7 @@ class MockedCafeRepository implements CafeRepository {
       name: 'Greenway',
       openNow: true,
       rating: 4,
-      tags: forCafe('2'),
+      tags: dataSource.forCafe('2'),
       photos: [],
     ),
     Cafe(
@@ -55,7 +56,7 @@ class MockedCafeRepository implements CafeRepository {
       name: 'Worst Cafe',
       openNow: false,
       rating: 1,
-      tags: forCafe('3'),
+      tags: dataSource.forCafe('3'),
       photos: [],
     )
   ];

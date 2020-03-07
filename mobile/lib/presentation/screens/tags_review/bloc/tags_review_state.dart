@@ -12,5 +12,6 @@ abstract class TagsReviewBlocState with _$TagsReviewBlocState {
   const factory TagsReviewBlocState.loaded({
     @required List<Tag> addedTags,
     @required List<TagReview> reviews,
+    @required List<Tag> notAddedYet,
   }) = Loaded;
 }

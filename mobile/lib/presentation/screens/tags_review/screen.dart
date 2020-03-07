@@ -16,7 +16,7 @@ class TagsReviewScreen extends StatelessWidget {
       body: BlocBuilder<TagsReviewBloc, TagsReviewBlocState>(
           builder: (context, state) => state.when(
                 loading: () => CircularLoader(),
-                loaded: (addedTags, reviewedTags) => Container(
+                loaded: (addedTags, tagsToReview, notAddedYet) => Container(
                   padding: const EdgeInsets.all(8),
                   child: SingleChildScrollView(
                     child: Column(
@@ -24,12 +24,12 @@ class TagsReviewScreen extends StatelessWidget {
                       children: <Widget>[
                         HeaderInfo(),
                         ReviewsTable(
-                          tagsToReview: reviewedTags,
+                          tagsToReview: tagsToReview,
                           onTagReview: (tagId, reviewKind) =>
                               _onTagReview(context, tagId, reviewKind),
                         ),
                         // * add more
-                        // if (model.addedTags.length > 0)
+                        // if (addedTags.length > 0)
                         //   ..._buildTagsToAdd(context, model),
                         // if (model.notAddedTagsYet.length > 0)
                         //   RaisedButton.icon(

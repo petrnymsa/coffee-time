@@ -11,39 +11,41 @@ class MockTagReputationModel {
   MockTagReputationModel(this.id, this.likes, this.dislikes);
 }
 
-final List<Tag> tags = [
-  Tag(id: '1', icon: FontAwesomeIcons.beer, title: 'beer'),
-  Tag(id: '2', icon: FontAwesomeIcons.wineBottle, title: 'wine'),
-  Tag(id: '3', icon: FontAwesomeIcons.wifi, title: 'wifi'),
-  Tag(id: '4', icon: FontAwesomeIcons.dog, title: 'dog friendly'),
-];
+class MockTagsDataSource {
+  final List<Tag> tags = [
+    Tag(id: '1', icon: FontAwesomeIcons.beer, title: 'beer'),
+    Tag(id: '2', icon: FontAwesomeIcons.wineBottle, title: 'wine'),
+    Tag(id: '3', icon: FontAwesomeIcons.wifi, title: 'wifi'),
+    Tag(id: '4', icon: FontAwesomeIcons.dog, title: 'dog friendly'),
+  ];
 
-final Map<String, List<MockTagReputationModel>> cafeTags = {
-  '1': [
-    MockTagReputationModel('1', 1, 0),
-    MockTagReputationModel('3', 4, 1),
-  ],
-  '2': [
-    MockTagReputationModel('2', 1, 0),
-    MockTagReputationModel('3', 4, 1),
-  ],
-  '3': [
-    MockTagReputationModel('4', 2, 1),
-    MockTagReputationModel('1', 2, 1),
-    MockTagReputationModel('3', 1, 1),
-  ],
-};
+  final Map<String, List<MockTagReputationModel>> cafeTags = {
+    '1': [
+      MockTagReputationModel('1', 1, 0),
+      MockTagReputationModel('3', 4, 1),
+    ],
+    '2': [
+      MockTagReputationModel('2', 1, 0),
+      MockTagReputationModel('3', 4, 1),
+    ],
+    '3': [
+      MockTagReputationModel('4', 2, 1),
+      MockTagReputationModel('1', 2, 1),
+      MockTagReputationModel('3', 1, 1),
+    ],
+  };
 
-List<TagReputation> forCafe(String id) {
-  final map = cafeTags[id];
+  List<TagReputation> forCafe(String id) {
+    final map = cafeTags[id];
 
-  final result = map
-      .map((x) => TagReputation(
-          id: x.id,
-          likes: x.likes,
-          dislikes: x.dislikes,
-          tag: tags.firstWhere((t) => t.id == x.id, orElse: () => null)))
-      .toList();
+    final result = map
+        .map((x) => TagReputation(
+            id: x.id,
+            likes: x.likes,
+            dislikes: x.dislikes,
+            tag: tags.firstWhere((t) => t.id == x.id, orElse: () => null)))
+        .toList();
 
-  return result;
+    return result;
+  }
 }

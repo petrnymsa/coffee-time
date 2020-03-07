@@ -1,11 +1,12 @@
-import 'package:coffee_time/domain/entities/tag_reputation.dart';
-import 'package:coffee_time/presentation/screens/tags_review/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 
 import '../../../core/app_logger.dart';
+import '../../../di_container.dart';
+import '../../../domain/entities/tag_reputation.dart';
 import '../../shared/shared_widgets.dart';
+import '../tags_review/bloc/bloc.dart';
 import '../tags_review/screen.dart';
 import 'bloc/detail_bloc.dart';
 import 'bloc/detail_bloc_state.dart';
@@ -47,7 +48,10 @@ class DetailScreen extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => BlocProvider<TagsReviewBloc>(
           child: TagsReviewScreen(),
-          create: (context) => TagsReviewBloc(tags.map((x) => x.tag).toList()),
+          create: (context) => TagsReviewBloc(
+              tagsToReview: tags.map((x) => x.tag).toList(),
+              tagRepository: sl())
+            ..add(Load()),
         ),
       ),
     );
