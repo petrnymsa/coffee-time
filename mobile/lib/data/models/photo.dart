@@ -55,5 +55,9 @@ class PhotoModel extends Equatable {
   @override
   List<Object> get props => [width, height, reference];
 
-  Photo toEntity(String url) => Photo(height: height, width: width, url: url);
+  Photo toEntity(String baseUrl) => Photo(
+        maxHeight: height,
+        maxWidth: width,
+        baseUrl: baseUrl,
+      );
 }

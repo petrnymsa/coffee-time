@@ -1,3 +1,5 @@
+import 'package:coffee_time/core/app_logger.dart';
+import 'package:coffee_time/domain/photo_url_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/cafe.dart';
@@ -17,10 +19,16 @@ class TileCoverContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        TileCoverImage(
-          borderRadius: borderRadius,
-          url: cafe.photos.first?.url,
-        ),
+        LayoutBuilder(builder: (context, constraints) {
+          getLogger('TileCoverContainer').i(constraints);
+          return TileCoverImage(
+            borderRadius: borderRadius,
+            url: createPhotoUrl(
+              cafe.photos.first?.baseUrl,
+              maxHeight: constraints.maxHeight.ceil() * 2,
+            ),
+          );
+        }),
         Center(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),

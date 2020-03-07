@@ -65,11 +65,7 @@ void main() {
     when(mockFavoriteService.getFavorites(any))
         .thenAnswer((_) async => [cafeModel.placeId]);
     when(
-      mockPhotoService.getPhotoUrl(
-        any,
-        maxHeight: anyNamed('maxHeight'),
-        maxWidth: anyNamed('maxWidth'),
-      ),
+      mockPhotoService.getBasePhotoUrl(any),
     ).thenReturn(photoUrl);
     when(mockTagRepository.getAll()).thenAnswer((_) async => Left(allTags));
   });
