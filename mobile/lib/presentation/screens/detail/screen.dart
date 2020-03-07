@@ -1,3 +1,5 @@
+import 'package:coffee_time/domain/entities/tag_reputation.dart';
+import 'package:coffee_time/presentation/screens/tags_review/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -26,7 +28,7 @@ class DetailScreen extends StatelessWidget {
               logger: logger,
               cafe: cafe,
               detail: detail,
-              onTagsEdit: () => _onTagsEditRequest(context),
+              onTagsEdit: () => _onTagsEditRequest(context, cafe.tags),
             ),
           );
         },
@@ -39,9 +41,16 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  void _onTagsEditRequest(BuildContext context) async {
-    final result = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => TagsReviewScreen()));
+  void _onTagsEditRequest(
+      BuildContext context, List<TagReputation> tags) async {
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider<TagsReviewBloc>(
+          child: TagsReviewScreen(),
+          create: (context) => TagsReviewBloc(tags.map((x) => x.tag).toList()),
+        ),
+      ),
+    );
 
     logger.i('Reviews tags $result');
   }

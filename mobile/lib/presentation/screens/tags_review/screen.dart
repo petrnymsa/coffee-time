@@ -1,124 +1,132 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../domain/entities/tag.dart';
 import '../../../domain/entities/tag_reputation.dart';
 import '../../shared/shared_widgets.dart';
+import 'bloc/bloc.dart';
+import 'model/tag_review.dart';
 
 class TagsReviewScreen extends StatelessWidget {
-  final List<TagReputation> tags = [
-    TagReputation(
-        tag: Tag(
-      id: '123',
-      icon: Icons.message,
-      title: 'foo',
-    )),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Navrhnout změnu')),
-      body: Container(
-        padding: const EdgeInsets.all(8),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              _buildHeadline(context),
-              if (tags.isNotEmpty)
-                const SizedBox(
-                  height: 30,
-                ),
-              if (tags.isNotEmpty)
-                Table(
-                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  // border: TableBorder.symmetric(
-                  //     inside: BorderSide(color: Colors.)),
-                  children: [
-                    TableRow(
-                        decoration: BoxDecoration(
-                          border:
-                              Border(bottom: BorderSide(color: Colors.black12)),
-                        ),
-                        children: [
-                          Container(),
-                          Text(
-                            'Pravda',
-                            textAlign: TextAlign.center,
+      body: BlocBuilder<TagsReviewBloc, TagsReviewBlocState>(
+          builder: (context, state) => state.when(
+                loading: () => CircularLoader(),
+                loaded: (addedTags, reviewedTags) => Container(
+                  padding: const EdgeInsets.all(8),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        _buildHeadline(context),
+                        if (reviewedTags.isNotEmpty)
+                          const SizedBox(
+                            height: 30,
                           ),
-                          Text(
-                            'Není pravda',
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            'Nehodnotím',
-                            textAlign: TextAlign.center,
-                          ),
-                        ]),
-                    ...tags
-                        .map(
-                          (t) => TableRow(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(color: Colors.black12)),
-                            ),
+                        if (reviewedTags.isNotEmpty)
+                          Table(
+                            defaultVerticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            // border: TableBorder.symmetric(
+                            //     inside: BorderSide(color: Colors.)),
                             children: [
-                              TableCell(
-                                child: Text(
-                                  t.tag.title,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              _buildReviewIcon(t.tag, FontAwesomeIcons.thumbsUp,
-                                  true, context),
-                              _buildReviewIcon(t.tag,
-                                  FontAwesomeIcons.thumbsDown, false, context),
-                              _buildReviewIcon(
-                                  t.tag, FontAwesomeIcons.minus, null, context),
+                              TableRow(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom:
+                                            BorderSide(color: Colors.black12)),
+                                  ),
+                                  children: [
+                                    Container(),
+                                    Text(
+                                      'Pravda',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'Není pravda',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'Nehodnotím',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ]),
+                              ...reviewedTags
+                                  .map(
+                                    (t) => TableRow(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.black12)),
+                                      ),
+                                      children: [
+                                        TableCell(
+                                          child: Text(
+                                            t.tag.title,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        _buildReviewIcon(
+                                            t,
+                                            FontAwesomeIcons.thumbsUp,
+                                            TagReviewKind.like,
+                                            context),
+                                        _buildReviewIcon(
+                                            t,
+                                            FontAwesomeIcons.thumbsDown,
+                                            TagReviewKind.dislike,
+                                            context),
+                                        _buildReviewIcon(
+                                            t,
+                                            FontAwesomeIcons.minus,
+                                            TagReviewKind.none,
+                                            context),
+                                      ],
+                                    ),
+                                  )
+                                  .toList()
                             ],
                           ),
-                        )
-                        .toList()
-                  ],
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        // * add more
+                        // if (model.addedTags.length > 0)
+                        //   ..._buildTagsToAdd(context, model),
+                        // if (model.notAddedTagsYet.length > 0)
+                        //   RaisedButton.icon(
+                        //     label: Text('Přidat štítky'),
+                        //     icon: Icon(FontAwesomeIcons.plus),
+                        //     onPressed: () async {
+                        //       final addedTags = await Navigator.of(context)
+                        //           .push(MaterialPageRoute(
+                        //         builder: (_) => ChangeNotifierProvider.value(
+                        //           value: detailModel,
+                        //           child: TagAddScreen(model.notAddedTagsYet),
+                        //         ),
+                        //       ));
+                        //       if (addedTags != null) model.addTags(addedTags);
+                        //     },
+                        //   ),
+                        FullWidthButton(
+                          text: 'Potvrdit',
+                          color: Colors.green,
+                          icon: Icon(FontAwesomeIcons.check),
+                          onPressed: () async {
+                            final updates =
+                                context.bloc<TagsReviewBloc>().getUpdates();
+                            Navigator.of(context).pop(updates);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              const SizedBox(
-                height: 30,
-              ),
-              // * add more
-              // if (model.addedTags.length > 0)
-              //   ..._buildTagsToAdd(context, model),
-              // if (model.notAddedTagsYet.length > 0)
-              //   RaisedButton.icon(
-              //     label: Text('Přidat štítky'),
-              //     icon: Icon(FontAwesomeIcons.plus),
-              //     onPressed: () async {
-              //       final addedTags = await Navigator.of(context)
-              //           .push(MaterialPageRoute(
-              //         builder: (_) => ChangeNotifierProvider.value(
-              //           value: detailModel,
-              //           child: TagAddScreen(model.notAddedTagsYet),
-              //         ),
-              //       ));
-              //       if (addedTags != null) model.addTags(addedTags);
-              //     },
-              //   ),
-              FullWidthButton(
-                text: 'Potvrdit',
-                color: Colors.green,
-                icon: Icon(FontAwesomeIcons.check),
-                onPressed: () async {
-                  // await Provider.of<CafeListProvider>(context,
-                  //         listen: false)
-                  //     .addTags(
-                  //         detailModel.detail, []); //todo fix empty []
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+              )),
     );
   }
 
@@ -148,14 +156,18 @@ class TagsReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildReviewIcon(
-      Tag tag, IconData icon, bool reviewType, BuildContext context) {
+  Widget _buildReviewIcon(TagReview tagReview, IconData icon,
+      TagReviewKind reviewType, BuildContext context) {
     return TableCell(
         child: IconButton(
       icon: Icon(icon),
-      color: true == reviewType ? Theme.of(context).primaryColor : Colors.grey,
+      color: tagReview.review == reviewType
+          ? Theme.of(context).primaryColor
+          : Colors.grey,
       onPressed: () {
-        //model.updateReview(tag, reviewType);
+        context
+            .bloc<TagsReviewBloc>()
+            .add(ReviewTag(id: tagReview.tag.id, review: reviewType));
       },
     ));
   }
