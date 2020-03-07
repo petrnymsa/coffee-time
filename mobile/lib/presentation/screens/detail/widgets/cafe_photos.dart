@@ -1,8 +1,7 @@
-import 'package:coffee_time/core/app_logger.dart';
-import 'package:coffee_time/domain/photo_url_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/photo.dart';
+import '../../../../domain/photo_url_helper.dart';
 import 'carousel_slider.dart';
 
 class CafePhotos extends StatelessWidget {

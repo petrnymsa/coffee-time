@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:coffee_time/core/http_client_factory.dart';
 import 'package:coffee_time/data/models/models.dart';
+import 'package:coffee_time/data/models/tag_update.dart';
 import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/domain/entities/location.dart';
+import 'package:coffee_time/domain/entities/tag_update.dart';
 import 'package:coffee_time/domain/exceptions/exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
@@ -33,9 +36,8 @@ void main() {
 
   void mockHttpClientWithStatusCode200(String fixtureName, String status) {
     when(mockHttpClient.get(any)).thenAnswer((_) async => Response(
-            apiResponseFixture(fixtureName, status), 200, headers: {
-          HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
-        }));
+        apiResponseFixture(fixtureName, status), 200,
+        headers: {HttpHeaders.contentTypeHeader: ContentType.json.toString()}));
   }
 
   void mockNearbyHttp200WithStatus(String status) {
@@ -257,6 +259,40 @@ void main() {
 
       expect(action('abc', language: 'en-US'),
           throwsA(isInstanceOf<ApiException>()));
+    });
+  });
+
+  group('updateTagsFroCafe', () {
+    test('Proper url is called', () {
+      when(
+        mockHttpClient.post(any,
+            body: anyNamed('body'), headers: anyNamed('headers')),
+      ).thenAnswer((_) async => Future.value(Response("", 204)));
+
+      service.updateTagsForCafe('abc', []);
+
+      verify(mockHttpClient.post("${ApiBase.apiBaseUrl}/tags/abc",
+          body: anyNamed('body'),
+          headers: {
+            HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+          }));
+    });
+
+    test('Proper url is called and proper json paased', () {
+      when(
+        mockHttpClient.post(any,
+            body: anyNamed('body'), headers: anyNamed('headers')),
+      ).thenAnswer((_) async => Future.value(Response("", 204)));
+
+      final model = TagUpdateModel(id: '123', change: TagUpdateKind.like);
+      service.updateTagsForCafe('abc', [model]);
+
+      final expectedUrl = "${ApiBase.apiBaseUrl}/tags/abc";
+      final expectedBody = jsonEncode([model]);
+
+      verify(mockHttpClient.post(expectedUrl, body: expectedBody, headers: {
+        HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+      }));
     });
   });
 }

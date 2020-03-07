@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
@@ -34,7 +35,30 @@ abstract class ApiBase {
       client.close();
     }
 
-    if (response.statusCode != 200) {
+    if (response.statusCode >= 400) {
+      throw ApiException(statusCode: response.statusCode, body: response.body);
+    }
+    return response;
+  }
+
+  Future<http.Response> postRequest(String url, String body) async {
+    _logger.i('POST request: $url');
+    //todo add auth
+    final client = clientFactory.create();
+    http.Response response;
+    try {
+      response = await client.post(url, body: body, headers: {
+        HttpHeaders.contentTypeHeader: ContentType.json.toString()
+      });
+      //ignore: avoid_catches_without_on_clauses
+    } catch (e) {
+      _logger.e(e.toString());
+      rethrow;
+    } finally {
+      client.close();
+    }
+
+    if (response.statusCode >= 400) {
       throw ApiException(statusCode: response.statusCode, body: response.body);
     }
     return response;

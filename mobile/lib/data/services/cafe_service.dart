@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:meta/meta.dart';
 
 import '../../core/http_client_factory.dart';
 import '../../core/utils/query_string_builder.dart';
 import '../../domain/entities/location.dart';
 import '../models/models.dart';
+import '../models/tag_update.dart';
 import 'api_base.dart';
 
 abstract class CafeService {
@@ -21,6 +24,8 @@ abstract class CafeService {
       {@required String language});
 
   Future<CafeModel> getBasicInfo(String placeId, {@required String language});
+
+  Future updateTagsForCafe(String placeId, List<TagUpdateModel> updates);
 }
 
 class CafeServiceImpl extends ApiBase implements CafeService {
@@ -100,5 +105,12 @@ class CafeServiceImpl extends ApiBase implements CafeService {
     final result = data['result'];
 
     return CafeModel.fromMap(result);
+  }
+
+  @override
+  Future updateTagsForCafe(String placeId, List<TagUpdateModel> updates) async {
+    final url = '${ApiBase.apiBaseUrl}/tags/$placeId';
+    final body = jsonEncode(updates);
+    await postRequest(url, body);
   }
 }
