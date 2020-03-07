@@ -23,7 +23,7 @@ class TileCoverImage extends StatelessWidget {
               placeholder: (context, url) => CircularLoader(),
               errorWidget: (context, url, error) => Icon(Icons.error),
               width: double.infinity,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
             )
           : Image.asset(
               'assets/table.jpg',

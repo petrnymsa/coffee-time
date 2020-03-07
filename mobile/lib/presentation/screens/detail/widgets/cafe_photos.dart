@@ -1,3 +1,5 @@
+import 'package:coffee_time/core/app_logger.dart';
+import 'package:coffee_time/domain/photo_url_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/photo.dart';
@@ -12,7 +14,14 @@ class CafePhotos extends StatelessWidget {
     return Stack(
       children: [
         CarouselSlider(
-          images: photos.map((p) => p.url).toList(),
+          height: 200,
+          images: photos
+              .take(4)
+              .map((p) => createPhotoUrl(
+                    p.baseUrl,
+                    maxHeight: 400,
+                  ))
+              .toList(),
         ),
         AppBar(
           backgroundColor: Colors.transparent,

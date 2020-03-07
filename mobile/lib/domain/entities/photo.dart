@@ -2,31 +2,32 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 class Photo extends Equatable {
-  final int width;
-  final int height;
-  final String url; //todo map from service to REST API url
+  final int maxWidth;
+  final int maxHeight;
+  final String baseUrl;
 
   Photo({
-    @required this.width,
-    @required this.height,
-    @required this.url,
+    @required this.maxWidth,
+    @required this.maxHeight,
+    @required this.baseUrl,
   });
 
   Photo copyWith({
-    int width,
-    int height,
-    String url,
+    int maxWidth,
+    int maxHeight,
+    String baseUrl,
   }) {
     return Photo(
-      width: width ?? this.width,
-      height: height ?? this.height,
-      url: url ?? this.url,
+      maxWidth: maxWidth ?? this.maxWidth,
+      maxHeight: maxHeight ?? this.maxHeight,
+      baseUrl: baseUrl ?? this.baseUrl,
     );
   }
 
   @override
-  String toString() => 'PhotoEntity width: $width, height: $height, url: $url';
+  String toString() =>
+      '''PhotoEntity width: $maxWidth, height: $maxHeight, url: $baseUrl''';
 
   @override
-  List<Object> get props => [url, width, height];
+  List<Object> get props => [baseUrl, maxWidth, maxHeight];
 }

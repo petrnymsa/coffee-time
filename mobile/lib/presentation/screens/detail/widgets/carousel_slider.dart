@@ -6,8 +6,9 @@ import '../../../shared/shared_widgets.dart';
 
 class CarouselSlider extends StatefulWidget {
   final List<String> images;
+  final double height;
 
-  CarouselSlider({Key key, this.images})
+  CarouselSlider({Key key, @required this.images, @required this.height})
       : assert(images != null),
         super(key: key);
 
@@ -21,7 +22,7 @@ class _CarouselSliderState extends State<CarouselSlider> {
     final items = widget.images;
     final theme = Theme.of(context);
     return Container(
-      height: 200,
+      height: widget.height,
       child: PageIndicatorContainer(
         length: items.length,
         child: PageView.builder(

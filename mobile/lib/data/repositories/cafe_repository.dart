@@ -56,11 +56,8 @@ class CafeRepositoryImpl implements CafeRepository {
 
       final photoUrlMap = <String, String>{};
       for (final photo in result.photos) {
-        photoUrlMap[photo.reference] = photoService.getPhotoUrl(
-          photo.reference,
-          maxHeight: photo.height,
-          maxWidth: photo.width,
-        );
+        photoUrlMap[photo.reference] =
+            photoService.getBasePhotoUrl(photo.reference);
       }
       return Left(result.toEntity(photoUrlMap));
     } on ApiException catch (e) {
@@ -86,8 +83,7 @@ class CafeRepositoryImpl implements CafeRepository {
         var photoUrl;
 
         if (cafe.photo != null) {
-          photoUrl = photoService.getPhotoUrl(cafe.photo.reference,
-              maxWidth: cafe.photo.width, maxHeight: cafe.photo.height);
+          photoUrl = photoService.getBasePhotoUrl(cafe.photo.reference);
         }
 
         cafes.add(cafe.toEntity(
@@ -135,8 +131,7 @@ class CafeRepositoryImpl implements CafeRepository {
         (x) {
           var photoUrl;
           if (x.photo != null) {
-            photoUrl = photoService.getPhotoUrl(x.photo.reference,
-                maxWidth: x.photo.width, maxHeight: x.photo.height);
+            photoUrl = photoService.getBasePhotoUrl(x.photo.reference);
           }
           // if (photoUrl == null) {
           //   getLogger('cafe').e(x);
