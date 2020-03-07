@@ -7,11 +7,13 @@ import '../../domain/entities/cafe_detail.dart';
 import '../../domain/entities/filter.dart';
 import '../../domain/entities/location.dart';
 import '../../domain/entities/tag.dart';
+import '../../domain/entities/tag_update.dart';
 import '../../domain/exceptions/api.dart';
 import '../../domain/failure.dart';
 import '../../domain/repositories/cafe_repository.dart';
 import '../../domain/repositories/nearby_result.dart';
 import '../../domain/repositories/tags_repository.dart';
+import '../models/tag_update.dart';
 import '../services/cafe_service.dart';
 import '../services/favorite_service.dart';
 import '../services/photo_service.dart';
@@ -167,6 +169,24 @@ class CafeRepositoryImpl implements CafeRepository {
       final result =
           await favoriteService.setFavorite('user', cafeId); //todo get User
       return Left(result);
+    } catch (e) {
+      return Right(CommonFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<bool, Failure>> updateTagsForCafe(
+      String id, List<TagUpdate> updates) async {
+    try {
+      final updateModels = updates
+          .map((x) => TagUpdateModel(id: x.id, change: x.change))
+          .toList();
+
+      await cafeService.updateTagsForCafe(id, updateModels);
+
+      return Left(true);
+    } on ApiException catch (e) {
+      return Right(ServiceFailure('Call to update tags failed', inner: e));
     } catch (e) {
       return Right(CommonFailure(e));
     }
