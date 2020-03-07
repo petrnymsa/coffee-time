@@ -1,8 +1,8 @@
-import 'package:coffee_time/core/app_logger.dart';
-import 'package:coffee_time/domain/photo_url_helper.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/app_logger.dart';
 import '../../../../domain/entities/cafe.dart';
+import '../../../../domain/photo_url_helper.dart';
 import 'tile_cover_image.dart';
 
 class TileCoverContainer extends StatelessWidget {
