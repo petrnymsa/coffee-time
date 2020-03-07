@@ -21,10 +21,12 @@ class TileCoverContainer extends StatelessWidget {
         LayoutBuilder(builder: (context, constraints) {
           return TileCoverImage(
             borderRadius: borderRadius,
-            url: createPhotoUrl(
-              cafe.photos.first?.baseUrl,
-              maxHeight: constraints.maxHeight.ceil() * 2,
-            ),
+            url: cafe.photos.isEmpty
+                ? null
+                : createPhotoUrl(
+                    cafe.photos.first?.baseUrl,
+                    maxHeight: constraints.maxHeight.ceil() * 2,
+                  ),
           );
         }),
         Center(
