@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/app_logger.dart';
 import '../../../../domain/entities/cafe.dart';
 import '../../../../domain/photo_url_helper.dart';
 import 'tile_cover_image.dart';
@@ -20,7 +19,6 @@ class TileCoverContainer extends StatelessWidget {
     return Stack(
       children: <Widget>[
         LayoutBuilder(builder: (context, constraints) {
-          getLogger('TileCoverContainer').i(constraints);
           return TileCoverImage(
             borderRadius: borderRadius,
             url: createPhotoUrl(

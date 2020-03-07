@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 
 import '../../../core/app_logger.dart';
 import '../../shared/shared_widgets.dart';
+import '../tags_review/screen.dart';
 import 'bloc/detail_bloc.dart';
 import 'bloc/detail_bloc_state.dart';
 import 'widgets/widgets.dart';
@@ -25,6 +26,7 @@ class DetailScreen extends StatelessWidget {
               logger: logger,
               cafe: cafe,
               detail: detail,
+              onTagsEdit: () => _onTagsEditRequest(context),
             ),
           );
         },
@@ -35,5 +37,12 @@ class DetailScreen extends StatelessWidget {
             orElse: () => Container(width: 0.0, height: 0.0)),
       ),
     );
+  }
+
+  void _onTagsEditRequest(BuildContext context) async {
+    final result = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => TagsReviewScreen()));
+
+    logger.i('Reviews tags $result');
   }
 }
