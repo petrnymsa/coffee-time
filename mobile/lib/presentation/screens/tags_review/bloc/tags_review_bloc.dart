@@ -36,6 +36,9 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
               addedTags: addedTags,
               reviews: reviews.map((x) {
                 if (x.tag.id == event.id) {
+                  if (x.review == event.review) {
+                    event = event.copyWith(review: TagReviewKind.none);
+                  }
                   return TagReview(tag: x.tag, review: event.review);
                 }
                 return x;
