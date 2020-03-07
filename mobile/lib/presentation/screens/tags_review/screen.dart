@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../domain/entities/tag.dart';
-import '../../../domain/entities/tag_reputation.dart';
 import '../../shared/shared_widgets.dart';
 import 'bloc/bloc.dart';
 import 'model/tag_review.dart';
+import 'widgets/widgets.dart';
 
 class TagsReviewScreen extends StatelessWidget {
   @override
@@ -22,77 +22,11 @@ class TagsReviewScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        _buildHeadline(context),
-                        if (reviewedTags.isNotEmpty)
-                          const SizedBox(
-                            height: 30,
-                          ),
-                        if (reviewedTags.isNotEmpty)
-                          Table(
-                            defaultVerticalAlignment:
-                                TableCellVerticalAlignment.middle,
-                            // border: TableBorder.symmetric(
-                            //     inside: BorderSide(color: Colors.)),
-                            children: [
-                              TableRow(
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom:
-                                            BorderSide(color: Colors.black12)),
-                                  ),
-                                  children: [
-                                    Container(),
-                                    Text(
-                                      'Pravda',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      'Není pravda',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      'Nehodnotím',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                              ...reviewedTags
-                                  .map(
-                                    (t) => TableRow(
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.black12)),
-                                      ),
-                                      children: [
-                                        TableCell(
-                                          child: Text(
-                                            t.tag.title,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        _buildReviewIcon(
-                                            t,
-                                            FontAwesomeIcons.thumbsUp,
-                                            TagReviewKind.like,
-                                            context),
-                                        _buildReviewIcon(
-                                            t,
-                                            FontAwesomeIcons.thumbsDown,
-                                            TagReviewKind.dislike,
-                                            context),
-                                        _buildReviewIcon(
-                                            t,
-                                            FontAwesomeIcons.minus,
-                                            TagReviewKind.none,
-                                            context),
-                                      ],
-                                    ),
-                                  )
-                                  .toList()
-                            ],
-                          ),
-                        const SizedBox(
-                          height: 30,
+                        HeaderInfo(),
+                        ReviewsTable(
+                          tagsToReview: reviewedTags,
+                          onTagReview: (tagId, reviewKind) =>
+                              _onTagReview(context, tagId, reviewKind),
                         ),
                         // * add more
                         // if (model.addedTags.length > 0)
@@ -130,46 +64,11 @@ class TagsReviewScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeadline(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text(
-          'Štítky jsou tvořeny uživateli.',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subhead,
-        ),
-        RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-              text: 'Pomozte nám ',
-              style: Theme.of(context).textTheme.subhead,
-              children: [
-                TextSpan(
-                    text: 'zlepšit',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(
-                  text: ' jejich přesnost.',
-                )
-              ]),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildReviewIcon(TagReview tagReview, IconData icon,
-      TagReviewKind reviewType, BuildContext context) {
-    return TableCell(
-        child: IconButton(
-      icon: Icon(icon),
-      color: tagReview.review == reviewType
-          ? Theme.of(context).primaryColor
-          : Colors.grey,
-      onPressed: () {
-        context
-            .bloc<TagsReviewBloc>()
-            .add(ReviewTag(id: tagReview.tag.id, review: reviewType));
-      },
-    ));
+  void _onTagReview(
+      BuildContext context, String tagId, TagReviewKind reviewKind) {
+    context
+        .bloc<TagsReviewBloc>()
+        .add(ReviewTag(id: tagId, review: reviewKind));
   }
 
   Widget _buildTag(Tag tag) {
