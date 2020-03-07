@@ -1,23 +1,22 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
-enum TagUpdateKind { like, dislike }
+import '../../domain/entities/tag_update.dart';
 
-class TagUpdate extends Equatable {
+class TagUpdateModel extends Equatable {
   final String id;
   final TagUpdateKind change;
-  TagUpdate({
+  TagUpdateModel({
     this.id,
     this.change,
   });
 
-  TagUpdate copyWith({
+  TagUpdateModel copyWith({
     String id,
     TagUpdateKind change,
   }) {
-    return TagUpdate(
+    return TagUpdateModel(
       id: id ?? this.id,
       change: change ?? this.change,
     );
@@ -30,10 +29,10 @@ class TagUpdate extends Equatable {
     };
   }
 
-  static TagUpdate fromMap(Map<String, dynamic> map) {
+  static TagUpdateModel fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return TagUpdate(
+    return TagUpdateModel(
       id: map['id'],
       change: TagUpdateKind.values.firstWhere(
           (x) => x.toString().split('.').last == map['change'],
@@ -43,11 +42,13 @@ class TagUpdate extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  static TagUpdate fromJson(String source) => fromMap(json.decode(source));
+  static TagUpdateModel fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() => 'TagUpdate(id: $id, change: $change)';
 
   @override
   List<Object> get props => [id, change];
+
+  TagUpdate toEnity() => TagUpdate(id: id, change: change);
 }

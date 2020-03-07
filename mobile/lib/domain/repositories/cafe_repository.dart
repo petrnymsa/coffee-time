@@ -18,7 +18,4 @@ abstract class CafeRepository {
   Future<Either<CafeDetail, Failure>> getDetail(String id);
 
   Future<Either<bool, Failure>> toggleFavorite(String id);
-
-  //todo update cafe tags, add TagUpdate entity
-  //Future addTags(String cafeId, List<TagReputation> tags);
 }

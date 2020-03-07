@@ -25,7 +25,7 @@ abstract class CafeService {
 
   Future<CafeModel> getBasicInfo(String placeId, {@required String language});
 
-  Future updateTagsForCafe(String placeId, List<TagUpdate> updates);
+  Future updateTagsForCafe(String placeId, List<TagUpdateModel> updates);
 }
 
 class CafeServiceImpl extends ApiBase implements CafeService {
@@ -108,7 +108,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
   }
 
   @override
-  Future updateTagsForCafe(String placeId, List<TagUpdate> updates) async {
+  Future updateTagsForCafe(String placeId, List<TagUpdateModel> updates) async {
     final url = '${ApiBase.apiBaseUrl}/tags/$placeId';
     final body = jsonEncode(updates);
     await postRequest(url, body);

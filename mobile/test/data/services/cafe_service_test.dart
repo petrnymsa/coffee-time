@@ -7,6 +7,7 @@ import 'package:coffee_time/data/models/tag_update.dart';
 import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/domain/entities/location.dart';
+import 'package:coffee_time/domain/entities/tag_update.dart';
 import 'package:coffee_time/domain/exceptions/exceptions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
@@ -283,7 +284,7 @@ void main() {
             body: anyNamed('body'), headers: anyNamed('headers')),
       ).thenAnswer((_) async => Future.value(Response("", 204)));
 
-      final model = TagUpdate(id: '123', change: TagUpdateKind.like);
+      final model = TagUpdateModel(id: '123', change: TagUpdateKind.like);
       service.updateTagsForCafe('abc', [model]);
 
       final expectedUrl = "${ApiBase.apiBaseUrl}/tags/abc";
