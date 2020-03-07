@@ -9,7 +9,6 @@ import 'api_base.dart';
 abstract class TagService {
   Future<List<TagModel>> getAll();
   Future<List<TagReputationModel>> getForCafe(String placeId);
-  //todo add update method
 }
 
 class TagServiceImpl extends ApiBase implements TagService {
