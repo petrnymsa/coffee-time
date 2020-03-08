@@ -28,6 +28,7 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
       load: _mapLoad,
       addTags: _mapAddTags,
       reviewTag: _mapReviewTag,
+      removeAdded: _mapRemoveAdded,
     );
   }
 
@@ -52,6 +53,10 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
   }
 
   Stream<TagsReviewBlocState> _mapAddTags(AddTags event) async* {
+    if (event.tagsToAdd == null || event.tagsToAdd.isEmpty) {
+      return;
+    }
+
     yield state.maybeMap(
       loaded: (loaded) {
         return Loaded(
@@ -60,6 +65,24 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
           notAddedYet: loaded.notAddedYet
               .where((x) => !event.tagsToAdd.contains(x))
               .toList(),
+        );
+      },
+      orElse: () => null, //todo failure
+    );
+  }
+
+  Stream<TagsReviewBlocState> _mapRemoveAdded(RemovedAdded event) async* {
+    yield state.maybeMap(
+      loaded: (loaded) {
+        final notAddedYet = [...loaded.notAddedYet, event.tagToRemove];
+        notAddedYet.sort((a, b) => a.id.compareTo(b.id));
+
+        return Loaded(
+          addedTags: [
+            ...loaded.addedTags.where((t) => t.id != event.tagToRemove.id)
+          ],
+          reviews: loaded.reviews,
+          notAddedYet: notAddedYet,
         );
       },
       orElse: () => null, //todo failure

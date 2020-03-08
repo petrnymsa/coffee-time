@@ -18,7 +18,6 @@ void main() {
   final tagsToReview = <Tag>[tagEntityExample()];
   final tagId = tagEntityExample().id;
   final allTags = <Tag>[
-    tagEntityExample(),
     Tag(id: '1', title: 't1', icon: Icons.message),
     Tag(id: '2', title: 't2', icon: Icons.message),
     Tag(id: '3', title: 't3', icon: Icons.message)
@@ -136,6 +135,30 @@ void main() {
         ],
         notAddedYet: notAdded([...tagsToReview, allTags[1]]),
       )
+    ],
+  );
+
+  blocTest(
+    'remove tag event',
+    build: () async =>
+        TagsReviewBloc(tagRepository: mockTagRepository, tagsToReview: [])
+          ..add(Load()),
+    act: (TagsReviewBloc bloc) async {
+      bloc.add(AddTags(tagsToAdd: [allTags[1]]));
+      bloc.add(RemovedAdded(tagToRemove: allTags[1]));
+    },
+    expect: [
+      Loaded(addedTags: [], reviews: [], notAddedYet: allTags),
+      Loaded(
+        addedTags: [allTags[1]],
+        reviews: [],
+        notAddedYet: notAdded([allTags[1]]),
+      ),
+      Loaded(
+        addedTags: [],
+        reviews: [],
+        notAddedYet: allTags,
+      ),
     ],
   );
 }
