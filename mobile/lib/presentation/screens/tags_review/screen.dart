@@ -1,3 +1,6 @@
+import 'package:coffee_time/core/app_logger.dart';
+import 'package:coffee_time/presentation/screens/tags_choose/bloc/bloc.dart';
+import 'package:coffee_time/presentation/screens/tags_choose/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,23 +32,28 @@ class TagsReviewScreen extends StatelessWidget {
                               _onTagReview(context, tagId, reviewKind),
                         ),
                         // * add more
-                        // if (addedTags.length > 0)
-                        //   ..._buildTagsToAdd(context, model),
-                        // if (model.notAddedTagsYet.length > 0)
-                        //   RaisedButton.icon(
-                        //     label: Text('Přidat štítky'),
-                        //     icon: Icon(FontAwesomeIcons.plus),
-                        //     onPressed: () async {
-                        //       final addedTags = await Navigator.of(context)
-                        //           .push(MaterialPageRoute(
-                        //         builder: (_) => ChangeNotifierProvider.value(
-                        //           value: detailModel,
-                        //           child: TagAddScreen(model.notAddedTagsYet),
-                        //         ),
-                        //       ));
-                        //       if (addedTags != null) model.addTags(addedTags);
-                        //     },
-                        //   ),
+                        if (addedTags.length > 0)
+                          ..._buildTagsToAdd(context, addedTags),
+                        if (notAddedYet.length > 0)
+                          RaisedButton.icon(
+                            label: Text('Přidat štítky'),
+                            icon: Icon(FontAwesomeIcons.plus),
+                            onPressed: () async {
+                              final addedTags =
+                                  await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => BlocProvider<TagsChooseBloc>(
+                                    child: TagsChooseScreen(),
+                                    create: (context) =>
+                                        TagsChooseBloc(sourceTags: notAddedYet),
+                                  ),
+                                ),
+                              );
+
+                              getLogger('TagsReview')
+                                  .i('addedTags = $addedTags');
+                            },
+                          ),
                         FullWidthButton(
                           text: 'Potvrdit',
                           color: Colors.green,
@@ -79,7 +87,7 @@ class TagsReviewScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildTagsToAdd(BuildContext context) {
+  List<Widget> _buildTagsToAdd(BuildContext context, List<Tag> addedTags) {
     return <Widget>[
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,16 +105,12 @@ class TagsReviewScreen extends StatelessWidget {
         ],
       ),
       Divider(),
-      // Wrap(
-      //   alignment: WrapAlignment.start,
-      //   spacing: 6.0,
-      //   runSpacing: 0.0,
-      //   children: model.addedTags
-      //       .map(
-      //         (t) => _buildTag(t, model),
-      //       )
-      //       .toList(),
-      // ),
+      Wrap(
+        alignment: WrapAlignment.start,
+        spacing: 6.0,
+        runSpacing: 0.0,
+        children: addedTags.map(_buildTag).toList(),
+      ),
       const SizedBox(
         height: 4,
       ),
