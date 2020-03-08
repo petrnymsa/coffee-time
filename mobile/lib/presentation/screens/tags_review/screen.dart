@@ -1,12 +1,12 @@
-import 'package:coffee_time/core/app_logger.dart';
-import 'package:coffee_time/presentation/screens/tags_choose/bloc/bloc.dart';
-import 'package:coffee_time/presentation/screens/tags_choose/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../core/app_logger.dart';
 import '../../../domain/entities/tag.dart';
 import '../../shared/shared_widgets.dart';
+import '../tags_choose/bloc/bloc.dart';
+import '../tags_choose/screen.dart';
 import 'bloc/bloc.dart';
 import 'model/tag_review.dart';
 import 'widgets/widgets.dart';
@@ -52,6 +52,10 @@ class TagsReviewScreen extends StatelessWidget {
 
                               getLogger('TagsReview')
                                   .i('addedTags = $addedTags');
+
+                              context
+                                  .bloc<TagsReviewBloc>()
+                                  .add(AddTags(tagsToAdd: addedTags));
                             },
                           ),
                         FullWidthButton(
@@ -79,11 +83,13 @@ class TagsReviewScreen extends StatelessWidget {
         .add(ReviewTag(id: tagId, review: reviewKind));
   }
 
-  Widget _buildTag(Tag tag) {
+  Widget _buildTag(BuildContext context, Tag tag) {
     return TagInput(
       tag: tag,
-      onDeleted: () => {},
-      onPressed: () => {},
+      onDeleted: () =>
+          context.bloc<TagsReviewBloc>().add(RemovedAdded(tagToRemove: tag)),
+      onPressed: () =>
+          context.bloc<TagsReviewBloc>().add(RemovedAdded(tagToRemove: tag)),
     );
   }
 
@@ -109,7 +115,7 @@ class TagsReviewScreen extends StatelessWidget {
         alignment: WrapAlignment.start,
         spacing: 6.0,
         runSpacing: 0.0,
-        children: addedTags.map(_buildTag).toList(),
+        children: addedTags.map((t) => _buildTag(context, t)).toList(),
       ),
       const SizedBox(
         height: 4,
