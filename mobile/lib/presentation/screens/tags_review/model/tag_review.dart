@@ -16,4 +16,7 @@ class TagReview extends Equatable {
 
   @override
   List<Object> get props => [tag, review];
+
+  @override
+  bool get stringify => true;
 }
