@@ -17,6 +17,7 @@ class MockTagsDataSource {
     Tag(id: '2', icon: FontAwesomeIcons.wineBottle, title: 'wine'),
     Tag(id: '3', icon: FontAwesomeIcons.wifi, title: 'wifi'),
     Tag(id: '4', icon: FontAwesomeIcons.dog, title: 'dog friendly'),
+    Tag(id: '5', icon: FontAwesomeIcons.accessibleIcon, title: 'accessible'),
   ];
 
   final Map<String, List<MockTagReputationModel>> cafeTags = {

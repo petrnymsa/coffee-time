@@ -52,10 +52,11 @@ class TagsReviewScreen extends StatelessWidget {
 
                               getLogger('TagsReview')
                                   .i('addedTags = $addedTags');
-
-                              context
-                                  .bloc<TagsReviewBloc>()
-                                  .add(AddTags(tagsToAdd: addedTags));
+                              if (addedTags != null) {
+                                context
+                                    .bloc<TagsReviewBloc>()
+                                    .add(AddTags(tagsToAdd: addedTags));
+                              }
                             },
                           ),
                         FullWidthButton(
@@ -83,6 +84,10 @@ class TagsReviewScreen extends StatelessWidget {
         .add(ReviewTag(id: tagId, review: reviewKind));
   }
 
+  void _onClearAdded(BuildContext context) {
+    context.bloc<TagsReviewBloc>().add(ClearAdded());
+  }
+
   Widget _buildTag(BuildContext context, Tag tag) {
     return TagInput(
       tag: tag,
@@ -106,7 +111,7 @@ class TagsReviewScreen extends StatelessWidget {
           FlatButton.icon(
             label: Text('Vyčistit'),
             icon: Icon(Icons.clear_all),
-            onPressed: () {},
+            onPressed: () => _onClearAdded(context),
           )
         ],
       ),
