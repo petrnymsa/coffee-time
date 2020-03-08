@@ -34,13 +34,6 @@ void main() {
     return allTags.where((t) => !present.contains(t)).toList();
   }
 
-  final initialLoaded = Loaded(
-      addedTags: [],
-      notAddedYet: notAdded([...tagsToReview]),
-      reviews: [
-        TagReview(review: TagReviewKind.none, tag: tagEntityExample())
-      ]);
-
   TagsReviewBloc createBloc({bool emitLoad = true}) {
     final bloc = TagsReviewBloc(
       tagRepository: mockTagRepository,
@@ -57,7 +50,14 @@ void main() {
     build: () async => createBloc(emitLoad: false),
     skip: 1,
     act: (TagsReviewBloc bloc) async => bloc.add(Load()),
-    expect: [initialLoaded],
+    expect: [
+      Loaded(
+          addedTags: [],
+          notAddedYet: notAdded([...tagsToReview]),
+          reviews: [
+            TagReview(review: TagReviewKind.none, tag: tagEntityExample())
+          ])
+    ],
   );
 
   blocTest(
@@ -66,7 +66,7 @@ void main() {
     act: (TagsReviewBloc bloc) async =>
         bloc.add(ReviewTag(id: tagId, review: TagReviewKind.like)),
     expect: [
-      initialLoaded,
+      isA<Loaded>(),
       Loaded(addedTags: [], reviews: [
         TagReview(review: TagReviewKind.like, tag: tagEntityExample())
       ], notAddedYet: notAdded(tagsToReview))
@@ -81,7 +81,7 @@ void main() {
       bloc.add(ReviewTag(id: tagId, review: TagReviewKind.like));
     },
     expect: [
-      initialLoaded,
+      isA<Loaded>(),
       Loaded(addedTags: [], reviews: [
         TagReview(review: TagReviewKind.like, tag: tagEntityExample())
       ], notAddedYet: notAdded(tagsToReview)),
@@ -105,7 +105,7 @@ void main() {
     act: (TagsReviewBloc bloc) async =>
         bloc.add(ReviewTag(id: tagId, review: TagReviewKind.like)),
     expect: [
-      initialLoaded,
+      isA<Loaded>(),
       Loaded(
         addedTags: [],
         reviews: [
@@ -127,7 +127,7 @@ void main() {
     act: (TagsReviewBloc bloc) async =>
         bloc.add(AddTags(tagsToAdd: [allTags[1]])),
     expect: [
-      initialLoaded,
+      isA<Loaded>(),
       Loaded(
         addedTags: [allTags[1]],
         reviews: [
@@ -148,12 +148,30 @@ void main() {
       bloc.add(RemovedAdded(tagToRemove: allTags[1]));
     },
     expect: [
-      Loaded(addedTags: [], reviews: [], notAddedYet: allTags),
+      isA<Loaded>(),
+      isA<Loaded>(),
       Loaded(
-        addedTags: [allTags[1]],
+        addedTags: [],
         reviews: [],
-        notAddedYet: notAdded([allTags[1]]),
+        notAddedYet: allTags,
       ),
+    ],
+  );
+
+  blocTest(
+    'clear added event',
+    build: () async =>
+        TagsReviewBloc(tagRepository: mockTagRepository, tagsToReview: [])
+          ..add(Load()),
+    act: (TagsReviewBloc bloc) async {
+      bloc.add(AddTags(tagsToAdd: [allTags[0]]));
+      bloc.add(AddTags(tagsToAdd: [allTags[1]]));
+      bloc.add(ClearAdded());
+    },
+    expect: [
+      isA<Loaded>(),
+      isA<Loaded>(),
+      isA<Loaded>(),
       Loaded(
         addedTags: [],
         reviews: [],

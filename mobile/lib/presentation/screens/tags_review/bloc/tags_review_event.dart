@@ -12,6 +12,7 @@ abstract class TagsReviewBlocEvent with _$TagsReviewBlocEvent {
       AddTags;
   const factory TagsReviewBlocEvent.removeAdded({@required Tag tagToRemove}) =
       RemovedAdded;
+  const factory TagsReviewBlocEvent.clearAdded() = ClearAdded;
   const factory TagsReviewBlocEvent.reviewTag(
       {@required String id, TagReviewKind review}) = ReviewTag;
 }

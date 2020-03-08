@@ -29,6 +29,7 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
       addTags: _mapAddTags,
       reviewTag: _mapReviewTag,
       removeAdded: _mapRemoveAdded,
+      clearAdded: _mapClearAdded,
     );
   }
 
@@ -84,6 +85,17 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
           reviews: loaded.reviews,
           notAddedYet: notAddedYet,
         );
+      },
+      orElse: () => null, //todo failure
+    );
+  }
+
+  Stream<TagsReviewBlocState> _mapClearAdded(ClearAdded event) async* {
+    yield state.maybeMap(
+      loaded: (loaded) {
+        final notAddedYet = [...loaded.notAddedYet, ...loaded.addedTags];
+        notAddedYet.sort((a, b) => a.id.compareTo(b.id));
+        return loaded.copyWith(addedTags: [], notAddedYet: notAddedYet);
       },
       orElse: () => null, //todo failure
     );
