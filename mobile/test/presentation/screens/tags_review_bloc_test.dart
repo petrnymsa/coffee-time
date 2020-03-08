@@ -1,47 +1,61 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:coffee_time/data/repositories/mock/tag_repository.dart';
-import 'package:coffee_time/data/repositories/mock/tags_data_source.dart';
+import 'package:coffee_time/core/either.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/domain/entities/tag_update.dart';
+import 'package:coffee_time/domain/repositories/tags_repository.dart';
 import 'package:coffee_time/presentation/screens/tags_review/bloc/bloc.dart';
 import 'package:coffee_time/presentation/screens/tags_review/model/tag_review.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 
 import '../../fixtures/fixture_helper.dart';
+
+class MockTagRepository extends Mock implements TagRepository {}
 
 //ignore_for_file: avoid_types_on_closure_parameters
 void main() {
   final tagsToReview = <Tag>[tagEntityExample()];
-  final tagId = tagsToReview[0].id;
+  final tagId = tagEntityExample().id;
+  final allTags = <Tag>[
+    tagEntityExample(),
+    Tag(id: '1', title: 't1', icon: Icons.message),
+    Tag(id: '2', title: 't2', icon: Icons.message),
+    Tag(id: '3', title: 't3', icon: Icons.message)
+  ];
 
-  final dataSource = MockTagsDataSource();
+  MockTagRepository mockTagRepository;
+
+  setUp(() {
+    mockTagRepository = MockTagRepository();
+    when(mockTagRepository.getAll()).thenAnswer((_) async => Left(allTags));
+  });
 
   List<Tag> notAdded(List<Tag> present) {
-    final all = dataSource.tags;
-
-    return all.where((t) => !present.contains(t)).toList();
+    return allTags.where((t) => !present.contains(t)).toList();
   }
 
   final initialLoaded = Loaded(
       addedTags: [],
-      notAddedYet: notAdded([]),
+      notAddedYet: notAdded([...tagsToReview]),
       reviews: [
         TagReview(review: TagReviewKind.none, tag: tagEntityExample())
       ]);
 
-  TagsReviewBloc createBloc() {
-    return TagsReviewBloc(
-      tagRepository: MockedTagRepository(),
+  TagsReviewBloc createBloc({bool emitLoad = true}) {
+    final bloc = TagsReviewBloc(
+      tagRepository: mockTagRepository,
       tagsToReview: tagsToReview,
-    )..add(Load());
+    );
+
+    if (emitLoad) bloc.add(Load());
+
+    return bloc;
   }
 
   blocTest(
     'initial state',
-    build: () async => TagsReviewBloc(
-      tagRepository: MockedTagRepository(),
-      tagsToReview: tagsToReview,
-    ),
+    build: () async => createBloc(emitLoad: false),
     skip: 1,
     act: (TagsReviewBloc bloc) async => bloc.add(Load()),
     expect: [initialLoaded],
@@ -80,7 +94,7 @@ void main() {
 
   test('get updates with no review', () {
     final bloc = TagsReviewBloc(
-        tagRepository: MockedTagRepository(), tagsToReview: tagsToReview);
+        tagRepository: mockTagRepository, tagsToReview: tagsToReview);
     final result = bloc.getUpdates();
 
     expect(result, []);
@@ -106,5 +120,22 @@ void main() {
 
       expect(result, [TagUpdate(id: tagId, change: TagUpdateKind.like)]);
     },
+  );
+
+  blocTest(
+    'add tags event',
+    build: () async => createBloc(),
+    act: (TagsReviewBloc bloc) async =>
+        bloc.add(AddTags(tagsToAdd: [allTags[1]])),
+    expect: [
+      initialLoaded,
+      Loaded(
+        addedTags: [allTags[1]],
+        reviews: [
+          TagReview(review: TagReviewKind.none, tag: tagEntityExample())
+        ],
+        notAddedYet: notAdded([...tagsToReview, allTags[1]]),
+      )
+    ],
   );
 }

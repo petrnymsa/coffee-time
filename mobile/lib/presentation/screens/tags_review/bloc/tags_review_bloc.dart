@@ -26,7 +26,7 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
       TagsReviewBlocEvent event) async* {
     yield* event.map(
       load: _mapLoad,
-      addTag: _mapAddTag,
+      addTags: _mapAddTags,
       reviewTag: _mapReviewTag,
     );
   }
@@ -51,7 +51,21 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
     });
   }
 
-  Stream<TagsReviewBlocState> _mapAddTag(AddTag event) async* {}
+  Stream<TagsReviewBlocState> _mapAddTags(AddTags event) async* {
+    yield state.maybeMap(
+      loaded: (loaded) {
+        return Loaded(
+          addedTags: [...loaded.addedTags, ...event.tagsToAdd],
+          reviews: loaded.reviews,
+          notAddedYet: loaded.notAddedYet
+              .where((x) => !event.tagsToAdd.contains(x))
+              .toList(),
+        );
+      },
+      orElse: () => null, //todo failure
+    );
+  }
+
   Stream<TagsReviewBlocState> _mapReviewTag(ReviewTag event) async* {
     yield state.maybeWhen(
         orElse: () => null,
