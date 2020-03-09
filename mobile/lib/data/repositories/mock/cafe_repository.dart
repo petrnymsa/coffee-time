@@ -1,4 +1,5 @@
 import 'package:coffee_time/data/repositories/mock/tags_data_source.dart';
+import 'package:coffee_time/domain/entities/tag_reputation.dart';
 
 import '../../../core/either.dart';
 import '../../../domain/entities/cafe.dart';
@@ -128,7 +129,7 @@ class MockedCafeRepository implements CafeRepository {
   }
 
   @override
-  Future<Either<bool, Failure>> updateTagsForCafe(
+  Future<Either<List<TagReputation>, Failure>> updateTagsForCafe(
       String id, List<TagUpdate> updates) {
     // TODO: implement updateTagsForCafe
     return null;

@@ -1,3 +1,4 @@
+import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/app_logger.dart';
@@ -175,7 +176,7 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<Either<bool, Failure>> updateTagsForCafe(
+  Future<Either<List<TagReputation>, Failure>> updateTagsForCafe(
       String id, List<TagUpdate> updates) async {
     try {
       final updateModels = updates
@@ -184,7 +185,12 @@ class CafeRepositoryImpl implements CafeRepository {
 
       await cafeService.updateTagsForCafe(id, updateModels);
 
-      return Left(true);
+      final tagsResult = await tagRepository.getForCafe(id);
+
+      return tagsResult.when(
+        left: (tags) => Left(tags),
+        right: (failure) => Right(failure),
+      );
     } on ApiException catch (e) {
       return Right(ServiceFailure('Call to update tags failed', inner: e));
     } catch (e) {
