@@ -1,0 +1,84 @@
+{
+    "html_attributions": [],
+    "status": "OK",
+    "result": {
+        "formatted_phone_number": "224 219 501",
+        "international_phone_number": "+420 224 219 501",
+        "opening_hours": {
+            "open_now": true,
+            "periods": [
+                {
+                    "close": {
+                        "day": 1,
+                        "time": "0000"
+                    },
+                    "open": {
+                        "day": 0,
+                        "time": "0700"
+                    }
+                },
+                {
+                    "close": {
+                        "day": 2,
+                        "time": "0000"
+                    },
+                    "open": {
+                        "day": 1,
+                        "time": "0700"
+                    }
+                }
+            ],
+            "weekday_text": [
+                "pondělí: 7:00–24:00",
+                "úterý: 7:00–24:00",
+                "středa: 7:00–24:00",
+                "čtvrtek: 7:00–24:00",
+                "pátek: 7:00–24:00",
+                "sobota: 7:00–24:00",
+                "neděle: 7:00–24:00"
+            ]
+        },
+        "photos": [
+            {
+                "height": 2160,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/106678332777930816394\">Milan Fiedler</a>"
+                ],
+                "photo_reference": "CmRaAAAA",
+                "width": 3840
+            },
+            {
+                "height": 2160,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/106678332777930816394\">Milan Fiedler</a>"
+                ],
+                "photo_reference": "CmRaAAAA",
+                "width": 3840
+            }
+        ],
+        "reviews": [
+            {
+                "author_name": "John Doe",
+                "author_url": "https://www.google.com/maps/contrib/10/reviews",
+                "language": "cs",
+                "profile_photo_url": "https://lh3.ggpht.com/-1fDyAWQ1M-4/photo.jpg",
+                "rating": 1,
+                "relative_time_description": "před 8 měsíci",
+                "text": "Sample text",
+                "time": 1559130144
+            },
+            {
+                "author_name": "John Doe",
+                "author_url": "https://www.google.com/maps/contrib/10/reviews",
+                "language": "cs",
+                "profile_photo_url": "https://lh3.ggpht.com/-1fDyAWQ1M-4/photo.jpg",
+                "rating": 1,
+                "relative_time_description": "před 8 měsíci",
+                "text": "Sample text",
+                "time": 1559130144
+            }
+        ],
+        "url": "https://maps.google.com",
+        "utc_offset": 60
+    }
+}

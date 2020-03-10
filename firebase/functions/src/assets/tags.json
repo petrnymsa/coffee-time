@@ -1,0 +1,179 @@
+[
+    {
+        "id": "accessible",
+        "title": "accessible",
+        "icon": {
+            "code": 61843,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "bezbariérový přístup"
+        }
+    },
+    {
+        "id": "baby_friendly",
+        "title": "baby friendly",
+        "icon": {
+            "code": 62086,
+            "family": "FontAwesomeBrands",
+            "package": "font_awesome_flutter"
+        }
+    },
+    {
+        "id": "brunch",
+        "title": "brunch",
+        "icon": {
+            "code": 63468,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        }
+    },
+    {
+        "id": "beer",
+        "title": "beer",
+        "icon": {
+            "code": 61692,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "pivo"
+        }
+    },
+    {
+        "id": "credit_card",
+        "title": "accept credit card",
+        "icon": {
+            "code": 61597,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "platba kartou"
+        }
+    },
+    {
+        "id": "dog_friendly",
+        "title": "dog friendly",
+        "icon": {
+            "code": 63187,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        }
+    },
+    {
+        "id": "icecream",
+        "title": "icecream",
+        "icon": {
+            "code": 63504,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "zmrzlina"
+        }
+    },
+    {
+        "id": "no_smoking",
+        "title": "no smoking",
+        "icon": {
+            "code": 62797,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "nekuřácké"
+        }
+    },
+    {
+        "id": "parking",
+        "title": "parking",
+        "icon": {
+            "code": 62784,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "parkování"
+        }
+    },
+    {
+        "id": "quiet_place",
+        "title": "quiet place",
+        "icon": {
+            "code": 62643,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "klidné místo"
+        }
+    },
+    {
+        "id": "refreshment",
+        "title": "refreshment",
+        "icon": {
+            "code": 62183,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "občerstvení"
+        }
+    },
+    {
+        "id": "terrace",
+        "title": "terrace",
+        "icon": {
+            "code": 0,
+            "family": "",
+            "package": ""
+        },
+        "translations": {
+            "cs": "terasa"
+        }
+    },
+    {
+        "id": "smoking",
+        "title": "smoking",
+        "icon": {
+            "code": 62605,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "kuřácké"
+        }
+    },
+    {
+        "id": "vegan_friendly",
+        "title": "vegan_friendly",
+        "icon": {
+            "code": 62929,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        }
+    },
+    {
+        "id": "wifi",
+        "title": "wifi",
+        "icon": {
+            "code": 61931,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        }
+    },
+    {
+        "id": "wine",
+        "title": "wine",
+        "icon": {
+            "code": 62691,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
+        },
+        "translations": {
+            "cs": "víno"
+        }
+    }
+]

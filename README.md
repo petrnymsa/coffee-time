@@ -1,2 +1,4 @@
-# coffee-time
-Master thesis - Flutter application Coffe time
+# Coffee time
+Master thesis main repository
+
+Will be updated.
