@@ -16,11 +16,15 @@ class ContactCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            if (contact.formattedPhone != null) Phone(contact: contact),
-            if (contact.website != null) Website(contact: contact),
+            //  Spacer(),
+            if (contact.formattedPhone != null)
+              Phone(contact: contact),
+            if (contact.website != null)
+              Website(contact: contact),
+            // Spacer(),
           ],
         ),
       ),
@@ -38,31 +42,25 @@ class Website extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: () async {
-          // if (await canLaunch(contact.website)) {
-          //   await launch(contact.website);
-          // }
-          await UrlLauncherHelper.launcUrl(contact.website);
-        },
-        child: Container(
-          padding: const EdgeInsets.only(left: 5),
-          child: Row(
-            children: <Widget>[
-              Icon(FontAwesomeIcons.globe),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: Text(
-                    'Web',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(decoration: TextDecoration.underline),
-                  ),
-                ),
+    return InkWell(
+      onTap: () async {
+        await UrlLauncherHelper.launcUrl(contact.website);
+      },
+      child: Container(
+        padding: const EdgeInsets.only(left: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Icon(FontAwesomeIcons.globe),
+            Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Text(
+                'Web page',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(decoration: TextDecoration.underline),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -81,13 +79,10 @@ class Phone extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        // if (await canLaunch("tel:${contact.internationalPhone}")) {
-        //   await launch("tel:${contact.internationalPhone}");
-        // }
         await UrlLauncherHelper.launchPhone(contact.internationalPhone);
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 2.0),
+        padding: const EdgeInsets.symmetric(horizontal: 2.0),
         child: Row(
           children: <Widget>[
             Icon(Icons.phone),
