@@ -1,6 +1,3 @@
-import 'package:coffee_time/data/repositories/mock/tags_data_source.dart';
-import 'package:coffee_time/domain/entities/tag_reputation.dart';
-
 import '../../../core/either.dart';
 import '../../../domain/entities/cafe.dart';
 import '../../../domain/entities/cafe_detail.dart';
@@ -10,10 +7,12 @@ import '../../../domain/entities/location.dart';
 import '../../../domain/entities/opening_hour.dart';
 import '../../../domain/entities/photo.dart';
 import '../../../domain/entities/review.dart';
+import '../../../domain/entities/tag_reputation.dart';
 import '../../../domain/entities/tag_update.dart';
 import '../../../domain/failure.dart';
 import '../../../domain/repositories/cafe_repository.dart';
 import '../../../domain/repositories/nearby_result.dart';
+import 'tags_data_source.dart';
 
 class MockedCafeRepository implements CafeRepository {
   static final MockTagsDataSource dataSource = MockTagsDataSource();

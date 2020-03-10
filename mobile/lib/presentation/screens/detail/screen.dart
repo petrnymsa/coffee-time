@@ -5,7 +5,6 @@ import 'package:logger/logger.dart';
 import '../../../core/app_logger.dart';
 import '../../../di_container.dart';
 import '../../../domain/entities/cafe.dart';
-import '../../../domain/entities/tag_reputation.dart';
 import '../../shared/shared_widgets.dart';
 import '../tags_review/bloc/bloc.dart' as review_bloc;
 import '../tags_review/screen.dart';

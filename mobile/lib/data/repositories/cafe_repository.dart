@@ -1,4 +1,3 @@
-import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/app_logger.dart';
@@ -8,6 +7,7 @@ import '../../domain/entities/cafe_detail.dart';
 import '../../domain/entities/filter.dart';
 import '../../domain/entities/location.dart';
 import '../../domain/entities/tag.dart';
+import '../../domain/entities/tag_reputation.dart';
 import '../../domain/entities/tag_update.dart';
 import '../../domain/exceptions/api.dart';
 import '../../domain/failure.dart';

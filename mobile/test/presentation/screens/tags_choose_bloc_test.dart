@@ -2,7 +2,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:coffee_time/presentation/screens/tags_choose/bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final allTags = <Tag>[
@@ -14,18 +13,17 @@ void main() {
   blocTest(
     'choose tag when empty',
     build: () async => TagsChooseBloc(sourceTags: allTags),
-    act: (TagsChooseBloc bloc) async => bloc.add(ChooseTag(tag: allTags[0])),
+    act: (bloc) async => bloc.add(ChooseTag(tag: allTags[0])),
     expect: [
       Loaded(availableTags: allTags, chosenTags: [allTags[0]])
     ],
   );
 
-  //todo sort??
   blocTest(
     'choose tag already chosen',
     build: () async =>
         TagsChooseBloc(sourceTags: allTags, alreadyChosenTags: [allTags[0]]),
-    act: (TagsChooseBloc bloc) async => bloc.add(ChooseTag(tag: allTags[0])),
+    act: (bloc) async => bloc.add(ChooseTag(tag: allTags[0])),
     expect: [Loaded(availableTags: allTags, chosenTags: [])],
   );
 }

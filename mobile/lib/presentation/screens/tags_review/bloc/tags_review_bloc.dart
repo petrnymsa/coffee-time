@@ -1,7 +1,7 @@
-import 'package:coffee_time/core/app_logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/app_logger.dart';
 import '../../../../domain/entities/tag.dart';
 import '../../../../domain/entities/tag_update.dart';
 import '../../../../domain/repositories/tags_repository.dart';

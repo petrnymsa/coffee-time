@@ -67,8 +67,14 @@ class DetailBloc extends Bloc<DetailBlocEvent, DetailBlocState> {
 
     yield result.when(
       left: (updatedTags) => state.maybeMap(
-          loaded: (loaded) =>
-              loaded.copyWith(cafe: cafe.copyWith(tags: updatedTags)),
+          loaded: (loaded) {
+            //dispatch event to cafelist - refresh tags
+            cafeListBloc.add(
+              cafe_list_events.UpdateTags(cafeId: event.id, tags: updatedTags),
+            );
+
+            return loaded.copyWith(cafe: cafe.copyWith(tags: updatedTags));
+          },
           orElse: () => DetailBlocState.failure(
               'Wrong state when UpdateTags called. State was: $state')),
       right: (failure) =>
