@@ -25,7 +25,10 @@ class DetailScreen extends StatelessWidget {
         builder: (context, state) {
           return state.when(
             loading: () => CircularLoader(),
-            failure: (message) => FailureMessage(message: message),
+            failure: (message) => FailureContainer(
+              message: message,
+              onRefresh: () => context.bloc<DetailBloc>().add(Load()),
+            ),
             loaded: (cafe, detail) => DetailContainer(
               logger: logger,
               cafe: cafe,

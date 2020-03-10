@@ -10,7 +10,7 @@ class FailureContainer extends StatelessWidget {
   const FailureContainer({
     Key key,
     @required this.message,
-    @required this.onRefresh,
+    this.onRefresh,
   }) : super(key: key);
 
   @override
