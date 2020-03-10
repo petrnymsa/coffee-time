@@ -63,6 +63,10 @@ class DetailBloc extends Bloc<DetailBlocEvent, DetailBlocState> {
   }
 
   Stream<DetailBlocState> _mapUpdateTags(UpdateTags event) async* {
+    if (event.tags.isEmpty) {
+      return;
+    }
+
     final result = await cafeRepository.updateTagsForCafe(event.id, event.tags);
 
     yield result.when(
