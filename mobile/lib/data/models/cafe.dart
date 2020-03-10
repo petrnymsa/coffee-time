@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -32,27 +30,27 @@ class CafeModel extends Equatable {
     this.photo,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'place_id': placeId,
       'name': name,
-      'geometry': {'location': location.toMap()},
+      'geometry': {'location': location.toJson()},
       'icon': iconUrl,
       'rating': rating,
       'opening_hours': {'open_now': openNow},
       'formatted_address': address,
-      'tags': List<dynamic>.from(tags.map((x) => x.toMap())),
-      'photos': [photo.toMap()],
+      'tags': List<dynamic>.from(tags.map((x) => x.toJson())),
+      'photos': [photo.toJson()],
     };
   }
 
-  static CafeModel fromMap(Map<String, dynamic> map) {
+  static CafeModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return CafeModel(
       placeId: map['place_id'],
       name: map['name'],
-      location: LocationModel.fromMap(map['geometry']['location']),
+      location: LocationModel.fromJson(map['geometry']['location']),
       iconUrl: map['icon'],
       rating: map['rating']?.toDouble(),
       openNow: map['opening_hours'] != null
@@ -62,15 +60,11 @@ class CafeModel extends Equatable {
           ? map['formatted_address']
           : map['vicinity'],
       tags: List<TagReputationModel>.from(
-          map['tags']?.map((x) => TagReputationModel.fromMap(x))),
+          map['tags']?.map((x) => TagReputationModel.fromJson(x))),
       photo:
-          PhotoModel.fromMap(map['photos'] != null ? map['photos'][0] : null),
+          PhotoModel.fromJson(map['photos'] != null ? map['photos'][0] : null),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static CafeModel fromJson(String source) => fromMap(json.decode(source));
 
   CafeModel copyWith({
     String placeId,

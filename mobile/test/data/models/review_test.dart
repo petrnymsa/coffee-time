@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:coffee_time/data/models/models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,7 +10,7 @@ void main() {
     test('Given valid review json, should return review model', () {
       final json = fixture('review.json');
       final model = reviewExample();
-      final result = ReviewModel.fromJson(json);
+      final result = ReviewModel.fromJson(jsonDecode(json));
       expect(result, model);
     });
   });

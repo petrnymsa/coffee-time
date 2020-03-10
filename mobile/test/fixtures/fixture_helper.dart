@@ -129,3 +129,5 @@ Cafe cafeEntityExample(
   return cafeModelExample()
       .toEntity(isFavorite: isFavorite, allTags: allTags, photoUrl: photoUrl);
 }
+
+Tag tagEntityExample() => tagExample().toEntity();

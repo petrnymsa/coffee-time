@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:coffee_time/data/models/photo.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,7 +14,7 @@ void main() {
       var model =
           PhotoModel(reference: reference, width: width, height: height);
 
-      var result = PhotoModel.fromJson(json);
+      var result = PhotoModel.fromJson(jsonDecode(json));
 
       expect(result, model);
     });

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -48,7 +46,7 @@ class ReviewModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'author_name': authorName,
       'author_url': authorUrl,
@@ -61,7 +59,7 @@ class ReviewModel extends Equatable {
     };
   }
 
-  static ReviewModel fromMap(Map<String, dynamic> map) {
+  static ReviewModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return ReviewModel(
@@ -75,10 +73,6 @@ class ReviewModel extends Equatable {
       time: map['time'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static ReviewModel fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

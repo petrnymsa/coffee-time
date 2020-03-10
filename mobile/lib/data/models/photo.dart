@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/photo.dart';
@@ -26,7 +24,7 @@ class PhotoModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'width': width,
       'height': height,
@@ -34,7 +32,7 @@ class PhotoModel extends Equatable {
     };
   }
 
-  static PhotoModel fromMap(Map<String, dynamic> map) {
+  static PhotoModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return PhotoModel(
@@ -43,10 +41,6 @@ class PhotoModel extends Equatable {
       reference: map['photo_reference'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static PhotoModel fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() =>

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:coffee_time/data/models/tag_reputation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,7 +10,7 @@ void main() {
     test('Given valid tag json, should return tag model', () {
       final json = fixture('tag_reputation.json');
       final model = tagReputationExample();
-      final result = TagReputationModel.fromJson(json);
+      final result = TagReputationModel.fromJson(jsonDecode(json));
       expect(result, model);
     });
   });

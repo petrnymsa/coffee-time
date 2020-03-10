@@ -12,6 +12,9 @@ class ApiException extends Equatable implements Exception {
 
   @override
   List<Object> get props => [body, statusCode];
+
+  @override
+  bool get stringify => true;
 }
 
 class GoogleApiException extends Equatable implements Exception {

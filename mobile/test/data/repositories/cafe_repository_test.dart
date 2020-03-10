@@ -9,6 +9,7 @@ import 'package:coffee_time/domain/entities/cafe_detail.dart';
 import 'package:coffee_time/domain/entities/filter.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/tag.dart';
+import 'package:coffee_time/domain/entities/tag_reputation.dart';
 import 'package:coffee_time/domain/entities/tag_update.dart';
 import 'package:coffee_time/domain/exceptions/api.dart';
 import 'package:coffee_time/domain/failure.dart';
@@ -247,12 +248,15 @@ void main() {
     test('When call is successful, should return success', () async {
       when(mockCafeService.updateTagsForCafe(any, any))
           .thenAnswer((_) async => Future.value(1));
+      when(mockTagRepository.getForCafe(any)).thenAnswer(
+        (_) async => Left([TagReputation(id: '123', likes: 2, dislikes: 1)]),
+      );
 
       final tagUpdate = TagUpdate(id: '123', change: TagUpdateKind.like);
       final updates = [tagUpdate];
       final result = await repository.updateTagsForCafe('abc', updates);
 
-      expect(result, equals(Left<bool, Failure>(true)));
+      expect(result, equals(isA<Left<List<TagReputation>, Failure>>()));
     });
 
     test('When service failed, should return failure', () async {
@@ -263,9 +267,11 @@ void main() {
       final updates = [tagUpdate];
       final result = await repository.updateTagsForCafe('abc', updates);
 
-      expect(result, isInstanceOf<Right<bool, Failure>>());
+      expect(result, isInstanceOf<Right<List<TagReputation>, Failure>>());
       expect(
-        ((result as Right<bool, Failure>).right as ServiceFailure).inner,
+        ((result as Right<List<TagReputation>, Failure>).right
+                as ServiceFailure)
+            .inner,
         ApiException(body: 'fail', statusCode: 400),
       );
     });
