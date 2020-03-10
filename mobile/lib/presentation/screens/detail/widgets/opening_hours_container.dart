@@ -27,27 +27,6 @@ class OpeningHoursContainer extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 40.0),
           child: OpeningHoursTable(
-            // openingHours: {
-            //   1: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   2: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   3: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   4: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   5: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   6: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   7: null,
-            // },
             openingHours: _mapOpeningHoursToViewModel(),
           ),
         ),
