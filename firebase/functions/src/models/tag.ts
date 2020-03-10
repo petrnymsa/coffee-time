@@ -32,9 +32,7 @@ export enum TagChange {
 /**
  * Represents concrete tag update. 
  */
-export class TagUpdate {
-    constructor(
-        public id: string,
-        public change: TagChange
-    ) { }
+export interface TagUpdate {
+    id: string,
+    change: TagChange
 }
