@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/cafe_detail.dart';
@@ -53,20 +51,20 @@ class CafeDetailModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'formatted_phone_number': formattedPhoneNumber,
       'international_phone_number': internationalPhoneNumber,
       'url': url,
       'utc_offset': utcOffset,
       'website': website,
-      'reviews': List<dynamic>.from(reviews.map((x) => x.toMap())),
-      'photos': List<dynamic>.from(photos.map((x) => x.toMap())),
-      'opening_hours': openingHours.toMap(),
+      'reviews': List<dynamic>.from(reviews.map((x) => x.toJson())),
+      'photos': List<dynamic>.from(photos.map((x) => x.toJson())),
+      'opening_hours': openingHours.toJson(),
     };
   }
 
-  static CafeDetailModel fromMap(Map<String, dynamic> map) {
+  static CafeDetailModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return CafeDetailModel(
@@ -77,20 +75,15 @@ class CafeDetailModel extends Equatable {
       website: map['website'],
       reviews: map['reviews'] != null
           ? List<ReviewModel>.from(
-              map['reviews']?.map((x) => ReviewModel.fromMap(x)))
+              map['reviews']?.map((x) => ReviewModel.fromJson(x)))
           : [],
       photos: map['photos'] != null
           ? List<PhotoModel>.from(
-              map['photos']?.map((x) => PhotoModel.fromMap(x)))
+              map['photos']?.map((x) => PhotoModel.fromJson(x)))
           : [],
-      openingHours: OpeningHoursModel.fromMap(map['opening_hours']),
+      openingHours: OpeningHoursModel.fromJson(map['opening_hours']),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static CafeDetailModel fromJson(String source) =>
-      fromMap(json.decode(source));
 
   @override
   String toString() {

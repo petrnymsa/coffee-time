@@ -16,11 +16,14 @@ class DetailContainer extends StatelessWidget {
   final Cafe cafe;
   final CafeDetail detail;
 
+  final Function onTagsEdit;
+
   const DetailContainer({
     Key key,
     @required this.logger,
     @required this.cafe,
     @required this.detail,
+    this.onTagsEdit,
   }) : super(key: key);
 
   final Logger logger;
@@ -55,17 +58,7 @@ class DetailContainer extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 TagsContainer(
                   tags: cafe.tags,
-                  onEdit: () async {
-                    // final result = await Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (_) => ChangeNotifierProvider.value(
-                    //         value: model, child: TagEditScreen()),
-                    //   ),
-                    // );
-                    // //      Provider.of<CafeListProvider>(context).refresh();
-                    // model.loadDetail();
-                    // print(result);
-                  },
+                  onEdit: onTagsEdit,
                 ),
                 if (detail.reviews?.length != 0)
                   ReviewsContainer(detail: detail),

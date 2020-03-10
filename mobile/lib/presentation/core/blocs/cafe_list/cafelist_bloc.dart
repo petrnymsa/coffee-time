@@ -49,6 +49,7 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
       refresh: _mapRefresh,
       toggleFavorite: _mapToggleFavorite,
       setFavorite: _mapSetFavorite,
+      updateTags: _mapUpdateTags,
     );
   }
 
@@ -140,6 +141,23 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
         final newCafes = cafes.map((cafe) {
           if (cafe.placeId == event.cafeId) {
             return cafe.copyWith(isFavorite: event.isFavorite);
+          }
+          return cafe;
+        }).toList();
+
+        return Loaded(cafes: newCafes, nextPage: token);
+      },
+      orElse: () => CafeListState.failure(
+          'Wrong state when ToggleFavorite called. State was: $state'),
+    );
+  }
+
+  Stream<CafeListState> _mapUpdateTags(UpdateTags event) async* {
+    yield state.maybeWhen(
+      loaded: (cafes, token) {
+        final newCafes = cafes.map((cafe) {
+          if (cafe.placeId == event.cafeId) {
+            return cafe.copyWith(tags: event.tags);
           }
           return cafe;
         }).toList();

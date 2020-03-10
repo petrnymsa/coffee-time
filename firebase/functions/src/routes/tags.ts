@@ -33,16 +33,9 @@ export const tagsRoute = (tagsRepository: TagsRepository): Router => {
 
     router.post('/:placeId', async (req, res) => {
         const data: TagUpdate[] = req.body;
-        const updates = data.map((d) => {
 
-            if (d.change !== 'like' && d.change !== 'dislike') {
-                res.status(400).json(`Provided tag update: ${d.id},${d.change} does not have valid change value.`);
-            }
-
-            return new TagUpdate(d.id, d.change);
-        });
         try {
-            await tagsRepository.updateTags(req.params.placeId, updates);
+            await tagsRepository.updateTags(req.params.placeId, data);
             res.status(204).end();
         } catch (err) {
             logRequestError(req, err);

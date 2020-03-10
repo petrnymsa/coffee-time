@@ -3,6 +3,7 @@ import '../entities/cafe.dart';
 import '../entities/cafe_detail.dart';
 import '../entities/filter.dart';
 import '../entities/location.dart';
+import '../entities/tag_reputation.dart';
 import '../entities/tag_update.dart';
 import '../failure.dart';
 import 'nearby_result.dart';
@@ -20,6 +21,6 @@ abstract class CafeRepository {
 
   Future<Either<bool, Failure>> toggleFavorite(String id);
 
-  Future<Either<bool, Failure>> updateTagsForCafe(
+  Future<Either<List<TagReputation>, Failure>> updateTagsForCafe(
       String id, List<TagUpdate> updates);
 }

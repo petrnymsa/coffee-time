@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/location.dart';
@@ -12,14 +11,14 @@ class LocationModel extends Equatable {
     this.lng,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'lat': lat,
       'lng': lng,
     };
   }
 
-  static LocationModel fromMap(Map<String, dynamic> map) {
+  static LocationModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return LocationModel(
@@ -27,10 +26,6 @@ class LocationModel extends Equatable {
       lng: map['lng'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static LocationModel fromJson(String source) => fromMap(json.decode(source));
 
   LocationModel copyWith({
     double lat,

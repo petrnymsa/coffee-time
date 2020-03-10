@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/tag.dart';
@@ -16,7 +14,7 @@ class TagReputationModel extends Equatable {
     this.dislikes,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'likes': likes,
@@ -24,20 +22,15 @@ class TagReputationModel extends Equatable {
     };
   }
 
-  static TagReputationModel fromMap(Map<String, dynamic> map) {
+  static TagReputationModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return TagReputationModel(
       id: map['id'],
-      likes: map['likes'],
-      dislikes: map['dislikes'],
+      likes: map['likes'] ?? 0,
+      dislikes: map['dislikes'] ?? 0,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static TagReputationModel fromJson(String source) =>
-      fromMap(json.decode(source));
 
   TagReputationModel copyWith({
     String id,

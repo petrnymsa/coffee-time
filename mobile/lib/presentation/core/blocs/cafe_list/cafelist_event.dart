@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../domain/entities/filter.dart';
 import '../../../../domain/entities/location.dart';
+import '../../../../domain/entities/tag_reputation.dart';
 
 part 'cafelist_event.freezed.dart';
 
@@ -16,5 +17,7 @@ abstract class CafeListEvent with _$CafeListEvent {
       ToggleFavorite;
   const factory CafeListEvent.setFavorite(
       {@required String cafeId, @required bool isFavorite}) = SetFavorite;
-  //todo favorites
+  const factory CafeListEvent.updateTags(
+      {@required String cafeId,
+      @required List<TagReputation> tags}) = UpdateTags;
 }

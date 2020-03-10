@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 
 import 'core/http_client_factory.dart';
 import 'data/repositories/cafe_repository.dart';
+//import 'data/repositories/mock/cafe_repository.dart';
+//import 'data/repositories/mock/tag_repository.dart';
 import 'data/repositories/tag_repository.dart';
 import 'data/services/cafe_service.dart';
 import 'data/services/favorite_service.dart';
@@ -57,6 +59,10 @@ void setupContainer() {
   sl.registerLazySingleton<TagRepository>(
     () => TagRepositoryImpl(tagService: sl()),
   );
+
+  // * Mock Repositories
+  // sl.registerLazySingleton<CafeRepository>(() => MockedCafeRepository());
+  // sl.registerLazySingleton<TagRepository>(() => MockedTagRepository());
 
   // * Others
   sl.registerLazySingleton<HttpClientFactory>(() => HttpClientFactoryImpl());
