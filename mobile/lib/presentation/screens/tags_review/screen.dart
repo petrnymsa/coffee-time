@@ -45,6 +45,7 @@ class TagsReviewScreen extends StatelessWidget {
                                   builder: (_) => BlocProvider<TagsChooseBloc>(
                                     child: TagsChooseScreen(),
                                     create: (context) =>
+                                        //todo get from DI
                                         TagsChooseBloc(sourceTags: notAddedYet),
                                   ),
                                 ),

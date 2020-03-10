@@ -29,8 +29,8 @@ class TagReputationModel extends Equatable {
 
     return TagReputationModel(
       id: map['id'],
-      likes: map['likes'],
-      dislikes: map['dislikes'],
+      likes: map['likes'] ?? 0,
+      dislikes: map['dislikes'] ?? 0,
     );
   }
 

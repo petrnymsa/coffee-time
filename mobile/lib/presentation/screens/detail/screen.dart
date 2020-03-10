@@ -4,11 +4,13 @@ import 'package:logger/logger.dart';
 
 import '../../../core/app_logger.dart';
 import '../../../di_container.dart';
+import '../../../domain/entities/cafe.dart';
 import '../../../domain/entities/tag_reputation.dart';
 import '../../shared/shared_widgets.dart';
-import '../tags_review/bloc/bloc.dart';
+import '../tags_review/bloc/bloc.dart' as review_bloc;
 import '../tags_review/screen.dart';
 import 'bloc/detail_bloc.dart';
+import 'bloc/detail_bloc_event.dart';
 import 'bloc/detail_bloc_state.dart';
 import 'widgets/widgets.dart';
 
@@ -29,7 +31,7 @@ class DetailScreen extends StatelessWidget {
               logger: logger,
               cafe: cafe,
               detail: detail,
-              onTagsEdit: () => _onTagsEditRequest(context, cafe.tags),
+              onTagsEdit: () => _onTagsEditRequest(context, cafe),
             ),
           );
         },
@@ -42,20 +44,23 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  void _onTagsEditRequest(
-      BuildContext context, List<TagReputation> tags) async {
-    final result = await Navigator.of(context).push(
+  void _onTagsEditRequest(BuildContext context, Cafe cafe) async {
+    final tagsToUpdate = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => BlocProvider<TagsReviewBloc>(
+        builder: (context) => BlocProvider<review_bloc.TagsReviewBloc>(
           child: TagsReviewScreen(),
-          create: (context) => TagsReviewBloc(
-              tagsToReview: tags.map((x) => x.tag).toList(),
+          create: (context) => review_bloc.TagsReviewBloc(
+              tagsToReview: cafe.tags.map((x) => x.tag).toList(),
               tagRepository: sl())
-            ..add(Load()),
+            ..add(review_bloc.Load()),
         ),
       ),
     );
 
-    logger.i('Reviews tags $result');
+    if (tagsToUpdate != null) {
+      context
+          .bloc<DetailBloc>()
+          .add(UpdateTags(id: cafe.placeId, tags: tagsToUpdate));
+    }
   }
 }

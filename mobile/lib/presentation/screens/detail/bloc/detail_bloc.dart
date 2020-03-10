@@ -28,6 +28,7 @@ class DetailBloc extends Bloc<DetailBlocEvent, DetailBlocState> {
     yield* event.map(
       load: _mapLoadEvent,
       toggleFavorite: _mapToggleFavorite,
+      updateTags: _mapUpdateTags,
     );
   }
 
@@ -59,6 +60,20 @@ class DetailBloc extends Bloc<DetailBlocEvent, DetailBlocState> {
         },
         right: (failure) =>
             DetailBlocState.failure(_mapFailureToMessage(failure)));
+  }
+
+  Stream<DetailBlocState> _mapUpdateTags(UpdateTags event) async* {
+    final result = await cafeRepository.updateTagsForCafe(event.id, event.tags);
+
+    yield result.when(
+      left: (updatedTags) => state.maybeMap(
+          loaded: (loaded) =>
+              loaded.copyWith(cafe: cafe.copyWith(tags: updatedTags)),
+          orElse: () => DetailBlocState.failure(
+              'Wrong state when UpdateTags called. State was: $state')),
+      right: (failure) =>
+          DetailBlocState.failure(_mapFailureToMessage(failure)),
+    );
   }
 
   //todo move to base bloc class
