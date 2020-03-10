@@ -44,6 +44,7 @@
 **/android/**/GeneratedPluginRegistrant.java
 
 **/google-services.json
+**/key.properties
 
 # iOS/XCode related
 **/ios/**/*.mode1v3

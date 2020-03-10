@@ -1,4 +1,4 @@
-package com.example.coffee_time
+package cz.petrnymsa.coffee_time
 
 import android.os.Bundle
 
