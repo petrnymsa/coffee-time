@@ -1,6 +1,6 @@
-import 'package:coffee_time/presentation/screens/tags_review/model/tag_review.dart';
 import 'package:flutter/material.dart';
 
+import '../model/tag_review.dart';
 import 'header_info.dart';
 import 'reviews_table.dart';
 

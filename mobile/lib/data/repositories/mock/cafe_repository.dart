@@ -114,7 +114,7 @@ class MockedCafeRepository implements CafeRepository {
 
   @override
   Future<Either<List<Cafe>, Failure>> search(String search, {Filter filter}) {
-    // TODO: implement search
+    // todo: implement search
     return null;
   }
 
@@ -130,7 +130,7 @@ class MockedCafeRepository implements CafeRepository {
   @override
   Future<Either<List<TagReputation>, Failure>> updateTagsForCafe(
       String id, List<TagUpdate> updates) {
-    // TODO: implement updateTagsForCafe
+    // todo: implement updateTagsForCafe
     return null;
   }
 }
