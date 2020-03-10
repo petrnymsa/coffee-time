@@ -22,7 +22,7 @@ class TagServiceImpl extends ApiBase implements TagService {
 
     final List<dynamic> data = json.decode(response.body);
     //ignore: unnecessary_lambdas
-    return data.map((x) => TagModel.fromMap(x)).toList();
+    return data.map((x) => TagModel.fromJson(x)).toList();
   }
 
   @override
@@ -32,6 +32,6 @@ class TagServiceImpl extends ApiBase implements TagService {
 
     final List<dynamic> data = json.decode(response.body);
     //ignore: unnecessary_lambdas
-    return data.map((x) => TagReputationModel.fromMap(x)).toList();
+    return data.map((x) => TagReputationModel.fromJson(x)).toList();
   }
 }

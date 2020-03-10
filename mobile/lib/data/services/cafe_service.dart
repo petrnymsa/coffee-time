@@ -50,7 +50,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['candidates'];
     //ignore: unnecessary_lambdas
-    return results.map((x) => CafeModel.fromMap(x)).toList();
+    return results.map((x) => CafeModel.fromJson(x)).toList();
   }
 
   @override
@@ -61,7 +61,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
     final data = await placesGetRequest(url);
     final result = data['result'];
 
-    return CafeDetailModel.fromMap(result);
+    return CafeDetailModel.fromJson(result);
   }
 
   @override
@@ -90,7 +90,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['results'];
     //ignore: unnecessary_lambdas
-    final cafes = results.map((x) => CafeModel.fromMap(x)).toList();
+    final cafes = results.map((x) => CafeModel.fromJson(x)).toList();
 
     return NearbyResultModel(
         cafes: cafes, nextPageToken: data['next_page_token']);
@@ -104,7 +104,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
     final data = await placesGetRequest(url);
     final result = data['result'];
 
-    return CafeModel.fromMap(result);
+    return CafeModel.fromJson(result);
   }
 
   @override

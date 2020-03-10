@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -15,14 +13,14 @@ class DayTimeModel extends Equatable {
     @required this.time,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'day': day,
       'time': time,
     };
   }
 
-  static DayTimeModel fromMap(Map<String, dynamic> map) {
+  static DayTimeModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return DayTimeModel(
@@ -30,10 +28,6 @@ class DayTimeModel extends Equatable {
       time: map['time'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static DayTimeModel fromJson(String source) => fromMap(json.decode(source));
 
   DayTimeModel copyWith({
     int day,
@@ -63,25 +57,21 @@ class PeriodModel extends Equatable {
     @required this.close,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
-      'open': open.toMap(),
-      'close': close.toMap(),
+      'open': open.toJson(),
+      'close': close.toJson(),
     };
   }
 
-  static PeriodModel fromMap(Map<String, dynamic> map) {
+  static PeriodModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return PeriodModel(
-      open: DayTimeModel.fromMap(map['open']),
-      close: DayTimeModel.fromMap(map['close']),
+      open: DayTimeModel.fromJson(map['open']),
+      close: DayTimeModel.fromJson(map['close']),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static PeriodModel fromJson(String source) => fromMap(json.decode(source));
 
   PeriodModel copyWith({
     DayTimeModel open,
@@ -109,30 +99,25 @@ class OpeningHoursModel extends Equatable {
 
   OpeningHoursModel({this.openNow, this.periods, this.weekdayText});
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'open_now': openNow,
       'periods': List<dynamic>.from(
-        periods.map((x) => x.toMap()),
+        periods.map((x) => x.toJson()),
       ),
       'weekday_text': weekdayText
     };
   }
 
-  static OpeningHoursModel fromMap(Map<String, dynamic> map) {
+  static OpeningHoursModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return OpeningHoursModel(
         openNow: map['open_now'],
         periods: List<PeriodModel>.from(
-            map['periods']?.map((x) => PeriodModel.fromMap(x))),
+            map['periods']?.map((x) => PeriodModel.fromJson(x))),
         weekdayText: List<String>.from(map['weekday_text']?.map((x) => x)));
   }
-
-  String toJson() => json.encode(toMap());
-
-  static OpeningHoursModel fromJson(String source) =>
-      fromMap(json.decode(source));
 
   @override
   String toString() =>

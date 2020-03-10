@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -46,7 +44,7 @@ class TagModel extends Equatable {
         fontFamily: map['family'], fontPackage: map['package']);
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'title': title,
@@ -55,7 +53,7 @@ class TagModel extends Equatable {
     };
   }
 
-  static TagModel fromMap(Map<String, dynamic> map) {
+  static TagModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return TagModel(
@@ -64,10 +62,6 @@ class TagModel extends Equatable {
         icon: _iconFromMap(map['icon']),
         translations: Map<String, String>.from(map['translations'] ?? {}));
   }
-
-  String toJson() => json.encode(toMap());
-
-  static TagModel fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

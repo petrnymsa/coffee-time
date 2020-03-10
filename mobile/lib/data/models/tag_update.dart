@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/tag_update.dart';
@@ -22,14 +20,14 @@ class TagUpdateModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'change': change.toString().split('.').last,
     };
   }
 
-  static TagUpdateModel fromMap(Map<String, dynamic> map) {
+  static TagUpdateModel fromJson(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return TagUpdateModel(
@@ -39,10 +37,6 @@ class TagUpdateModel extends Equatable {
           orElse: () => null),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static TagUpdateModel fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() => 'TagUpdate(id: $id, change: $change)';
