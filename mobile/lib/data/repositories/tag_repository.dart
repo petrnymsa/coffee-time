@@ -11,18 +11,13 @@ import '../services/tag_service.dart';
 //ignore_for_file: avoid_catches_without_on_clauses
 class TagRepositoryImpl implements TagRepository {
   static const String serviceFailedMessage = 'Service call failed';
-
   final TagService tagService;
-
-  List<Tag> _cachedTags;
 
   TagRepositoryImpl({@required this.tagService});
 
   Future<List<Tag>> _getAllTags() async {
-    //todo add cache store, use Facade pattern - ideally about 10 minutes
     final tagModels = await tagService.getAll();
     final tags = tagModels.map((x) => x.toEntity()).toList();
-    _cachedTags = tags;
     return tags;
   }
 
@@ -30,7 +25,6 @@ class TagRepositoryImpl implements TagRepository {
   Future<Either<List<Tag>, Failure>> getAll() async {
     try {
       final tags = await _getAllTags();
-
       return Left(tags);
     } on ApiException catch (e) {
       return Right(ServiceFailure(serviceFailedMessage, inner: e));
@@ -43,14 +37,11 @@ class TagRepositoryImpl implements TagRepository {
   Future<Either<List<TagReputation>, Failure>> getForCafe(
       String placeId) async {
     try {
-      if (_cachedTags == null) {
-        await _getAllTags();
-      }
-
+      final allTags = await _getAllTags();
       final reputations = await tagService.getForCafe(placeId);
 
       final result = reputations.map((r) {
-        final tag = _cachedTags.firstWhere((t) => t.id == r.id);
+        final tag = allTags.firstWhere((t) => t.id == r.id);
         return r.toEntity(tag);
       }).toList();
 
@@ -65,11 +56,8 @@ class TagRepositoryImpl implements TagRepository {
   @override
   Future<Either<Tag, Failure>> getById(String id) async {
     try {
-      if (_cachedTags == null) {
-        await _getAllTags();
-      }
-
-      final tag = _cachedTags.firstWhere((t) => t.id == id, orElse: () => null);
+      final allTags = await _getAllTags();
+      final tag = allTags.firstWhere((t) => t.id == id, orElse: () => null);
 
       if (tag == null) {
         return Right(NotFound());
