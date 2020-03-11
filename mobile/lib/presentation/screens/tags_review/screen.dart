@@ -61,7 +61,7 @@ class TagsReviewScreen extends StatelessWidget {
                     onAddTags: () => _onAddTags(context, notAddedYet),
                   ),
                   FullWidthButton(
-                    text: 'Potvrdit',
+                    text: I18n.of(context).confirm,
                     color: Colors.green,
                     icon: Icon(FontAwesomeIcons.check),
                     onPressed: () async {

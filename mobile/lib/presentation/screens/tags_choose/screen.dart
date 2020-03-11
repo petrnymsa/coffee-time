@@ -1,9 +1,9 @@
-import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../domain/entities/tag.dart';
+import '../../../generated/i18n.dart';
 import '../../shared/shared_widgets.dart';
 import 'bloc/bloc.dart';
 
@@ -42,7 +42,7 @@ class TagsChooseScreen extends StatelessWidget {
                   ),
                 ),
                 FullWidthButton(
-                  text: 'Potvrdit',
+                  text: I18n.of(context).confirm,
                   color: Colors.green,
                   icon: Icon(FontAwesomeIcons.check),
                   onPressed: () async {
