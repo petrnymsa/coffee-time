@@ -1,8 +1,8 @@
-import 'package:coffee_time/core/locale_provider.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/app_logger.dart';
 import '../../core/either.dart';
+import '../../core/locale_provider.dart';
 import '../../domain/entities/cafe.dart';
 import '../../domain/entities/cafe_detail.dart';
 import '../../domain/entities/filter.dart';
@@ -117,13 +117,14 @@ class CafeRepositoryImpl implements CafeRepository {
 
       //todo apply filter - tags
       //todo apply filter - ordering
-      //todo applz filter - radius
       final locale = LocaleProvider.getLocaleWithDashFormat();
       final result = await cafeService.getNearBy(
         location,
         language: locale,
         openNow: filter.onlyOpen,
         pageToken: pageToken,
+        radius:
+            filter.ordering == FilterOrdering.popularity ? filter.radius : null,
       );
       final tags = await _getTags();
       final favoriteIds = await _getFavoriteIds();
@@ -156,8 +157,7 @@ class CafeRepositoryImpl implements CafeRepository {
 
   @override
   Future<Either<List<Cafe>, Failure>> search(String search, {Filter filter}) {
-    // todo: implement search
-    return null;
+    throw UnimplementedError();
   }
 
   @override

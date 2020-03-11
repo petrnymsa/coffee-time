@@ -63,12 +63,12 @@ class FilterScreen extends StatelessWidget {
                   children: <Widget>[
                     Radio(
                       groupValue: model.filter.ordering.index,
-                      value: FilterOrdering.rating.index,
+                      value: FilterOrdering.popularity.index,
                       onChanged: (v) => model.changeOrdering(v),
                     ),
                     GestureDetector(
                       onTap: () =>
-                          model.changeOrdering(FilterOrdering.rating.index),
+                          model.changeOrdering(FilterOrdering.popularity.index),
                       child: Text(
                         'Podle hodnocení',
                         style: Theme.of(context).textTheme.subhead,

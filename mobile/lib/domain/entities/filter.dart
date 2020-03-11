@@ -1,17 +1,22 @@
+import 'package:equatable/equatable.dart';
+
 import 'cafe.dart';
 import 'tag.dart';
 
-enum FilterOrdering { distance, rating }
+enum FilterOrdering { distance, popularity }
 
-class Filter {
+class Filter extends Equatable {
   final bool onlyOpen;
   final List<Tag> tags;
   final FilterOrdering ordering;
+  final int radius; //todo  ???
 
-  const Filter(
-      {this.onlyOpen = true,
-      this.tags = const [],
-      this.ordering = FilterOrdering.distance});
+  const Filter({
+    this.onlyOpen = true,
+    this.tags = const [],
+    this.ordering = FilterOrdering.distance,
+    this.radius = 2500,
+  });
 
   static const Filter defaultFilter = Filter();
 
@@ -44,4 +49,10 @@ class Filter {
 
   @override
   String toString() => 'onlyOpen: $onlyOpen, tags: $tags, ordering: $ordering';
+
+  @override
+  List<Object> get props => [onlyOpen, tags, ordering, radius];
+
+  @override
+  bool get stringify => true;
 }

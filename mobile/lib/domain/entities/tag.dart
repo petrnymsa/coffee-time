@@ -1,7 +1,7 @@
-import 'package:coffee_time/core/locale_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+import '../../core/locale_provider.dart';
 
 class Tag extends Equatable {
   final String id;
