@@ -125,8 +125,6 @@ class CafeRepositoryImpl implements CafeRepository {
         openNow: filter.onlyOpen,
         pageToken: pageToken,
       );
-      getLogger('CafeRepository').i('Got results ${result.cafes.length}');
-      // todo get isFavorite
       final tags = await _getTags();
       final favoriteIds = await _getFavoriteIds();
 
