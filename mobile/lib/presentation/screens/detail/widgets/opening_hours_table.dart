@@ -1,3 +1,4 @@
+import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -28,8 +29,8 @@ class OpeningHoursTable extends StatelessWidget {
     for (var i = 0; i < weekDays.length; i++) {
       final day = weekDays[i];
       final dayIndex = i;
-      final time =
-          openingHours[dayIndex]?.toString() ?? 'Zavřeno'; //todo translate
+      final time = openingHours[dayIndex]?.toString() ??
+          I18n.of(context).openingHours_closed;
       var color = Colors.black;
       var weight = FontWeight.normal;
 

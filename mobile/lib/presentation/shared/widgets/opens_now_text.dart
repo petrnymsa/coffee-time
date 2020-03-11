@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../generated/i18n.dart';
+
 class OpensNowText extends StatelessWidget {
   final bool opensNow;
 
@@ -7,8 +9,9 @@ class OpensNowText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tr = I18n.of(context);
     return Text(
-      opensNow ? 'Otevřeno' : 'Zavřeno',
+      opensNow ? tr.openingHours_open : tr.openingHours_closed,
       style: Theme.of(context)
           .textTheme
           .overline

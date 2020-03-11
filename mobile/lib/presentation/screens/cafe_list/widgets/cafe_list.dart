@@ -24,14 +24,12 @@ class CafeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getLogger('CafeList').i('rebuild');
     if (cafes.length == 0) return NoData();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Text('Cafes total: ${cafes.length}'),
         Expanded(
           child: RefreshIndicator(
             onRefresh: () {
