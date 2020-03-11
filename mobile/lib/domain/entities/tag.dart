@@ -1,3 +1,4 @@
+import 'package:coffee_time/core/locale_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -32,7 +33,7 @@ class Tag extends Equatable {
   }
 
   String _getTranslatedTitle() {
-    final locale = Intl.shortLocale(Intl.getCurrentLocale());
+    final locale = LocaleProvider.getShortLocale();
 
     if (translations.containsKey(locale)) {
       return translations[locale];

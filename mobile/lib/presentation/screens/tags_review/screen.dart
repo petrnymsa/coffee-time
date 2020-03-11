@@ -1,3 +1,4 @@
+import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -38,7 +39,7 @@ class TagsReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Navrhnout změnu')),
+      appBar: AppBar(title: Text(I18n.of(context).reviews_title)),
       body: BlocBuilder<TagsReviewBloc, TagsReviewBlocState>(
         builder: (context, state) => state.when(
           loading: () => CircularLoader(),

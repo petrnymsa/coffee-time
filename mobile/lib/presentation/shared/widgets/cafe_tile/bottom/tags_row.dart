@@ -19,7 +19,10 @@ class TagsRow extends StatelessWidget {
         children: tags
             .map((t) => Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: TagContainer(icon: t.tag.icon),
+                  child: TagContainer(
+                    tag: t.tag,
+                    onlyIcon: true,
+                  ),
                 ))
             .toList(),
       ),

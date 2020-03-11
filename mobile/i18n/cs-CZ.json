@@ -32,7 +32,8 @@
         "_headerTitle": "Uživatelé vytvářejí značky. Můžete nám pomoci vylepšit je?",
         "_haederSubTitle": "Není nutné hodnotit každou značku.",
         "_true": "Pravda",
-        "_false": "Nepravdivé"
+        "_false": "Nepravdivé",
+        "_title": "Navrhněte změny"
     },
     "addTags": {
         "_header": "Vyberte jednu nebo více značek.",

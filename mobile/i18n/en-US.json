@@ -28,6 +28,7 @@
         "_webpage": "Web page"
     },
     "reviews": {
+        "_title": "Suggest changes",
         "_add": "Add tags",
         "_headerTitle": "Users create tags. Could you help us improve them?",
         "_haederSubTitle": "It's not necessary to review each tag.",

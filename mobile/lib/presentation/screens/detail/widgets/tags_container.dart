@@ -38,12 +38,7 @@ class TagsContainer extends StatelessWidget {
               direction: Axis.horizontal,
               spacing: 5.0,
               runSpacing: 5.0,
-              children: tags
-                  .map((x) => TagContainer(
-                        title: x.tag.title,
-                        icon: x.tag.icon,
-                      ))
-                  .toList(),
+              children: tags.map((x) => TagContainer(tag: x.tag)).toList(),
             ),
           ),
         FlatButton.icon(

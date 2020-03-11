@@ -68,6 +68,8 @@ class I18n implements WidgetsLocalizations {
   String get detail_reviewsTitle => "Reviews";
   /// "Web page"
   String get detail_webpage => "Web page";
+  /// "Suggest changes"
+  String get reviews_title => "Suggest changes";
   /// "Add tags"
   String get reviews_add => "Add tags";
   /// "Users create tags. Could you help us improve them?"
@@ -148,6 +150,9 @@ class _I18n_cs_CZ extends I18n {
   /// "Webová stránka"
   @override
   String get detail_webpage => "Webová stránka";
+  /// "Navrhněte změny"
+  @override
+  String get reviews_title => "Navrhněte změny";
   /// "Přidat štítky"
   @override
   String get reviews_add => "Přidat štítky";
