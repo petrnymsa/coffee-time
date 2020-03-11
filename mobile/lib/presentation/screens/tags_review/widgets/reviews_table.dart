@@ -1,3 +1,4 @@
+import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 
 import '../model/tag_review.dart';
@@ -13,7 +14,6 @@ class ReviewsTable extends StatelessWidget {
     @required this.onTagReview,
   }) : super(key: key);
 
-  //todo translate
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,14 +37,14 @@ class ReviewsTable extends StatelessWidget {
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.top,
                   child: Text(
-                    'Pravda',
+                    I18n.of(context).reviews_true,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.top,
                   child: Text(
-                    'Není pravda',
+                    I18n.of(context).reviews_false,
                     textAlign: TextAlign.center,
                   ),
                 ),

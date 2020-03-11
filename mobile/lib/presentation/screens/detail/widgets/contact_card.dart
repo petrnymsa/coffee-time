@@ -1,3 +1,4 @@
+import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -55,7 +56,7 @@ class Website extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 5),
               child: Text(
-                'Web page',
+                I18n.of(context).detail_webpage,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(decoration: TextDecoration.underline),
               ),

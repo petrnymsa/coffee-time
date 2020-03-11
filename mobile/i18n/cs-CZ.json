@@ -15,13 +15,17 @@
     "favorites": {
         "_noFavorites": "Zatím žádné oblíbené."
     },
+    "cafeList": {
+        "_noCafes": "Nebyly nalezeny žádné kavárny."
+    },
     "detail": {
         "_navigate": "Navigovat",
         "_openingHoursTitle": "Otevírací doba",
         "_tagsTitle": "Značky",
         "_noTags": "Nebyly přidány žádné značky",
         "_suggestChange": "Navrhnout změnu",
-        "_reviewsTitle": "Recenze"
+        "_reviewsTitle": "Recenze",
+        "_webpage": "Webová stránka"
     },
     "reviews": {
         "_add": "Přidat štítky",
@@ -31,6 +35,7 @@
         "_false": "Nepravdivé"
     },
     "addTags": {
-        "_header": "Vyberte jednu nebo více značek."
+        "_header": "Vyberte jednu nebo více značek.",
+        "_title": "Vyberte značky"
     }
 }

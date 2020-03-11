@@ -50,6 +50,8 @@ class I18n implements WidgetsLocalizations {
   String get openingHours_open => "Open";
   /// "Closed"
   String get openingHours_closed => "Closed";
+  /// "No cafes found."
+  String get cafeList_noCafes => "No cafes found.";
   /// "No favorites yet."
   String get favorites_noFavorites => "No favorites yet.";
   /// "Navigate"
@@ -64,6 +66,8 @@ class I18n implements WidgetsLocalizations {
   String get detail_suggestChange => "Suggest change";
   /// "Reviews"
   String get detail_reviewsTitle => "Reviews";
+  /// "Web page"
+  String get detail_webpage => "Web page";
   /// "Add tags"
   String get reviews_add => "Add tags";
   /// "Users create tags. Could you help us improve them?"
@@ -74,6 +78,8 @@ class I18n implements WidgetsLocalizations {
   String get reviews_true => "True";
   /// "False"
   String get reviews_false => "False";
+  /// "Choose tags"
+  String get addTags_title => "Choose tags";
   /// "Choose one or more tags."
   String get addTags_header => "Choose one or more tags.";
 }
@@ -115,6 +121,9 @@ class _I18n_cs_CZ extends I18n {
   /// "Zavřeno"
   @override
   String get openingHours_closed => "Zavřeno";
+  /// "Nebyly nalezeny žádné kavárny."
+  @override
+  String get cafeList_noCafes => "Nebyly nalezeny žádné kavárny.";
   /// "Zatím žádné oblíbené."
   @override
   String get favorites_noFavorites => "Zatím žádné oblíbené.";
@@ -136,6 +145,9 @@ class _I18n_cs_CZ extends I18n {
   /// "Recenze"
   @override
   String get detail_reviewsTitle => "Recenze";
+  /// "Webová stránka"
+  @override
+  String get detail_webpage => "Webová stránka";
   /// "Přidat štítky"
   @override
   String get reviews_add => "Přidat štítky";
@@ -151,6 +163,9 @@ class _I18n_cs_CZ extends I18n {
   /// "Nepravdivé"
   @override
   String get reviews_false => "Nepravdivé";
+  /// "Vyberte značky"
+  @override
+  String get addTags_title => "Vyberte značky";
   /// "Vyberte jednu nebo více značek."
   @override
   String get addTags_header => "Vyberte jednu nebo více značek.";

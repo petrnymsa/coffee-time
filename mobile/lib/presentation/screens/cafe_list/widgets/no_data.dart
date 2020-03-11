@@ -1,3 +1,4 @@
+import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -15,7 +16,7 @@ class NoData extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Icon(FontAwesomeIcons.coffee),
-            Text('Žádné kavárny neodpovídají hledání') //todo translate
+            Text(I18n.of(context).cafeList_noCafes)
           ],
         ),
       ),

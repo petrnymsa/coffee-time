@@ -1,3 +1,4 @@
+import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +21,7 @@ class Shell extends StatelessWidget {
       builder: (context, tab) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(ShellConfiguration.tabTitle(tab).capitalize()),
+            title: Text(ShellConfiguration.tabTitle(context, tab).capitalize()),
           ),
           body: _mapTabToScreen(tab),
           bottomNavigationBar: BottomTabSelector(

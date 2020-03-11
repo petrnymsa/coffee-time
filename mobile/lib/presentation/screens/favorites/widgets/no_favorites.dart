@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../generated/i18n.dart';
+
 class NoFavorites extends StatelessWidget {
   const NoFavorites({Key key}) : super(key: key);
 
@@ -19,7 +21,7 @@ class NoFavorites extends StatelessWidget {
             height: 14,
           ),
           Text(
-            'Žádné oblíbené kavárny', //todo translate
+            I18n.of(context).favorites_noFavorites,
             style: TextStyle(fontSize: 20),
           ),
         ],

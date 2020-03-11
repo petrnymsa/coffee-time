@@ -12,6 +12,9 @@
         "_open": "Open",
         "_closed": "Closed"
     },
+    "cafeList": {
+        "_noCafes": "No cafes found."
+    },
     "favorites": {
         "_noFavorites": "No favorites yet."
     },
@@ -21,7 +24,8 @@
         "_tagsTitle": "Tags",
         "_noTags": "No tags added",
         "_suggestChange": "Suggest change",
-        "_reviewsTitle": "Reviews"
+        "_reviewsTitle": "Reviews",
+        "_webpage": "Web page"
     },
     "reviews": {
         "_add": "Add tags",
@@ -31,6 +35,7 @@
         "_false": "False"
     },
     "addTags": {
+        "_title": "Choose tags",
         "_header": "Choose one or more tags."
     }
 }

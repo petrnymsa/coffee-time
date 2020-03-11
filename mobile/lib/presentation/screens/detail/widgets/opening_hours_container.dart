@@ -1,3 +1,4 @@
+import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -20,7 +21,7 @@ class OpeningHoursContainer extends StatelessWidget {
       expanded: true,
       header: SectionHeader(
         icon: FontAwesomeIcons.clock,
-        title: 'Otevírací doba', //todo translate
+        title: I18n.of(context).detail_openingHoursTitle,
       ),
       body: Align(
         alignment: Alignment.centerLeft,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/tag_reputation.dart';
+import '../../../../generated/i18n.dart';
 import '../../../shared/shared_widgets.dart';
 
 class TagsContainer extends StatelessWidget {
@@ -17,12 +18,12 @@ class TagsContainer extends StatelessWidget {
       children: <Widget>[
         SectionHeader(
           icon: FontAwesomeIcons.tags,
-          title: 'Štítky', //todo translate
+          title: I18n.of(context).detail_tagsTitle,
         ),
         if (tags.isEmpty)
           Padding(
             padding: EdgeInsets.all(4.0),
-            child: Text('Žádné štítky nepřidány.'), //todo translate
+            child: Text(I18n.of(context).detail_noTags),
           ),
         if (tags.isNotEmpty)
           SizedBox(
@@ -47,7 +48,7 @@ class TagsContainer extends StatelessWidget {
           ),
         FlatButton.icon(
           label: Text(
-            'Navrhnout změnu', //todo translate
+            I18n.of(context).detail_suggestChange,
             style: TextStyle(fontSize: 14),
           ),
           icon: Icon(
