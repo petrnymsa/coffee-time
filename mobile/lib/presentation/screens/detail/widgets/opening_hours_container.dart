@@ -1,8 +1,8 @@
-import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/opening_hour.dart';
+import '../../../../generated/i18n.dart';
 import '../../../models/opening_hour.dart';
 import '../../../shared/shared_widgets.dart';
 import 'opening_hours_table.dart';
