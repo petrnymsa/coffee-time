@@ -8,7 +8,7 @@ class MockTimeProvider extends Mock implements TimeProvider {}
 void main() {
   MockTimeProvider timeProvider;
 
-  int callCount = 0;
+  var callCount = 0;
 
   setUp(() {
     timeProvider = MockTimeProvider();
