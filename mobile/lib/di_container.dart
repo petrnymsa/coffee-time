@@ -1,3 +1,5 @@
+import 'package:coffee_time/core/time_provider.dart';
+import 'package:coffee_time/data/services/cached_tag_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 
@@ -43,8 +45,8 @@ void setupContainer() {
       () => GeolocatorLocationService(geolocator: Geolocator()));
   sl.registerLazySingleton<FavoriteService>(() => FavoriteLocalService());
   sl.registerLazySingleton<PhotoService>(() => PhotoServiceImpl());
-  sl.registerLazySingleton<TagService>(
-      () => TagServiceImpl(clientFactory: sl()));
+  sl.registerLazySingleton<TagService>(() => CachedTagService(
+      tagService: TagServiceImpl(clientFactory: sl()), timeProvider: sl()));
   sl.registerLazySingleton<CafeService>(
       () => CafeServiceImpl(clientFactory: sl()));
 
@@ -66,4 +68,5 @@ void setupContainer() {
 
   // * Others
   sl.registerLazySingleton<HttpClientFactory>(() => HttpClientFactoryImpl());
+  sl.registerLazySingleton<TimeProvider>(() => TimeProvider());
 }
