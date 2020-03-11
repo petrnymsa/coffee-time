@@ -1,0 +1,36 @@
+{
+    "refresh": "Refresh",
+    "confirm": "Confirm",
+    "somethingWrong": "Oops, something went wrong.",
+    "tabs": {
+        "_cafes": "Cafes",
+        "_favorites": "Favorites",
+        "_map": "Map",
+        "_settings": "Settings"
+    },
+    "openingHours": {
+        "_open": "Open",
+        "_closed": "Closed"
+    },
+    "favorites": {
+        "_noFavorites": "No favorites yet."
+    },
+    "detail": {
+        "_navigate": "Navigate",
+        "_openingHoursTitle": "Opening hours",
+        "_tagsTitle": "Tags",
+        "_noTags": "No tags added",
+        "_suggestChange": "Suggest change",
+        "_reviewsTitle": "Reviews"
+    },
+    "reviews": {
+        "_add": "Add tags",
+        "_headerTitle": "Users create tags. Could you help us improve them?",
+        "_haederSubTitle": "It's not necessary to review each tag.",
+        "_true": "True",
+        "_false": "False"
+    },
+    "addTags": {
+        "_header": "Choose one or more tags."
+    }
+}

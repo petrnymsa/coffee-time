@@ -9,8 +9,8 @@ import 'di_container.dart';
 import 'presentation/app.dart';
 
 Future setupLocalization() async {
-  await initializeDateFormatting('cs');
-  await initializeDateFormatting('en');
+  // await initializeDateFormatting('cs');
+  // await initializeDateFormatting('en');
 
   Intl.defaultLocale = await findSystemLocale();
 }

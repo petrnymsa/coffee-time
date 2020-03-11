@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   font_awesome_flutter: ^8.5.0
   page_indicator: ^0.3.0
   expandable: ^3.0.1
@@ -31,7 +33,7 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
-    sdk: flutter
+    sdk: flutter 
   mockito: ^4.1.1
   bloc_test: ^4.0.0
   effective_dart: ^1.2.0
