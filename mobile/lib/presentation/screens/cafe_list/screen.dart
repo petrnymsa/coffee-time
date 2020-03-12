@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../core/blocs/cafe_list/bloc.dart';
 import '../../shared/shared_widgets.dart';
+import './bloc/bloc.dart';
 import 'widgets/widgets.dart';
 
 class CafeListScreen extends StatelessWidget {

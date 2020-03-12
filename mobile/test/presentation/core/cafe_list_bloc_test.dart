@@ -6,7 +6,7 @@ import 'package:coffee_time/domain/failure.dart';
 import 'package:coffee_time/domain/repositories/cafe_repository.dart';
 import 'package:coffee_time/domain/repositories/nearby_result.dart';
 import 'package:coffee_time/domain/services/location_service.dart';
-import 'package:coffee_time/presentation/core/blocs/cafe_list/bloc.dart';
+import 'package:coffee_time/presentation/screens/cafe_list/bloc/bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
-import '../../../core/blocs/cafe_list/bloc.dart';
 import '../../../shared/shared_widgets.dart';
 import '../../detail/bloc/detail_bloc.dart';
 import '../../detail/bloc/detail_bloc_event.dart' as detail_events;
 import '../../detail/screen.dart';
+import '../bloc/bloc.dart';
 import 'no_data.dart';
 
 class CafeList extends StatelessWidget {
