@@ -115,8 +115,6 @@ class CafeRepositoryImpl implements CafeRepository {
     try {
       getLogger('CafeRepository').i('getNearby at location: $location');
 
-      //todo apply filter - tags
-      //todo apply filter - ordering
       final locale = LocaleProvider.getLocaleWithDashFormat();
       final result = await cafeService.getNearBy(
         location,
@@ -129,13 +127,12 @@ class CafeRepositoryImpl implements CafeRepository {
       final tags = await _getTags();
       final favoriteIds = await _getFavoriteIds();
 
-      final cafes = result.cafes.map(
+      var cafes = result.cafes.map(
         (x) {
           var photoUrl;
           if (x.photo != null) {
             photoUrl = photoService.getBasePhotoUrl(x.photo.reference);
           }
-
           return x.toEntity(
             isFavorite: favoriteIds.contains(x.placeId),
             allTags: tags,
@@ -143,6 +140,12 @@ class CafeRepositoryImpl implements CafeRepository {
           );
         },
       ).toList();
+
+      if (filter.tagIds.isNotEmpty) {
+        cafes = cafes
+            .where((c) => c.tags.any((t) => filter.tagIds.contains(t.id)))
+            .toList();
+      }
 
       return Left(
           NearbyResult(cafes: cafes, nextPageToken: result.nextPageToken));

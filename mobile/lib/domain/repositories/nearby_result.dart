@@ -11,4 +11,7 @@ class NearbyResult extends Equatable {
 
   @override
   List<Object> get props => [cafes, nextPageToken];
+
+  @override
+  bool get stringify => true;
 }
