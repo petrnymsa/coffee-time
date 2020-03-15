@@ -77,7 +77,10 @@ TagReputationModel tagReputationExample() {
   return TagReputationModel(id: 'beer', likes: 5, dislikes: 1);
 }
 
-CafeModel cafeModelExample({bool openNow = true}) {
+CafeModel cafeModelExample({
+  bool openNow = true,
+  List<TagReputationModel> tags,
+}) {
   return CafeModel(
     address: 'address',
     iconUrl: 'https://maps/71.png',
@@ -87,7 +90,7 @@ CafeModel cafeModelExample({bool openNow = true}) {
     location: LocationModel(lat: 50.399608, lng: 16.0532),
     placeId: 'ChIJ4',
     rating: 4.5,
-    tags: [tagReputationExample()],
+    tags: tags ?? [tagReputationExample()],
   );
 }
 

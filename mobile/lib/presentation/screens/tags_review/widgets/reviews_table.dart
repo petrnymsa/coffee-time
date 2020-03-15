@@ -1,6 +1,6 @@
-import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../generated/i18n.dart';
 import '../model/tag_review.dart';
 import 'review_tag_cell.dart';
 

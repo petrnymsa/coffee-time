@@ -1,13 +1,11 @@
-import 'package:coffee_time/core/time_provider.dart';
-import 'package:coffee_time/data/services/cached_tag_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/http_client_factory.dart';
+import 'core/time_provider.dart';
 import 'data/repositories/cafe_repository.dart';
-//import 'data/repositories/mock/cafe_repository.dart';
-//import 'data/repositories/mock/tag_repository.dart';
 import 'data/repositories/tag_repository.dart';
+import 'data/services/cached_tag_service.dart';
 import 'data/services/cafe_service.dart';
 import 'data/services/favorite_service.dart';
 import 'data/services/photo_service.dart';
@@ -16,8 +14,8 @@ import 'domain/entities/cafe.dart';
 import 'domain/repositories/cafe_repository.dart';
 import 'domain/repositories/tags_repository.dart';
 import 'domain/services/location_service.dart';
-import 'presentation/core/blocs/cafe_list/cafelist_bloc.dart';
 import 'presentation/core/blocs/tabs/bloc.dart';
+import 'presentation/screens/cafe_list/bloc/cafelist_bloc.dart';
 import 'presentation/screens/detail/bloc/detail_bloc.dart';
 import 'presentation/screens/favorites/bloc/bloc.dart';
 

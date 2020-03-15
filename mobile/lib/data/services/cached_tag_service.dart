@@ -1,7 +1,7 @@
-import 'package:coffee_time/core/time_provider.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../core/cached_value.dart';
+import '../../core/time_provider.dart';
 import '../models/tag.dart';
 import '../models/tag_reputation.dart';
 import 'tag_service.dart';

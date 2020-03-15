@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/app_logger.dart';
 import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
-import '../../../core/blocs/cafe_list/bloc.dart';
 import '../../../shared/shared_widgets.dart';
 import '../../detail/bloc/detail_bloc.dart';
 import '../../detail/bloc/detail_bloc_event.dart' as detail_events;
 import '../../detail/screen.dart';
+import '../bloc/bloc.dart';
 import 'no_data.dart';
 
-//todo add to current loaded state filter entity
 class CafeList extends StatelessWidget {
-  final List<Cafe> cafes;
-  final String nextPageToken;
+  final Loaded state;
 
   const CafeList({
     Key key,
-    @required this.cafes,
-    this.nextPageToken,
+    @required this.state,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (cafes.length == 0) return NoData();
+    if (state.cafes.length == 0) return NoData();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -40,18 +36,18 @@ class CafeList extends StatelessWidget {
               onNotification: (notification) =>
                   _handleScrollNotification(context, notification),
               child: ListView.builder(
-                itemCount:
-                    nextPageToken != null ? cafes.length + 1 : cafes.length,
+                itemCount: state.nextPageToken != null
+                    ? state.cafes.length + 1
+                    : state.cafes.length,
                 itemBuilder: (_, index) {
-                  if (index < cafes.length) {
+                  if (index < state.cafes.length) {
                     return CafeTile(
-                      cafe: cafes[index],
+                      cafe: state.cafes[index],
                       onFavoriteTap: () {
-                        context
-                            .bloc<CafeListBloc>()
-                            .add(ToggleFavorite(cafeId: cafes[index].placeId));
+                        context.bloc<CafeListBloc>().add(
+                            ToggleFavorite(cafeId: state.cafes[index].placeId));
                       },
-                      onTap: () => _onTileTap(context, cafes[index]),
+                      onTap: () => _onTileTap(context, state.cafes[index]),
                     );
                   } else {
                     return CircularLoader();
@@ -69,7 +65,9 @@ class CafeList extends StatelessWidget {
       BuildContext context, Notification notification) {
     if (notification is ScrollEndNotification &&
         notification.metrics.extentAfter == 0) {
-      context.bloc<CafeListBloc>().add(LoadNext(pageToken: nextPageToken));
+      context
+          .bloc<CafeListBloc>()
+          .add(LoadNext(pageToken: state.nextPageToken));
     }
 
     return false;

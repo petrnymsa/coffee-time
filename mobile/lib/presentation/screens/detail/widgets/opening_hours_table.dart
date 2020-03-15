@@ -1,7 +1,7 @@
-import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../generated/i18n.dart';
 import '../../../models/opening_hour.dart';
 
 class OpeningHoursTable extends StatelessWidget {

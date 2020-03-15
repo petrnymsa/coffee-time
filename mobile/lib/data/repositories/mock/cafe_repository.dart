@@ -114,8 +114,7 @@ class MockedCafeRepository implements CafeRepository {
 
   @override
   Future<Either<List<Cafe>, Failure>> search(String search, {Filter filter}) {
-    // todo: implement search
-    return null;
+    throw UnimplementedError();
   }
 
   @override
@@ -130,7 +129,6 @@ class MockedCafeRepository implements CafeRepository {
   @override
   Future<Either<List<TagReputation>, Failure>> updateTagsForCafe(
       String id, List<TagUpdate> updates) {
-    // todo: implement updateTagsForCafe
-    return null;
+    throw UnimplementedError();
   }
 }

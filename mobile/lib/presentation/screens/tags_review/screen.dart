@@ -1,9 +1,9 @@
-import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../domain/entities/tag.dart';
+import '../../../generated/i18n.dart';
 import '../../shared/shared_widgets.dart';
 import '../tags_choose/bloc/bloc.dart';
 import '../tags_choose/screen.dart';

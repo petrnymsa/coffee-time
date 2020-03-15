@@ -1,7 +1,7 @@
-import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../domain/entities/cafe.dart';
+import '../../../../../generated/i18n.dart';
 
 class BottomLine extends StatelessWidget {
   const BottomLine({

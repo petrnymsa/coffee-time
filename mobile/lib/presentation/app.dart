@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../di_container.dart';
 import '../generated/i18n.dart';
-import 'core/blocs/cafe_list/bloc.dart';
+import './screens/cafe_list/bloc/bloc.dart';
 import 'core/blocs/tabs/bloc.dart';
 import 'shared/theme.dart';
 import 'shell.dart';
