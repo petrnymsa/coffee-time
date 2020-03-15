@@ -24,12 +24,15 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
 
   Stream<FilterBlocState> _mapChangeOpeningHour(
       ChangeOpeningHour event) async* {
-    yield FilterBlocState(filter: state.filter.copyWith(onlyOpen: event.open));
+    final filter = state.filter;
+    yield FilterBlocState(filter: filter.copyWith(onlyOpen: !filter.onlyOpen));
   }
 
   Stream<FilterBlocState> _mapChangeOrdering(ChangeOrdering event) async* {
+    final filter = state.filter;
     yield FilterBlocState(
-        filter: state.filter.copyWith(ordering: event.ordering));
+      filter: filter.copyWith(ordering: _switchOrdering(filter.ordering)),
+    );
   }
 
   Stream<FilterBlocState> _mapChangeTags(ChangeTags event) async* {
@@ -37,5 +40,10 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
       filter:
           state.filter.copyWith(tagIds: event.tags.map((t) => t.id).toList()),
     );
+  }
+
+  FilterOrdering _switchOrdering(FilterOrdering old) {
+    if (old == FilterOrdering.distance) return FilterOrdering.popularity;
+    return FilterOrdering.distance;
   }
 }

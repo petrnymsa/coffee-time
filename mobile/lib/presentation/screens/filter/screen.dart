@@ -1,100 +1,124 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../domain/entities/tag.dart';
 import '../../shared/shared_widgets.dart';
+import 'bloc/bloc.dart';
 
+//todo translate
 class FilterScreen extends StatelessWidget {
   const FilterScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Upravit filtr'),
-      ),
-      floatingActionButton: Builder(
-        builder: (ctx) => FloatingActionButton.extended(
-          icon: Icon(Icons.check),
-          label: Text('Potvrdit'),
-          foregroundColor: Colors.white,
-          onPressed: () {
-            // Provider.of<FilterProvider>(ctx, listen: false).save();
-            // Navigator.of(context).pop();
-          },
+    return BlocBuilder<FilterBloc, FilterBlocState>(
+      builder: (context, state) => Scaffold(
+        appBar: AppBar(
+          title: Text('Upravit filtr'),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 60.0),
-          child: Column(
-            children: <Widget>[
-              // ..._buildOpening(ctx, model),
-              SectionHeader(
-                title: 'Řazení',
-                icon: Icons.sort,
-              ),
-              const SizedBox(
-                height: 6.0,
-              ),
-              Row(
-                  // children: <Widget>[
-                  //   Radio(
-                  //     groupValue: model.filter.ordering.index,
-                  //     value: FilterOrdering.distance.index,
-                  //     onChanged: (v) => model.changeOrdering(v),
-                  //   ),
-                  //   GestureDetector(
-                  //     onTap: () =>
-                  //         model.changeOrdering(FilterOrdering.distance.index),
-                  //     child: Text(
-                  //       'Podle vzdálenosti',
-                  //       style: Theme.of(context).textTheme.subhead,
-                  //     ),
-                  //   ),
-                  // ],
-                  ),
-              Row(
-                children: <Widget>[
-                  Radio(
-                      groupValue: 0, // model.filter.ordering.index,
-                      value: 0, //FilterOrdering.popularity.index,
-                      onChanged: (v) => {} // model.changeOrdering(v) },
+        floatingActionButton: Builder(
+          builder: (ctx) => FloatingActionButton.extended(
+            icon: Icon(Icons.check),
+            label: Text('Potvrdit'),
+            foregroundColor: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pop(state.filter);
+            },
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 60.0),
+            child: Column(
+              children: <Widget>[
+                SectionHeader(
+                  icon: FontAwesomeIcons.clock,
+                  title: 'Otevírací doba',
+                ),
+                Row(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () =>
+                          context.bloc<FilterBloc>().add(ChangeOpeningHour()),
+                      child: Text(
+                        'Pouze otevřené',
+                        style: Theme.of(context).textTheme.subhead,
                       ),
-                  GestureDetector(
-                    onTap: () => {},
-                    // model.changeOrdering(FilterOrdering.popularity.index),
-                    child: Text(
-                      'Podle hodnocení',
-                      style: Theme.of(context).textTheme.subhead,
                     ),
-                  ),
-                ],
-              ),
-              SectionHeader(
-                icon: FontAwesomeIcons.tags,
-                title: 'Štítky',
-              ),
-              const SizedBox(
-                height: 6.0,
-              ),
-              Text('Kavárna obsahuje alespoň jeden níže vybraný štítek'),
-              //if (model.filter.tags != null) ..._buildTagsToAdd(ctx, model),
-              // if (model.notAddedTagsYet.length > 0)
-              //   RaisedButton.icon(
-              //     label: Text('Vybrat štítky'),
-              //     icon: Icon(FontAwesomeIcons.plus),
-              //     onPressed: () async {
-              //       // final List<Tag> addedTags =
-              //       //     await Navigator.of(context).push(MaterialPageRoute(
-              //       //         builder: (_) => TagAddScreen(
-              //       //               model.notAddedTagsYet,
-              //       //               title: 'Vybrat štítky',
-              //       //             )));
-              //       // if (addedTags != null) model.updateChosenTags(addedTags);
-              //     },
-              //   ),
-            ],
+                    Switch(
+                      value: state.filter.onlyOpen, //model.filter.onlyOpen,
+                      onChanged: (value) =>
+                          context.bloc<FilterBloc>().add(ChangeOpeningHour()),
+                    )
+                  ],
+                ),
+                SectionHeader(
+                  title: 'Řazení',
+                  icon: Icons.sort,
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                Row(
+                    // children: <Widget>[
+                    //   Radio(
+                    //     groupValue: model.filter.ordering.index,
+                    //     value: FilterOrdering.distance.index,
+                    //     onChanged: (v) => model.changeOrdering(v),
+                    //   ),
+                    //   GestureDetector(
+                    //     onTap: () =>
+                    //         model.changeOrdering(FilterOrdering.distance.index),
+                    //     child: Text(
+                    //       'Podle vzdálenosti',
+                    //       style: Theme.of(context).textTheme.subhead,
+                    //     ),
+                    //   ),
+                    // ],
+                    ),
+                Row(
+                  children: <Widget>[
+                    Radio(
+                        groupValue: 0, // model.filter.ordering.index,
+                        value: 0, //FilterOrdering.popularity.index,
+                        onChanged: (v) => {} // model.changeOrdering(v) },
+                        ),
+                    GestureDetector(
+                      onTap: () => {},
+                      // model.changeOrdering(FilterOrdering.popularity.index),
+                      child: Text(
+                        'Podle hodnocení',
+                        style: Theme.of(context).textTheme.subhead,
+                      ),
+                    ),
+                  ],
+                ),
+                SectionHeader(
+                  icon: FontAwesomeIcons.tags,
+                  title: 'Štítky',
+                ),
+                const SizedBox(
+                  height: 6.0,
+                ),
+                Text('Kavárna obsahuje alespoň jeden níže vybraný štítek'),
+                //if (model.filter.tags != null) ..._buildTagsToAdd(ctx, model),
+                // if (model.notAddedTagsYet.length > 0)
+                //   RaisedButton.icon(
+                //     label: Text('Vybrat štítky'),
+                //     icon: Icon(FontAwesomeIcons.plus),
+                //     onPressed: () async {
+                //       // final List<Tag> addedTags =
+                //       //     await Navigator.of(context).push(MaterialPageRoute(
+                //       //         builder: (_) => TagAddScreen(
+                //       //               model.notAddedTagsYet,
+                //       //               title: 'Vybrat štítky',
+                //       //             )));
+                //       // if (addedTags != null) model.updateChosenTags(addedTags);
+                //     },
+                //   ),
+              ],
+            ),
           ),
         ),
       ),
@@ -102,27 +126,7 @@ class FilterScreen extends StatelessWidget {
   }
 
   List<Widget> _buildOpening(BuildContext context) {
-    return [
-      SectionHeader(
-        icon: FontAwesomeIcons.clock,
-        title: 'Otevírací doba',
-      ),
-      Row(
-        children: <Widget>[
-          GestureDetector(
-            onTap: () => {}, //model.changeOnlyNow(!model.filter.onlyOpen),
-            child: Text(
-              'Pouze otevřené',
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
-          Switch(
-            value: true, //model.filter.onlyOpen,
-            onChanged: (value) => {}, //todo
-          )
-        ],
-      )
-    ];
+    return [];
   }
 
   Widget _buildTag(Tag tag) {

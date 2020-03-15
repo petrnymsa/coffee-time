@@ -13,7 +13,7 @@ void main() {
   blocTest(
     'Change opening hours',
     build: () async => FilterBloc(initialFilter: Filter(onlyOpen: false)),
-    act: (bloc) async => bloc.add(ChangeOpeningHour(open: true)),
+    act: (bloc) async => bloc.add(ChangeOpeningHour()),
     expect: [FilterBlocState(filter: Filter(onlyOpen: true))],
   );
 
@@ -21,19 +21,7 @@ void main() {
     'Change ordering',
     build: () async =>
         FilterBloc(initialFilter: Filter(ordering: FilterOrdering.distance)),
-    act: (bloc) async =>
-        bloc.add(ChangeOrdering(ordering: FilterOrdering.popularity)),
-    expect: [
-      FilterBlocState(filter: Filter(ordering: FilterOrdering.popularity))
-    ],
-  );
-
-  blocTest(
-    'Change ordering',
-    build: () async =>
-        FilterBloc(initialFilter: Filter(ordering: FilterOrdering.distance)),
-    act: (bloc) async =>
-        bloc.add(ChangeOrdering(ordering: FilterOrdering.popularity)),
+    act: (bloc) async => bloc.add(ChangeOrdering()),
     expect: [
       FilterBlocState(filter: Filter(ordering: FilterOrdering.popularity))
     ],
