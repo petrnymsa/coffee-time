@@ -50,11 +50,11 @@ class AddTagsContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Štítky k přidání',
+            'Štítky k přidání', //todo translate
             style: Theme.of(context).textTheme.subhead,
           ),
           FlatButton.icon(
-            label: Text('Vyčistit'),
+            label: Text('Vyčistit'), //todo translate
             icon: Icon(Icons.clear_all),
             onPressed: () => _onClearAdded(context),
           )
