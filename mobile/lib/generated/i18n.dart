@@ -94,12 +94,12 @@ class I18n implements WidgetsLocalizations {
   String get filter_openingHours_title => "Opening hours";
   /// "Show only open cafes"
   String get filter_openingHours_onlyOpen => "Show only open cafes";
-  /// "Ordering"
-  String get filter_orderBy_title => "Ordering";
-  /// "Order by popularity"
-  String get filter_orderBy_popularity => "Order by popularity";
-  /// "Order by distance"
-  String get filter_orderBy_distance => "Order by distance";
+  /// "Sort"
+  String get filter_orderBy_title => "Sort";
+  /// "Sort by popularity"
+  String get filter_orderBy_popularity => "Sort by popularity";
+  /// "Sort by distance"
+  String get filter_orderBy_distance => "Sort by distance";
   /// "Tags"
   String get filter_tags_title => "Tags";
   /// "Cafe should contain at least one selected tag."

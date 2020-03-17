@@ -48,9 +48,9 @@
             "_onlyOpen": "Show only open cafes"
         },
         "_orderBy": {
-            "_title": "Ordering",
-            "_popularity": "Order by popularity",
-            "_distance": "Order by distance"
+            "_title": "Sort",
+            "_popularity": "Sort by popularity",
+            "_distance": "Sort by distance"
         },
         "_tags": {
             "_title": "Tags",
