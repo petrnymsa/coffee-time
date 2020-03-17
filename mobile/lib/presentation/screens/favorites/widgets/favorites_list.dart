@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
+import '../../../../domain/entities/location.dart';
+import '../../../../domain/services/location_service.dart';
+import '../../../core/notification_helper.dart';
 import '../../../shared/shared_widgets.dart';
 import '../../detail/bloc/detail_bloc.dart';
 import '../../detail/bloc/detail_bloc_event.dart' as detail_events;
@@ -14,6 +17,27 @@ class FavoritesList extends StatelessWidget {
   final List<Cafe> cafes;
 
   const FavoritesList({Key key, @required this.cafes}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _location(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: cafes.length,
+            itemBuilder: (_, index) => CafeTile(
+              currentLocation: snapshot.data,
+              cafe: cafes[index],
+              onFavoriteTap: () => _onToggleFavorite(context, cafes[index]),
+              onTap: () => _onTileTap(context, cafes[index]),
+            ),
+          );
+        }
+        return CircularLoader();
+      },
+    );
+  }
 
   //todo add named route
   void _onTileTap(BuildContext context, Cafe cafe) {
@@ -29,19 +53,10 @@ class FavoritesList extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: cafes.length,
-      itemBuilder: (_, index) => CafeTile(
-        cafe: cafes[index],
-        onFavoriteTap: () {
-          context
-              .bloc<FavoritesBloc>()
-              .add(ToggleFavorite(cafes[index].placeId));
-        },
-        onTap: () => _onTileTap(context, cafes[index]),
-      ),
-    );
+  void _onToggleFavorite(BuildContext context, Cafe cafe) {
+    context.bloc<FavoritesBloc>().add(ToggleFavorite(cafe.placeId));
+    context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
   }
+
+  Future<Location> _location() => sl<LocationService>().getCurrentLocation();
 }

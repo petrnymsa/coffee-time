@@ -110,6 +110,10 @@ class I18n implements WidgetsLocalizations {
   String get filter_tags_chosenTags => "Chosen tags";
   /// "Clear tags"
   String get filter_tags_clear => "Clear tags";
+  /// "Added to favorites"
+  String get notification_favoriteAdded => "Added to favorites";
+  /// "Removed from favorites"
+  String get notification_favoriteRemoved => "Removed from favorites";
 }
 
 class _I18n_en_US extends I18n {
@@ -239,6 +243,12 @@ class _I18n_cs_CZ extends I18n {
   /// "Vymazat štítky"
   @override
   String get filter_tags_clear => "Vymazat štítky";
+  /// "Přidáno k oblíbeným"
+  @override
+  String get notification_favoriteAdded => "Přidáno k oblíbeným";
+  /// "Odebráno z oblíbených"
+  @override
+  String get notification_favoriteRemoved => "Odebráno z oblíbených";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;

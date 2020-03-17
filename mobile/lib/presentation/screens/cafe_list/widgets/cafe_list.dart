@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
+import '../../../core/notification_helper.dart';
 import '../../../shared/shared_widgets.dart';
 import '../../detail/bloc/detail_bloc.dart';
 import '../../detail/bloc/detail_bloc_event.dart' as detail_events;
@@ -46,10 +47,8 @@ class CafeList extends StatelessWidget {
                     return CafeTile(
                       cafe: state.cafes[index],
                       currentLocation: state.currentLocation,
-                      onFavoriteTap: () {
-                        context.bloc<CafeListBloc>().add(
-                            ToggleFavorite(cafeId: state.cafes[index].placeId));
-                      },
+                      onFavoriteTap: () =>
+                          _onToggleFavorite(context, state.cafes[index]),
                       onTap: () => _onTileTap(context, state.cafes[index]),
                     );
                   } else {
@@ -62,6 +61,11 @@ class CafeList extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _onToggleFavorite(BuildContext context, Cafe cafe) {
+    context.bloc<CafeListBloc>().add(ToggleFavorite(cafeId: cafe.placeId));
+    context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
   }
 
   bool _handleScrollNotification(

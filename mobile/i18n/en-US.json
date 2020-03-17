@@ -59,5 +59,9 @@
             "_chosenTags": "Chosen tags",
             "_clear": "Clear tags"
         }
+    },
+    "notification": {
+        "_favoriteAdded": "Added to favorites",
+        "_favoriteRemoved": "Removed from favorites"
     }
 }
