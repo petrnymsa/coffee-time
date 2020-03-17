@@ -59,5 +59,9 @@
             "_chosenTags": "Vybrané štítky",
             "_clear": "Vymazat štítky"
         }
+    },
+    "notification": {
+        "_favoriteAdded": "Přidáno k oblíbeným",
+        "_favoriteRemoved": "Odebráno z oblíbených"
     }
 }

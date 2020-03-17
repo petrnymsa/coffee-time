@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/cafe.dart';
+import '../../../core/notification_helper.dart';
 import '../bloc/detail_bloc.dart';
 import '../bloc/detail_bloc_event.dart';
 
@@ -22,6 +23,7 @@ class FavoriteButton extends StatelessWidget {
       ),
       onPressed: () {
         context.bloc<DetailBloc>().add(ToggleFavorite(cafe.placeId));
+        context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
       },
     );
   }
