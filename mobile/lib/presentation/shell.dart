@@ -1,5 +1,3 @@
-import 'package:coffee_time/domain/entities/filter.dart';
-import 'package:coffee_time/presentation/shared/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../core/app_logger.dart';
 import '../core/utils/string_utils.dart';
 import '../di_container.dart';
+import '../domain/entities/filter.dart';
 import 'core/blocs/tabs/bloc.dart';
 import 'models/app_tab.dart';
 import 'screens/cafe_list/bloc/bloc.dart';
@@ -14,6 +13,7 @@ import 'screens/cafe_list/screen.dart';
 import 'screens/favorites/bloc/bloc.dart';
 import 'screens/favorites/screen.dart';
 import 'screens/filter/bloc/filter_bloc.dart';
+import 'screens/filter/bloc/filter_bloc_event.dart';
 import 'screens/filter/screen.dart';
 import 'screens/map/screen.dart';
 import 'screens/settings/screen.dart';
@@ -77,7 +77,10 @@ class Shell extends StatelessWidget {
               final result = await Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => BlocProvider(
-                    create: (_) => FilterBloc(initialFilter: filter),
+                    create: (_) => FilterBloc(
+                      tagRepository: sl(),
+                      initialFilter: filter,
+                    )..add(Init()),
                     child: FilterScreen(),
                   ),
                 ),

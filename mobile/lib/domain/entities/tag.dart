@@ -49,4 +49,7 @@ class Tag extends Equatable {
 
   @override
   List<Object> get props => [id, title, icon, translations];
+
+  @override
+  bool get stringify => true;
 }

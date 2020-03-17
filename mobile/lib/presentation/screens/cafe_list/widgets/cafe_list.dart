@@ -29,7 +29,9 @@ class CafeList extends StatelessWidget {
         Expanded(
           child: RefreshIndicator(
             onRefresh: () {
-              context.bloc<CafeListBloc>().add(Refresh());
+              context
+                  .bloc<CafeListBloc>()
+                  .add(Refresh(filter: state.actualFilter));
               return Future.value();
             },
             child: NotificationListener(
@@ -65,9 +67,8 @@ class CafeList extends StatelessWidget {
       BuildContext context, Notification notification) {
     if (notification is ScrollEndNotification &&
         notification.metrics.extentAfter == 0) {
-      context
-          .bloc<CafeListBloc>()
-          .add(LoadNext(pageToken: state.nextPageToken));
+      context.bloc<CafeListBloc>().add(
+          LoadNext(pageToken: state.nextPageToken, filter: state.actualFilter));
     }
 
     return false;

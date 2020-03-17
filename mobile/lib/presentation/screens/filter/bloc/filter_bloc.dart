@@ -1,8 +1,8 @@
-import 'package:coffee_time/domain/entities/tag.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/filter.dart';
+import '../../../../domain/entities/tag.dart';
 import '../../../../domain/repositories/tags_repository.dart';
 import 'filter_bloc_event.dart';
 import 'filter_bloc_state.dart';
@@ -69,7 +69,7 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
     final addedTags = [...state.addedTags, ...event.tags];
     final addedTagsIds = addedTags.map((x) => x.id).toList();
     final notAddedYet =
-        state.notAddedTags.skipWhile(addedTags.contains).toList();
+        state.notAddedTags.where((t) => !addedTags.contains(t)).toList();
 
     yield FilterBlocState(
       filter: state.filter.copyWith(tagIds: addedTagsIds),

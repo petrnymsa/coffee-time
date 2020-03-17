@@ -39,7 +39,7 @@ class CafeTile extends StatelessWidget {
       onMapTap();
       return;
     }
-    await UrlLauncherHelper.launchNavigation(cafe.location);
+    await UrlLauncherHelper.launchNavigationWithAddress(cafe.address);
   }
 
   @override
