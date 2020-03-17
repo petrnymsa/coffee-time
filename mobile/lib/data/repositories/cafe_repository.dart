@@ -143,7 +143,9 @@ class CafeRepositoryImpl implements CafeRepository {
 
       if (filter.tagIds.isNotEmpty) {
         cafes = cafes
-            .where((c) => c.tags.any((t) => filter.tagIds.contains(t.id)))
+            .where((c) =>
+                c.tags.isNotEmpty &&
+                c.tags.any((t) => filter.tagIds.contains(t.id)))
             .toList();
       }
 

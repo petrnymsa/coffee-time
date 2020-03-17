@@ -45,7 +45,6 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
       loadNearby: _mapLoadNearby,
       loadNext: _mapLoadNext,
       loadQuery: _mapLoadQuery,
-      setFilter: _mapSetFilter,
       refresh: _mapRefresh,
       toggleFavorite: _mapToggleFavorite,
       setFavorite: _mapSetFavorite,
@@ -100,12 +99,8 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     yield CafeListState.failure('not implemented');
   }
 
-  Stream<CafeListState> _mapSetFilter(SetFilter event) async* {
-    logger.d('recieved LoadNearby event $event');
-    yield CafeListState.failure('not implemented');
-  }
-
   Stream<CafeListState> _mapRefresh(Refresh event) async* {
+    yield Loading();
     _issuedTokens = [];
     final location = await _locationService.getCurrentLocation();
     final result =
