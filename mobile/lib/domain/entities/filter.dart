@@ -6,7 +6,7 @@ class Filter extends Equatable {
   final bool onlyOpen;
   final List<String> tagIds;
   final FilterOrdering ordering;
-  final int radius; //todo  ???
+  final int radius;
 
   const Filter({
     this.onlyOpen = true,

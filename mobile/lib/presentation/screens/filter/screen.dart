@@ -5,7 +5,6 @@ import '../../../generated/i18n.dart';
 import 'bloc/bloc.dart';
 import 'widgets/widgets.dart';
 
-//todo translate
 class FilterScreen extends StatelessWidget {
   const FilterScreen({Key key}) : super(key: key);
 
