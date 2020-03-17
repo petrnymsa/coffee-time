@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:coffee_time/domain/entities/location.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
@@ -58,7 +59,7 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     yield Loading();
     final result =
         await _cafeRepository.getNearby(event.location, filter: event.filter);
-    yield _mapCafeResultToState(result, event.filter);
+    yield _mapCafeResultToState(result, event.filter, event.location);
   }
 
   Stream<CafeListState> _mapLoadNext(LoadNext event) async* {
@@ -83,10 +84,11 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     );
     yield result.when(
         left: (res) => state.maybeWhen(
-            loaded: (cafes, filter, token) {
+            loaded: (cafes, filter, currentLocation, token) {
               return Loaded(
                   cafes: [...cafes, ...res.cafes],
                   actualFilter: event.filter,
+                  currentLocation: location,
                   nextPageToken: res.nextPageToken);
             },
             orElse: () => null),
@@ -105,24 +107,29 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     final location = await _locationService.getCurrentLocation();
     final result =
         await _cafeRepository.getNearby(location, filter: event.filter);
-    yield _mapCafeResultToState(result, event.filter);
+    yield _mapCafeResultToState(result, event.filter, location);
   }
 
   Stream<CafeListState> _mapToggleFavorite(ToggleFavorite event) async* {
     final result = await _cafeRepository.toggleFavorite(event.cafeId);
 
     yield result.when(
-      left: (isFavorite) => state.maybeWhen(
-          loaded: (cafes, filter, token) {
+      left: (isFavorite) => state.maybeMap(
+          loaded: (loaded) {
+            final cafes = loaded.cafes;
             final newCafes = cafes.map((cafe) {
               if (cafe.placeId == event.cafeId) {
                 return cafe.copyWith(isFavorite: isFavorite);
               }
               return cafe;
             }).toList();
-
-            return Loaded(
-                cafes: newCafes, actualFilter: filter, nextPageToken: token);
+            return loaded.copyWith(cafes: newCafes);
+            // return Loaded(
+            //   cafes: newCafes,
+            //   actualFilter: filter,
+            //   currentLocation: currentLocation,
+            //   nextPageToken: token,
+            // );
           },
           orElse: () => CafeListState.failure(
               'Wrong state when ToggleFavorite called. State was: $state')),
@@ -131,17 +138,18 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
   }
 
   Stream<CafeListState> _mapSetFavorite(SetFavorite event) async* {
-    yield state.maybeWhen(
-      loaded: (cafes, filter, token) {
+    yield state.maybeMap(
+      loaded: (loaded) {
+        final cafes = loaded.cafes;
         final newCafes = cafes.map((cafe) {
           if (cafe.placeId == event.cafeId) {
             return cafe.copyWith(isFavorite: event.isFavorite);
           }
           return cafe;
         }).toList();
-
-        return Loaded(
-            cafes: newCafes, actualFilter: filter, nextPageToken: token);
+        return loaded.copyWith(cafes: newCafes);
+        // return Loaded(
+        //     cafes: newCafes, actualFilter: filter, nextPageToken: token);
       },
       orElse: () => CafeListState.failure(
           'Wrong state when ToggleFavorite called. State was: $state'),
@@ -149,17 +157,18 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
   }
 
   Stream<CafeListState> _mapUpdateTags(UpdateTags event) async* {
-    yield state.maybeWhen(
-      loaded: (cafes, filter, token) {
+    yield state.maybeMap(
+      loaded: (loaded) {
+        final cafes = loaded.cafes;
         final newCafes = cafes.map((cafe) {
           if (cafe.placeId == event.cafeId) {
             return cafe.copyWith(tags: event.tags);
           }
           return cafe;
         }).toList();
-
-        return Loaded(
-            cafes: newCafes, actualFilter: filter, nextPageToken: token);
+        return loaded.copyWith(cafes: newCafes);
+        // return Loaded(
+        //     cafes: newCafes, actualFilter: filter, nextPageToken: token);
       },
       orElse: () => CafeListState.failure(
           'Wrong state when ToggleFavorite called. State was: $state'),
@@ -167,11 +176,15 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
   }
 
   CafeListState _mapCafeResultToState(
-      Either<NearbyResult, Failure> result, Filter filter) {
+    Either<NearbyResult, Failure> result,
+    Filter filter,
+    Location currentLocation,
+  ) {
     return result.when(
       left: (nearby) => Loaded(
         cafes: nearby.cafes,
         actualFilter: filter,
+        currentLocation: currentLocation,
         nextPageToken: nearby.nextPageToken,
       ),
       right: (failure) => CafeListState.failure(_mapFailureToMessage(failure)),

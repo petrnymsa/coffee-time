@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/utils/launcher_helper.dart';
 import '../../../../domain/entities/cafe.dart';
+import '../../../../domain/entities/location.dart';
 import 'bottom/bottom_container.dart';
 import 'favorite_corner_button.dart';
 import 'navigation_button.dart';
@@ -14,6 +15,7 @@ import 'tile_cover_container.dart';
 
 class CafeTile extends StatelessWidget {
   final Cafe cafe;
+  final Location currentLocation;
   final Function onTap;
   final Function onFavoriteTap;
   final Function onMapTap;
@@ -21,6 +23,7 @@ class CafeTile extends StatelessWidget {
   CafeTile({
     Key key,
     @required this.cafe,
+    @required this.currentLocation,
     this.onTap,
     this.onFavoriteTap,
     this.onMapTap,
@@ -91,6 +94,7 @@ class CafeTile extends StatelessWidget {
                     tileHeight: tileHeight,
                     imageHegiht: imageHegiht,
                     cafe: cafe,
+                    currentLocation: currentLocation,
                   ),
                 ],
               ),

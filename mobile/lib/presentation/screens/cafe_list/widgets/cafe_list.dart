@@ -45,6 +45,7 @@ class CafeList extends StatelessWidget {
                   if (index < state.cafes.length) {
                     return CafeTile(
                       cafe: state.cafes[index],
+                      currentLocation: state.currentLocation,
                       onFavoriteTap: () {
                         context.bloc<CafeListBloc>().add(
                             ToggleFavorite(cafeId: state.cafes[index].placeId));

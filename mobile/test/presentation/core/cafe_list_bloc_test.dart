@@ -49,7 +49,11 @@ void main() {
       },
       act: (bloc) => bloc.add(LoadNearby(Location(1, 1), filter: Filter())),
       expect: [
-        Loaded(cafes: [cafeEntityExample()], actualFilter: Filter())
+        Loaded(
+          cafes: [cafeEntityExample()],
+          actualFilter: Filter(),
+          currentLocation: Location(1, 1),
+        )
       ],
     );
 
