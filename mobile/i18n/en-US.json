@@ -33,10 +33,31 @@
         "_headerTitle": "Users create tags. Could you help us improve them?",
         "_haederSubTitle": "It's not necessary to review each tag.",
         "_true": "True",
-        "_false": "False"
+        "_false": "False",
+        "_chosenTags": "Chosen tags",
+        "_clearTags": "Clear tags"
     },
     "addTags": {
         "_title": "Choose tags",
         "_header": "Choose one or more tags."
+    },
+    "filter": {
+        "_title": "Edit filter",
+        "_openingHours": {
+            "_title": "Opening hours",
+            "_onlyOpen": "Show only open cafes"
+        },
+        "_orderBy": {
+            "_title": "Ordering",
+            "_popularity": "Order by popularity",
+            "_distance": "Order by distance"
+        },
+        "_tags": {
+            "_title": "Tags",
+            "_info": "Cafe should contain at least one selected tag.",
+            "_chooseTags": "Choose tags",
+            "_chosenTags": "Chosen tags",
+            "_clear": "Clear tags"
+        }
     }
 }

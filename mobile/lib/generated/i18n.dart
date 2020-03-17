@@ -80,10 +80,36 @@ class I18n implements WidgetsLocalizations {
   String get reviews_true => "True";
   /// "False"
   String get reviews_false => "False";
+  /// "Chosen tags"
+  String get reviews_chosenTags => "Chosen tags";
+  /// "Clear tags"
+  String get reviews_clearTags => "Clear tags";
   /// "Choose tags"
   String get addTags_title => "Choose tags";
   /// "Choose one or more tags."
   String get addTags_header => "Choose one or more tags.";
+  /// "Edit filter"
+  String get filter_title => "Edit filter";
+  /// "Opening hours"
+  String get filter_openingHours_title => "Opening hours";
+  /// "Show only open cafes"
+  String get filter_openingHours_onlyOpen => "Show only open cafes";
+  /// "Ordering"
+  String get filter_orderBy_title => "Ordering";
+  /// "Order by popularity"
+  String get filter_orderBy_popularity => "Order by popularity";
+  /// "Order by distance"
+  String get filter_orderBy_distance => "Order by distance";
+  /// "Tags"
+  String get filter_tags_title => "Tags";
+  /// "Cafe should contain at least one selected tag."
+  String get filter_tags_info => "Cafe should contain at least one selected tag.";
+  /// "Choose tags"
+  String get filter_tags_chooseTags => "Choose tags";
+  /// "Chosen tags"
+  String get filter_tags_chosenTags => "Chosen tags";
+  /// "Clear tags"
+  String get filter_tags_clear => "Clear tags";
 }
 
 class _I18n_en_US extends I18n {
@@ -135,12 +161,12 @@ class _I18n_cs_CZ extends I18n {
   /// "Otevírací doba"
   @override
   String get detail_openingHoursTitle => "Otevírací doba";
-  /// "Značky"
+  /// "Štítky"
   @override
-  String get detail_tagsTitle => "Značky";
-  /// "Nebyly přidány žádné značky"
+  String get detail_tagsTitle => "Štítky";
+  /// "Nebyly přidány žádné štítky"
   @override
-  String get detail_noTags => "Nebyly přidány žádné značky";
+  String get detail_noTags => "Nebyly přidány žádné štítky";
   /// "Navrhnout změnu"
   @override
   String get detail_suggestChange => "Navrhnout změnu";
@@ -156,24 +182,63 @@ class _I18n_cs_CZ extends I18n {
   /// "Přidat štítky"
   @override
   String get reviews_add => "Přidat štítky";
-  /// "Uživatelé vytvářejí značky. Můžete nám pomoci vylepšit je?"
+  /// "Uživatelé vytvářejí štítky. Můžete nám pomoci vylepšit je?"
   @override
-  String get reviews_headerTitle => "Uživatelé vytvářejí značky. Můžete nám pomoci vylepšit je?";
-  /// "Není nutné hodnotit každou značku."
+  String get reviews_headerTitle => "Uživatelé vytvářejí štítky. Můžete nám pomoci vylepšit je?";
+  /// "Není nutné hodnotit každý štítek."
   @override
-  String get reviews_haederSubTitle => "Není nutné hodnotit každou značku.";
+  String get reviews_haederSubTitle => "Není nutné hodnotit každý štítek.";
   /// "Pravda"
   @override
   String get reviews_true => "Pravda";
   /// "Nepravdivé"
   @override
   String get reviews_false => "Nepravdivé";
-  /// "Vyberte značky"
+  /// "Vybrané štítky"
   @override
-  String get addTags_title => "Vyberte značky";
-  /// "Vyberte jednu nebo více značek."
+  String get reviews_chosenTags => "Vybrané štítky";
+  /// "Vymazat štítky"
   @override
-  String get addTags_header => "Vyberte jednu nebo více značek.";
+  String get reviews_clearTags => "Vymazat štítky";
+  /// "Vyberte štítky"
+  @override
+  String get addTags_title => "Vyberte štítky";
+  /// "Vyberte jeden nebo více štítků."
+  @override
+  String get addTags_header => "Vyberte jeden nebo více štítků.";
+  /// "Upravit filtr"
+  @override
+  String get filter_title => "Upravit filtr";
+  /// "Otevírací doba"
+  @override
+  String get filter_openingHours_title => "Otevírací doba";
+  /// "Pouze otevřené kavárny"
+  @override
+  String get filter_openingHours_onlyOpen => "Pouze otevřené kavárny";
+  /// "Řazení"
+  @override
+  String get filter_orderBy_title => "Řazení";
+  /// "Seřadit podle oblíbenosti"
+  @override
+  String get filter_orderBy_popularity => "Seřadit podle oblíbenosti";
+  /// "Seřadit podle vzdálenosti"
+  @override
+  String get filter_orderBy_distance => "Seřadit podle vzdálenosti";
+  /// "Značky"
+  @override
+  String get filter_tags_title => "Značky";
+  /// "Kavárna by měla obsahovat alespoň jeden vybraný štítek."
+  @override
+  String get filter_tags_info => "Kavárna by měla obsahovat alespoň jeden vybraný štítek.";
+  /// "Vyberte štítky"
+  @override
+  String get filter_tags_chooseTags => "Vyberte štítky";
+  /// "Vybrané štítky"
+  @override
+  String get filter_tags_chosenTags => "Vybrané štítky";
+  /// "Vymazat štítky"
+  @override
+  String get filter_tags_clear => "Vymazat štítky";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../generated/i18n.dart';
 import '../../../shared/shared_widgets.dart';
 import '../../tags_choose/bloc/bloc.dart';
 import '../../tags_choose/screen.dart';
@@ -21,14 +22,14 @@ class TagsContainer extends StatelessWidget {
         children: <Widget>[
           SectionHeader(
             icon: FontAwesomeIcons.tags,
-            title: 'Štítky',
+            title: I18n.of(context).filter_tags_title,
           ),
           const SizedBox(height: 6.0),
-          Text('Kavárna obsahuje alespoň jeden níže vybraný štítek'),
+          Text(I18n.of(context).filter_tags_info),
           if (state.addedTags != null) ..._buildTagsToAdd(context),
           if (state.notAddedTags.length > 0)
             RaisedButton.icon(
-              label: Text('Vybrat štítky'),
+              label: Text(I18n.of(context).filter_tags_chooseTags),
               icon: Icon(FontAwesomeIcons.plus),
               onPressed: () async {
                 final addedTags =
@@ -55,11 +56,11 @@ class TagsContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Štítky k přidání',
+            I18n.of(context).filter_tags_chosenTags,
             style: Theme.of(context).textTheme.subhead,
           ),
           FlatButton.icon(
-            label: Text('Vyčistit'),
+            label: Text(I18n.of(context).filter_tags_clear),
             icon: Icon(Icons.clear_all),
             onPressed: () => context.bloc<FilterBloc>().add(ClearTags()),
           )

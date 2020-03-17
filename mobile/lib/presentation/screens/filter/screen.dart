@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../generated/i18n.dart';
 import 'bloc/bloc.dart';
 import 'widgets/widgets.dart';
 
@@ -13,12 +14,12 @@ class FilterScreen extends StatelessWidget {
     return BlocBuilder<FilterBloc, FilterBlocState>(
       builder: (context, state) => Scaffold(
         appBar: AppBar(
-          title: Text('Upravit filtr'),
+          title: Text(I18n.of(context).filter_title),
         ),
         floatingActionButton: Builder(
           builder: (ctx) => FloatingActionButton.extended(
             icon: Icon(Icons.check),
-            label: Text('Potvrdit'),
+            label: Text(I18n.of(context).confirm),
             foregroundColor: Colors.white,
             onPressed: () {
               Navigator.of(context).pop(state.filter);

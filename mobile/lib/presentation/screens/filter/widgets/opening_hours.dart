@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/filter.dart';
+import '../../../../generated/i18n.dart';
 import '../../../shared/shared_widgets.dart';
 import '../bloc/bloc.dart';
 
@@ -20,23 +21,23 @@ class OpeningHoursContainer extends StatelessWidget {
         children: <Widget>[
           SectionHeader(
             icon: FontAwesomeIcons.clock,
-            title: 'Otevírací doba',
+            title: I18n.of(context).filter_openingHours_title,
           ),
           Row(
             children: <Widget>[
-              GestureDetector(
-                onTap: () =>
-                    context.bloc<FilterBloc>().add(ChangeOpeningHour()),
-                child: Text(
-                  'Pouze otevřené',
-                  style: Theme.of(context).textTheme.subhead,
-                ),
-              ),
               Switch(
                 value: filter.onlyOpen, //model.filter.onlyOpen,
                 onChanged: (value) =>
                     context.bloc<FilterBloc>().add(ChangeOpeningHour()),
-              )
+              ),
+              GestureDetector(
+                onTap: () =>
+                    context.bloc<FilterBloc>().add(ChangeOpeningHour()),
+                child: Text(
+                  I18n.of(context).filter_openingHours_onlyOpen,
+                  style: Theme.of(context).textTheme.subhead,
+                ),
+              ),
             ],
           ),
         ],

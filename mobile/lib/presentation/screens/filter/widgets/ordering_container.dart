@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/filter.dart';
+import '../../../../generated/i18n.dart';
 import '../../../shared/shared_widgets.dart';
 import '../bloc/bloc.dart';
 
-//todo translate
 class OrderingContainer extends StatelessWidget {
   final FilterOrdering ordering;
 
@@ -17,7 +17,7 @@ class OrderingContainer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           SectionHeader(
-            title: 'Řadit dle oblíbenosti',
+            title: I18n.of(context).filter_orderBy_title,
             icon: Icons.sort,
           ),
           const SizedBox(height: 6.0),
@@ -32,7 +32,7 @@ class OrderingContainer extends StatelessWidget {
               GestureDetector(
                 onTap: () => context.bloc<FilterBloc>().add(ChangeOrdering()),
                 child: Text(
-                  'Podle vzdálenosti',
+                  I18n.of(context).filter_orderBy_distance,
                   style: Theme.of(context).textTheme.subhead,
                 ),
               ),
@@ -49,7 +49,7 @@ class OrderingContainer extends StatelessWidget {
               GestureDetector(
                 onTap: () => context.bloc<FilterBloc>().add(ChangeOrdering()),
                 child: Text(
-                  'Podle hodnocení',
+                  I18n.of(context).filter_orderBy_popularity,
                   style: Theme.of(context).textTheme.subhead,
                 ),
               ),
