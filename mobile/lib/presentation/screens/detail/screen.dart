@@ -5,6 +5,8 @@ import 'package:logger/logger.dart';
 import '../../../core/app_logger.dart';
 import '../../../di_container.dart';
 import '../../../domain/entities/cafe.dart';
+import '../../../generated/i18n.dart';
+import '../../core/notification_helper.dart';
 import '../../shared/shared_widgets.dart';
 import '../tags_review/bloc/bloc.dart' as review_bloc;
 import '../tags_review/screen.dart';
@@ -25,7 +27,10 @@ class DetailScreen extends StatelessWidget {
         builder: (context, state) {
           return state.when(
             loading: () => CircularLoader(),
-            failure: (message) => FailureMessage(message: message),
+            failure: (message) => FailureContainer(
+              message: message,
+              onRefresh: () => context.bloc<DetailBloc>().add(Load()),
+            ),
             loaded: (cafe, detail) => DetailContainer(
               logger: logger,
               cafe: cafe,
@@ -57,6 +62,8 @@ class DetailScreen extends StatelessWidget {
     );
 
     if (tagsToUpdate != null) {
+      context.showNotifcationSnackBar(
+          text: I18n.of(context).notification_reviewAdded);
       context
           .bloc<DetailBloc>()
           .add(UpdateTags(id: cafe.placeId, tags: tagsToUpdate));

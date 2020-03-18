@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../domain/entities/cafe.dart';
 import '../../../../domain/failure.dart';
 import '../../../../domain/repositories/cafe_repository.dart';
-import '../../../core/blocs/cafe_list/cafelist_bloc.dart';
-import '../../../core/blocs/cafe_list/cafelist_event.dart' as cafe_list_events;
+import '../../cafe_list/bloc/cafelist_bloc.dart';
+import '../../cafe_list/bloc/cafelist_event.dart' as cafe_list_events;
 import 'detail_bloc_event.dart';
 import 'detail_bloc_state.dart';
 

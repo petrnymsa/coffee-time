@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain/entities/tag.dart';
+
 class TagContainer extends StatelessWidget {
-  final IconData icon;
-  final String title;
+  final Tag tag;
+  final bool onlyIcon;
   final EdgeInsets padding;
   TagContainer({
-    this.title,
-    this.icon,
+    this.tag,
     this.padding = const EdgeInsets.symmetric(horizontal: 6.0, vertical: 6.0),
+    this.onlyIcon = false,
   });
 
   @override
@@ -18,21 +20,21 @@ class TagContainer extends StatelessWidget {
         color: const Color(0xFF63A69F), //todo hardcoded color
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: title != null
+      child: !onlyIcon
           ? Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if (icon != null)
+                if (tag.icon != null)
                   Icon(
-                    icon,
+                    tag.icon,
                     color: Colors.white,
                     size: 16,
                   ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
-                    title,
+                    tag.translatedTitle,
                     style: TextStyle(
                         fontSize: 14,
                         color: Colors.white,
@@ -42,7 +44,7 @@ class TagContainer extends StatelessWidget {
               ],
             )
           : Icon(
-              icon,
+              tag.icon,
               color: Colors.white,
               size: 16,
             ),

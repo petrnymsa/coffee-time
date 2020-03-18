@@ -26,7 +26,7 @@ class TagChoice extends StatelessWidget {
       padding: padding,
       child: ChoiceChip(
           padding: innerPadding,
-          label: Text(tag.title),
+          label: Text(tag.translatedTitle),
           selected: selected,
           avatar: selected
               ? Icon(

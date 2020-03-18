@@ -16,7 +16,7 @@ class TagInput extends StatelessWidget {
     return InputChip(
       padding: const EdgeInsets.all(0.0),
       labelPadding: const EdgeInsets.all(0),
-      label: Text(tag.title),
+      label: Text(tag.translatedTitle),
       avatar: Icon(
         tag.icon,
         size: 14,

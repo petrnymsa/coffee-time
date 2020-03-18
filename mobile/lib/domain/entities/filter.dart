@@ -1,47 +1,50 @@
-import 'cafe.dart';
-import 'tag.dart';
+import 'package:equatable/equatable.dart';
 
-enum FilterOrdering { distance, rating }
+enum FilterOrdering { distance, popularity }
 
-class Filter {
+class Filter extends Equatable {
   final bool onlyOpen;
-  final List<Tag> tags;
+  final List<String> tagIds;
   final FilterOrdering ordering;
+  final int radius;
 
-  const Filter(
-      {this.onlyOpen = true,
-      this.tags = const [],
-      this.ordering = FilterOrdering.distance});
+  const Filter({
+    this.onlyOpen = true,
+    this.tagIds = const [],
+    this.ordering = FilterOrdering.distance,
+    this.radius = 2500,
+  });
 
   static const Filter defaultFilter = Filter();
 
-  bool apply(Cafe entity) {
-    if (onlyOpen && !entity.openNow) return false;
-
-    if (tags != null && tags.length > 0 && !entity.tags.any(tags.contains)) {
-      return false;
-    }
-
-    return true;
+  bool filterTags(List<String> ids) {
+    return tagIds.isEmpty || ids.any(tagIds.contains);
   }
 
   Filter copyWith({
     bool onlyOpen,
-    List<Tag> tags,
+    List<String> tagIds,
     FilterOrdering ordering,
   }) {
     return Filter(
         onlyOpen: onlyOpen ?? this.onlyOpen,
-        tags: tags ?? this.tags,
+        tagIds: tagIds ?? this.tagIds,
         ordering: ordering ?? this.ordering);
   }
 
   bool isDefault() {
     return onlyOpen == true &&
-        tags.length == 0 &&
+        tagIds.length == 0 &&
         ordering == FilterOrdering.distance;
   }
 
   @override
-  String toString() => 'onlyOpen: $onlyOpen, tags: $tags, ordering: $ordering';
+  String toString() =>
+      'onlyOpen: $onlyOpen, tags: $tagIds, ordering: $ordering';
+
+  @override
+  List<Object> get props => [onlyOpen, tagIds, ordering, radius];
+
+  @override
+  bool get stringify => true;
 }

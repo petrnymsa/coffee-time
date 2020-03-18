@@ -22,7 +22,7 @@ class BottomTabSelector extends StatelessWidget {
             (t) => BottomNavigationBarItem(
               backgroundColor: AppTheme.main_color,
               icon: Icon(ShellConfiguration.tabIcon(t)),
-              title: Text(ShellConfiguration.tabTitle(t)),
+              title: Text(ShellConfiguration.tabTitle(context, t)),
             ),
           )
           .toList(),

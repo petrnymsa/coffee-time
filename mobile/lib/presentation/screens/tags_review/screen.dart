@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../domain/entities/tag.dart';
+import '../../../generated/i18n.dart';
 import '../../shared/shared_widgets.dart';
 import '../tags_choose/bloc/bloc.dart';
 import '../tags_choose/screen.dart';
@@ -35,10 +36,15 @@ class TagsReviewScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _onConfirm(BuildContext context) async {
+    final updates = context.bloc<TagsReviewBloc>().getUpdates();
+    Navigator.of(context).pop(updates);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Navrhnout změnu')),
+      appBar: AppBar(title: Text(I18n.of(context).reviews_title)),
       body: BlocBuilder<TagsReviewBloc, TagsReviewBlocState>(
         builder: (context, state) => state.when(
           loading: () => CircularLoader(),
@@ -48,6 +54,7 @@ class TagsReviewScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  HeaderInfo(),
                   if (tagsToReview.isNotEmpty)
                     ReviewsContainer(
                       tagsToReview: tagsToReview,
@@ -60,14 +67,10 @@ class TagsReviewScreen extends StatelessWidget {
                     onAddTags: () => _onAddTags(context, notAddedYet),
                   ),
                   FullWidthButton(
-                    text: 'Potvrdit',
+                    text: I18n.of(context).confirm,
                     color: Colors.green,
                     icon: Icon(FontAwesomeIcons.check),
-                    onPressed: () async {
-                      final updates =
-                          context.bloc<TagsReviewBloc>().getUpdates();
-                      Navigator.of(context).pop(updates);
-                    },
+                    onPressed: () => _onConfirm(context),
                   ),
                 ],
               ),

@@ -31,7 +31,6 @@ class _ExpandablePanelState extends State<ExpandablePanel>
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: AnimatedSize(
         alignment: Alignment.topLeft,
         vsync: this,
@@ -41,20 +40,23 @@ class _ExpandablePanelState extends State<ExpandablePanel>
           children: [
             GestureDetector(
               onTap: _changeExpansion,
-              child: Row(
-                children: <Widget>[
-                  widget.header,
-                  Spacer(),
-                  IconButton(
-                    splashColor: Colors.transparent,
-                    icon: Icon(
-                      _expanded
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
+              child: Container(
+                color: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    widget.header,
+                    Spacer(),
+                    IconButton(
+                      splashColor: Colors.transparent,
+                      icon: Icon(
+                        _expanded
+                            ? Icons.keyboard_arrow_up
+                            : Icons.keyboard_arrow_down,
+                      ),
+                      onPressed: _changeExpansion,
                     ),
-                    onPressed: _changeExpansion,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             if (_expanded)

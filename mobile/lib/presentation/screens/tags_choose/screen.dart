@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../domain/entities/tag.dart';
+import '../../../generated/i18n.dart';
 import '../../shared/shared_widgets.dart';
 import 'bloc/bloc.dart';
 
@@ -16,7 +17,7 @@ class TagsChooseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('TODO TITLE')),
+      appBar: AppBar(title: Text(I18n.of(context).addTags_title)),
       body: BlocBuilder<TagsChooseBloc, TagsChooseBlocState>(
         builder: (context, state) => Container(
           padding: const EdgeInsets.all(8),
@@ -24,7 +25,7 @@ class TagsChooseScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text('Vyberte jeden nebo víc štítků'), //todo translate
+                Text(I18n.of(context).addTags_header),
                 Align(
                   alignment: Alignment.topCenter,
                   child: Wrap(
@@ -41,7 +42,7 @@ class TagsChooseScreen extends StatelessWidget {
                   ),
                 ),
                 FullWidthButton(
-                  text: 'Potvrdit',
+                  text: I18n.of(context).confirm,
                   color: Colors.green,
                   icon: Icon(FontAwesomeIcons.check),
                   onPressed: () async {

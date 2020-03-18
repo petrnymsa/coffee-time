@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 
 import '../../core/app_logger.dart';
 import '../../core/either.dart';
+import '../../core/locale_provider.dart';
 import '../../domain/entities/cafe.dart';
 import '../../domain/entities/cafe_detail.dart';
 import '../../domain/entities/filter.dart';
@@ -54,8 +55,8 @@ class CafeRepositoryImpl implements CafeRepository {
   @override
   Future<Either<CafeDetail, Failure>> getDetail(String id) async {
     try {
-      //todo get language
-      final result = await cafeService.getDetail(id, language: 'en-US');
+      final locale = LocaleProvider.getLocaleWithDashFormat();
+      final result = await cafeService.getDetail(id, language: locale);
 
       final photoUrlMap = <String, String>{};
       for (final photo in result.photos) {
@@ -79,10 +80,10 @@ class CafeRepositoryImpl implements CafeRepository {
       final favoriteIds = await _getFavoriteIds();
 
       final cafes = <Cafe>[];
-      //todo get current language
+      final locale = LocaleProvider.getLocaleWithDashFormat();
 
       for (final id in favoriteIds) {
-        final cafe = await cafeService.getBasicInfo(id, language: 'en-US');
+        final cafe = await cafeService.getBasicInfo(id, language: locale);
         var photoUrl;
 
         if (cafe.photo != null) {
@@ -114,38 +115,39 @@ class CafeRepositoryImpl implements CafeRepository {
     try {
       getLogger('CafeRepository').i('getNearby at location: $location');
 
-      //todo get current language
-      //todo apply filter - tags
-      //todo apply filter - ordering
-      //todo applz filter - radius
-
+      final locale = LocaleProvider.getLocaleWithDashFormat();
       final result = await cafeService.getNearBy(
         location,
-        language: 'en-US',
+        language: locale,
         openNow: filter.onlyOpen,
         pageToken: pageToken,
+        radius:
+            filter.ordering == FilterOrdering.popularity ? filter.radius : null,
       );
-      getLogger('CafeRepository').i('Got results ${result.cafes.length}');
-      // todo get isFavorite
-      final tags = await _getTags();
+      final allTags = await _getTags();
       final favoriteIds = await _getFavoriteIds();
 
-      final cafes = result.cafes.map(
+      var cafes = result.cafes.map(
         (x) {
           var photoUrl;
           if (x.photo != null) {
             photoUrl = photoService.getBasePhotoUrl(x.photo.reference);
           }
-          // if (photoUrl == null) {
-          //   getLogger('cafe').e(x);
-          // }
           return x.toEntity(
             isFavorite: favoriteIds.contains(x.placeId),
-            allTags: tags,
+            allTags: allTags,
             photoUrl: photoUrl,
           );
         },
       ).toList();
+
+      if (filter.tagIds.isNotEmpty) {
+        cafes = cafes
+            .where((c) =>
+                c.tags.isNotEmpty &&
+                c.tags.any((t) => filter.tagIds.contains(t.id)))
+            .toList();
+      }
 
       return Left(
           NearbyResult(cafes: cafes, nextPageToken: result.nextPageToken));
@@ -160,8 +162,7 @@ class CafeRepositoryImpl implements CafeRepository {
 
   @override
   Future<Either<List<Cafe>, Failure>> search(String search, {Filter filter}) {
-    // todo: implement search
-    return null;
+    throw UnimplementedError();
   }
 
   @override

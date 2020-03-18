@@ -29,7 +29,7 @@ class DetailContainer extends StatelessWidget {
   final Logger logger;
 
   void _onShowMap() async {
-    UrlLauncherHelper.launchNavigationWithAddress(cafe.address);
+    await UrlLauncherHelper.launchNavigationWithAddress(cafe.address);
   }
 
   @override
@@ -54,7 +54,8 @@ class DetailContainer extends StatelessWidget {
                 if (detail.contact.hasValues)
                   ContactCard(contact: detail.contact),
                 const SizedBox(height: 10.0),
-                OpeningHoursContainer(openingHours: detail.openingHours),
+                if (detail.openingHours != null)
+                  OpeningHoursContainer(openingHours: detail.openingHours),
                 const SizedBox(height: 10.0),
                 TagsContainer(
                   tags: cafe.tags,

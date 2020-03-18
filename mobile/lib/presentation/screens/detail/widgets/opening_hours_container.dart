@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/opening_hour.dart';
+import '../../../../generated/i18n.dart';
 import '../../../models/opening_hour.dart';
 import '../../../shared/shared_widgets.dart';
 import 'opening_hours_table.dart';
@@ -20,34 +21,13 @@ class OpeningHoursContainer extends StatelessWidget {
       expanded: true,
       header: SectionHeader(
         icon: FontAwesomeIcons.clock,
-        title: 'Otevírací doba', //todo translate
+        title: I18n.of(context).detail_openingHoursTitle,
       ),
       body: Align(
         alignment: Alignment.centerLeft,
         child: Padding(
           padding: const EdgeInsets.only(left: 40.0),
           child: OpeningHoursTable(
-            // openingHours: {
-            //   1: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   2: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   3: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   4: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   5: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   6: const OpeningTime(
-            //       opening: const HourMinute(8, 0),
-            //       closing: const HourMinute(16, 0)),
-            //   7: null,
-            // },
             openingHours: _mapOpeningHoursToViewModel(),
           ),
         ),

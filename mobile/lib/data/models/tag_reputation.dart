@@ -8,6 +8,10 @@ class TagReputationModel extends Equatable {
   final int likes;
   final int dislikes;
 
+  int get score => likes - dislikes;
+
+  static const int minimalScore = -1;
+
   TagReputationModel({
     this.id,
     this.likes,

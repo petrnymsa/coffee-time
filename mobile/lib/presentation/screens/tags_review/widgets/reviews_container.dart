@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../generated/i18n.dart';
 import '../model/tag_review.dart';
-import 'header_info.dart';
 import 'reviews_table.dart';
 
 class ReviewsContainer extends StatelessWidget {
@@ -18,7 +18,10 @@ class ReviewsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        HeaderInfo(),
+        Text(
+          I18n.of(context).reviews_haederSubTitle,
+          style: TextStyle(fontSize: 14, color: Colors.black54),
+        ),
         ReviewsTable(tagsToReview: tagsToReview, onTagReview: onTagReview)
       ],
     );

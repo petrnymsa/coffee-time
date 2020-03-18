@@ -1,0 +1,68 @@
+{
+    "refresh": "Obnovit",
+    "confirm": "Potvrdit",
+    "somethingWrong": "Jejda! Něco se pokazilo.",
+    "tabs": {
+        "_cafes": "Kavárny",
+        "_favorites": "Oblíbené",
+        "_map": "Mapa",
+        "_settings": "Nastavení"
+    },
+    "openingHours": {
+        "_open": "Otevřeno",
+        "_closed": "Zavřeno"
+    },
+    "favorites": {
+        "_noFavorites": "Zatím žádné oblíbené."
+    },
+    "cafeList": {
+        "_noCafes": "Nebyly nalezeny žádné kavárny."
+    },
+    "detail": {
+        "_navigate": "Navigovat",
+        "_openingHoursTitle": "Otevírací doba",
+        "_tagsTitle": "Štítky",
+        "_noTags": "Nebyly přidány žádné štítky",
+        "_suggestChange": "Navrhnout změnu",
+        "_reviewsTitle": "Recenze",
+        "_webpage": "Webová stránka"
+    },
+    "reviews": {
+        "_add": "Přidat štítky",
+        "_headerTitle": "Uživatelé vytvářejí štítky. Můžete nám pomoci vylepšit je?",
+        "_haederSubTitle": "Není nutné hodnotit každý štítek.",
+        "_true": "Pravda",
+        "_false": "Nepravdivé",
+        "_title": "Navrhněte změny",
+        "_chosenTags": "Vybrané štítky",
+        "_clearTags": "Vymazat štítky"
+    },
+    "addTags": {
+        "_header": "Vyberte jeden nebo více štítků.",
+        "_title": "Vyberte štítky"
+    },
+    "filter": {
+        "_title": "Upravit filtr",
+        "_openingHours": {
+            "_title": "Otevírací doba",
+            "_onlyOpen": "Pouze otevřené kavárny"
+        },
+        "_orderBy": {
+            "_title": "Řazení",
+            "_popularity": "Seřadit podle oblíbenosti",
+            "_distance": "Seřadit podle vzdálenosti"
+        },
+        "_tags": {
+            "_title": "Značky",
+            "_info": "Kavárna by měla obsahovat alespoň jeden vybraný štítek.",
+            "_chooseTags": "Vyberte štítky",
+            "_chosenTags": "Vybrané štítky",
+            "_clear": "Vymazat štítky"
+        }
+    },
+    "notification": {
+        "_favoriteAdded": "Přidáno k oblíbeným",
+        "_favoriteRemoved": "Odebráno z oblíbených",
+        "_reviewAdded": "Děkuji. Hodnocení zaznamenáno."
+    }
+}

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/cafe.dart';
+import '../../../../generated/i18n.dart';
 
 class CafeNameContainer extends StatelessWidget {
   final Cafe cafe;
@@ -38,7 +39,7 @@ class CafeNameContainer extends StatelessWidget {
             ),
           FlatButton.icon(
             icon: Icon(FontAwesomeIcons.locationArrow),
-            label: Text('Navigate'),
+            label: Text(I18n.of(context).detail_navigate),
             onPressed: onShowMap,
           )
         ],

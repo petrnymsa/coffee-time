@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/tag.dart';
+import '../../../../generated/i18n.dart';
 import '../../../shared/shared_widgets.dart';
 import '../bloc/bloc.dart';
 
@@ -25,7 +26,7 @@ class AddTagsContainer extends StatelessWidget {
       if (addedTags.length > 0) ..._buildTagsToAdd(context, addedTags),
       if (notAddedYet.length > 0)
         RaisedButton.icon(
-          label: Text('Přidat štítky'),
+          label: Text(I18n.of(context).reviews_add),
           icon: Icon(FontAwesomeIcons.plus),
           onPressed: onAddTags,
         ),
@@ -49,11 +50,11 @@ class AddTagsContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Štítky k přidání',
+            I18n.of(context).reviews_chosenTags,
             style: Theme.of(context).textTheme.subhead,
           ),
           FlatButton.icon(
-            label: Text('Vyčistit'),
+            label: Text(I18n.of(context).reviews_clearTags),
             icon: Icon(Icons.clear_all),
             onPressed: () => _onClearAdded(context),
           )

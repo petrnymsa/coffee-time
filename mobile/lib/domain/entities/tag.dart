@@ -1,11 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/locale_provider.dart';
+
 class Tag extends Equatable {
   final String id;
   final String title;
   final IconData icon;
   final Map<String, String> translations;
+
+  String get translatedTitle => _getTranslatedTitle();
 
   Tag({
     @required this.id,
@@ -28,6 +32,16 @@ class Tag extends Equatable {
     );
   }
 
+  String _getTranslatedTitle() {
+    final locale = LocaleProvider.getShortLocale();
+
+    if (translations.containsKey(locale)) {
+      return translations[locale];
+    }
+
+    return title;
+  }
+
   @override
   String toString() {
     return '''TagEntity id: $id, title: $title, icon: $icon, translations: $translations''';
@@ -35,4 +49,7 @@ class Tag extends Equatable {
 
   @override
   List<Object> get props => [id, title, icon, translations];
+
+  @override
+  bool get stringify => true;
 }

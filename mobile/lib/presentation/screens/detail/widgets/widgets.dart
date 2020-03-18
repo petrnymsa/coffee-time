@@ -4,6 +4,7 @@ export 'carousel_slider.dart';
 export 'contact_card.dart';
 export 'detail_container.dart';
 export 'detail_header.dart';
+export 'distance_text.dart';
 export 'favorite_button.dart';
 export 'opening_hours_container.dart';
 export 'opening_hours_table.dart';

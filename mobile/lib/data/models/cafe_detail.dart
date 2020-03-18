@@ -109,7 +109,7 @@ class CafeDetailModel extends Equatable {
           website: website,
         ),
         url: url,
-        openingHours: openingHours.toEntity(),
+        openingHours: openingHours?.toEntity(),
         utcOffset: utcOffset,
         photos: photos
             .map((p) => p.toEntity(photoReferenceUrlMap[p.reference]))

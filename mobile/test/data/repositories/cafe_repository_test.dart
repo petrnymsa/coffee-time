@@ -15,6 +15,7 @@ import 'package:coffee_time/domain/exceptions/api.dart';
 import 'package:coffee_time/domain/failure.dart';
 import 'package:coffee_time/domain/repositories/nearby_result.dart';
 import 'package:coffee_time/domain/repositories/tags_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -138,7 +139,7 @@ void main() {
           )));
     });
 
-    test('When passed filter, filter is applied', () async {
+    test('When passed filter for openNow, filter is applied', () async {
       final openedCafe = cafeModelExample(openNow: true);
 
       when(
@@ -155,6 +156,42 @@ void main() {
         result,
         equals(Left<NearbyResult, Failure>(NearbyResult(cafes: [
           openedCafe.toEntity(
+              isFavorite: true, allTags: allTags, photoUrl: photoUrl)
+        ]))),
+      );
+    });
+
+    test('When passed filter for tags, filter is applied', () async {
+      final expectedCafe =
+          cafeModelExample(openNow: true, tags: [tagReputationExample()]);
+      final unwantedTag = Tag(id: 'ac_unit', icon: Icons.ac_unit, title: '123');
+
+      when(
+        mockCafeService.getNearBy(Location(1, 1),
+            language: argThat(isInstanceOf<String>(), named: 'language'),
+            openNow: anyNamed('openNow'),
+            pageToken: anyNamed('pageToken')),
+      ).thenAnswer(
+        (_) async => NearbyResultModel(cafes: [
+          expectedCafe,
+          cafeModelExample(
+            tags: [],
+          )
+        ]),
+      );
+
+      when(mockTagRepository.getAll())
+          .thenAnswer((_) async => Left([...allTags, unwantedTag]));
+
+      final result = await repository.getNearby(
+        Location(1, 1),
+        filter: Filter(tagIds: [tagReputationExample().id]),
+      );
+
+      expect(
+        result,
+        equals(Left<NearbyResult, Failure>(NearbyResult(cafes: [
+          expectedCafe.toEntity(
               isFavorite: true, allTags: allTags, photoUrl: photoUrl)
         ]))),
       );

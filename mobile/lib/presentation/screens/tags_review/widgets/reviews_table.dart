@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../generated/i18n.dart';
 import '../model/tag_review.dart';
 import 'review_tag_cell.dart';
 
@@ -13,7 +14,6 @@ class ReviewsTable extends StatelessWidget {
     @required this.onTagReview,
   }) : super(key: key);
 
-  //todo translate
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,10 +22,9 @@ class ReviewsTable extends StatelessWidget {
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         defaultColumnWidth: FlexColumnWidth(),
         columnWidths: {
-          0: FlexColumnWidth(2),
+          0: FlexColumnWidth(3),
           1: FlexColumnWidth(2),
           2: FlexColumnWidth(2),
-          //   3: FlexColumnWidth(2),
         },
         children: [
           TableRow(
@@ -37,24 +36,17 @@ class ReviewsTable extends StatelessWidget {
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.top,
                   child: Text(
-                    'Pravda',
+                    I18n.of(context).reviews_true,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.top,
                   child: Text(
-                    'Není pravda',
+                    I18n.of(context).reviews_false,
                     textAlign: TextAlign.center,
                   ),
                 ),
-                // TableCell(
-                //   verticalAlignment: TableCellVerticalAlignment.top,
-                //   child: Text(
-                //     'Nehodnotím',
-                //     textAlign: TextAlign.center,
-                //   ),
-                // ),
               ]),
           ...tagsToReview.map((tag) => buildTableRow(context, tag)).toList()
         ],
@@ -72,11 +64,12 @@ class ReviewsTable extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Icon(tagToReview.tag.icon, size: 14),
+              Icon(tagToReview.tag.icon, size: 16),
               SizedBox(width: 6.0),
               Text(
-                tagToReview.tag.title,
+                tagToReview.tag.translatedTitle,
                 textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
               ),
             ],
           ),
