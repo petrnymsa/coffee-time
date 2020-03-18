@@ -62,6 +62,7 @@
     },
     "notification": {
         "_favoriteAdded": "Přidáno k oblíbeným",
-        "_favoriteRemoved": "Odebráno z oblíbených"
+        "_favoriteRemoved": "Odebráno z oblíbených",
+        "_reviewAdded": "Děkuji. Hodnocení zaznamenáno."
     }
 }

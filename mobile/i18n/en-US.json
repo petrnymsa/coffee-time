@@ -62,6 +62,7 @@
     },
     "notification": {
         "_favoriteAdded": "Added to favorites",
-        "_favoriteRemoved": "Removed from favorites"
+        "_favoriteRemoved": "Removed from favorites",
+        "_reviewAdded": "Thank you. Review noted."
     }
 }

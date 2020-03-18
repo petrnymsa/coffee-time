@@ -36,6 +36,11 @@ class TagsReviewScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _onConfirm(BuildContext context) async {
+    final updates = context.bloc<TagsReviewBloc>().getUpdates();
+    Navigator.of(context).pop(updates);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,11 +69,7 @@ class TagsReviewScreen extends StatelessWidget {
                     text: I18n.of(context).confirm,
                     color: Colors.green,
                     icon: Icon(FontAwesomeIcons.check),
-                    onPressed: () async {
-                      final updates =
-                          context.bloc<TagsReviewBloc>().getUpdates();
-                      Navigator.of(context).pop(updates);
-                    },
+                    onPressed: () => _onConfirm(context),
                   ),
                 ],
               ),
