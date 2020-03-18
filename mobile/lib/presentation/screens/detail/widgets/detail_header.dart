@@ -25,13 +25,14 @@ class DetailHeader extends StatelessWidget {
         SizedBox(width: 4),
         DistanceText(cafeLocation: cafe.location),
         SizedBox(width: 4),
-        Icon(
-          FontAwesomeIcons.clock,
-          size: 14,
-          color: Theme.of(context).accentColor,
-        ),
+        if (cafe.openNow != null)
+          Icon(
+            FontAwesomeIcons.clock,
+            size: 14,
+            color: Theme.of(context).accentColor,
+          ),
         SizedBox(width: 4),
-        OpensNowText(opensNow: cafe.openNow),
+        if (cafe.openNow != null) OpensNowText(opensNow: cafe.openNow),
         Spacer(),
         if (cafe.rating != null) Rating.large(cafe.rating),
       ],
