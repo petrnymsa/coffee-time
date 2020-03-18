@@ -11,6 +11,10 @@ extension ContextExtension on BuildContext {
         ? tr.notification_favoriteAdded
         : tr.notification_favoriteRemoved;
 
+    showNotifcationSnackBar(text: text);
+  }
+
+  void showNotifcationSnackBar({@required String text}) {
     Scaffold.of(this).showSnackBar(SnackBar(
       backgroundColor: Theme.of(this).accentColor,
       content: Text(text),

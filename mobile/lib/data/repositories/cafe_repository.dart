@@ -124,7 +124,7 @@ class CafeRepositoryImpl implements CafeRepository {
         radius:
             filter.ordering == FilterOrdering.popularity ? filter.radius : null,
       );
-      final tags = await _getTags();
+      final allTags = await _getTags();
       final favoriteIds = await _getFavoriteIds();
 
       var cafes = result.cafes.map(
@@ -135,7 +135,7 @@ class CafeRepositoryImpl implements CafeRepository {
           }
           return x.toEntity(
             isFavorite: favoriteIds.contains(x.placeId),
-            allTags: tags,
+            allTags: allTags,
             photoUrl: photoUrl,
           );
         },

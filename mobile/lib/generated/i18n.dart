@@ -114,6 +114,8 @@ class I18n implements WidgetsLocalizations {
   String get notification_favoriteAdded => "Added to favorites";
   /// "Removed from favorites"
   String get notification_favoriteRemoved => "Removed from favorites";
+  /// "Thank you. Review noted."
+  String get notification_reviewAdded => "Thank you. Review noted.";
 }
 
 class _I18n_en_US extends I18n {
@@ -249,6 +251,9 @@ class _I18n_cs_CZ extends I18n {
   /// "Odebráno z oblíbených"
   @override
   String get notification_favoriteRemoved => "Odebráno z oblíbených";
+  /// "Děkuji. Hodnocení zaznamenáno."
+  @override
+  String get notification_reviewAdded => "Děkuji. Hodnocení zaznamenáno.";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;
