@@ -11,15 +11,19 @@ class NoData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          children: <Widget>[
-            Icon(FontAwesomeIcons.coffee),
-            Text(I18n.of(context).cafeList_noCafes)
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(FontAwesomeIcons.coffee, size: 48),
+          SizedBox(
+            height: 14,
+          ),
+          Text(
+            I18n.of(context).cafeList_noCafes,
+            style: TextStyle(fontSize: 20),
+          )
+        ],
       ),
     );
   }
