@@ -38,10 +38,6 @@ class CafeTile extends StatelessWidget {
   }
 
   void _onMapTap(Cafe cafe) async {
-    if (onMapTap != null) {
-      onMapTap();
-      return;
-    }
     await UrlLauncherHelper.launchNavigationWithAddress(cafe.address);
   }
 

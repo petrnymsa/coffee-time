@@ -1,4 +1,3 @@
-import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -6,6 +5,7 @@ import 'package:logger/logger.dart';
 import '../../../core/app_logger.dart';
 import '../../../di_container.dart';
 import '../../../domain/entities/cafe.dart';
+import '../../../generated/i18n.dart';
 import '../../core/notification_helper.dart';
 import '../../shared/shared_widgets.dart';
 import '../tags_review/bloc/bloc.dart' as review_bloc;
