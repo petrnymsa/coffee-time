@@ -122,6 +122,7 @@ class CafeModel extends Equatable {
         openNow: openNow,
         address: address,
         tags: tags
+            .where((t) => t.score >= TagReputationModel.minimalScore)
             .map((x) => x.toEntity(
                 allTags.firstWhere((t) => t.id == x.id, orElse: () => null)))
             .toList(),
