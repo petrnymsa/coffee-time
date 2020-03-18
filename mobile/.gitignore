@@ -30,6 +30,8 @@
 .pub/
 /build/
 
+i18nconfig.json
+
 # Generated files
 **.freezed.dart*
 **.g.dart*
