@@ -54,6 +54,7 @@ class TagsReviewScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  HeaderInfo(),
                   if (tagsToReview.isNotEmpty)
                     ReviewsContainer(
                       tagsToReview: tagsToReview,
