@@ -36,6 +36,8 @@ class I18n implements WidgetsLocalizations {
   String get refresh => "Refresh";
   /// "Confirm"
   String get confirm => "Confirm";
+  /// "Price"
+  String get price => "Price";
   /// "Oops, something went wrong."
   String get somethingWrong => "Oops, something went wrong.";
   /// "Cafes"
@@ -134,6 +136,9 @@ class _I18n_cs_CZ extends I18n {
   /// "Potvrdit"
   @override
   String get confirm => "Potvrdit";
+  /// "Cena"
+  @override
+  String get price => "Cena";
   /// "Jejda! Něco se pokazilo."
   @override
   String get somethingWrong => "Jejda! Něco se pokazilo.";
