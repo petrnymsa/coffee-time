@@ -54,12 +54,12 @@ class Shell extends StatelessWidget {
               Icon(FontAwesomeIcons.filter),
               if (filter != null && filter != Filter())
                 Positioned(
-                  right: 4,
+                  right: 2,
                   bottom: 0,
                   child: Container(
                     padding: EdgeInsets.all(1),
                     decoration: BoxDecoration(
-                      color: Colors.indigo,
+                      color: Colors.lightGreen,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     constraints: BoxConstraints(
