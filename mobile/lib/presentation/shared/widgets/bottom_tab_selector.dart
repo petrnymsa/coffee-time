@@ -17,6 +17,7 @@ class BottomTabSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: AppTabKey.values.indexOf(currentTab),
+      type: BottomNavigationBarType.fixed,
       items: AppTabKey.values
           .map(
             (t) => BottomNavigationBarItem(

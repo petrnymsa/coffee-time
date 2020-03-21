@@ -13,7 +13,7 @@ void main() {
   blocTest(
     'Emits passed tab',
     build: () => Future.value(TabsBloc()),
-    act: (bloc) => bloc.add(SetTab(AppTabKey.settings)),
-    expect: [AppTabKey.settings],
+    act: (bloc) => bloc.add(SetTab(AppTabKey.favorites)),
+    expect: [AppTabKey.favorites],
   );
 }

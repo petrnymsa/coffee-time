@@ -16,7 +16,6 @@ import 'screens/filter/bloc/filter_bloc.dart';
 import 'screens/filter/bloc/filter_bloc_event.dart';
 import 'screens/filter/screen.dart';
 import 'screens/map/screen.dart';
-import 'screens/settings/screen.dart';
 import 'shared/widgets/bottom_tab_selector.dart';
 import 'shell_config.dart';
 
@@ -86,8 +85,6 @@ class Shell extends StatelessWidget {
                 ),
               );
 
-              getLogger('Shell').i('New filter - $result');
-
               if (result != null) {
                 cafeListBloc.add(Refresh(filter: result));
               }
@@ -110,9 +107,6 @@ class Shell extends StatelessWidget {
         return BlocProvider(
             create: (_) => sl<FavoritesBloc>()..add(Load()),
             child: FavoritesScreen());
-        break;
-      case AppTabKey.settings:
-        return SettingsScreen();
         break;
       default:
         return Center(
