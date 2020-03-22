@@ -131,4 +131,11 @@ class MockedCafeRepository implements CafeRepository {
       String id, List<TagUpdate> updates) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<List<Cafe>, Failure>> getAllNearby(Location location,
+      {Filter filter}) {
+    // TODO: implement getAllNearby
+    return null;
+  }
 }
