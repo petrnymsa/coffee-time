@@ -12,10 +12,10 @@ class Pricing extends StatelessWidget {
       children: <Widget>[
         for (var i = 0; i < priceLevel; i++)
           Padding(
-            padding: const EdgeInsets.all(1.0),
+            padding: const EdgeInsets.all(2.0),
             child: Icon(
               FontAwesomeIcons.coins,
-              size: 8,
+              size: 10,
               color: Theme.of(context).accentColor,
             ),
           ),
