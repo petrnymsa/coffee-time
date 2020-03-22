@@ -18,6 +18,7 @@ import 'presentation/core/blocs/tabs/bloc.dart';
 import 'presentation/screens/cafe_list/bloc/cafelist_bloc.dart';
 import 'presentation/screens/detail/bloc/detail_bloc.dart';
 import 'presentation/screens/favorites/bloc/bloc.dart';
+import 'presentation/screens/map/bloc/map_bloc.dart';
 
 final GetIt sl = GetIt.I;
 
@@ -30,8 +31,11 @@ void setupContainer() {
     ),
   );
   sl.registerLazySingleton(() => TabsBloc());
-  sl.registerFactory(
+  sl.registerLazySingleton<FavoritesBloc>(
     () => FavoritesBloc(cafeRepository: sl(), cafeListBloc: sl()),
+  );
+  sl.registerLazySingleton<MapBloc>(
+    () => MapBloc(cafeRepository: sl(), locationService: sl()),
   );
   sl.registerFactoryParam<DetailBloc, Cafe, dynamic>(
     (cafe, _) =>
