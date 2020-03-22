@@ -6,9 +6,7 @@ import 'bloc/bloc.dart';
 import 'widgets/widgets.dart';
 
 class MapScreen extends StatefulWidget {
-  MapScreen({Key key}) : super(key: key) {
-    print('Constructor');
-  }
+  const MapScreen({Key key}) : super(key: key);
 
   @override
   _MapScreenState createState() => _MapScreenState();

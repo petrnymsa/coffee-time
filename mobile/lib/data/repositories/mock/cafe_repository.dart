@@ -135,7 +135,6 @@ class MockedCafeRepository implements CafeRepository {
   @override
   Future<Either<List<Cafe>, Failure>> getAllNearby(Location location,
       {Filter filter}) {
-    // TODO: implement getAllNearby
-    return null;
+    throw UnimplementedError();
   }
 }

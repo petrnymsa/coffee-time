@@ -14,6 +14,7 @@ import 'domain/entities/cafe.dart';
 import 'domain/repositories/cafe_repository.dart';
 import 'domain/repositories/tags_repository.dart';
 import 'domain/services/location_service.dart';
+import 'presentation/core/blocs/filter/bloc.dart';
 import 'presentation/core/blocs/tabs/bloc.dart';
 import 'presentation/screens/cafe_list/bloc/cafelist_bloc.dart';
 import 'presentation/screens/detail/bloc/detail_bloc.dart';
@@ -28,9 +29,11 @@ void setupContainer() {
     () => CafeListBloc(
       locationService: sl(),
       cafeRepository: sl(),
+      filterBloc: sl(),
     ),
   );
   sl.registerLazySingleton(() => TabsBloc());
+  sl.registerLazySingleton(() => FilterBloc(tagRepository: sl()));
   sl.registerLazySingleton<FavoritesBloc>(
     () => FavoritesBloc(cafeRepository: sl(), cafeListBloc: sl()),
   );

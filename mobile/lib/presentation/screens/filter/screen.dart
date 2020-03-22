@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../generated/i18n.dart';
-import 'bloc/bloc.dart';
+import '../../core/blocs/filter/bloc.dart';
 import 'widgets/widgets.dart';
 
 class FilterScreen extends StatelessWidget {
