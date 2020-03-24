@@ -1,11 +1,13 @@
-import 'package:coffee_time/domain/entities/filter.dart';
-import 'package:coffee_time/domain/entities/location.dart';
-import 'package:coffee_time/domain/failure.dart';
-import 'package:coffee_time/domain/services/location_service.dart';
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/entities/filter.dart';
+import '../../../../domain/entities/location.dart';
+import '../../../../domain/failure.dart';
 import '../../../../domain/repositories/cafe_repository.dart';
+import '../../../../domain/services/location_service.dart';
 import 'map_bloc_event.dart';
 import 'map_bloc_state.dart';
 
@@ -27,12 +29,28 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
       init: _mapInit,
       setLocation: _mapSetLocation,
       setCurrentLocation: _mapSetCurrentLocation,
+      filterChanged: _mapFilterChanged,
     );
   }
 
   Stream<MapBlocState> _mapInit(Init event) async* {
     final location = await locationService.getCurrentLocation();
     yield await _getAllNearbyAndMapState(location, event.filter);
+  }
+
+  Stream<MapBlocState> _mapFilterChanged(FilterChanged event) async* {
+    final filter = event.filter;
+
+    final location = state.maybeWhen(
+      loaded: (cafes, location, filter) => location,
+      orElse: () => null,
+    );
+
+    if (location == null) {
+      yield* _mapSetCurrentLocation(SetCurrentLocation(filter: filter));
+    } else {
+      yield* _mapSetLocation(SetLocation(location, filter: filter));
+    }
   }
 
   Stream<MapBlocState> _mapSetLocation(SetLocation event) async* {
@@ -49,7 +67,8 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
     final result = await cafeRepository.getAllNearby(location, filter: filter);
 
     return result.when(
-        left: (cafes) => Loaded(cafes: cafes, location: location),
+        left: (cafes) =>
+            Loaded(cafes: cafes, location: location, filter: filter),
         right: (failure) =>
             MapBlocState.failure(_mapFailureToMessage(failure)));
   }

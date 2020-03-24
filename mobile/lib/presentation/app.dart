@@ -7,6 +7,7 @@ import '../generated/i18n.dart';
 import './screens/cafe_list/bloc/bloc.dart';
 import 'core/blocs/filter/bloc.dart';
 import 'core/blocs/tabs/bloc.dart';
+import 'screens/map/bloc/bloc.dart' as map_bloc;
 import 'shared/theme.dart';
 import 'shell.dart';
 
@@ -32,6 +33,8 @@ class App extends StatelessWidget {
         home: MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => sl<CafeListBloc>()..add(Refresh())),
+            BlocProvider(
+                create: (_) => sl<map_bloc.MapBloc>()..add(map_bloc.Init())),
             BlocProvider(create: (_) => TabsBloc()),
           ],
           child: Shell(),

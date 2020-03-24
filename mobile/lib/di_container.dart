@@ -25,15 +25,14 @@ final GetIt sl = GetIt.I;
 
 void setupContainer() {
   // * BLoCs
-  sl.registerLazySingleton(
+  sl.registerLazySingleton<CafeListBloc>(
     () => CafeListBloc(
       locationService: sl(),
       cafeRepository: sl(),
-      filterBloc: sl(),
     ),
   );
-  sl.registerLazySingleton(() => TabsBloc());
-  sl.registerLazySingleton(() => FilterBloc(tagRepository: sl()));
+  sl.registerFactory<TabsBloc>(() => TabsBloc());
+  sl.registerFactory<FilterBloc>(() => FilterBloc(tagRepository: sl()));
   sl.registerLazySingleton<FavoritesBloc>(
     () => FavoritesBloc(cafeRepository: sl(), cafeListBloc: sl()),
   );

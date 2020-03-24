@@ -1,4 +1,3 @@
-import 'package:coffee_time/core/app_logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
 
+import 'core/app_logger.dart';
 import 'di_container.dart';
 import 'presentation/app.dart';
 

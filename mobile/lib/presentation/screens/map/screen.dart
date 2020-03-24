@@ -21,7 +21,7 @@ class _MapScreenState extends State<MapScreen> {
         loaded: (loaded) => MapContainer(state: loaded),
         failure: (failure) => FailureContainer(
           message: failure.message,
-          onRefresh: null,
+          onRefresh: null, //todo onRefresh
         ),
       ),
     );

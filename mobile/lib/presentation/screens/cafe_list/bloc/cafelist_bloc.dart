@@ -13,7 +13,6 @@ import '../../../../domain/failure.dart';
 import '../../../../domain/repositories/cafe_repository.dart';
 import '../../../../domain/repositories/nearby_result.dart';
 import '../../../../domain/services/location_service.dart';
-import '../../../core/blocs/filter/bloc.dart';
 import './cafelist_event.dart';
 import './cafelist_state.dart';
 
@@ -21,21 +20,14 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
   final CafeRepository _cafeRepository;
   final LocationService _locationService;
   final Logger logger = getLogger('CafeListBloc');
-  final FilterBloc filterBloc;
-
-  StreamSubscription<FilterBlocState> _filterBlocSubscription;
 
   List<String> _issuedTokens = [];
 
-  CafeListBloc(
-      {@required CafeRepository cafeRepository,
-      @required LocationService locationService,
-      @required this.filterBloc})
-      : _cafeRepository = cafeRepository,
-        _locationService = locationService {
-    //subscribe to FilterBloc recieve updated filter
-    _filterBlocSubscription = filterBloc.listen(_onFilterBlocStateChanged);
-  }
+  CafeListBloc({
+    @required CafeRepository cafeRepository,
+    @required LocationService locationService,
+  })  : _cafeRepository = cafeRepository,
+        _locationService = locationService;
 
   @override
   CafeListState get initialState => Loading();
@@ -108,12 +100,6 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
               return cafe;
             }).toList();
             return loaded.copyWith(cafes: newCafes);
-            // return Loaded(
-            //   cafes: newCafes,
-            //   actualFilter: filter,
-            //   currentLocation: currentLocation,
-            //   nextPageToken: token,
-            // );
           },
           orElse: () => CafeListState.failure(
               'Wrong state when ToggleFavorite called. State was: $state')),
@@ -132,8 +118,6 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
           return cafe;
         }).toList();
         return loaded.copyWith(cafes: newCafes);
-        // return Loaded(
-        //     cafes: newCafes, actualFilter: filter, nextPageToken: token);
       },
       orElse: () => CafeListState.failure(
           'Wrong state when ToggleFavorite called. State was: $state'),
@@ -151,8 +135,6 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
           return cafe;
         }).toList();
         return loaded.copyWith(cafes: newCafes);
-        // return Loaded(
-        //     cafes: newCafes, actualFilter: filter, nextPageToken: token);
       },
       orElse: () => CafeListState.failure(
           'Wrong state when ToggleFavorite called. State was: $state'),
@@ -175,11 +157,6 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     );
   }
 
-  void _onFilterBlocStateChanged(FilterBlocState state) {
-    // new filter set -> refresh data
-    add(Refresh(filter: state.filter));
-  }
-
   //todo move to base
   String _mapFailureToMessage(Failure failure) {
     return failure.when(
@@ -187,11 +164,5 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
       notFound: () => 'Not found',
       serviceFailure: (msg, inner) => 'Service Failed: $msg.\nInner: $inner',
     );
-  }
-
-  @override
-  Future<void> close() async {
-    await _filterBlocSubscription?.cancel();
-    return super.close();
   }
 }

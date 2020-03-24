@@ -7,6 +7,7 @@ import '../di_container.dart';
 import 'core/blocs/filter/bloc.dart';
 import 'core/blocs/tabs/bloc.dart';
 import 'models/app_tab.dart';
+import 'screens/cafe_list/bloc/bloc.dart' as cafe_list_bloc;
 import 'screens/cafe_list/screen.dart';
 import 'screens/favorites/bloc/bloc.dart' as favorites_bloc;
 import 'screens/favorites/screen.dart';
@@ -19,21 +20,34 @@ import 'shell_config.dart';
 class Shell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TabsBloc, AppTabKey>(
-      builder: (context, tab) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(ShellConfiguration.tabTitle(context, tab).capitalize()),
-            actions: _mapTabToActions(context, tab),
-          ),
-          body: _mapTabToScreen(tab),
-          bottomNavigationBar: BottomTabSelector(
-            currentTab: tab,
-            tabSelected: (selectedTab) =>
-                context.bloc<TabsBloc>().add(SetTab(selectedTab)),
-          ),
-        );
+    return BlocListener<FilterBloc, FilterBlocState>(
+      listener: (context, state) {
+        if (state.confirmed) {
+          context
+              .bloc<map_bloc.MapBloc>()
+              .add(map_bloc.FilterChanged(state.filter));
+          context
+              .bloc<cafe_list_bloc.CafeListBloc>()
+              .add(cafe_list_bloc.Refresh(filter: state.filter));
+        }
       },
+      child: BlocBuilder<TabsBloc, AppTabKey>(
+        builder: (context, tab) {
+          return Scaffold(
+            appBar: AppBar(
+              title:
+                  Text(ShellConfiguration.tabTitle(context, tab).capitalize()),
+              actions: _mapTabToActions(context, tab),
+            ),
+            body: _mapTabToScreen(tab),
+            bottomNavigationBar: BottomTabSelector(
+              currentTab: tab,
+              tabSelected: (selectedTab) =>
+                  context.bloc<TabsBloc>().add(SetTab(selectedTab)),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -84,9 +98,7 @@ class Shell extends StatelessWidget {
         return CafeListScreen();
         break;
       case AppTabKey.map:
-        return BlocProvider(
-            create: (_) => sl<map_bloc.MapBloc>()..add(map_bloc.Init()),
-            child: MapScreen());
+        return MapScreen();
         break;
       case AppTabKey.favorites:
         return BlocProvider(
