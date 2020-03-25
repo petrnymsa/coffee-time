@@ -50,10 +50,9 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/mock/cafe.json
-    - assets/mock/cafe_detail.json
     - assets/table.jpg
     - assets/coffee-shop-marker.png
+    - assets/flag.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   fonts:

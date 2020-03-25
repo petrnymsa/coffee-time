@@ -13,6 +13,8 @@ abstract class MapBlocState with _$MapBlocState {
   const factory MapBlocState.loaded(
       {@required List<Cafe> cafes,
       @required Location location,
+      @required bool customLocation,
       @required Filter filter}) = Loaded;
-  const factory MapBlocState.failure(String message) = _Failure;
+  const factory MapBlocState.failure(String message,
+      {@Default(Filter()) Filter filter}) = _Failure;
 }

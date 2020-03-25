@@ -34,15 +34,17 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
   }
 
   Stream<MapBlocState> _mapInit(Init event) async* {
+    yield Loading();
     final location = await locationService.getCurrentLocation();
-    yield await _getAllNearbyAndMapState(location, event.filter);
+    yield await _getAllNearbyAndMapState(location, event.filter,
+        customLocation: false);
   }
 
   Stream<MapBlocState> _mapFilterChanged(FilterChanged event) async* {
     final filter = event.filter;
 
-    final location = state.maybeWhen(
-      loaded: (cafes, location, filter) => location,
+    final location = state.maybeMap(
+      loaded: (l) => l.location,
       orElse: () => null,
     );
 
@@ -54,23 +56,33 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
   }
 
   Stream<MapBlocState> _mapSetLocation(SetLocation event) async* {
-    yield await _getAllNearbyAndMapState(event.location, event.filter);
+    yield await _getAllNearbyAndMapState(event.location, event.filter,
+        customLocation: true);
   }
 
   Stream<MapBlocState> _mapSetCurrentLocation(SetCurrentLocation event) async* {
     final location = await locationService.getCurrentLocation();
-    yield await _getAllNearbyAndMapState(location, event.filter);
+    yield await _getAllNearbyAndMapState(location, event.filter,
+        customLocation: false);
   }
 
   Future<MapBlocState> _getAllNearbyAndMapState(
-      Location location, Filter filter) async {
+      Location location, Filter filter,
+      {@required bool customLocation}) async {
     final result = await cafeRepository.getAllNearby(location, filter: filter);
 
     return result.when(
-        left: (cafes) =>
-            Loaded(cafes: cafes, location: location, filter: filter),
-        right: (failure) =>
-            MapBlocState.failure(_mapFailureToMessage(failure)));
+      left: (cafes) => Loaded(
+        cafes: cafes,
+        location: location,
+        filter: filter,
+        customLocation: customLocation,
+      ),
+      right: (failure) => MapBlocState.failure(
+        _mapFailureToMessage(failure),
+        filter: filter,
+      ),
+    );
   }
 
   //todo move to base bloc class

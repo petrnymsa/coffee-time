@@ -8,8 +8,18 @@ import 'package:logger/logger.dart';
 
 import '../../../../core/app_logger.dart';
 import '../../../../di_container.dart';
+import '../../../../domain/entities/location.dart';
 import '../../../../domain/services/location_service.dart';
 import '../bloc/bloc.dart';
+
+// helper function to convert between Location <-> LatLng
+extension on Location {
+  LatLng toLatLng() => LatLng(lat, lng);
+}
+
+extension on LatLng {
+  Location toLocation() => Location(latitude, longitude);
+}
 
 class MapContainer extends StatefulWidget {
   final Loaded state;
@@ -31,6 +41,7 @@ class _MapContainerState extends State<MapContainer> {
   final Logger logger = getLogger('MapScreen');
 
   BitmapDescriptor cafeIcon;
+  BitmapDescriptor flagIcon;
 
   final LocationService locationService = sl<LocationService>();
 
@@ -41,9 +52,14 @@ class _MapContainerState extends State<MapContainer> {
   }
 
   void _loadCafeIcon() async {
+    //todo assets constants
     cafeIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(devicePixelRatio: 2.5),
-      'assets/coffee-shop-marker.png', //todo assets constants
+      'assets/coffee-shop-marker.png',
+    );
+    flagIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5),
+      'assets/flag.png',
     );
     setState(() {});
   }
@@ -52,16 +68,44 @@ class _MapContainerState extends State<MapContainer> {
     _controller.complete(controller);
   }
 
+  void _onMapPressed(LatLng tappedLocation) {
+    _moveCameraToLocation(tappedLocation);
+    final location = tappedLocation.toLocation();
+    context
+        .bloc<MapBloc>()
+        .add(SetLocation(location, filter: widget.state.filter));
+  }
+
   Future<void> _moveToCurrentLocation() async {
     final location = await locationService.getCurrentLocation();
+    await _moveCameraToLocation(LatLng(location.lat, location.lng));
+  }
+
+  Future<void> _moveCameraToLocation(LatLng location) async {
     final cl = await _controller.future;
-    cl.animateCamera(
-        CameraUpdate.newLatLng(LatLng(location.lat, location.lng)));
+    cl.animateCamera(CameraUpdate.newLatLng(location));
   }
 
   @override
   Widget build(BuildContext context) {
     logger.i('Rebuild');
+    final markers = widget.state.cafes
+        .map((c) => Marker(
+            markerId: MarkerId(c.placeId),
+            icon: cafeIcon,
+            position: LatLng(c.location.lat, c.location.lng),
+            infoWindow: InfoWindow(
+              title: c.name,
+              snippet: c.address,
+              onTap: () {}, //todo detail
+            )))
+        .toSet();
+    if (widget.state.customLocation) {
+      final position = widget.state.location.toLatLng();
+      markers.add(Marker(
+          markerId: MarkerId('custom'), position: position, icon: flagIcon));
+    }
+
     return Stack(
       children: [
         GoogleMap(
@@ -75,21 +119,24 @@ class _MapContainerState extends State<MapContainer> {
             bearing: defaultBearing,
           ),
           onMapCreated: _onMapCreated,
-          onTap: print,
-          markers: widget.state.cafes
-              .map(
-                (c) => Marker(
-                  markerId: MarkerId(c.placeId),
-                  icon: cafeIcon,
-                  position: LatLng(c.location.lat, c.location.lng),
-                  infoWindow: InfoWindow(
-                    title: c.name,
-                    snippet: c.address,
-                    onTap: () {}, //todo detail
-                  ),
-                ),
-              )
-              .toSet(),
+          onLongPress: _onMapPressed,
+          markers: markers,
+          // widget.state.cafes
+          //     .map(
+          //       (c) => Marker(
+          //         markerId: MarkerId(c.placeId),
+          //         icon: cafeIcon,
+          //         position: LatLng(c.location.lat, c.location.lng),
+          //         infoWindow: InfoWindow(
+          //           title: c.name,
+          //           snippet: c.address,
+          //           onTap: () {}, //todo detail
+          //         ),
+          //       ),
+          //     )
+          //     .toSet(),          // polygons: widget.state.customLocation
+          //     ? _createCustomLocationPolygon()
+          //     : null,
           myLocationEnabled: true,
           myLocationButtonEnabled: false,
           mapToolbarEnabled: false,
