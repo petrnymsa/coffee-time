@@ -32,11 +32,7 @@ class Filter extends Equatable {
         ordering: ordering ?? this.ordering);
   }
 
-  bool isDefault() {
-    return onlyOpen == true &&
-        tagIds.length == 0 &&
-        ordering == FilterOrdering.distance;
-  }
+  bool isDefault() => this == Filter();
 
   @override
   String toString() =>

@@ -19,6 +19,35 @@ class CafeList extends StatelessWidget {
     @required this.state,
   }) : super(key: key);
 
+  void _onToggleFavorite(BuildContext context, Cafe cafe) {
+    context.bloc<CafeListBloc>().add(ToggleFavorite(cafeId: cafe.placeId));
+    context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
+  }
+
+  bool _handleScrollNotification(
+      BuildContext context, Notification notification) {
+    if (notification is ScrollEndNotification &&
+        notification.metrics.extentAfter == 0) {
+      context.bloc<CafeListBloc>().add(
+          LoadNext(pageToken: state.nextPageToken, filter: state.actualFilter));
+    }
+
+    return false;
+  }
+
+  void _onTileTap(BuildContext context, Cafe cafe) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => BlocProvider<DetailBloc>(
+          create: (_) => sl.get<DetailBloc>(
+            param1: cafe,
+          )..add(detail_events.Load()),
+          child: DetailScreen(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (state.cafes.length == 0) return NoData();
@@ -60,35 +89,6 @@ class CafeList extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  void _onToggleFavorite(BuildContext context, Cafe cafe) {
-    context.bloc<CafeListBloc>().add(ToggleFavorite(cafeId: cafe.placeId));
-    context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
-  }
-
-  bool _handleScrollNotification(
-      BuildContext context, Notification notification) {
-    if (notification is ScrollEndNotification &&
-        notification.metrics.extentAfter == 0) {
-      context.bloc<CafeListBloc>().add(
-          LoadNext(pageToken: state.nextPageToken, filter: state.actualFilter));
-    }
-
-    return false;
-  }
-
-  void _onTileTap(BuildContext context, Cafe cafe) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => BlocProvider<DetailBloc>(
-          create: (_) => sl.get<DetailBloc>(
-            param1: cafe,
-          )..add(detail_events.Load()),
-          child: DetailScreen(),
-        ),
-      ),
     );
   }
 }

@@ -64,6 +64,8 @@
     "notification": {
         "_favoriteAdded": "Added to favorites",
         "_favoriteRemoved": "Removed from favorites",
-        "_reviewAdded": "Thank you. Review noted."
+        "_reviewAdded": "Thank you. Review noted.",
+        "_loading": "Loading...",
+        "_cafesCoundLoaded": "Found {count} cafes arround."
     }
 }

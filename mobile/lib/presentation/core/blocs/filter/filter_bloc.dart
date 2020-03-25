@@ -21,6 +21,7 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
   Stream<FilterBlocState> mapEventToState(FilterBlocEvent event) async* {
     yield* event.map(
       init: _mapInit,
+      confirm: _mapConfirm,
       changeOpeningHour: _mapChangeOpeningHour,
       changeOrdering: _mapChangeOrdering,
       addTags: _mapAddTags,
@@ -31,6 +32,8 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
   }
 
   Stream<FilterBlocState> _mapInit(Init event) async* {
+    final filter = event.filter ?? state.filter;
+
     final allTagsResult = await tagRepository.getAll();
 
     final allTags = allTagsResult.when(
@@ -42,26 +45,39 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
     final notAddedTags = <Tag>[];
 
     for (final tag in allTags) {
-      if (state.filter.tagIds.contains(tag.id)) {
+      if (filter.tagIds.contains(tag.id)) {
         addedTags.add(tag);
       } else {
         notAddedTags.add(tag);
       }
     }
 
-    yield state.copyWith(addedTags: addedTags, notAddedTags: notAddedTags);
+    yield FilterBlocState(
+      filter: filter,
+      confirmed: false,
+      addedTags: addedTags,
+      notAddedTags: notAddedTags,
+    );
+  }
+
+  Stream<FilterBlocState> _mapConfirm(Confirm event) async* {
+    yield state.copyWith(confirmed: true);
   }
 
   Stream<FilterBlocState> _mapChangeOpeningHour(
       ChangeOpeningHour event) async* {
     final filter = state.filter;
-    yield FilterBlocState(filter: filter.copyWith(onlyOpen: !filter.onlyOpen));
+    yield state.copyWith(
+      filter: filter.copyWith(onlyOpen: !filter.onlyOpen),
+      confirmed: false,
+    );
   }
 
   Stream<FilterBlocState> _mapChangeOrdering(ChangeOrdering event) async* {
     final filter = state.filter;
-    yield FilterBlocState(
+    yield state.copyWith(
       filter: filter.copyWith(ordering: _switchOrdering(filter.ordering)),
+      confirmed: false,
     );
   }
 
@@ -75,6 +91,7 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
       filter: state.filter.copyWith(tagIds: addedTagsIds),
       addedTags: addedTags,
       notAddedTags: notAddedYet,
+      confirmed: false,
     );
   }
 
@@ -93,6 +110,7 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
       filter: state.filter.copyWith(tagIds: addedTagsIds),
       addedTags: addedTags,
       notAddedTags: notAddedYet,
+      confirmed: false,
     );
   }
 
@@ -101,13 +119,18 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
     notAdded.sort((a, b) => a.id.compareTo(b.id));
 
     yield state.copyWith(
-        filter: state.filter.copyWith(tagIds: []),
-        addedTags: [],
-        notAddedTags: notAdded);
+      filter: state.filter.copyWith(tagIds: []),
+      addedTags: [],
+      notAddedTags: notAdded,
+      confirmed: false,
+    );
   }
 
   Stream<FilterBlocState> _mapSetDefault(SetDefault event) async* {
-    yield FilterBlocState(filter: Filter());
+    yield state.copyWith(
+      filter: Filter(),
+      confirmed: false,
+    );
   }
 
   FilterOrdering _switchOrdering(FilterOrdering old) {

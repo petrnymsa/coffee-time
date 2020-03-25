@@ -52,6 +52,48 @@ class CafeRepositoryImpl implements CafeRepository {
     return favoriteService.getFavorites('user');
   }
 
+  Future<NearbyResult> _getNearbyResult({
+    @required Location location,
+    @required Filter filter,
+    @required String pageToken,
+  }) async {
+    final locale = LocaleProvider.getLocaleWithDashFormat();
+    final result = await cafeService.getNearBy(
+      location,
+      language: locale,
+      openNow: filter.onlyOpen,
+      pageToken: pageToken,
+      radius:
+          filter.ordering == FilterOrdering.popularity ? filter.radius : null,
+    );
+    final allTags = await _getTags();
+    final favoriteIds = await _getFavoriteIds();
+
+    var cafes = result.cafes.map(
+      (x) {
+        var photoUrl;
+        if (x.photo != null) {
+          photoUrl = photoService.getBasePhotoUrl(x.photo.reference);
+        }
+        return x.toEntity(
+          isFavorite: favoriteIds.contains(x.placeId),
+          allTags: allTags,
+          photoUrl: photoUrl,
+        );
+      },
+    ).toList();
+
+    if (filter.tagIds.isNotEmpty) {
+      cafes = cafes
+          .where((c) =>
+              c.tags.isNotEmpty &&
+              c.tags.any((t) => filter.tagIds.contains(t.id)))
+          .toList();
+    }
+
+    return NearbyResult(cafes: cafes, nextPageToken: result.nextPageToken);
+  }
+
   @override
   Future<Either<CafeDetail, Failure>> getDetail(String id) async {
     try {
@@ -115,42 +157,45 @@ class CafeRepositoryImpl implements CafeRepository {
     try {
       getLogger('CafeRepository').i('getNearby at location: $location');
 
-      final locale = LocaleProvider.getLocaleWithDashFormat();
-      final result = await cafeService.getNearBy(
-        location,
-        language: locale,
-        openNow: filter.onlyOpen,
-        pageToken: pageToken,
-        radius:
-            filter.ordering == FilterOrdering.popularity ? filter.radius : null,
-      );
-      final allTags = await _getTags();
-      final favoriteIds = await _getFavoriteIds();
+      final result = await _getNearbyResult(
+          location: location, filter: filter, pageToken: pageToken);
+      return Left(result);
+    } on ApiException catch (e) {
+      return Right(ServiceFailure('Call to nearby service failed', inner: e));
+    } on GoogleApiException catch (e) {
+      return Right(ServiceFailure('Call to nearby service failed', inner: e));
+    } catch (e) {
+      return Right(CommonFailure(e));
+    }
+  }
 
-      var cafes = result.cafes.map(
-        (x) {
-          var photoUrl;
-          if (x.photo != null) {
-            photoUrl = photoService.getBasePhotoUrl(x.photo.reference);
-          }
-          return x.toEntity(
-            isFavorite: favoriteIds.contains(x.placeId),
-            allTags: allTags,
-            photoUrl: photoUrl,
-          );
-        },
-      ).toList();
+  @override
+  Future<Either<List<Cafe>, Failure>> getAllNearby(Location location,
+      {Filter filter = const Filter()}) async {
+    try {
+      getLogger('CafeRepository').i('getNearby at location: $location');
 
-      if (filter.tagIds.isNotEmpty) {
-        cafes = cafes
-            .where((c) =>
-                c.tags.isNotEmpty &&
-                c.tags.any((t) => filter.tagIds.contains(t.id)))
-            .toList();
+      final cafes = <Cafe>[];
+      var loadNext = true;
+      var nextPageToken;
+      const maxCalls = 3; // as defined by API - there cant be more than 3 pages
+      var callCount = 0;
+
+      while (loadNext && callCount < maxCalls) {
+        final nearbyResult = await _getNearbyResult(
+            location: location, filter: filter, pageToken: nextPageToken);
+
+        cafes.addAll(nearbyResult.cafes);
+
+        if (nearbyResult.nextPageToken != null) {
+          nextPageToken = nearbyResult.nextPageToken;
+        } else {
+          loadNext = false;
+        }
+        callCount++;
       }
 
-      return Left(
-          NearbyResult(cafes: cafes, nextPageToken: result.nextPageToken));
+      return Left(cafes);
     } on ApiException catch (e) {
       return Right(ServiceFailure('Call to nearby service failed', inner: e));
     } on GoogleApiException catch (e) {
