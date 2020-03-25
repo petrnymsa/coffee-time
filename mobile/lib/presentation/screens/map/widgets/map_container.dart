@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,8 +9,12 @@ import 'package:logger/logger.dart';
 
 import '../../../../core/app_logger.dart';
 import '../../../../di_container.dart';
+import '../../../../domain/entities/cafe.dart';
 import '../../../../domain/entities/location.dart';
 import '../../../../domain/services/location_service.dart';
+import '../../../core/notification_helper.dart';
+import '../../detail/bloc/bloc.dart' as detail_bloc;
+import '../../detail/screen.dart';
 import '../bloc/bloc.dart';
 
 // helper function to convert between Location <-> LatLng
@@ -34,7 +39,7 @@ class MapContainer extends StatefulWidget {
 }
 
 class _MapContainerState extends State<MapContainer> {
-  static const double defaultZoom = 15.5;
+  static const double defaultZoom = 13.5;
   static const double defaultBearing = 0;
 
   final Completer<GoogleMapController> _controller = Completer();
@@ -44,6 +49,8 @@ class _MapContainerState extends State<MapContainer> {
   BitmapDescriptor flagIcon;
 
   final LocationService locationService = sl<LocationService>();
+
+  final _markers = <Marker>{};
 
   @override
   void initState() {
@@ -83,13 +90,24 @@ class _MapContainerState extends State<MapContainer> {
 
   Future<void> _moveCameraToLocation(LatLng location) async {
     final cl = await _controller.future;
-    cl.animateCamera(CameraUpdate.newLatLng(location));
+    cl.animateCamera(CameraUpdate.newLatLngZoom(location, defaultZoom));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    logger.i('Rebuild');
-    final markers = widget.state.cafes
+  void _onMarkerInfoTap(Cafe cafe) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => BlocProvider<detail_bloc.DetailBloc>(
+          create: (_) => sl.get<detail_bloc.DetailBloc>(
+            param1: cafe,
+          )..add(detail_bloc.Load()),
+          child: DetailScreen(),
+        ),
+      ),
+    );
+  }
+
+  void _addCafeMarkers() {
+    final cafeMarkers = widget.state.cafes
         .map((c) => Marker(
             markerId: MarkerId(c.placeId),
             icon: cafeIcon,
@@ -97,69 +115,89 @@ class _MapContainerState extends State<MapContainer> {
             infoWindow: InfoWindow(
               title: c.name,
               snippet: c.address,
-              onTap: () {}, //todo detail
+              onTap: () => _onMarkerInfoTap(c),
             )))
         .toSet();
+
+    _markers.addAll(cafeMarkers);
+  }
+
+  void _addCustomLocationMarker() {
+    final position = widget.state.location.toLatLng();
+    _markers.add(Marker(
+        markerId: MarkerId('custom'), position: position, icon: flagIcon));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    logger.i('Rebuild');
+
+    _markers.clear();
+    _addCafeMarkers();
+
     if (widget.state.customLocation) {
-      final position = widget.state.location.toLatLng();
-      markers.add(Marker(
-          markerId: MarkerId('custom'), position: position, icon: flagIcon));
+      _addCustomLocationMarker();
     }
 
-    return Stack(
-      children: [
-        GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(
-              widget.state.location.lat,
-              widget.state.location.lng,
-            ),
-            zoom: defaultZoom,
-            bearing: defaultBearing,
-          ),
-          onMapCreated: _onMapCreated,
-          onLongPress: _onMapPressed,
-          markers: markers,
-          // widget.state.cafes
-          //     .map(
-          //       (c) => Marker(
-          //         markerId: MarkerId(c.placeId),
-          //         icon: cafeIcon,
-          //         position: LatLng(c.location.lat, c.location.lng),
-          //         infoWindow: InfoWindow(
-          //           title: c.name,
-          //           snippet: c.address,
-          //           onTap: () {}, //todo detail
-          //         ),
-          //       ),
-          //     )
-          //     .toSet(),          // polygons: widget.state.customLocation
-          //     ? _createCustomLocationPolygon()
-          //     : null,
-          myLocationEnabled: true,
-          myLocationButtonEnabled: false,
-          mapToolbarEnabled: false,
-          compassEnabled: true,
-          rotateGesturesEnabled: true,
-        ),
-        Positioned(
-          right: 10,
-          bottom: 10,
-          child: FloatingActionButton(
-            onPressed: () {
-              context
-                  .bloc<MapBloc>()
-                  .add(SetCurrentLocation(filter: widget.state.filter));
-              _moveToCurrentLocation();
+    final tr = I18n.of(context);
+
+    return BlocListener<MapBloc, MapBlocState>(
+      listener: (context, state) {
+        state.maybeMap(
+            loaded: (loaded) {
+              if (loaded.customLocation) {
+                if (loaded.cafes.isEmpty) {
+                  context.showNotificationWithLoadingSnackBar(
+                      text: tr.notification_loading);
+                } else {
+                  context.showNotificationSnackBar(
+                      text: tr.notification_cafesCoundLoaded(
+                    loaded.cafes.length.toString(),
+                  ));
+                }
+              }
             },
-            child: Icon(
-              FontAwesomeIcons.crosshairs,
-              color: Colors.white,
+            orElse: () {});
+      },
+      child: Stack(
+        children: [
+          GoogleMap(
+            mapType: MapType.normal,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                widget.state.location.lat,
+                widget.state.location.lng,
+              ),
+              zoom: defaultZoom,
+              bearing: defaultBearing,
             ),
+            onMapCreated: _onMapCreated,
+            onLongPress: _onMapPressed,
+            markers: _markers,
+            myLocationEnabled: true,
+            myLocationButtonEnabled: false,
+            mapToolbarEnabled: false,
+            compassEnabled: true,
+            rotateGesturesEnabled: true,
           ),
-        )
-      ],
+          Positioned(
+            right: 10,
+            bottom: 10,
+            child: FloatingActionButton(
+              onPressed: () {
+                context
+                    .bloc<MapBloc>()
+                    .add(SetCurrentLocation(filter: widget.state.filter));
+                _moveToCurrentLocation();
+              },
+              child: Icon(
+                FontAwesomeIcons.crosshairs,
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -64,6 +64,8 @@
     "notification": {
         "_favoriteAdded": "Přidáno k oblíbeným",
         "_favoriteRemoved": "Odebráno z oblíbených",
-        "_reviewAdded": "Děkuji. Hodnocení zaznamenáno."
+        "_reviewAdded": "Děkuji. Hodnocení zaznamenáno.",
+        "_loading": "Načítání...",
+        "_cafesCoundLoaded": "Bylo nalezeno {count} kaváren."
     }
 }

@@ -11,14 +11,34 @@ extension ContextExtension on BuildContext {
         ? tr.notification_favoriteAdded
         : tr.notification_favoriteRemoved;
 
-    showNotifcationSnackBar(text: text);
+    showNotificationSnackBar(text: text);
   }
 
-  void showNotifcationSnackBar({@required String text}) {
+  void showNotificationSnackBar({
+    @required String text,
+    Duration duration = const Duration(seconds: 1),
+  }) {
     Scaffold.of(this).showSnackBar(SnackBar(
       backgroundColor: Theme.of(this).accentColor,
       content: Text(text),
-      duration: const Duration(seconds: 1),
+      duration: duration,
+    ));
+  }
+
+  void showNotificationWithLoadingSnackBar({
+    @required String text,
+    Duration duration = const Duration(seconds: 1),
+  }) {
+    Scaffold.of(this).showSnackBar(SnackBar(
+      backgroundColor: Theme.of(this).accentColor,
+      content: Row(
+        children: [
+          const CircularProgressIndicator(strokeWidth: 2),
+          const SizedBox(width: 2),
+          Text(text),
+        ],
+      ),
+      duration: duration,
     ));
   }
 }

@@ -16,8 +16,6 @@ Future setupLocalization() async {
   Intl.defaultLocale = await findSystemLocale();
 }
 
-Logger blocLogger;
-
 void main() async {
   await setupLocalization();
 
@@ -33,7 +31,6 @@ void main() async {
   //Setup Bloc logger
   if (kDebugMode) {
     BlocSupervisor.delegate = SimpleBlocDelegate();
-    blocLogger = getLogger('Bloc');
   }
 
   runApp(App());
@@ -43,6 +40,6 @@ class SimpleBlocDelegate extends BlocDelegate {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    blocLogger.i(transition);
+    getLogger(bloc.runtimeType.toString()).i(transition);
   }
 }

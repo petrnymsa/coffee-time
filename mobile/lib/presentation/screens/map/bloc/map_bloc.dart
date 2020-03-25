@@ -48,14 +48,26 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
       orElse: () => null,
     );
 
+    final customLocation = state.maybeMap(
+      loaded: (l) => l.customLocation,
+      orElse: () => null,
+    );
+
     if (location == null) {
       yield* _mapSetCurrentLocation(SetCurrentLocation(filter: filter));
     } else {
-      yield* _mapSetLocation(SetLocation(location, filter: filter));
+      yield await _getAllNearbyAndMapState(location, event.filter,
+          customLocation: customLocation ?? false);
     }
   }
 
   Stream<MapBlocState> _mapSetLocation(SetLocation event) async* {
+    yield Loaded(
+      location: event.location,
+      cafes: [],
+      filter: event.filter,
+      customLocation: true,
+    );
     yield await _getAllNearbyAndMapState(event.location, event.filter,
         customLocation: true);
   }

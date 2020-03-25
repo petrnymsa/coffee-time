@@ -33,7 +33,7 @@ void setupContainer() {
   );
   sl.registerFactory<TabsBloc>(() => TabsBloc());
   sl.registerFactory<FilterBloc>(() => FilterBloc(tagRepository: sl()));
-  sl.registerLazySingleton<FavoritesBloc>(
+  sl.registerFactory<FavoritesBloc>(
     () => FavoritesBloc(cafeRepository: sl(), cafeListBloc: sl()),
   );
   sl.registerLazySingleton<MapBloc>(
