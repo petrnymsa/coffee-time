@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:coffee_time/generated/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +11,7 @@ import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
 import '../../../../domain/entities/location.dart';
 import '../../../../domain/services/location_service.dart';
+import '../../../../generated/i18n.dart';
 import '../../../core/notification_helper.dart';
 import '../../detail/bloc/bloc.dart' as detail_bloc;
 import '../../detail/screen.dart';
