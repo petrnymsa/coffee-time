@@ -13,8 +13,6 @@ class ShellConfiguration {
         return I18n.of(context).tabs_favorites;
       case AppTabKey.map:
         return I18n.of(context).tabs_map;
-      case AppTabKey.settings:
-        return I18n.of(context).tabs_settings;
       default:
         return 'unknown';
     }
@@ -28,8 +26,6 @@ class ShellConfiguration {
         return FontAwesomeIcons.heart;
       case AppTabKey.map:
         return FontAwesomeIcons.map;
-      case AppTabKey.settings:
-        return FontAwesomeIcons.cog;
       default:
         return FontAwesomeIcons.question;
     }

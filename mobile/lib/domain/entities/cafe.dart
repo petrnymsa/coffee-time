@@ -10,6 +10,7 @@ class Cafe extends Equatable {
   final Location location;
   final String iconUrl;
   final double rating;
+  final int priceLevel;
   final bool openNow;
   final String address;
   final List<TagReputation> tags;
@@ -23,6 +24,7 @@ class Cafe extends Equatable {
     this.location,
     this.iconUrl,
     this.rating,
+    this.priceLevel,
     this.openNow,
     this.address,
     this.tags,
@@ -36,6 +38,7 @@ class Cafe extends Equatable {
     Location location,
     String iconUrl,
     double rating,
+    int priceLevel,
     bool openNow,
     String address,
     List<TagReputation> tags,
@@ -48,6 +51,7 @@ class Cafe extends Equatable {
       location: location ?? this.location,
       iconUrl: iconUrl ?? this.iconUrl,
       rating: rating ?? this.rating,
+      priceLevel: priceLevel ?? this.priceLevel,
       openNow: openNow ?? this.openNow,
       address: address ?? this.address,
       tags: tags ?? this.tags,
@@ -58,7 +62,7 @@ class Cafe extends Equatable {
 
   @override
   String toString() {
-    return '''CafeEntity placeId: $placeId, name: $name, location: $location, iconUrl: $iconUrl, rating: $rating, openNow: $openNow, address: $address, tags: $tags, photos: $photos, isFavorite: $isFavorite''';
+    return '''CafeEntity placeId: $placeId, name: $name, location: $location, iconUrl: $iconUrl, rating: $rating, priceLevel: $priceLevel, openNow: $openNow, address: $address, tags: $tags, photos: $photos, isFavorite: $isFavorite''';
   }
 
   @override
@@ -68,6 +72,7 @@ class Cafe extends Equatable {
         location,
         iconUrl,
         rating,
+        priceLevel,
         openNow,
         address,
         tags,

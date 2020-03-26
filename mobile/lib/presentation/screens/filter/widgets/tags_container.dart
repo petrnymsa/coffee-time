@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../generated/i18n.dart';
+import '../../../core/blocs/filter/bloc.dart';
 import '../../../shared/shared_widgets.dart';
 import '../../tags_choose/bloc/bloc.dart';
 import '../../tags_choose/screen.dart';
-import '../bloc/bloc.dart';
 
 class TagsContainer extends StatelessWidget {
   final FilterBlocState state;

@@ -14,6 +14,7 @@ class CafeModel extends Equatable {
   final LocationModel location;
   final String iconUrl;
   final double rating;
+  final int priceLevel;
   final bool openNow;
   final String address;
   final List<TagReputationModel> tags;
@@ -24,6 +25,7 @@ class CafeModel extends Equatable {
     @required this.location,
     @required this.iconUrl,
     @required this.rating,
+    @required this.priceLevel,
     @required this.openNow,
     @required this.address,
     @required this.tags,
@@ -37,6 +39,7 @@ class CafeModel extends Equatable {
       'geometry': {'location': location.toJson()},
       'icon': iconUrl,
       'rating': rating,
+      'price_level': priceLevel,
       'opening_hours': {'open_now': openNow},
       'formatted_address': address,
       'tags': List<dynamic>.from(tags.map((x) => x.toJson())),
@@ -53,6 +56,7 @@ class CafeModel extends Equatable {
       location: LocationModel.fromJson(map['geometry']['location']),
       iconUrl: map['icon'],
       rating: map['rating']?.toDouble(),
+      priceLevel: map['price_level']?.toInt(),
       openNow: map['opening_hours'] != null
           ? map['opening_hours']['open_now']
           : null,
@@ -72,6 +76,7 @@ class CafeModel extends Equatable {
     LocationModel location,
     String iconUrl,
     double rating,
+    int priceLevel,
     bool openNow,
     String address,
     List<TagReputationModel> tags,
@@ -83,6 +88,7 @@ class CafeModel extends Equatable {
       location: location ?? this.location,
       iconUrl: iconUrl ?? this.iconUrl,
       rating: rating ?? this.rating,
+      priceLevel: priceLevel ?? this.priceLevel,
       openNow: openNow ?? this.openNow,
       address: address ?? this.address,
       tags: tags ?? this.tags,
@@ -93,7 +99,7 @@ class CafeModel extends Equatable {
   @override
   String toString() {
     return '''CafeModel placeId: $placeId, name: $name, location: $location, 
-    iconUrl: $iconUrl, rating: $rating, openNow: $openNow, address: $address, tags: $tags, photo: $photo''';
+    iconUrl: $iconUrl, rating: $rating, priceLevel: $priceLevel, openNow: $openNow, address: $address, tags: $tags, photo: $photo''';
   }
 
   @override
@@ -103,6 +109,7 @@ class CafeModel extends Equatable {
         location,
         iconUrl,
         rating,
+        priceLevel,
         openNow,
         address,
         tags,
@@ -119,6 +126,7 @@ class CafeModel extends Equatable {
         location: location.toEntity(),
         iconUrl: iconUrl,
         rating: rating,
+        priceLevel: priceLevel,
         openNow: openNow,
         address: address,
         tags: tags

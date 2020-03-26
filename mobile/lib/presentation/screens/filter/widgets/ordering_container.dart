@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/filter.dart';
 import '../../../../generated/i18n.dart';
+import '../../../core/blocs/filter/bloc.dart';
 import '../../../shared/shared_widgets.dart';
-import '../bloc/bloc.dart';
 
 class OrderingContainer extends StatelessWidget {
   final FilterOrdering ordering;

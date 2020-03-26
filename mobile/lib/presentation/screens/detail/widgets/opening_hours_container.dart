@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/opening_hour.dart';
 import '../../../../generated/i18n.dart';
-import '../../../models/opening_hour.dart';
 import '../../../shared/shared_widgets.dart';
+import '../models/opening_time.dart';
 import 'opening_hours_table.dart';
 
 class OpeningHoursContainer extends StatelessWidget {
@@ -38,9 +38,13 @@ class OpeningHoursContainer extends StatelessWidget {
   Map<int, OpeningTime> _mapOpeningHoursToViewModel() {
     final result = <int, OpeningTime>{};
 
-    for (final p in openingHours.periods) {
+    for (var p in openingHours.periods) {
+      if (p.isNonStop) {
+        result[p.open.day] = OpeningTime.nonStop();
+        continue;
+      }
       final open = p.open.toHourMinuteParts();
-      final close = p.close.toHourMinuteParts();
+      final close = p.close?.toHourMinuteParts() ?? [0, 0];
 
       result[p.open.day] = OpeningTime(
         opening: HourMinute(open[0], open[1]),

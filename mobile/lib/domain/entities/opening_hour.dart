@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 class DayTime extends Equatable {
   final int day;
@@ -37,8 +38,10 @@ class Period extends Equatable {
   final DayTime open;
   final DayTime close;
 
+  bool get isNonStop => close == null && open.time == '0000';
+
   Period({
-    this.open,
+    @required this.open,
     this.close,
   });
 

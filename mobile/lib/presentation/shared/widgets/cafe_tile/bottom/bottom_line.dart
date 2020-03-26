@@ -6,6 +6,7 @@ import '../../../../../domain/entities/cafe.dart';
 import '../../../../../domain/entities/location.dart';
 import '../../../../../domain/services/location_service.dart';
 import '../../../../../generated/i18n.dart';
+import '../../../shared_widgets.dart';
 
 class BottomLine extends StatelessWidget {
   final Cafe cafe;
@@ -19,13 +20,26 @@ class BottomLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final iconTextStyle = TextStyle(
+        color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300);
     return Row(
       children: <Widget>[
+        if (cafe.priceLevel != null)
+          Text(
+            I18n.of(context).price,
+            style: TextStyle(
+              color: Colors.black54,
+              fontSize: 14,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        if (cafe.priceLevel != null) Pricing(cafe.priceLevel),
         Spacer(),
         Icon(
           FontAwesomeIcons.walking,
           size: 14,
-          color: Theme.of(context).accentColor,
+          color: theme.accentColor,
         ),
         FutureBuilder(
           future: _distance(),
@@ -33,11 +47,7 @@ class BottomLine extends StatelessWidget {
             if (snapshot.hasData) {
               return Text(
                 '${snapshot.data.toInt()} m',
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                ),
+                style: iconTextStyle,
               );
             }
             if (snapshot.hasError) {
@@ -50,15 +60,14 @@ class BottomLine extends StatelessWidget {
         Icon(
           FontAwesomeIcons.clock,
           size: 14,
-          color: Theme.of(context).accentColor,
+          color: theme.accentColor,
         ),
         SizedBox(width: 4),
         Text(
           cafe.openNow != null && cafe.openNow
               ? I18n.of(context).openingHours_open
               : I18n.of(context).openingHours_closed,
-          style: TextStyle(
-              color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
+          style: iconTextStyle,
         ),
       ],
     );

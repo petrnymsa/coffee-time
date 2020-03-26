@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
+import '../../../core/blocs/favorites/bloc.dart' as favorites;
 import '../../../core/notification_helper.dart';
 import '../../../shared/shared_widgets.dart';
 import '../../detail/bloc/detail_bloc.dart';
@@ -18,6 +19,38 @@ class CafeList extends StatelessWidget {
     Key key,
     @required this.state,
   }) : super(key: key);
+
+  void _onToggleFavorite(BuildContext context, Cafe cafe) {
+    //  context.bloc<CafeListBloc>().add(ToggleFavorite(cafeId: cafe.placeId));
+    context
+        .bloc<favorites.FavoritesBloc>()
+        .add(favorites.ToggleFavorite(cafe.placeId));
+    context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
+  }
+
+  bool _handleScrollNotification(
+      BuildContext context, Notification notification) {
+    if (notification is ScrollEndNotification &&
+        notification.metrics.extentAfter == 0) {
+      context.bloc<CafeListBloc>().add(
+          LoadNext(pageToken: state.nextPageToken, filter: state.actualFilter));
+    }
+
+    return false;
+  }
+
+  void _onTileTap(BuildContext context, Cafe cafe) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => BlocProvider<DetailBloc>(
+          create: (_) => sl.get<DetailBloc>(
+            param1: cafe,
+          )..add(detail_events.Load()),
+          child: DetailScreen(),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,35 +93,6 @@ class CafeList extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  void _onToggleFavorite(BuildContext context, Cafe cafe) {
-    context.bloc<CafeListBloc>().add(ToggleFavorite(cafeId: cafe.placeId));
-    context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
-  }
-
-  bool _handleScrollNotification(
-      BuildContext context, Notification notification) {
-    if (notification is ScrollEndNotification &&
-        notification.metrics.extentAfter == 0) {
-      context.bloc<CafeListBloc>().add(
-          LoadNext(pageToken: state.nextPageToken, filter: state.actualFilter));
-    }
-
-    return false;
-  }
-
-  void _onTileTap(BuildContext context, Cafe cafe) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => BlocProvider<DetailBloc>(
-          create: (_) => sl.get<DetailBloc>(
-            param1: cafe,
-          )..add(detail_events.Load()),
-          child: DetailScreen(),
-        ),
-      ),
     );
   }
 }

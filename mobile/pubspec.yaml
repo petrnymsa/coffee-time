@@ -1,7 +1,7 @@
 name: coffee_time
 description: Find your nearest and best cafe for you
 
-version: 0.1.0
+version: 0.2.0+4
 
 environment:
   sdk: '>2.6.0 <3.0.0'
@@ -50,9 +50,9 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/mock/cafe.json
-    - assets/mock/cafe_detail.json
     - assets/table.jpg
+    - assets/coffee-shop-marker.png
+    - assets/flag.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   fonts:

@@ -89,7 +89,7 @@ class PeriodModel extends Equatable {
   @override
   List<Object> get props => [open, close];
 
-  Period toEntity() => Period(close: close.toEntity(), open: open.toEntity());
+  Period toEntity() => Period(close: close?.toEntity(), open: open.toEntity());
 }
 
 class OpeningHoursModel extends Equatable {

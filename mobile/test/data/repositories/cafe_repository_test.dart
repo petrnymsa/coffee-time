@@ -29,6 +29,29 @@ class MockPhotoService extends Mock implements PhotoService {}
 
 class MockTagRepository extends Mock implements TagRepository {}
 
+class ControlledFakeCafeService extends Fake implements CafeService {
+  int currentCallCount = 0;
+  static const maxCallCount = 2;
+  List<String> tokens = ['1', '2'];
+
+  @override
+  Future<NearbyResultModel> getNearBy(Location location,
+      {String language, int radius, bool openNow, String pageToken}) async {
+    var nextToken;
+    if (currentCallCount == 0 && pageToken == null) {
+      nextToken = tokens[currentCallCount];
+    }
+
+    if (currentCallCount < maxCallCount) {
+      nextToken = tokens[currentCallCount];
+    }
+
+    final model = cafeModelExample();
+    currentCallCount++;
+    return NearbyResultModel(cafes: [model], nextPageToken: nextToken);
+  }
+}
+
 void main() {
   MockCafeService mockCafeService;
   MockPhotoService mockPhotoService;
@@ -195,6 +218,80 @@ void main() {
               isFavorite: true, allTags: allTags, photoUrl: photoUrl)
         ]))),
       );
+    });
+  });
+
+  group('getAllNearby', () {
+    test('Only one page is available, should return', () async {
+      final expectedCafe =
+          cafeModelExample(openNow: true, tags: [tagReputationExample()]);
+      when(
+        mockCafeService.getNearBy(Location(1, 1),
+            language: argThat(isInstanceOf<String>(), named: 'language'),
+            openNow: anyNamed('openNow'),
+            pageToken: anyNamed('pageToken')),
+      ).thenAnswer((_) async => NearbyResultModel(cafes: [expectedCafe]));
+      when(mockTagRepository.getAll())
+          .thenAnswer((_) async => Left([...allTags]));
+
+      final result =
+          await repository.getAllNearby(Location(1, 1), filter: Filter());
+
+      expect(
+        result,
+        equals(Left<List<Cafe>, Failure>([
+          expectedCafe.toEntity(
+              isFavorite: true, allTags: allTags, photoUrl: photoUrl)
+        ])),
+      );
+    });
+
+    test('More than one page is available, should return', () async {
+      final controlledFakeService = ControlledFakeCafeService();
+      repository = CafeRepositoryImpl(
+        cafeService: controlledFakeService,
+        tagRepository: mockTagRepository,
+        photoService: mockPhotoService,
+        favoriteService: mockFavoriteService,
+      );
+      final location = Location(1, 1);
+      final filter = Filter();
+
+      when(mockTagRepository.getAll())
+          .thenAnswer((_) async => Left([...allTags]));
+
+      final result = await repository.getAllNearby(location, filter: filter);
+
+      final cafe = cafeEntityExample(
+          isFavorite: true, allTags: allTags, photoUrl: photoUrl);
+      expect(
+        result,
+        equals(Left<List<Cafe>, Failure>([cafe, cafe, cafe])),
+      );
+
+      verifyInOrder([
+        controlledFakeService.getNearBy(location, pageToken: null),
+        controlledFakeService.getNearBy(location, pageToken: '1'),
+        controlledFakeService.getNearBy(location, pageToken: '2'),
+      ]);
+    });
+
+    test('When service fails, should return failure', () async {
+      when(
+        mockCafeService.getNearBy(Location(1, 1),
+            language: argThat(isInstanceOf<String>(), named: 'language'),
+            openNow: anyNamed('openNow'),
+            pageToken: anyNamed('pageToken')),
+      ).thenThrow(ApiException(body: 'fail', statusCode: 400));
+
+      final result = await repository.getAllNearby(Location(1, 1));
+
+      expect(
+          result,
+          equals(Right<List<Cafe>, Failure>(
+            ServiceFailure('Call to nearby service failed',
+                inner: ApiException(body: 'fail', statusCode: 400)),
+          )));
     });
   });
 

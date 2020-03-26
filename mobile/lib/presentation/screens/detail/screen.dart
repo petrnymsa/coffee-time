@@ -62,7 +62,7 @@ class DetailScreen extends StatelessWidget {
     );
 
     if (tagsToUpdate != null) {
-      context.showNotifcationSnackBar(
+      context.showNotificationSnackBar(
           text: I18n.of(context).notification_reviewAdded);
       context
           .bloc<DetailBloc>()

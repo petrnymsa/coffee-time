@@ -13,6 +13,9 @@ abstract class CafeRepository {
   Future<Either<NearbyResult, Failure>> getNearby(Location location,
       {Filter filter, String pageToken});
 
+  Future<Either<List<Cafe>, Failure>> getAllNearby(Location location,
+      {Filter filter});
+
   Future<Either<List<Cafe>, Failure>> search(String search, {Filter filter});
 
   Future<Either<List<Cafe>, Failure>> getFavorites();

@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/filter.dart';
 import '../../../../generated/i18n.dart';
+import '../../../core/blocs/filter/bloc.dart';
 import '../../../shared/shared_widgets.dart';
-import '../bloc/bloc.dart';
 
 class OpeningHoursContainer extends StatelessWidget {
   final Filter filter;
@@ -26,9 +26,12 @@ class OpeningHoursContainer extends StatelessWidget {
           Row(
             children: <Widget>[
               Switch(
-                value: filter.onlyOpen, //model.filter.onlyOpen,
-                onChanged: (value) =>
-                    context.bloc<FilterBloc>().add(ChangeOpeningHour()),
+                value: filter.onlyOpen,
+                onChanged: (value) {
+                  final b = BlocProvider.of<FilterBloc>(context);
+                  b.add(ChangeOpeningHour());
+                  //context.bloc<FilterBloc>().add(ChangeOpeningHour());
+                },
               ),
               GestureDetector(
                 onTap: () =>

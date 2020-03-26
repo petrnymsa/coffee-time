@@ -36,6 +36,8 @@ class I18n implements WidgetsLocalizations {
   String get refresh => "Refresh";
   /// "Confirm"
   String get confirm => "Confirm";
+  /// "Price"
+  String get price => "Price";
   /// "Oops, something went wrong."
   String get somethingWrong => "Oops, something went wrong.";
   /// "Cafes"
@@ -116,6 +118,10 @@ class I18n implements WidgetsLocalizations {
   String get notification_favoriteRemoved => "Removed from favorites";
   /// "Thank you. Review noted."
   String get notification_reviewAdded => "Thank you. Review noted.";
+  /// "Loading..."
+  String get notification_loading => "Loading...";
+  /// "Found ${count} cafes arround."
+  String notification_cafesCoundLoaded(String count) => "Found ${count} cafes arround.";
 }
 
 class _I18n_en_US extends I18n {
@@ -134,6 +140,9 @@ class _I18n_cs_CZ extends I18n {
   /// "Potvrdit"
   @override
   String get confirm => "Potvrdit";
+  /// "Cena"
+  @override
+  String get price => "Cena";
   /// "Jejda! Něco se pokazilo."
   @override
   String get somethingWrong => "Jejda! Něco se pokazilo.";
@@ -254,6 +263,12 @@ class _I18n_cs_CZ extends I18n {
   /// "Děkuji. Hodnocení zaznamenáno."
   @override
   String get notification_reviewAdded => "Děkuji. Hodnocení zaznamenáno.";
+  /// "Načítání..."
+  @override
+  String get notification_loading => "Načítání...";
+  /// "Bylo nalezeno ${count} kaváren."
+  @override
+  String notification_cafesCoundLoaded(String count) => "Bylo nalezeno ${count} kaváren.";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;
