@@ -13,6 +13,7 @@ import '../../../../domain/failure.dart';
 import '../../../../domain/repositories/cafe_repository.dart';
 import '../../../../domain/repositories/nearby_result.dart';
 import '../../../../domain/services/location_service.dart';
+import '../../../core/blocs/favorites/bloc.dart' as favorites;
 import './cafelist_event.dart';
 import './cafelist_state.dart';
 
@@ -23,11 +24,18 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
 
   List<String> _issuedTokens = [];
 
+  final favorites.FavoritesBloc favoritesBloc;
+
+  StreamSubscription<favorites.FavoritesBlocState> _favoritesBlocSubscription;
+
   CafeListBloc({
     @required CafeRepository cafeRepository,
     @required LocationService locationService,
+    @required this.favoritesBloc,
   })  : _cafeRepository = cafeRepository,
-        _locationService = locationService;
+        _locationService = locationService {
+    _favoritesBlocSubscription = favoritesBloc.listen(_onFavoritesStateChanged);
+  }
 
   @override
   CafeListState get initialState => Loading();
@@ -37,10 +45,25 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     yield* event.map(
       loadNext: _mapLoadNext,
       refresh: _mapRefresh,
-      toggleFavorite: _mapToggleFavorite,
       setFavorite: _mapSetFavorite,
       updateTags: _mapUpdateTags,
     );
+  }
+
+  void _onFavoritesStateChanged(favorites.FavoritesBlocState favoritesState) {
+    final lastUpdate = favoritesState.maybeMap(
+      loaded: (l) => l,
+      orElse: () => null,
+    );
+    //if favorites updated -> update screen
+    if (lastUpdate?.lastCafeId != null) {
+      add(SetFavorite(
+        cafeId: lastUpdate.lastCafeId,
+        isFavorite: lastUpdate.lastCafeIsFavorite,
+      ));
+    }
+    getLogger(runtimeType.toString())
+        .w('Got favorites state change: ${favoritesState.runtimeType}');
   }
 
   Stream<CafeListState> _mapLoadNext(LoadNext event) async* {
@@ -84,27 +107,6 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     final result =
         await _cafeRepository.getNearby(location, filter: event.filter);
     yield _mapCafeResultToState(result, event.filter, location);
-  }
-
-  Stream<CafeListState> _mapToggleFavorite(ToggleFavorite event) async* {
-    final result = await _cafeRepository.toggleFavorite(event.cafeId);
-
-    yield result.when(
-      left: (isFavorite) => state.maybeMap(
-          loaded: (loaded) {
-            final cafes = loaded.cafes;
-            final newCafes = cafes.map((cafe) {
-              if (cafe.placeId == event.cafeId) {
-                return cafe.copyWith(isFavorite: isFavorite);
-              }
-              return cafe;
-            }).toList();
-            return loaded.copyWith(cafes: newCafes);
-          },
-          orElse: () => CafeListState.failure(
-              'Wrong state when ToggleFavorite called. State was: $state')),
-      right: (failure) => CafeListState.failure(_mapFailureToMessage(failure)),
-    );
   }
 
   Stream<CafeListState> _mapSetFavorite(SetFavorite event) async* {
@@ -164,5 +166,11 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
       notFound: () => 'Not found',
       serviceFailure: (msg, inner) => 'Service Failed: $msg.\nInner: $inner',
     );
+  }
+
+  @override
+  Future<void> close() {
+    _favoritesBlocSubscription?.cancel();
+    return super.close();
   }
 }

@@ -11,8 +11,6 @@ abstract class CafeListEvent with _$CafeListEvent {
       {String pageToken, @Default(Filter()) Filter filter}) = LoadNext;
   const factory CafeListEvent.refresh({@Default(Filter()) Filter filter}) =
       Refresh;
-  const factory CafeListEvent.toggleFavorite({@required String cafeId}) =
-      ToggleFavorite;
   const factory CafeListEvent.setFavorite(
       {@required String cafeId, @required bool isFavorite}) = SetFavorite;
   const factory CafeListEvent.updateTags(

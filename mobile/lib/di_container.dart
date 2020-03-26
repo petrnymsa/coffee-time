@@ -14,11 +14,11 @@ import 'domain/entities/cafe.dart';
 import 'domain/repositories/cafe_repository.dart';
 import 'domain/repositories/tags_repository.dart';
 import 'domain/services/location_service.dart';
+import 'presentation/core/blocs/favorites/favorites_bloc.dart';
 import 'presentation/core/blocs/filter/bloc.dart';
 import 'presentation/core/blocs/tabs/bloc.dart';
 import 'presentation/screens/cafe_list/bloc/cafelist_bloc.dart';
 import 'presentation/screens/detail/bloc/detail_bloc.dart';
-import 'presentation/screens/favorites/bloc/bloc.dart';
 import 'presentation/screens/map/bloc/map_bloc.dart';
 
 final GetIt sl = GetIt.I;
@@ -29,19 +29,24 @@ void setupContainer() {
     () => CafeListBloc(
       locationService: sl(),
       cafeRepository: sl(),
+      favoritesBloc: sl(),
     ),
   );
   sl.registerFactory<TabsBloc>(() => TabsBloc());
   sl.registerFactory<FilterBloc>(() => FilterBloc(tagRepository: sl()));
-  sl.registerFactory<FavoritesBloc>(
-    () => FavoritesBloc(cafeRepository: sl(), cafeListBloc: sl()),
+  sl.registerLazySingleton<FavoritesBloc>(
+    () => FavoritesBloc(cafeRepository: sl()),
   );
   sl.registerLazySingleton<MapBloc>(
     () => MapBloc(cafeRepository: sl(), locationService: sl()),
   );
   sl.registerFactoryParam<DetailBloc, Cafe, dynamic>(
-    (cafe, _) =>
-        DetailBloc(cafe: cafe, cafeListBloc: sl(), cafeRepository: sl()),
+    (cafe, _) => DetailBloc(
+      cafe: cafe,
+      cafeListBloc: sl(),
+      cafeRepository: sl(),
+      favoritesBloc: sl(),
+    ),
   );
 
   // * Services

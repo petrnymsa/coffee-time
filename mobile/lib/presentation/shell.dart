@@ -3,13 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../core/utils/string_utils.dart';
-import '../di_container.dart';
 import 'core/blocs/filter/bloc.dart';
 import 'core/blocs/tabs/bloc.dart';
 import 'models/app_tab.dart';
 import 'screens/cafe_list/bloc/bloc.dart' as cafe_list_bloc;
 import 'screens/cafe_list/screen.dart';
-import 'screens/favorites/bloc/bloc.dart' as favorites_bloc;
 import 'screens/favorites/screen.dart';
 import 'screens/filter/screen.dart';
 import 'screens/map/bloc/bloc.dart' as map_bloc;
@@ -101,10 +99,7 @@ class Shell extends StatelessWidget {
         return MapScreen();
         break;
       case AppTabKey.favorites:
-        return BlocProvider(
-            create: (_) =>
-                sl<favorites_bloc.FavoritesBloc>()..add(favorites_bloc.Load()),
-            child: FavoritesScreen());
+        return FavoritesScreen();
         break;
       default:
         return Center(

@@ -1,18 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/either.dart';
 import '../../../../domain/failure.dart';
 import '../../../../domain/repositories/cafe_repository.dart';
-import '../../cafe_list/bloc/cafelist_bloc.dart';
-import '../../cafe_list/bloc/cafelist_event.dart' as cafe_list_events;
 import 'favorites_bloc_event.dart';
 import 'favorites_bloc_state.dart';
 
 class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState> {
-  final CafeListBloc cafeListBloc;
   final CafeRepository cafeRepository;
 
-  FavoritesBloc({@required this.cafeListBloc, @required this.cafeRepository});
+  FavoritesBloc({@required this.cafeRepository});
 
   @override
   FavoritesBlocState get initialState => Loading();
@@ -29,34 +27,46 @@ class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState> {
     final result = await cafeRepository.getFavorites();
 
     yield result.when(
-        left: (cafes) => Loaded(cafes),
+        left: (cafes) => Loaded(cafes: cafes),
         right: (failure) =>
             FavoritesBlocState.failure(_mapFailureToMessage(failure)));
   }
 
   Stream<FavoritesBlocState> _mapToggleFavorite(ToggleFavorite event) async* {
-    final result = await cafeRepository.toggleFavorite(event.id);
+    final isFavoriteResult = await cafeRepository.toggleFavorite(event.id);
+
+    if (isFavoriteResult is Failure) {
+      final failure = (isFavoriteResult as Failure);
+      yield FavoritesBlocState.failure(_mapFailureToMessage(failure));
+      return;
+    }
+    final isFavorite = (isFavoriteResult as Left<bool, Failure>).left;
+
+    yield state.maybeMap(
+      loaded: (loaded) {
+        final cafes = loaded.cafes.map((c) {
+          if (c.placeId == event.id) {
+            return c.copyWith(isFavorite: isFavorite);
+          }
+          return c;
+        }).toList();
+
+        return loaded.copyWith(
+          cafes: cafes,
+          lastCafeId: event.id,
+          lastCafeIsFavorite: isFavorite,
+        );
+      },
+      orElse: () => FavoritesBlocState.failure('Forbidden state $state'),
+    );
+
+    //todo improvement -> get first favoritesIds and then make difference
+    //* -> then exclusion call to service
+    // * this can prevent too many call to api
+    final result = await cafeRepository.getFavorites();
 
     yield result.when(
-        left: (isFavorite) {
-          //dispatch event to cafelist - refresh list
-          cafeListBloc.add(cafe_list_events.SetFavorite(
-              cafeId: event.id, isFavorite: isFavorite));
-
-          return state.maybeWhen(
-              loaded: (cafes) {
-                final newCafes = cafes.map((cafe) {
-                  if (cafe.placeId == event.id) {
-                    return cafe.copyWith(isFavorite: isFavorite);
-                  }
-                  return cafe;
-                }).toList();
-
-                return Loaded(newCafes);
-              },
-              orElse: () => FavoritesBlocState.failure(
-                  'Wrong state when ToggleFavorite called. State was: $state'));
-        },
+        left: (cafes) => Loaded(cafes: cafes),
         right: (failure) =>
             FavoritesBlocState.failure(_mapFailureToMessage(failure)));
   }
