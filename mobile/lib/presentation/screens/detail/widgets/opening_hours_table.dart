@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../generated/i18n.dart';
-import '../../../models/opening_hour.dart';
+import '../models/opening_time.dart';
 
 class OpeningHoursTable extends StatelessWidget {
   final Map<int, OpeningTime> openingHours;
@@ -11,7 +11,7 @@ class OpeningHoursTable extends StatelessWidget {
       : assert(openingHours != null),
         super(key: key);
 
-  List<String> getWeekDays() {
+  List<String> _getWeekDays() {
     final now = DateTime.now();
     final firstDayOfWeek = now.subtract(Duration(days: now.weekday - 1));
     return List.generate(7, (index) => index)
@@ -20,21 +20,30 @@ class OpeningHoursTable extends StatelessWidget {
         .toList();
   }
 
+  String _getTimeString(BuildContext context, OpeningTime time) {
+    if (time != null) {
+      return time.isNonstop ? 'nonstop' : time.toString();
+    }
+    return I18n.of(context).openingHours_closed;
+  }
+
   @override
   Widget build(BuildContext context) {
     final rows = <TableRow>[];
-    final weekDays = getWeekDays();
+    final weekDays = _getWeekDays();
     final today = DateTime.now().weekday - 1;
 
     for (var i = 0; i < weekDays.length; i++) {
       final day = weekDays[i];
       final dayIndex = i;
-      final time = openingHours[dayIndex]?.toString() ??
-          I18n.of(context).openingHours_closed;
+      final openingTime = openingHours[dayIndex];
+
+      var timeString = _getTimeString(context, openingTime);
+
       var color = Colors.black;
       var weight = FontWeight.normal;
 
-      if (openingHours[dayIndex] == null) {
+      if (openingTime == null) {
         color = Theme.of(context).accentColor;
       } else if (today == dayIndex) {
         color = Colors.cyan;
@@ -44,7 +53,7 @@ class OpeningHoursTable extends StatelessWidget {
       rows.add(TableRow(children: [
         Text(day,
             style: TextStyle(fontSize: 16, color: color, fontWeight: weight)),
-        Text(time,
+        Text(timeString,
             style: TextStyle(fontSize: 16, color: color, fontWeight: weight)),
       ]));
     }

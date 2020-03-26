@@ -16,7 +16,13 @@ class OpeningTime {
   final HourMinute opening;
   final HourMinute closing;
 
+  bool get isNonstop =>
+      closing == null && opening.hour == 0 && opening.minute == 0;
+
   const OpeningTime({this.opening, this.closing});
+
+  factory OpeningTime.nonStop() =>
+      OpeningTime(opening: HourMinute(0, 0), closing: null);
 
   @override
   String toString() {
