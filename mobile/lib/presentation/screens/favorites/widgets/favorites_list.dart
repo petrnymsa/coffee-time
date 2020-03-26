@@ -5,13 +5,12 @@ import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
 import '../../../../domain/entities/location.dart';
 import '../../../../domain/services/location_service.dart';
+import '../../../core/blocs/favorites/bloc.dart';
 import '../../../core/notification_helper.dart';
 import '../../../shared/shared_widgets.dart';
 import '../../detail/bloc/detail_bloc.dart';
 import '../../detail/bloc/detail_bloc_event.dart' as detail_events;
 import '../../detail/screen.dart';
-import '../bloc/favorites_bloc.dart';
-import '../bloc/favorites_bloc_event.dart';
 
 class FavoritesList extends StatelessWidget {
   final List<Cafe> cafes;
@@ -55,7 +54,14 @@ class FavoritesList extends StatelessWidget {
 
   void _onToggleFavorite(BuildContext context, Cafe cafe) {
     context.bloc<FavoritesBloc>().add(ToggleFavorite(cafe.placeId));
-    context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
+
+    context.showFavoriteChangedSnackBar(
+      isFavorite: cafe.isFavorite,
+      duration: const Duration(seconds: 3),
+      undoAction: () {
+        context.bloc<FavoritesBloc>().add(ToggleFavorite(cafe.placeId));
+      },
+    );
   }
 
   Future<Location> _location() => sl<LocationService>().getCurrentLocation();

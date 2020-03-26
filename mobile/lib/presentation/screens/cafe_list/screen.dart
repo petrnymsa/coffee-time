@@ -9,7 +9,7 @@ import 'widgets/widgets.dart';
 class CafeListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    getLogger('CafeListScreen').w('rebuild');
+    getLogger('CafeListScreen').i('rebuild');
     return BlocBuilder<CafeListBloc, CafeListState>(
       builder: (context, state) {
         return state.map(
@@ -21,6 +21,7 @@ class CafeListScreen extends StatelessWidget {
 
             return CafeList(state: loaded);
           },
+          //todo add to failure state current filter
           failure: (failure) => FailureContainer(
             message: failure.message,
             onRefresh: () {

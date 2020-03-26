@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
+import '../../../core/blocs/favorites/bloc.dart' as favorites;
 import '../../../core/notification_helper.dart';
 import '../../../shared/shared_widgets.dart';
 import '../../detail/bloc/detail_bloc.dart';
@@ -20,7 +21,10 @@ class CafeList extends StatelessWidget {
   }) : super(key: key);
 
   void _onToggleFavorite(BuildContext context, Cafe cafe) {
-    context.bloc<CafeListBloc>().add(ToggleFavorite(cafeId: cafe.placeId));
+    //  context.bloc<CafeListBloc>().add(ToggleFavorite(cafeId: cafe.placeId));
+    context
+        .bloc<favorites.FavoritesBloc>()
+        .add(favorites.ToggleFavorite(cafe.placeId));
     context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
   }
 

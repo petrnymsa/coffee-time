@@ -33,17 +33,6 @@ class FilterScreen extends StatelessWidget {
               onPressed: () => _handleAppBarBack(context),
             ),
           ),
-          // floatingActionButton: Builder(
-          //   builder: (ctx) => FloatingActionButton.extended(
-          //     icon: Icon(Icons.check),
-          //     label: Text(I18n.of(context).confirm),
-          //     foregroundColor: Colors.white,
-          //     onPressed: () {
-          //       context.bloc<FilterBloc>().add(Confirm());
-          //       Navigator.of(context).pop(state.filter);
-          //     },
-          //   ),
-          // ),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 60.0),
