@@ -190,7 +190,7 @@ class _MapContainerState extends State<MapContainer> {
                     .add(SetCurrentLocation(filter: widget.state.filter));
                 _moveToCurrentLocation();
               },
-              child: Icon(
+              child: FaIcon(
                 FontAwesomeIcons.crosshairs,
                 color: Colors.white,
               ),

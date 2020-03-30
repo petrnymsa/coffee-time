@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/tag.dart';
 
@@ -43,7 +44,7 @@ class TagContainer extends StatelessWidget {
                 ),
               ],
             )
-          : Icon(
+          : FaIcon(
               tag.icon,
               color: Colors.white,
               size: 16,

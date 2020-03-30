@@ -46,7 +46,7 @@ class TagsContainer extends StatelessWidget {
             I18n.of(context).detail_suggestChange,
             style: TextStyle(fontSize: 14),
           ),
-          icon: Icon(
+          icon: FaIcon(
             FontAwesomeIcons.edit,
             size: 16,
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../models/app_tab.dart';
 import '../../shell_config.dart';
@@ -22,7 +23,7 @@ class BottomTabSelector extends StatelessWidget {
           .map(
             (t) => BottomNavigationBarItem(
               backgroundColor: AppTheme.main_color,
-              icon: Icon(ShellConfiguration.tabIcon(t)),
+              icon: FaIcon(ShellConfiguration.tabIcon(t)),
               title: Text(ShellConfiguration.tabTitle(context, t)),
             ),
           )

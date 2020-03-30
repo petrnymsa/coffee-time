@@ -29,11 +29,11 @@ class TagChoice extends StatelessWidget {
           label: Text(tag.translatedTitle),
           selected: selected,
           avatar: selected
-              ? Icon(
+              ? FaIcon(
                   FontAwesomeIcons.check,
                   size: 16,
                 )
-              : Icon(tag.icon, size: 16),
+              : FaIcon(tag.icon, size: 16),
           onSelected: onSelected),
     );
   }

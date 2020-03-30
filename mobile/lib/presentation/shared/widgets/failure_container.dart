@@ -27,11 +27,11 @@ class FailureContainer extends StatelessWidget {
           if (onRefresh != null)
             FlatButton.icon(
               onPressed: onRefresh,
-              icon: Icon(
+              icon: FaIcon(
                 FontAwesomeIcons.redo,
                 size: 20,
               ),
-              label: Text('Obnovit'),
+              label: Text('Obnovit'), //todo translate
             ),
         ],
       ),

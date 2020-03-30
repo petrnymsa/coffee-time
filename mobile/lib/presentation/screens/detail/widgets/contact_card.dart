@@ -52,7 +52,7 @@ class Website extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Icon(FontAwesomeIcons.globe),
+            FaIcon(FontAwesomeIcons.globe),
             Padding(
               padding: const EdgeInsets.only(left: 5),
               child: Text(
@@ -86,7 +86,7 @@ class Phone extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 2.0),
         child: Row(
           children: <Widget>[
-            Icon(Icons.phone),
+            FaIcon(Icons.phone),
             Padding(
               padding: const EdgeInsets.only(left: 5),
               child: Text(
