@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:coffee_time/domain/services/app_permission_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -15,12 +16,16 @@ abstract class LocationService {
 
 class GeolocatorLocationService implements LocationService {
   final Geolocator _geolocator;
+  final AppPermissionProvider _locationPermissionProvider;
 
   StreamSubscription<Position> _geolocatorStream;
   StreamController<Location> _locationController;
 
-  GeolocatorLocationService({@required Geolocator geolocator})
-      : _geolocator = geolocator;
+  GeolocatorLocationService({
+    @required Geolocator geolocator,
+    @required AppPermissionProvider permissionProvider,
+  })  : _geolocator = geolocator,
+        _locationPermissionProvider = permissionProvider;
 
   Future<void> _checkAvailability() async {
     if (!await _geolocator.isLocationServiceEnabled()) {
@@ -31,7 +36,7 @@ class GeolocatorLocationService implements LocationService {
 
     if (geoPermission != GeolocationStatus.granted) {
       //request again, but can fail if user opted 'ask never again'
-      final permission = await Permission.location.request();
+      final permission = await _locationPermissionProvider.request();
 
       if (permission != PermissionStatus.granted) {
         //if so throw exception
