@@ -16,4 +16,8 @@ abstract class CafeListState with _$CafeListState {
     String nextPageToken,
   }) = Loaded;
   const factory CafeListState.failure(String message) = _Failure;
+  const factory CafeListState.failureNoLocationService() =
+      FailureNoLocationService;
+  const factory CafeListState.failureNoLocationPermission() =
+      FailureNoLocationPermission;
 }

@@ -28,6 +28,13 @@ class CafeListScreen extends StatelessWidget {
               context.bloc<CafeListBloc>().add(Refresh());
             },
           ),
+          failureNoLocationPermission: (_) => NoLocationPermission(
+            onPermissionGranted: () {
+              context.bloc<CafeListBloc>().add(Refresh());
+            },
+          ),
+          failureNoLocationService: (_) =>
+              Text('No location service available'),
         );
       },
     );

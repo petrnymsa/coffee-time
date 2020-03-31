@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:coffee_time/domain/exceptions/exceptions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
@@ -103,10 +104,16 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
   Stream<CafeListState> _mapRefresh(Refresh event) async* {
     yield Loading();
     _issuedTokens = [];
-    final location = await _locationService.getCurrentLocation();
-    final result =
-        await _cafeRepository.getNearby(location, filter: event.filter);
-    yield _mapCafeResultToState(result, event.filter, location);
+    try {
+      final location = await _locationService.getCurrentLocation();
+      final result =
+          await _cafeRepository.getNearby(location, filter: event.filter);
+      yield _mapCafeResultToState(result, event.filter, location);
+    } on NoLocationPermissionException {
+      yield FailureNoLocationPermission();
+    } on NoLocationServiceException {
+      yield FailureNoLocationService();
+    }
   }
 
   Stream<CafeListState> _mapSetFavorite(SetFavorite event) async* {

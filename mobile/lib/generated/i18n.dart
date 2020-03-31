@@ -122,6 +122,12 @@ class I18n implements WidgetsLocalizations {
   String get notification_loading => "Loading...";
   /// "Found ${count} cafes arround."
   String notification_cafesCoundLoaded(String count) => "Found ${count} cafes arround.";
+  /// "Can't open settings. Please try enable location permission manually."
+  String get notification_cantOpenAppSetting => "Can't open settings. Please try enable location permission manually.";
+  /// "No location permission granted"
+  String get failure_locationPermission_title => "No location permission granted";
+  /// "Go to settings and enable"
+  String get failure_locationPermission_refreshText => "Go to settings and enable";
 }
 
 class _I18n_en_US extends I18n {
@@ -269,6 +275,15 @@ class _I18n_cs_CZ extends I18n {
   /// "Bylo nalezeno ${count} kaváren."
   @override
   String notification_cafesCoundLoaded(String count) => "Bylo nalezeno ${count} kaváren.";
+  /// "Nastavení nelze otevřít. Zkuste povolit povolení polohy ručně."
+  @override
+  String get notification_cantOpenAppSetting => "Nastavení nelze otevřít. Zkuste povolit povolení polohy ručně.";
+  /// "Nebylo uděleno žádné povolení polohy"
+  @override
+  String get failure_locationPermission_title => "Nebylo uděleno žádné povolení polohy";
+  /// "Přejděte do nastavení a povolte"
+  @override
+  String get failure_locationPermission_refreshText => "Přejděte do nastavení a povolte";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;

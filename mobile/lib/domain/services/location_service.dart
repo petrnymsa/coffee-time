@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../entities/location.dart';
+import '../exceptions/exceptions.dart';
 
 abstract class LocationService {
   Future<Location> getCurrentLocation();
@@ -21,8 +23,28 @@ class GeolocatorLocationService implements LocationService {
   GeolocatorLocationService({@required Geolocator geolocator})
       : _geolocator = geolocator;
 
+  Future<void> _checkAvailability() async {
+    if (!await _geolocator.isLocationServiceEnabled()) {
+      throw NoLocationServiceException();
+    }
+
+    final geoPermission = await _geolocator.checkGeolocationPermissionStatus();
+
+    if (geoPermission != GeolocationStatus.granted) {
+      //request again, but can fail if user opted 'ask never again'
+      final permission = await Permission.location.request();
+
+      if (permission != PermissionStatus.granted) {
+        //if so throw exception
+        throw NoLocationPermissionException(geoPermission);
+      }
+    }
+  }
+
   @override
   Future<Location> getCurrentLocation() async {
+    await _checkAvailability();
+
     final position = await _geolocator.getCurrentPosition();
     return Location(position.latitude, position.longitude);
   }
