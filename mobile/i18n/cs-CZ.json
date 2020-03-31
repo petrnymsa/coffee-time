@@ -66,6 +66,17 @@
         "_favoriteRemoved": "Odebráno z oblíbených",
         "_reviewAdded": "Děkuji. Hodnocení zaznamenáno.",
         "_loading": "Načítání...",
-        "_cafesCoundLoaded": "Bylo nalezeno {count} kaváren."
+        "_cafesCoundLoaded": "Bylo nalezeno {count} kaváren.",
+        "_cantOpenAppSetting": "Nastavení nelze otevřít. Zkuste povolit povolení polohy ručně."
+    },
+    "failure": {
+        "_locationPermission": {
+            "_title": "Aplikace nemůže používat vaši polohu",
+            "_refreshText": "Přejít do nastavení a povolit"
+        },
+        "_locationService": {
+            "_title": "Máte vypnuté sdílení polohy",
+            "_refreshText": "Jít do nastavení a zapnout"
+        }
     }
 }

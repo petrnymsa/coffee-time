@@ -1,3 +1,4 @@
+import 'package:coffee_time/domain/services/app_permission_provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 
@@ -50,8 +51,10 @@ void setupContainer() {
   );
 
   // * Services
-  sl.registerLazySingleton<LocationService>(
-      () => GeolocatorLocationService(geolocator: Geolocator()));
+  sl.registerLazySingleton<AppPermissionProvider>(
+      () => LocationAppPermissionProvider());
+  sl.registerLazySingleton<LocationService>(() => GeolocatorLocationService(
+      geolocator: Geolocator(), permissionProvider: sl()));
   sl.registerLazySingleton<FavoriteService>(() => FavoriteLocalService());
   sl.registerLazySingleton<PhotoService>(() => PhotoServiceImpl());
   sl.registerLazySingleton<TagService>(() => CachedTagService(

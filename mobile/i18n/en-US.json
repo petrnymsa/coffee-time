@@ -66,6 +66,17 @@
         "_favoriteRemoved": "Removed from favorites",
         "_reviewAdded": "Thank you. Review noted.",
         "_loading": "Loading...",
-        "_cafesCoundLoaded": "Found {count} cafes arround."
+        "_cafesCoundLoaded": "Found {count} cafes arround.",
+        "_cantOpenAppSetting": "Can't open settings. Please try enable location permission manually."
+    },
+    "failure": {
+        "_locationPermission": {
+            "_title": "Can't use your location",
+            "_refreshText": "Go to settings and enable"
+        },
+        "_locationService": {
+            "_title": "You have location turned off",
+            "_refreshText": "Open settings and enable"
+        }
     }
 }

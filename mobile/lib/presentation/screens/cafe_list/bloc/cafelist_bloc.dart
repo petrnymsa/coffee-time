@@ -9,6 +9,7 @@ import '../../../../core/either.dart';
 import '../../../../core/utils/string_utils.dart';
 import '../../../../domain/entities/filter.dart';
 import '../../../../domain/entities/location.dart';
+import '../../../../domain/exceptions/exceptions.dart';
 import '../../../../domain/failure.dart';
 import '../../../../domain/repositories/cafe_repository.dart';
 import '../../../../domain/repositories/nearby_result.dart';
@@ -87,26 +88,35 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
       filter: event.filter,
     );
     yield result.when(
-        left: (res) => state.maybeWhen(
-            loaded: (cafes, filter, currentLocation, token) {
-              return Loaded(
-                  cafes: [...cafes, ...res.cafes],
-                  actualFilter: event.filter,
-                  currentLocation: location,
-                  nextPageToken: res.nextPageToken);
-            },
-            orElse: () => null),
-        right: (failure) =>
-            CafeListState.failure(_mapFailureToMessage(failure)));
+      left: (res) => state.maybeWhen(
+          loaded: (cafes, filter, currentLocation, token) {
+            return Loaded(
+                cafes: [...cafes, ...res.cafes],
+                actualFilter: event.filter,
+                currentLocation: location,
+                nextPageToken: res.nextPageToken);
+          },
+          orElse: () => null),
+      right: (failure) => CafeListState.failure(
+        _mapFailureToMessage(failure),
+        filter: event.filter,
+      ),
+    );
   }
 
   Stream<CafeListState> _mapRefresh(Refresh event) async* {
     yield Loading();
     _issuedTokens = [];
-    final location = await _locationService.getCurrentLocation();
-    final result =
-        await _cafeRepository.getNearby(location, filter: event.filter);
-    yield _mapCafeResultToState(result, event.filter, location);
+    try {
+      final location = await _locationService.getCurrentLocation();
+      final result =
+          await _cafeRepository.getNearby(location, filter: event.filter);
+      yield _mapCafeResultToState(result, event.filter, location);
+    } on NoLocationPermissionException {
+      yield FailureNoLocationPermission(filter: event.filter);
+    } on NoLocationServiceException {
+      yield FailureNoLocationService(filter: event.filter);
+    }
   }
 
   Stream<CafeListState> _mapSetFavorite(SetFavorite event) async* {
@@ -155,7 +165,8 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
         currentLocation: currentLocation,
         nextPageToken: nearby.nextPageToken,
       ),
-      right: (failure) => CafeListState.failure(_mapFailureToMessage(failure)),
+      right: (failure) =>
+          CafeListState.failure(_mapFailureToMessage(failure), filter: filter),
     );
   }
 
