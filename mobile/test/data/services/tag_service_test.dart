@@ -1,3 +1,4 @@
+import 'package:coffee_time/core/app_config.dart';
 import 'package:coffee_time/core/http_client_factory.dart';
 import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/data/services/tag_service.dart';
@@ -17,12 +18,15 @@ void main() {
   TagServiceImpl tagService;
   MockHttpClientFactory mockHttpClientFactory;
 
+  var config = AppConfig(apiUrl: 'http://www.test.com/api');
+
   setUp(() {
     noLogger();
 
     httpClient = MockHttpClient();
     mockHttpClientFactory = MockHttpClientFactory();
-    tagService = TagServiceImpl(clientFactory: mockHttpClientFactory);
+    tagService =
+        TagServiceImpl(clientFactory: mockHttpClientFactory, appConfig: config);
 
     when(mockHttpClientFactory.create()).thenReturn(httpClient);
   });
@@ -48,7 +52,7 @@ void main() {
   group('getAll', () {
     test('Should call GET request on right url', () {
       setupHttpClientResponseOk();
-      final url = '${ApiBase.apiBaseUrl}/tags';
+      final url = '${config.apiUrl}/tags';
 
       tagService.getAll();
 

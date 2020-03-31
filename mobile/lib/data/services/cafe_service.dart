@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
+import '../../core/app_config.dart';
 import '../../core/http_client_factory.dart';
 import '../../core/utils/query_string_builder.dart';
 import '../../domain/entities/location.dart';
@@ -29,8 +30,10 @@ abstract class CafeService {
 }
 
 class CafeServiceImpl extends ApiBase implements CafeService {
-  CafeServiceImpl({@required HttpClientFactory clientFactory})
-      : super(clientFactory: clientFactory);
+  CafeServiceImpl({
+    @required HttpClientFactory clientFactory,
+    @required AppConfig appConfig,
+  }) : super(clientFactory: clientFactory, appConfig: appConfig);
 
   @override
   Future<List<CafeModel>> findByQuery(
@@ -46,7 +49,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
       queryString..add('location', location.toString())..add('radius', radius);
     }
 
-    final url = '${ApiBase.apiBaseUrl}/$language/find?${queryString.build()}';
+    final url = '${appConfig.apiUrl}/$language/find?${queryString.build()}';
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['candidates'];
     //ignore: unnecessary_lambdas
@@ -56,7 +59,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
   @override
   Future<CafeDetailModel> getDetail(String placeId,
       {@required String language}) async {
-    final url = '${ApiBase.apiBaseUrl}/$language/detail/$placeId';
+    final url = '${appConfig.apiUrl}/$language/detail/$placeId';
 
     final data = await placesGetRequest(url);
     final result = data['result'];
@@ -85,7 +88,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
       queryString.add('radius', radius);
     }
 
-    final url = '${ApiBase.apiBaseUrl}/$language/nearby?${queryString.build()}';
+    final url = '${appConfig.apiUrl}/$language/nearby?${queryString.build()}';
 
     final data = await placesGetRequest(url);
     final List<dynamic> results = data['results'];
@@ -99,7 +102,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
   @override
   Future<CafeModel> getBasicInfo(String placeId,
       {@required String language}) async {
-    final url = '${ApiBase.apiBaseUrl}/$language/basic/$placeId';
+    final url = '${appConfig.apiUrl}/$language/basic/$placeId';
 
     final data = await placesGetRequest(url);
     final result = data['result'];
@@ -109,7 +112,7 @@ class CafeServiceImpl extends ApiBase implements CafeService {
 
   @override
   Future updateTagsForCafe(String placeId, List<TagUpdateModel> updates) async {
-    final url = '${ApiBase.apiBaseUrl}/tags/$placeId';
+    final url = '${appConfig.apiUrl}/tags/$placeId';
     final body = jsonEncode(updates);
     await postRequest(url, body);
   }

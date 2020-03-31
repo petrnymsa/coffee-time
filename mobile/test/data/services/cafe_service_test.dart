@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:coffee_time/core/app_config.dart';
 import 'package:coffee_time/core/http_client_factory.dart';
 import 'package:coffee_time/data/models/models.dart';
 import 'package:coffee_time/data/models/tag_update.dart';
@@ -24,12 +25,16 @@ void main() {
   CafeServiceImpl service;
   MockHttpClientFactory mockHttpClientFactory;
 
+  final baseUrl = 'http://www.test.com/api';
+  var appConfig = AppConfig(apiUrl: baseUrl);
+
   setUp(() {
     noLogger();
 
     mockHttpClient = MockHttpClient();
     mockHttpClientFactory = MockHttpClientFactory();
-    service = CafeServiceImpl(clientFactory: mockHttpClientFactory);
+    service = CafeServiceImpl(
+        clientFactory: mockHttpClientFactory, appConfig: appConfig);
 
     when(mockHttpClientFactory.create()).thenReturn(mockHttpClient);
   });
@@ -67,8 +72,7 @@ void main() {
 
       service.getNearBy(Location(1, 1), language: 'en-US');
 
-      verify(mockHttpClient
-          .get('${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0'));
+      verify(mockHttpClient.get('$baseUrl/en-US/nearby?location=1.0%2C1.0'));
     });
 
     test('With opennow parameter proper URL is called', () {
@@ -76,8 +80,8 @@ void main() {
 
       service.getNearBy(Location(1, 1), language: 'en-US', openNow: true);
 
-      verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&opennow'));
+      verify(mockHttpClient
+          .get('$baseUrl/en-US/nearby?location=1.0%2C1.0&opennow'));
     });
 
     test('With pagetoken parameter proper URL is called', () {
@@ -85,8 +89,8 @@ void main() {
 
       service.getNearBy(Location(1, 1), language: 'en-US', pageToken: 'abc');
 
-      verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&pagetoken=abc'));
+      verify(mockHttpClient
+          .get('$baseUrl/en-US/nearby?location=1.0%2C1.0&pagetoken=abc'));
     });
 
     test('With radius parameter proper URL is called', () {
@@ -94,8 +98,8 @@ void main() {
 
       service.getNearBy(Location(1, 1), language: 'en-US', radius: 2000);
 
-      verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2000'));
+      verify(mockHttpClient
+          .get('$baseUrl/en-US/nearby?location=1.0%2C1.0&radius=2000'));
     });
 
     test('With all parameters proper URL is called', () {
@@ -105,7 +109,7 @@ void main() {
           language: 'en-US', openNow: true, pageToken: 'abc', radius: 2500);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&opennow&pagetoken=abc&radius=2500'));
+          '$baseUrl/en-US/nearby?location=1.0%2C1.0&opennow&pagetoken=abc&radius=2500'));
     });
   });
 
@@ -144,8 +148,7 @@ void main() {
 
       service.findByQuery('query', language: 'en-US');
 
-      verify(
-          mockHttpClient.get('${ApiBase.apiBaseUrl}/en-US/find?input=query'));
+      verify(mockHttpClient.get('$baseUrl/en-US/find?input=query'));
     });
 
     test('With location and radius parameters proper URL is called', () {
@@ -155,7 +158,7 @@ void main() {
           language: 'en-US', location: Location(1, 1), radius: 2500);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/find?input=query&location=1.0%2C1.0&radius=2500'));
+          '$baseUrl/en-US/find?input=query&location=1.0%2C1.0&radius=2500'));
     });
   });
 
@@ -194,7 +197,7 @@ void main() {
 
       service.getDetail('abc', language: 'en-US');
 
-      verify(mockHttpClient.get('${ApiBase.apiBaseUrl}/en-US/detail/abc'));
+      verify(mockHttpClient.get('$baseUrl/en-US/detail/abc'));
     });
 
     test('With required parameters and sucessfull request model is returned',
@@ -231,7 +234,7 @@ void main() {
 
       service.getBasicInfo('abc', language: 'en-US');
 
-      verify(mockHttpClient.get('${ApiBase.apiBaseUrl}/en-US/basic/abc'));
+      verify(mockHttpClient.get('$baseUrl/en-US/basic/abc'));
     });
 
     test('With required parameters and sucessfull request model is returned',
@@ -271,11 +274,10 @@ void main() {
 
       service.updateTagsForCafe('abc', []);
 
-      verify(mockHttpClient.post("${ApiBase.apiBaseUrl}/tags/abc",
-          body: anyNamed('body'),
-          headers: {
-            HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-          }));
+      verify(mockHttpClient
+          .post("$baseUrl/tags/abc", body: anyNamed('body'), headers: {
+        HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+      }));
     });
 
     test('Proper url is called and proper json paased', () {
@@ -287,7 +289,7 @@ void main() {
       final model = TagUpdateModel(id: '123', change: TagUpdateKind.like);
       service.updateTagsForCafe('abc', [model]);
 
-      final expectedUrl = "${ApiBase.apiBaseUrl}/tags/abc";
+      final expectedUrl = "$baseUrl/tags/abc";
       final expectedBody = jsonEncode([model]);
 
       verify(mockHttpClient.post(expectedUrl, body: expectedBody, headers: {
