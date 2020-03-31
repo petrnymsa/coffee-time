@@ -17,4 +17,8 @@ abstract class MapBlocState with _$MapBlocState {
       @required Filter filter}) = Loaded;
   const factory MapBlocState.failure(String message,
       {@Default(Filter()) Filter filter}) = _Failure;
+  const factory MapBlocState.failureNoLocationService(
+      {@required Filter filter}) = FailureNoLocationService;
+  const factory MapBlocState.failureNoLocationPermission(
+      {@required Filter filter}) = FailureNoLocationPermission;
 }

@@ -71,7 +71,7 @@
     },
     "failure": {
         "_locationPermission": {
-            "_title": "No location permission granted",
+            "_title": "Can't use your location",
             "_refreshText": "Go to settings and enable"
         },
         "_locationService": {

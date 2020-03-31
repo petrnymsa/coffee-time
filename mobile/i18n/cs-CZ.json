@@ -71,8 +71,8 @@
     },
     "failure": {
         "_locationPermission": {
-            "_title": "Nebylo uděleno žádné povolení polohy",
-            "_refreshText": "Přejít do nastavení a povolte"
+            "_title": "Aplikace nemůže používat vaši polohu",
+            "_refreshText": "Přejít do nastavení a povolit"
         },
         "_locationService": {
             "_title": "Máte vypnuté sdílení polohy",
