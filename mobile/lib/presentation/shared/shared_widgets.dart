@@ -5,6 +5,7 @@ export 'widgets/expandable_panel.dart';
 export 'widgets/failure/failure_container.dart';
 export 'widgets/failure/failure_message.dart';
 export 'widgets/failure/no_location_permission.dart';
+export 'widgets/failure/no_location_service.dart';
 export 'widgets/full_width_button.dart';
 export 'widgets/opens_now_text.dart';
 export 'widgets/pricing.dart';

@@ -1,10 +1,10 @@
-import 'package:coffee_time/generated/i18n.dart';
-import 'package:coffee_time/presentation/shared/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../../core/notification_helper.dart';
 
+import '../../../../generated/i18n.dart';
+import '../../../core/notification_helper.dart';
+import '../../shared_widgets.dart';
 import 'failure_container.dart';
 
 typedef OnPermissionGranted = void Function();

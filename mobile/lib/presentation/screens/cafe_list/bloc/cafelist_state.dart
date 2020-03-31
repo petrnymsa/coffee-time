@@ -15,9 +15,10 @@ abstract class CafeListState with _$CafeListState {
     @required Location currentLocation,
     String nextPageToken,
   }) = Loaded;
-  const factory CafeListState.failure(String message) = _Failure;
-  const factory CafeListState.failureNoLocationService() =
-      FailureNoLocationService;
-  const factory CafeListState.failureNoLocationPermission() =
-      FailureNoLocationPermission;
+  const factory CafeListState.failure(String message,
+      {@Default(Filter()) Filter filter}) = _Failure;
+  const factory CafeListState.failureNoLocationService(
+      {@required Filter filter}) = FailureNoLocationService;
+  const factory CafeListState.failureNoLocationPermission(
+      {@required Filter filter}) = FailureNoLocationPermission;
 }

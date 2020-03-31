@@ -73,6 +73,10 @@
         "_locationPermission": {
             "_title": "Nebylo uděleno žádné povolení polohy",
             "_refreshText": "Přejít do nastavení a povolte"
+        },
+        "_locationService": {
+            "_title": "Máte vypnuté sdílení polohy",
+            "_refreshText": "Jít do nastavení a zapnout"
         }
     }
 }

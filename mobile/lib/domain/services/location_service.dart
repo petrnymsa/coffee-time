@@ -13,7 +13,6 @@ abstract class LocationService {
   Future<double> distanceBetween(Location start, Location end);
 }
 
-//todo check permission
 class GeolocatorLocationService implements LocationService {
   final Geolocator _geolocator;
 

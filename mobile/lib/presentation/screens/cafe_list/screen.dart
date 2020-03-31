@@ -13,29 +13,29 @@ class CafeListScreen extends StatelessWidget {
     return BlocBuilder<CafeListBloc, CafeListState>(
       builder: (context, state) {
         return state.map(
-          loading: (_) => CircularLoader(),
-          loaded: (loaded) {
-            if (loaded.cafes.length == 0) {
-              return NoData();
-            }
-
-            return CafeList(state: loaded);
-          },
-          //todo add to failure state current filter
-          failure: (failure) => FailureContainer(
-            message: failure.message,
-            onRefresh: () {
-              context.bloc<CafeListBloc>().add(Refresh());
+            loading: (_) => CircularLoader(),
+            loaded: (loaded) {
+              if (loaded.cafes.length == 0) {
+                return NoData();
+              }
+              return CafeList(state: loaded);
             },
-          ),
-          failureNoLocationPermission: (_) => NoLocationPermission(
-            onPermissionGranted: () {
-              context.bloc<CafeListBloc>().add(Refresh());
-            },
-          ),
-          failureNoLocationService: (_) =>
-              Text('No location service available'),
-        );
+            failure: (failure) => FailureContainer(
+                  message: failure.message,
+                  onRefresh: () => context
+                      .bloc<CafeListBloc>()
+                      .add(Refresh(filter: failure.filter)),
+                ),
+            failureNoLocationPermission: (f) => NoLocationPermission(
+                  onPermissionGranted: () => context
+                      .bloc<CafeListBloc>()
+                      .add(Refresh(filter: f.filter)),
+                ),
+            failureNoLocationService: (f) => NoLocationService(
+                  onLocationServiceOpened: () => context
+                      .bloc<CafeListBloc>()
+                      .add(Refresh(filter: f.filter)),
+                ));
       },
     );
   }

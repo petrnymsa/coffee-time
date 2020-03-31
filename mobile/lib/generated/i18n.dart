@@ -128,6 +128,10 @@ class I18n implements WidgetsLocalizations {
   String get failure_locationPermission_title => "No location permission granted";
   /// "Go to settings and enable"
   String get failure_locationPermission_refreshText => "Go to settings and enable";
+  /// "You have location turned off"
+  String get failure_locationService_title => "You have location turned off";
+  /// "Open settings and enable"
+  String get failure_locationService_refreshText => "Open settings and enable";
 }
 
 class _I18n_en_US extends I18n {
@@ -281,9 +285,15 @@ class _I18n_cs_CZ extends I18n {
   /// "Nebylo uděleno žádné povolení polohy"
   @override
   String get failure_locationPermission_title => "Nebylo uděleno žádné povolení polohy";
-  /// "Přejděte do nastavení a povolte"
+  /// "Přejít do nastavení a povolte"
   @override
-  String get failure_locationPermission_refreshText => "Přejděte do nastavení a povolte";
+  String get failure_locationPermission_refreshText => "Přejít do nastavení a povolte";
+  /// "Máte vypnuté sdílení polohy"
+  @override
+  String get failure_locationService_title => "Máte vypnuté sdílení polohy";
+  /// "Jít do nastavení a zapnout"
+  @override
+  String get failure_locationService_refreshText => "Jít do nastavení a zapnout";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;
