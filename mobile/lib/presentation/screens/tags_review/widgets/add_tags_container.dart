@@ -27,7 +27,7 @@ class AddTagsContainer extends StatelessWidget {
       if (notAddedYet.length > 0)
         RaisedButton.icon(
           label: Text(I18n.of(context).reviews_add),
-          icon: Icon(FontAwesomeIcons.plus),
+          icon: FaIcon(FontAwesomeIcons.plus),
           onPressed: onAddTags,
         ),
     ]);
@@ -55,7 +55,7 @@ class AddTagsContainer extends StatelessWidget {
           ),
           FlatButton.icon(
             label: Text(I18n.of(context).reviews_clearTags),
-            icon: Icon(Icons.clear_all),
+            icon: FaIcon(Icons.clear_all),
             onPressed: () => _onClearAdded(context),
           )
         ],

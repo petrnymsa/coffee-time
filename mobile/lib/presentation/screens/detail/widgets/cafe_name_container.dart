@@ -38,7 +38,7 @@ class CafeNameContainer extends StatelessWidget {
               ),
             ),
           FlatButton.icon(
-            icon: Icon(FontAwesomeIcons.locationArrow),
+            icon: FaIcon(FontAwesomeIcons.locationArrow),
             label: Text(I18n.of(context).detail_navigate),
             onPressed: onShowMap,
           )

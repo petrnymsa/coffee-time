@@ -1,7 +1,7 @@
 name: coffee_time
 description: Find your nearest and best cafe for you
 
-version: 0.2.0+4
+version: 0.2.1+5
 
 environment:
   sdk: '>2.6.0 <3.0.0'
@@ -11,21 +11,23 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  font_awesome_flutter: ^8.5.0
+  font_awesome_flutter: ^8.8.1
   page_indicator: ^0.3.0
   expandable: ^3.0.1
   url_launcher: ^5.4.2
   intl: ^0.16.0
   logger: ^0.7.0+2
   equatable: ^1.1.1
-  google_maps_flutter: ^0.5.21+11
+  google_maps_flutter: ^0.5.25+2
   http: ^0.12.0+4
   freezed_annotation: ^0.7.1
   shared_preferences: ^0.5.6+1
   flutter_bloc: ^3.2.0
   geolocator: ^5.2.1
   cached_network_image: ^2.0.0
-  get_it: ^4.0.0
+  get_it: ^4.0.0  
+  permission_handler: ^5.0.0
+  app_settings: ^3.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

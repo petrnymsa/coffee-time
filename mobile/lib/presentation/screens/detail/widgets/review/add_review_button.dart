@@ -18,7 +18,7 @@ class AddReviewButton extends StatelessWidget {
           await UrlLauncherHelper.launcUrl(cafeUrl);
         },
         label: Text('Přidat hodnocení'),
-        icon: Icon(FontAwesomeIcons.comment),
+        icon: FaIcon(FontAwesomeIcons.comment),
       ),
     );
   }

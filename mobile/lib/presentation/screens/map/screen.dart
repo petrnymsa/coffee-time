@@ -25,6 +25,14 @@ class _MapScreenState extends State<MapScreen> {
             context.bloc<MapBloc>().add(Init(filter: failure.filter));
           },
         ),
+        failureNoLocationPermission: (f) => NoLocationPermission(
+          onPermissionGranted: () =>
+              context.bloc<MapBloc>().add(Init(filter: f.filter)),
+        ),
+        failureNoLocationService: (f) => NoLocationService(
+          onLocationServiceOpened: () =>
+              context.bloc<MapBloc>().add(Init(filter: f.filter)),
+        ),
       ),
     );
   }

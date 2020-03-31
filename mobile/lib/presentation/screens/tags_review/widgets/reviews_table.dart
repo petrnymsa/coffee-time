@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../generated/i18n.dart';
 import '../model/tag_review.dart';
@@ -64,7 +65,7 @@ class ReviewsTable extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Icon(tagToReview.tag.icon, size: 16),
+              FaIcon(tagToReview.tag.icon, size: 16),
               SizedBox(width: 6.0),
               Text(
                 tagToReview.tag.translatedTitle,

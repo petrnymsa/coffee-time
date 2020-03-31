@@ -36,7 +36,7 @@ class BottomLine extends StatelessWidget {
           ),
         if (cafe.priceLevel != null) Pricing(cafe.priceLevel),
         Spacer(),
-        Icon(
+        FaIcon(
           FontAwesomeIcons.walking,
           size: 14,
           color: theme.accentColor,
@@ -57,7 +57,7 @@ class BottomLine extends StatelessWidget {
           },
         ),
         SizedBox(width: 4),
-        Icon(
+        FaIcon(
           FontAwesomeIcons.clock,
           size: 14,
           color: theme.accentColor,

@@ -56,7 +56,7 @@ class Shell extends StatelessWidget {
           final filter = state.filter;
           return IconButton(
             icon: Stack(children: [
-              Icon(FontAwesomeIcons.filter),
+              FaIcon(FontAwesomeIcons.filter),
               if (!filter.isDefault())
                 Positioned(
                   right: 2,

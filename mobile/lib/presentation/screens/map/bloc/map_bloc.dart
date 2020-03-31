@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/filter.dart';
 import '../../../../domain/entities/location.dart';
+import '../../../../domain/exceptions/exceptions.dart';
 import '../../../../domain/failure.dart';
 import '../../../../domain/repositories/cafe_repository.dart';
 import '../../../../domain/services/location_service.dart';
@@ -35,9 +36,15 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
 
   Stream<MapBlocState> _mapInit(Init event) async* {
     yield Loading();
-    final location = await locationService.getCurrentLocation();
-    yield await _getAllNearbyAndMapState(location, event.filter,
-        customLocation: false);
+    try {
+      final location = await locationService.getCurrentLocation();
+      yield await _getAllNearbyAndMapState(location, event.filter,
+          customLocation: false);
+    } on NoLocationPermissionException {
+      yield FailureNoLocationPermission(filter: event.filter);
+    } on NoLocationServiceException {
+      yield FailureNoLocationService(filter: event.filter);
+    }
   }
 
   Stream<MapBlocState> _mapFilterChanged(FilterChanged event) async* {
@@ -73,9 +80,15 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
   }
 
   Stream<MapBlocState> _mapSetCurrentLocation(SetCurrentLocation event) async* {
-    final location = await locationService.getCurrentLocation();
-    yield await _getAllNearbyAndMapState(location, event.filter,
-        customLocation: false);
+    try {
+      final location = await locationService.getCurrentLocation();
+      yield await _getAllNearbyAndMapState(location, event.filter,
+          customLocation: false);
+    } on NoLocationPermissionException {
+      yield FailureNoLocationPermission(filter: event.filter);
+    } on NoLocationServiceException {
+      yield FailureNoLocationService(filter: event.filter);
+    }
   }
 
   Future<MapBlocState> _getAllNearbyAndMapState(

@@ -20,7 +20,7 @@ class DetailHeader extends StatelessWidget {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Icon(
+            FaIcon(
               FontAwesomeIcons.walking,
               size: 14,
               color: Theme.of(context).accentColor,
@@ -29,7 +29,7 @@ class DetailHeader extends StatelessWidget {
             DistanceText(cafeLocation: cafe.location),
             SizedBox(width: 4),
             if (cafe.openNow != null)
-              Icon(
+              FaIcon(
                 FontAwesomeIcons.clock,
                 size: 14,
                 color: Theme.of(context).accentColor,

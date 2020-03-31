@@ -69,7 +69,7 @@ class TagsReviewScreen extends StatelessWidget {
                   FullWidthButton(
                     text: I18n.of(context).confirm,
                     color: Colors.green,
-                    icon: Icon(FontAwesomeIcons.check),
+                    icon: FaIcon(FontAwesomeIcons.check),
                     onPressed: () => _onConfirm(context),
                   ),
                 ],

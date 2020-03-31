@@ -30,7 +30,7 @@ class TagsContainer extends StatelessWidget {
           if (state.notAddedTags.length > 0)
             RaisedButton.icon(
               label: Text(I18n.of(context).filter_tags_chooseTags),
-              icon: Icon(FontAwesomeIcons.plus),
+              icon: FaIcon(FontAwesomeIcons.plus),
               onPressed: () async {
                 final addedTags =
                     await Navigator.of(context).push(MaterialPageRoute(

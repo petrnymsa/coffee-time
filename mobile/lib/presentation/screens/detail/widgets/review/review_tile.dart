@@ -22,7 +22,7 @@ class ReviewTile extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: review.profilePhotoUrl,
               placeholder: (_, __) => CircularLoader(),
-              errorWidget: (_, __, ___) => Icon(FontAwesomeIcons.user),
+              errorWidget: (_, __, ___) => FaIcon(FontAwesomeIcons.user),
             ),
           ),
           backgroundColor: Theme.of(context).accentColor,

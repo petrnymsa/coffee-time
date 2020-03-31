@@ -44,7 +44,7 @@ class TagsChooseScreen extends StatelessWidget {
                 FullWidthButton(
                   text: I18n.of(context).confirm,
                   color: Colors.green,
-                  icon: Icon(FontAwesomeIcons.check),
+                  icon: FaIcon(FontAwesomeIcons.check),
                   onPressed: () async {
                     Navigator.of(context).pop(state.chosenTags);
                   },

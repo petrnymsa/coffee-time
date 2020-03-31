@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FullWidthButton extends StatelessWidget {
   final String text;
   final Color color;
-  final Icon icon;
+  final Widget icon;
   final Function onPressed;
   final EdgeInsets padding;
   const FullWidthButton(

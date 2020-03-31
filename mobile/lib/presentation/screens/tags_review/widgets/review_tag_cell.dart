@@ -20,7 +20,7 @@ class ReviewTagCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return TableCell(
         child: IconButton(
-      icon: Icon(_reviewIcon()),
+      icon: FaIcon(_reviewIcon()),
       color: tagToReview.review == reviewKind
           ? Theme.of(context).primaryColor
           : Colors.grey,

@@ -18,15 +18,21 @@ class CafeListScreen extends StatelessWidget {
             if (loaded.cafes.length == 0) {
               return NoData();
             }
-
             return CafeList(state: loaded);
           },
-          //todo add to failure state current filter
           failure: (failure) => FailureContainer(
             message: failure.message,
-            onRefresh: () {
-              context.bloc<CafeListBloc>().add(Refresh());
-            },
+            onRefresh: () => context
+                .bloc<CafeListBloc>()
+                .add(Refresh(filter: failure.filter)),
+          ),
+          failureNoLocationPermission: (f) => NoLocationPermission(
+            onPermissionGranted: () =>
+                context.bloc<CafeListBloc>().add(Refresh(filter: f.filter)),
+          ),
+          failureNoLocationService: (f) => NoLocationService(
+            onLocationServiceOpened: () =>
+                context.bloc<CafeListBloc>().add(Refresh(filter: f.filter)),
           ),
         );
       },

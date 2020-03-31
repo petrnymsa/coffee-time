@@ -122,6 +122,16 @@ class I18n implements WidgetsLocalizations {
   String get notification_loading => "Loading...";
   /// "Found ${count} cafes arround."
   String notification_cafesCoundLoaded(String count) => "Found ${count} cafes arround.";
+  /// "Can't open settings. Please try enable location permission manually."
+  String get notification_cantOpenAppSetting => "Can't open settings. Please try enable location permission manually.";
+  /// "Can't use your location"
+  String get failure_locationPermission_title => "Can't use your location";
+  /// "Go to settings and enable"
+  String get failure_locationPermission_refreshText => "Go to settings and enable";
+  /// "You have location turned off"
+  String get failure_locationService_title => "You have location turned off";
+  /// "Open settings and enable"
+  String get failure_locationService_refreshText => "Open settings and enable";
 }
 
 class _I18n_en_US extends I18n {
@@ -269,6 +279,21 @@ class _I18n_cs_CZ extends I18n {
   /// "Bylo nalezeno ${count} kaváren."
   @override
   String notification_cafesCoundLoaded(String count) => "Bylo nalezeno ${count} kaváren.";
+  /// "Nastavení nelze otevřít. Zkuste povolit povolení polohy ručně."
+  @override
+  String get notification_cantOpenAppSetting => "Nastavení nelze otevřít. Zkuste povolit povolení polohy ručně.";
+  /// "Aplikace nemůže používat vaši polohu"
+  @override
+  String get failure_locationPermission_title => "Aplikace nemůže používat vaši polohu";
+  /// "Přejít do nastavení a povolit"
+  @override
+  String get failure_locationPermission_refreshText => "Přejít do nastavení a povolit";
+  /// "Máte vypnuté sdílení polohy"
+  @override
+  String get failure_locationService_title => "Máte vypnuté sdílení polohy";
+  /// "Jít do nastavení a zapnout"
+  @override
+  String get failure_locationService_refreshText => "Jít do nastavení a zapnout";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;

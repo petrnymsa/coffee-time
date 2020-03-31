@@ -15,7 +15,7 @@ class NoData extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(FontAwesomeIcons.coffee, size: 48),
+          FaIcon(FontAwesomeIcons.coffee, size: 48),
           SizedBox(
             height: 14,
           ),
