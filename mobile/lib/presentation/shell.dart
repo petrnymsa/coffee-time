@@ -31,17 +31,19 @@ class Shell extends StatelessWidget {
       },
       child: BlocBuilder<TabsBloc, AppTabKey>(
         builder: (context, tab) {
-          return Scaffold(
-            appBar: AppBar(
-              title:
-                  Text(ShellConfiguration.tabTitle(context, tab).capitalize()),
-              actions: _mapTabToActions(context, tab),
-            ),
-            body: _mapTabToScreen(tab),
-            bottomNavigationBar: BottomTabSelector(
-              currentTab: tab,
-              tabSelected: (selectedTab) =>
-                  context.bloc<TabsBloc>().add(SetTab(selectedTab)),
+          return SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(
+                    ShellConfiguration.tabTitle(context, tab).capitalize()),
+                actions: _mapTabToActions(context, tab),
+              ),
+              body: _mapTabToScreen(tab),
+              bottomNavigationBar: BottomTabSelector(
+                currentTab: tab,
+                tabSelected: (selectedTab) =>
+                    context.bloc<TabsBloc>().add(SetTab(selectedTab)),
+              ),
             ),
           );
         },

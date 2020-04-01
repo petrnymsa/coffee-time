@@ -2,6 +2,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/app_config.dart';
+import 'core/firebase/authentication.dart';
 import 'core/http_client_factory.dart';
 import 'core/time_provider.dart';
 import 'data/repositories/cafe_repository.dart';
@@ -61,11 +62,12 @@ Future<void> setupContainer(AppConfig appConfig) async {
       () => PhotoServiceImpl(appConfig: appConfig));
   sl.registerLazySingleton<TagService>(
     () => CachedTagService(
-        tagService: TagServiceImpl(clientFactory: sl(), appConfig: appConfig),
+        tagService: TagServiceImpl(
+            clientFactory: sl(), appConfig: appConfig, authProvider: sl()),
         timeProvider: sl()),
   );
-  sl.registerLazySingleton<CafeService>(
-      () => CafeServiceImpl(clientFactory: sl(), appConfig: appConfig));
+  sl.registerLazySingleton<CafeService>(() => CafeServiceImpl(
+      clientFactory: sl(), appConfig: appConfig, authProvider: sl()));
 
   // * Repositories
   sl.registerLazySingleton<CafeRepository>(
@@ -87,4 +89,5 @@ Future<void> setupContainer(AppConfig appConfig) async {
   sl.registerLazySingleton<HttpClientFactory>(() => HttpClientFactoryImpl());
   sl.registerLazySingleton<TimeProvider>(() => TimeProvider());
   sl.registerLazySingleton<AppConfig>(() => appConfig);
+  sl.registerLazySingleton<FirebaseAuthProvider>(() => FirebaseAuthProvider());
 }
