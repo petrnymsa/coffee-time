@@ -8,7 +8,6 @@ import '../entities/tag_update.dart';
 import '../failure.dart';
 import 'nearby_result.dart';
 
-//todo documentation
 abstract class CafeRepository {
   Future<Either<NearbyResult, Failure>> getNearby(Location location,
       {Filter filter, String pageToken});

@@ -24,7 +24,7 @@ class FailureMessage extends StatelessWidget {
         children: <Widget>[
           FaIcon(
             icon ?? FontAwesomeIcons.dizzy,
-            color: AppTheme.main_color,
+            color: AppTheme.kMainColor,
             size: 46,
           ),
           Padding(

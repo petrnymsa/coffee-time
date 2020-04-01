@@ -47,7 +47,6 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
         notAddedYet: notAdded,
       );
     }, right: (failure) {
-      //todo failure
       getLogger('TagsReviewBloc').e(failure.toString());
       return null;
     });

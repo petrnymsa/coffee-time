@@ -41,14 +41,14 @@ class _CarouselSliderState extends State<CarouselSlider> {
                     width: double.infinity,
                     imageUrl: items[index],
                     httpHeaders: createPhotoHttpHeader(snapshot.data),
-                    placeholder: (_, __) => CircularLoader(),
+                    placeholder: (_, __) => const CircularLoader(),
                   );
                 } else if (snapshot.hasError) {
                   return Center(
                     child: Text(snapshot.error.toString()),
                   );
                 }
-                return Center(child: CircularLoader());
+                return Center(child: const CircularLoader());
               },
             );
           },

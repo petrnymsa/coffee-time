@@ -11,10 +11,10 @@ class FavoritesScreen extends StatelessWidget {
     return BlocBuilder<FavoritesBloc, FavoritesBlocState>(
       builder: (context, state) {
         return state.when(
-          loading: () => CircularLoader(),
+          loading: () => const CircularLoader(),
           loaded: (cafes, _, __) {
             if (cafes.length == 0) {
-              return NoFavorites();
+              return const NoFavorites();
             }
 
             return FavoritesList(cafes: cafes);

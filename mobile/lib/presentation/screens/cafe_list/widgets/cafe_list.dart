@@ -85,7 +85,7 @@ class CafeList extends StatelessWidget {
                       onTap: () => _onTileTap(context, state.cafes[index]),
                     );
                   } else {
-                    return CircularLoader();
+                    return const CircularLoader();
                   }
                 },
               ),

@@ -17,7 +17,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<MapBloc, MapBlocState>(
       builder: (context, state) => state.map(
-        loading: (loading) => CircularLoader(),
+        loading: (loading) => const CircularLoader(),
         loaded: (loaded) => MapContainer(state: loaded),
         failure: (failure) => FailureContainer(
           message: failure.message,

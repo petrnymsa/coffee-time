@@ -66,7 +66,7 @@ class ReviewsTable extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               FaIcon(tagToReview.tag.icon, size: 16),
-              SizedBox(width: 6.0),
+              const SizedBox(width: 6.0),
               Text(
                 tagToReview.tag.translatedTitle,
                 textAlign: TextAlign.center,
@@ -87,12 +87,6 @@ class ReviewsTable extends StatelessWidget {
           onTagReview: () =>
               onTagReview(tagToReview.tag.id, TagReviewKind.dislike),
         ),
-        // ReviewTagCell(
-        //   tagToReview: tagToReview,
-        //   reviewKind: TagReviewKind.none,
-        //   onTagReview: () =>
-        //       onTagReview(tagToReview.tag.id, TagReviewKind.none),
-        // ),
       ],
     );
   }

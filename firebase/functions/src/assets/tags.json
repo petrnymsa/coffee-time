@@ -126,9 +126,9 @@
         "id": "terrace",
         "title": "terrace",
         "icon": {
-            "code": 0,
-            "family": "",
-            "package": ""
+            "code": 62648,
+            "family": "FontAwesomeSolid",
+            "package": "font_awesome_flutter"
         },
         "translations": {
             "cs": "terasa"

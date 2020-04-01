@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 
 import '../../../../core/utils/launcher_helper.dart';
 import '../../../../domain/entities/cafe.dart';
@@ -20,13 +19,10 @@ class DetailContainer extends StatelessWidget {
 
   const DetailContainer({
     Key key,
-    @required this.logger,
     @required this.cafe,
     @required this.detail,
     this.onTagsEdit,
   }) : super(key: key);
-
-  final Logger logger;
 
   void _onShowMap() async {
     await UrlLauncherHelper.launchNavigationWithAddress(cafe.address);

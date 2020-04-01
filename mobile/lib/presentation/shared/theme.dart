@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 
 //ignore_for_file: avoid_classes_with_only_static_members
 class AppTheme {
-  static const main_color = Color(0xFFF2594B);
-  static const secondary_color = Color(0xFFF2836B);
-  static const background_color = Color(0xFFF7F7F7);
+  static const kMainColor = Color(0xFFF2594B);
+  static const kSecondaryColor = Color(0xFFF2836B);
+  static const kBackgroundColor = Color(0xFFF7F7F7);
+  static const kTagColor = Color(0xFF63A69F);
 
   static Map<int, Color> primarySwatch = {
     50: Color.fromRGBO(242, 89, 75, .1),
@@ -23,20 +24,20 @@ class AppTheme {
 
   static ThemeData apply(BuildContext context) {
     return ThemeData(
-      primaryColor: main_color,
+      primaryColor: kMainColor,
       primarySwatch: MaterialColor(0xFFF2594B, primarySwatch),
-      accentColor: secondary_color,
-      backgroundColor: background_color,
-      scaffoldBackgroundColor: background_color,
-      primaryIconTheme: IconThemeData(color: main_color),
-      accentIconTheme: IconThemeData(color: secondary_color),
+      accentColor: kSecondaryColor,
+      backgroundColor: kBackgroundColor,
+      scaffoldBackgroundColor: kBackgroundColor,
+      primaryIconTheme: IconThemeData(color: kMainColor),
+      accentIconTheme: IconThemeData(color: kSecondaryColor),
       appBarTheme: Theme.of(context)
           .appBarTheme
           .copyWith(iconTheme: IconThemeData(color: Colors.white)),
-      iconTheme: IconThemeData(color: main_color),
+      iconTheme: IconThemeData(color: kMainColor),
       buttonTheme: ButtonThemeData(
-          buttonColor: main_color, textTheme: ButtonTextTheme.primary),
-      buttonColor: main_color,
+          buttonColor: kMainColor, textTheme: ButtonTextTheme.primary),
+      buttonColor: kMainColor,
       fontFamily: 'Raleway',
     );
   }

@@ -28,27 +28,9 @@ class Bootstrapper extends StatelessWidget {
           if (user == null) {
             signIn();
           }
-
-          // return SafeArea(
-          //     child: Scaffold(
-          //         body: FutureBuilder<IdTokenResult>(
-          //   future: user.getIdToken(),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasData) {
-          //       return SelectableText(snapshot.data.token);
-          //     } else {
-          //       return Column(
-          //         children: <Widget>[
-          //           Text('Signed in...'),
-          //           CircularProgressIndicator(),
-          //         ],
-          //       );
-          //     }
-          //   },
-          // )));
           return Shell();
         } else {
-          return SplashScreen();
+          return const SplashScreen();
         }
       },
     );

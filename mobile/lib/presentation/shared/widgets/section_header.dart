@@ -12,7 +12,6 @@ class SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //return LayoutBuilder(builder: (ctx, constraints) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -21,7 +20,7 @@ class SectionHeader extends StatelessWidget {
           width: 16.0,
         ),
         ConstrainedBox(
-          constraints: BoxConstraints(), //todo constraint it on smaller devices
+          constraints: BoxConstraints(),
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -33,6 +32,5 @@ class SectionHeader extends StatelessWidget {
         if (after != null) ...after
       ],
     );
-//    });
   }
 }
