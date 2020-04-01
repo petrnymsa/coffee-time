@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:coffee_time/core/firebase/authentication.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/app_config.dart';
+import '../../core/firebase/authentication.dart';
 import '../../core/http_client_factory.dart';
 import '../../core/utils/query_string_builder.dart';
 import '../../domain/entities/location.dart';

@@ -1,5 +1,3 @@
-import '../core/firebase/authentication.dart';
-
 import '../core/utils/query_string_builder.dart';
 
 String createPhotoUrl(String baseUrl, {int maxWidth, int maxHeight}) {
