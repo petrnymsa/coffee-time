@@ -1,7 +1,7 @@
 name: coffee_time
 description: Find your nearest and best cafe for you
 
-version: 0.2.1+5
+version: 0.3.0+6
 
 environment:
   sdk: '>2.6.0 <3.0.0'
@@ -28,6 +28,7 @@ dependencies:
   get_it: ^4.0.0  
   permission_handler: ^5.0.0
   app_settings: ^3.0.1
+  firebase_auth: ^0.15.5+3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,8 +42,7 @@ dev_dependencies:
   effective_dart: ^1.2.0
   build_runner: ^1.7.4
   freezed: ^0.9.0
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  flutter_launcher_icons: "^0.7.3"
 
 # The following section is specific to Flutter.
 flutter:
@@ -52,6 +52,7 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/config/
     - assets/table.jpg
     - assets/coffee-shop-marker.png
     - assets/flag.png
@@ -71,3 +72,8 @@ flutter:
           weight: 300
         - asset: assets/fonts/Raleway-Bold.ttf
           weight: 700
+
+flutter_icons:
+  android: "launcher_icon" 
+  ios: true
+  image_path: "assets/icon/icon.png"

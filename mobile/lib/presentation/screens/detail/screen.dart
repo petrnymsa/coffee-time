@@ -16,8 +16,6 @@ import 'bloc/detail_bloc_state.dart';
 import 'widgets/widgets.dart';
 
 class DetailScreen extends StatelessWidget {
-  final Logger logger = getLogger('DetailScreen');
-
   DetailScreen({Key key}) : super(key: key);
 
   @override
@@ -26,13 +24,12 @@ class DetailScreen extends StatelessWidget {
       body: BlocBuilder<DetailBloc, DetailBlocState>(
         builder: (context, state) {
           return state.when(
-            loading: () => CircularLoader(),
+            loading: () => const CircularLoader(),
             failure: (message) => FailureContainer(
               message: message,
               onRefresh: () => context.bloc<DetailBloc>().add(Load()),
             ),
             loaded: (cafe, detail) => DetailContainer(
-              logger: logger,
               cafe: cafe,
               detail: detail,
               onTagsEdit: () => _onTagsEditRequest(context, cafe),

@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../domain/entities/cafe_detail.dart';
 import '../../../../../generated/i18n.dart';
 import '../../../../shared/shared_widgets.dart';
-import 'add_review_button.dart';
 import 'review_list.dart';
 
 class ReviewsContainer extends StatelessWidget {
@@ -18,15 +17,13 @@ class ReviewsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Divider(),
+        const Divider(),
         SectionHeader(
           icon: FontAwesomeIcons.comments,
           title: I18n.of(context).detail_reviewsTitle,
         ),
         ReviewList(reviews: detail.reviews),
-        SizedBox(height: 10),
-        AddReviewButton(cafeUrl: detail.url),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       ],
     );
   }

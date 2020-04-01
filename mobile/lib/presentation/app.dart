@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import '../bootstrapper.dart';
+import '../core/firebase/authentication.dart';
 import '../di_container.dart';
 import '../generated/i18n.dart';
 import './screens/cafe_list/bloc/bloc.dart';
@@ -10,7 +12,6 @@ import 'core/blocs/filter/bloc.dart';
 import 'core/blocs/tabs/bloc.dart';
 import 'screens/map/bloc/bloc.dart' as map_bloc;
 import 'shared/theme.dart';
-import 'shell.dart';
 
 class App extends StatelessWidget {
   final _localizationDelegates = <LocalizationsDelegate>[
@@ -46,7 +47,7 @@ class App extends StatelessWidget {
                 create: (_) => sl<map_bloc.MapBloc>()..add(map_bloc.Init())),
             BlocProvider(create: (_) => TabsBloc()),
           ],
-          child: Shell(),
+          child: Bootstrapper(authProvider: sl<FirebaseAuthProvider>()),
         ),
       ),
     );

@@ -10,9 +10,6 @@ import 'favorite_corner_button.dart';
 import 'navigation_button.dart';
 import 'tile_cover_container.dart';
 
-// todo text styles
-// todo color styles
-
 class CafeTile extends StatelessWidget {
   final Cafe cafe;
   final Location currentLocation;

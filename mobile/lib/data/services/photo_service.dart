@@ -1,4 +1,6 @@
-import 'api_base.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../core/app_config.dart';
 
 //ignore: one_member_abstracts
 abstract class PhotoService {
@@ -6,7 +8,13 @@ abstract class PhotoService {
 }
 
 class PhotoServiceImpl implements PhotoService {
+  final AppConfig appConfig;
+
+  PhotoServiceImpl({
+    @required this.appConfig,
+  });
+
   @override
   String getBasePhotoUrl(String photoReference) =>
-      "${ApiBase.apiBaseUrl}/photo/$photoReference";
+      "${appConfig.apiUrl}/photo/$photoReference";
 }

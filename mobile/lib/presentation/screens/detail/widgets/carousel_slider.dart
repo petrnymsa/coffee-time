@@ -2,6 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
 
+import '../../../../core/firebase/authentication.dart';
+import '../../../../di_container.dart';
+import '../../../../domain/photo_url_helper.dart';
 import '../../../shared/shared_widgets.dart';
 
 class CarouselSlider extends StatefulWidget {
@@ -28,11 +31,25 @@ class _CarouselSliderState extends State<CarouselSlider> {
         child: PageView.builder(
           itemCount: items.length,
           itemBuilder: (ctx, index) {
-            return CachedNetworkImage(
-              fit: BoxFit.cover,
-              width: double.infinity,
-              imageUrl: items[index],
-              placeholder: (_, __) => CircularLoader(),
+            //not ideal though - consider using top-level provider style
+            return FutureBuilder<String>(
+              future: sl<FirebaseAuthProvider>().getAuthToken(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    imageUrl: items[index],
+                    httpHeaders: createPhotoHttpHeader(snapshot.data),
+                    placeholder: (_, __) => const CircularLoader(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(snapshot.error.toString()),
+                  );
+                }
+                return Center(child: const CircularLoader());
+              },
             );
           },
         ),

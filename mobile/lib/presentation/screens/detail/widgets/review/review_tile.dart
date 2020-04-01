@@ -21,8 +21,8 @@ class ReviewTile extends StatelessWidget {
           child: ClipOval(
             child: CachedNetworkImage(
               imageUrl: review.profilePhotoUrl,
-              placeholder: (_, __) => CircularLoader(),
-              errorWidget: (_, __, ___) => FaIcon(FontAwesomeIcons.user),
+              placeholder: (_, __) => const CircularLoader(),
+              errorWidget: (_, __, ___) => const FaIcon(FontAwesomeIcons.user),
             ),
           ),
           backgroundColor: Theme.of(context).accentColor,
@@ -44,9 +44,7 @@ class ReviewTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 6,
-                ),
+                const SizedBox(width: 6),
                 Rating.small(
                   review.rating.toDouble(),
                   displayRating: false,
@@ -56,7 +54,7 @@ class ReviewTile extends StatelessWidget {
             Text(
               review.relativeTimeDescription,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w300,
                 color: Colors.black87,
@@ -68,7 +66,7 @@ class ReviewTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: Text(
             review.text,
-            style: TextStyle(color: Colors.black, fontSize: 16),
+            style: const TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),
       ),

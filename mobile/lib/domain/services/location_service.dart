@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:coffee_time/domain/services/app_permission_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../entities/location.dart';
 import '../exceptions/exceptions.dart';
+import 'app_permission_provider.dart';
 
 abstract class LocationService {
   Future<Location> getCurrentLocation();

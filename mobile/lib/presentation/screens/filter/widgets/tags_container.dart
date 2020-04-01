@@ -66,7 +66,7 @@ class TagsContainer extends StatelessWidget {
           )
         ],
       ),
-      Divider(),
+      const Divider(),
       Wrap(
         alignment: WrapAlignment.start,
         spacing: 6.0,

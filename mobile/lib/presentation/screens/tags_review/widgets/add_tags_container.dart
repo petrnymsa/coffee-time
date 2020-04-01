@@ -55,21 +55,19 @@ class AddTagsContainer extends StatelessWidget {
           ),
           FlatButton.icon(
             label: Text(I18n.of(context).reviews_clearTags),
-            icon: FaIcon(Icons.clear_all),
+            icon: const FaIcon(Icons.clear_all),
             onPressed: () => _onClearAdded(context),
           )
         ],
       ),
-      Divider(),
+      const Divider(),
       Wrap(
         alignment: WrapAlignment.start,
         spacing: 6.0,
         runSpacing: 0.0,
         children: addedTags.map((t) => _buildTag(context, t)).toList(),
       ),
-      const SizedBox(
-        height: 4,
-      ),
+      const SizedBox(height: 4),
     ];
   }
 

@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/firebase/authentication.dart';
+import '../../../../di_container.dart';
+import '../../../../domain/photo_url_helper.dart';
+import '../../../assets.dart';
 import '../../shared_widgets.dart';
 
 class TileCoverImage extends StatelessWidget {
@@ -18,15 +22,25 @@ class TileCoverImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: borderRadius,
       child: url != null
-          ? CachedNetworkImage(
-              imageUrl: url,
-              placeholder: (context, url) => CircularLoader(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-              width: double.infinity,
-              fit: BoxFit.fitWidth,
+          ? FutureBuilder<String>(
+              future: sl<FirebaseAuthProvider>().getAuthToken(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return CachedNetworkImage(
+                    imageUrl: url,
+                    httpHeaders: createPhotoHttpHeader(snapshot.data),
+                    placeholder: (context, url) => const CircularLoader(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
+                  );
+                }
+                return const Center(child: CircularLoader());
+              },
             )
           : Image.asset(
-              'assets/table.jpg',
+              Assets.kImageTable,
               width: double.infinity,
               fit: BoxFit.cover,
             ),

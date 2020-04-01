@@ -22,3 +22,6 @@ String createPhotoUrl(String baseUrl, {int maxWidth, int maxHeight}) {
 
   return baseUrl;
 }
+
+Map<String, String> createPhotoHttpHeader(String token) =>
+    {'Authorization': 'Bearer $token'};

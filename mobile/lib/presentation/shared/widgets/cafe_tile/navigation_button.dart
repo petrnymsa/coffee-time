@@ -30,7 +30,7 @@ class NavigationButton extends StatelessWidget {
           ),
         ),
         child: IconButton(
-          icon: FaIcon(
+          icon: const FaIcon(
             FontAwesomeIcons.locationArrow,
             size: 24,
           ),

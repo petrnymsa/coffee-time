@@ -1,11 +1,10 @@
-import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/domain/photo_url_helper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('getPhotoUrl', () {
     final photoReference = 'abc';
-    final baseUrl = '${ApiBase.apiBaseUrl}/photo/$photoReference';
+    final baseUrl = 'api/photo/$photoReference';
 
     test('Given null url should return null', () {
       final actual = createPhotoUrl(null);

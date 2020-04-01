@@ -1,7 +1,8 @@
-import 'package:coffee_time/domain/services/app_permission_provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 
+import 'core/app_config.dart';
+import 'core/firebase/authentication.dart';
 import 'core/http_client_factory.dart';
 import 'core/time_provider.dart';
 import 'data/repositories/cafe_repository.dart';
@@ -14,6 +15,7 @@ import 'data/services/tag_service.dart';
 import 'domain/entities/cafe.dart';
 import 'domain/repositories/cafe_repository.dart';
 import 'domain/repositories/tags_repository.dart';
+import 'domain/services/app_permission_provider.dart';
 import 'domain/services/location_service.dart';
 import 'presentation/core/blocs/favorites/favorites_bloc.dart';
 import 'presentation/core/blocs/filter/bloc.dart';
@@ -24,7 +26,7 @@ import 'presentation/screens/map/bloc/map_bloc.dart';
 
 final GetIt sl = GetIt.I;
 
-void setupContainer() {
+Future<void> setupContainer(AppConfig appConfig) async {
   // * BLoCs
   sl.registerLazySingleton<CafeListBloc>(
     () => CafeListBloc(
@@ -56,11 +58,16 @@ void setupContainer() {
   sl.registerLazySingleton<LocationService>(() => GeolocatorLocationService(
       geolocator: Geolocator(), permissionProvider: sl()));
   sl.registerLazySingleton<FavoriteService>(() => FavoriteLocalService());
-  sl.registerLazySingleton<PhotoService>(() => PhotoServiceImpl());
-  sl.registerLazySingleton<TagService>(() => CachedTagService(
-      tagService: TagServiceImpl(clientFactory: sl()), timeProvider: sl()));
-  sl.registerLazySingleton<CafeService>(
-      () => CafeServiceImpl(clientFactory: sl()));
+  sl.registerLazySingleton<PhotoService>(
+      () => PhotoServiceImpl(appConfig: appConfig));
+  sl.registerLazySingleton<TagService>(
+    () => CachedTagService(
+        tagService: TagServiceImpl(
+            clientFactory: sl(), appConfig: appConfig, authProvider: sl()),
+        timeProvider: sl()),
+  );
+  sl.registerLazySingleton<CafeService>(() => CafeServiceImpl(
+      clientFactory: sl(), appConfig: appConfig, authProvider: sl()));
 
   // * Repositories
   sl.registerLazySingleton<CafeRepository>(
@@ -81,4 +88,6 @@ void setupContainer() {
   // * Others
   sl.registerLazySingleton<HttpClientFactory>(() => HttpClientFactoryImpl());
   sl.registerLazySingleton<TimeProvider>(() => TimeProvider());
+  sl.registerLazySingleton<AppConfig>(() => appConfig);
+  sl.registerLazySingleton<FirebaseAuthProvider>(() => FirebaseAuthProvider());
 }

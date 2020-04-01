@@ -47,14 +47,14 @@ class TagsReviewScreen extends StatelessWidget {
       appBar: AppBar(title: Text(I18n.of(context).reviews_title)),
       body: BlocBuilder<TagsReviewBloc, TagsReviewBlocState>(
         builder: (context, state) => state.when(
-          loading: () => CircularLoader(),
+          loading: () => const CircularLoader(),
           loaded: (addedTags, tagsToReview, notAddedYet) => Container(
             padding: const EdgeInsets.all(8),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  HeaderInfo(),
+                  const HeaderInfo(),
                   if (tagsToReview.isNotEmpty)
                     ReviewsContainer(
                       tagsToReview: tagsToReview,
@@ -69,7 +69,7 @@ class TagsReviewScreen extends StatelessWidget {
                   FullWidthButton(
                     text: I18n.of(context).confirm,
                     color: Colors.green,
-                    icon: FaIcon(FontAwesomeIcons.check),
+                    icon: const FaIcon(FontAwesomeIcons.check),
                     onPressed: () => _onConfirm(context),
                   ),
                 ],

@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:coffee_time/core/app_config.dart';
+import 'package:coffee_time/core/firebase/authentication.dart';
 import 'package:coffee_time/core/http_client_factory.dart';
 import 'package:coffee_time/data/models/models.dart';
 import 'package:coffee_time/data/models/tag_update.dart';
-import 'package:coffee_time/data/services/api_base.dart';
 import 'package:coffee_time/data/services/cafe_service.dart';
 import 'package:coffee_time/domain/entities/location.dart';
 import 'package:coffee_time/domain/entities/tag_update.dart';
@@ -19,25 +20,40 @@ class MockHttpClient extends Mock implements Client {}
 
 class MockHttpClientFactory extends Mock implements HttpClientFactory {}
 
+class MockAuthProvider extends Mock implements FirebaseAuthProvider {}
+
 void main() {
   MockHttpClient mockHttpClient;
   CafeServiceImpl service;
   MockHttpClientFactory mockHttpClientFactory;
+  MockAuthProvider mockAuthProvider;
+
+  final baseUrl = 'http://www.test.com/api';
+  final authHeader = {'authorization': 'Bearer token'};
+  var appConfig = AppConfig(apiUrl: baseUrl);
 
   setUp(() {
     noLogger();
 
     mockHttpClient = MockHttpClient();
     mockHttpClientFactory = MockHttpClientFactory();
-    service = CafeServiceImpl(clientFactory: mockHttpClientFactory);
+    mockAuthProvider = MockAuthProvider();
+    service = CafeServiceImpl(
+      clientFactory: mockHttpClientFactory,
+      appConfig: appConfig,
+      authProvider: mockAuthProvider,
+    );
 
     when(mockHttpClientFactory.create()).thenReturn(mockHttpClient);
+    when(mockAuthProvider.getAuthToken()).thenAnswer((_) async => 'token');
   });
 
   void mockHttpClientWithStatusCode200(String fixtureName, String status) {
-    when(mockHttpClient.get(any)).thenAnswer((_) async => Response(
-        apiResponseFixture(fixtureName, status), 200,
-        headers: {HttpHeaders.contentTypeHeader: ContentType.json.toString()}));
+    when(mockHttpClient.get(any, headers: anyNamed('headers'))).thenAnswer(
+        (_) async => Response(apiResponseFixture(fixtureName, status), 200,
+                headers: {
+                  HttpHeaders.contentTypeHeader: ContentType.json.toString()
+                }));
   }
 
   void mockNearbyHttp200WithStatus(String status) {
@@ -57,55 +73,60 @@ void main() {
   }
 
   void mockClientHttp400() {
-    when(mockHttpClient.get(any))
+    when(mockHttpClient.get(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => Response('Bad request', 400));
   }
 
   group('getNearby(url)', () {
-    test('With required parameters, proper URL is called', () {
+    test('With required parameters, proper URL is called', () async {
       mockNearbyHttp200WithStatus("OK");
 
-      service.getNearBy(Location(1, 1), language: 'en-US');
+      await service.getNearBy(Location(1, 1), language: 'en-US');
 
-      verify(mockHttpClient
-          .get('${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0'));
+      verify(mockHttpClient.get('$baseUrl/en-US/nearby?location=1.0%2C1.0',
+          headers: authHeader));
     });
 
-    test('With opennow parameter proper URL is called', () {
+    test('With opennow parameter proper URL is called', () async {
       mockNearbyHttp200WithStatus("OK");
 
-      service.getNearBy(Location(1, 1), language: 'en-US', openNow: true);
+      await service.getNearBy(Location(1, 1), language: 'en-US', openNow: true);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&opennow'));
+          '$baseUrl/en-US/nearby?location=1.0%2C1.0&opennow',
+          headers: authHeader));
     });
 
-    test('With pagetoken parameter proper URL is called', () {
+    test('With pagetoken parameter proper URL is called', () async {
       mockNearbyHttp200WithStatus("OK");
 
-      service.getNearBy(Location(1, 1), language: 'en-US', pageToken: 'abc');
+      await service.getNearBy(Location(1, 1),
+          language: 'en-US', pageToken: 'abc');
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&pagetoken=abc'));
+          '$baseUrl/en-US/nearby?location=1.0%2C1.0&pagetoken=abc',
+          headers: authHeader));
     });
 
-    test('With radius parameter proper URL is called', () {
+    test('With radius parameter proper URL is called', () async {
       mockNearbyHttp200WithStatus("OK");
 
-      service.getNearBy(Location(1, 1), language: 'en-US', radius: 2000);
+      await service.getNearBy(Location(1, 1), language: 'en-US', radius: 2000);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&radius=2000'));
+          '$baseUrl/en-US/nearby?location=1.0%2C1.0&radius=2000',
+          headers: authHeader));
     });
 
-    test('With all parameters proper URL is called', () {
+    test('With all parameters proper URL is called', () async {
       mockNearbyHttp200WithStatus("OK");
 
-      service.getNearBy(Location(1, 1),
+      await service.getNearBy(Location(1, 1),
           language: 'en-US', openNow: true, pageToken: 'abc', radius: 2500);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/nearby?location=1.0%2C1.0&opennow&pagetoken=abc&radius=2500'));
+          '$baseUrl/en-US/nearby?location=1.0%2C1.0&opennow&pagetoken=abc&radius=2500',
+          headers: authHeader));
     });
   });
 
@@ -139,23 +160,24 @@ void main() {
   });
 
   group('find(url)', () {
-    test('With required parameters, proper URL is called', () {
+    test('With required parameters, proper URL is called', () async {
       mockFindHttp200WithStatus("OK");
 
-      service.findByQuery('query', language: 'en-US');
+      await service.findByQuery('query', language: 'en-US');
 
-      verify(
-          mockHttpClient.get('${ApiBase.apiBaseUrl}/en-US/find?input=query'));
+      verify(mockHttpClient.get('$baseUrl/en-US/find?input=query',
+          headers: authHeader));
     });
 
-    test('With location and radius parameters proper URL is called', () {
+    test('With location and radius parameters proper URL is called', () async {
       mockFindHttp200WithStatus("OK");
 
-      service.findByQuery('query',
+      await service.findByQuery('query',
           language: 'en-US', location: Location(1, 1), radius: 2500);
 
       verify(mockHttpClient.get(
-          '${ApiBase.apiBaseUrl}/en-US/find?input=query&location=1.0%2C1.0&radius=2500'));
+          '$baseUrl/en-US/find?input=query&location=1.0%2C1.0&radius=2500',
+          headers: authHeader));
     });
   });
 
@@ -189,12 +211,13 @@ void main() {
   });
 
   group('detail', () {
-    test('With required parameters, proper URL is called', () {
+    test('With required parameters, proper URL is called', () async {
       mockDetailHttp200WithStatus("OK");
 
-      service.getDetail('abc', language: 'en-US');
+      await service.getDetail('abc', language: 'en-US');
 
-      verify(mockHttpClient.get('${ApiBase.apiBaseUrl}/en-US/detail/abc'));
+      verify(
+          mockHttpClient.get('$baseUrl/en-US/detail/abc', headers: authHeader));
     });
 
     test('With required parameters and sucessfull request model is returned',
@@ -226,12 +249,13 @@ void main() {
   });
 
   group('basic', () {
-    test('With required parameters, proper URL is called', () {
+    test('With required parameters, proper URL is called', () async {
       mockBasicHttp200WithStatus("OK");
 
-      service.getBasicInfo('abc', language: 'en-US');
+      await service.getBasicInfo('abc', language: 'en-US');
 
-      verify(mockHttpClient.get('${ApiBase.apiBaseUrl}/en-US/basic/abc'));
+      verify(
+          mockHttpClient.get('$baseUrl/en-US/basic/abc', headers: authHeader));
     });
 
     test('With required parameters and sucessfull request model is returned',
@@ -263,35 +287,36 @@ void main() {
   });
 
   group('updateTagsFroCafe', () {
-    test('Proper url is called', () {
+    test('Proper url is called', () async {
       when(
         mockHttpClient.post(any,
             body: anyNamed('body'), headers: anyNamed('headers')),
       ).thenAnswer((_) async => Future.value(Response("", 204)));
 
-      service.updateTagsForCafe('abc', []);
+      await service.updateTagsForCafe('abc', []);
 
-      verify(mockHttpClient.post("${ApiBase.apiBaseUrl}/tags/abc",
-          body: anyNamed('body'),
-          headers: {
-            HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-          }));
+      verify(mockHttpClient
+          .post("$baseUrl/tags/abc", body: anyNamed('body'), headers: {
+        HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        'authorization': 'Bearer token'
+      }));
     });
 
-    test('Proper url is called and proper json paased', () {
+    test('Proper url is called and proper json paased', () async {
       when(
         mockHttpClient.post(any,
             body: anyNamed('body'), headers: anyNamed('headers')),
       ).thenAnswer((_) async => Future.value(Response("", 204)));
 
       final model = TagUpdateModel(id: '123', change: TagUpdateKind.like);
-      service.updateTagsForCafe('abc', [model]);
+      await service.updateTagsForCafe('abc', [model]);
 
-      final expectedUrl = "${ApiBase.apiBaseUrl}/tags/abc";
+      final expectedUrl = "$baseUrl/tags/abc";
       final expectedBody = jsonEncode([model]);
 
       verify(mockHttpClient.post(expectedUrl, body: expectedBody, headers: {
         HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        'authorization': 'Bearer token'
       }));
     });
   });

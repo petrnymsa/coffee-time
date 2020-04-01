@@ -31,6 +31,7 @@
 /build/
 
 i18nconfig.json
+assets/config/*
 
 # Generated files
 **.freezed.dart*

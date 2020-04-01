@@ -54,8 +54,6 @@ class DetailBloc extends Bloc<DetailBlocEvent, DetailBlocState> {
         isFavorite: lastUpdate.lastCafeIsFavorite,
       ));
     }
-    getLogger(runtimeType.toString())
-        .w('Got favorites state change: ${favoritesState.runtimeType}');
   }
 
   Stream<DetailBlocState> _mapLoadEvent(Load event) async* {

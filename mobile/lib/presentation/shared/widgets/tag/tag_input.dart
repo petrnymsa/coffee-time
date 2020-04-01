@@ -21,7 +21,7 @@ class TagInput extends StatelessWidget {
         tag.icon,
         size: 14,
       ),
-      deleteIcon: Icon(FontAwesomeIcons.times, size: 12),
+      deleteIcon: const Icon(FontAwesomeIcons.times, size: 12),
       onDeleted: onDeleted,
       onPressed: onPressed,
     );

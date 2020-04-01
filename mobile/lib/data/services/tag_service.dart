@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
+import '../../core/app_config.dart';
+import '../../core/firebase/authentication.dart';
 import '../../core/http_client_factory.dart';
 import '../models/models.dart';
 import 'api_base.dart';
@@ -12,12 +14,19 @@ abstract class TagService {
 }
 
 class TagServiceImpl extends ApiBase implements TagService {
-  TagServiceImpl({@required HttpClientFactory clientFactory})
-      : super(clientFactory: clientFactory);
+  TagServiceImpl({
+    @required HttpClientFactory clientFactory,
+    @required AppConfig appConfig,
+    @required FirebaseAuthProvider authProvider,
+  }) : super(
+          clientFactory: clientFactory,
+          appConfig: appConfig,
+          authProvider: authProvider,
+        );
 
   @override
   Future<List<TagModel>> getAll() async {
-    final url = '${ApiBase.apiBaseUrl}/tags';
+    final url = '${appConfig.apiUrl}/tags';
     final response = await getRequest(url);
 
     final List<dynamic> data = json.decode(response.body);
@@ -27,7 +36,7 @@ class TagServiceImpl extends ApiBase implements TagService {
 
   @override
   Future<List<TagReputationModel>> getForCafe(String placeId) async {
-    final url = '${ApiBase.apiBaseUrl}/tags/$placeId';
+    final url = '${appConfig.apiUrl}/tags/$placeId';
     final response = await getRequest(url);
 
     final List<dynamic> data = json.decode(response.body);
