@@ -1,3 +1,5 @@
+import '../core/firebase/authentication.dart';
+
 import '../core/utils/query_string_builder.dart';
 
 String createPhotoUrl(String baseUrl, {int maxWidth, int maxHeight}) {
@@ -22,3 +24,6 @@ String createPhotoUrl(String baseUrl, {int maxWidth, int maxHeight}) {
 
   return baseUrl;
 }
+
+Map<String, String> createPhotoHttpHeader(String token) =>
+    {'Authorization': 'Bearer $token'};

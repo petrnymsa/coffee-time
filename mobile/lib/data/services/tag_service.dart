@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:coffee_time/core/firebase/authentication.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/app_config.dart';
@@ -13,10 +14,15 @@ abstract class TagService {
 }
 
 class TagServiceImpl extends ApiBase implements TagService {
-  TagServiceImpl(
-      {@required HttpClientFactory clientFactory,
-      @required AppConfig appConfig})
-      : super(clientFactory: clientFactory, appConfig: appConfig);
+  TagServiceImpl({
+    @required HttpClientFactory clientFactory,
+    @required AppConfig appConfig,
+    @required FirebaseAuthProvider authProvider,
+  }) : super(
+          clientFactory: clientFactory,
+          appConfig: appConfig,
+          authProvider: authProvider,
+        );
 
   @override
   Future<List<TagModel>> getAll() async {
