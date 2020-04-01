@@ -28,17 +28,18 @@ class TileCoverImage extends StatelessWidget {
                   return CachedNetworkImage(
                     imageUrl: url,
                     httpHeaders: createPhotoHttpHeader(snapshot.data),
-                    placeholder: (context, url) => CircularLoader(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    placeholder: (context, url) => const CircularLoader(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                     width: double.infinity,
                     fit: BoxFit.fitWidth,
                   );
                 }
-                return Center(child: CircularLoader());
+                return const Center(child: CircularLoader());
               },
             )
           : Image.asset(
-              'assets/table.jpg',
+              'assets/table.jpg', //todo asset
               width: double.infinity,
               fit: BoxFit.cover,
             ),

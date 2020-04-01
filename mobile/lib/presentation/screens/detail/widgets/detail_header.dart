@@ -25,18 +25,18 @@ class DetailHeader extends StatelessWidget {
               size: 14,
               color: Theme.of(context).accentColor,
             ),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             DistanceText(cafeLocation: cafe.location),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             if (cafe.openNow != null)
               FaIcon(
                 FontAwesomeIcons.clock,
                 size: 14,
                 color: Theme.of(context).accentColor,
               ),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             if (cafe.openNow != null) OpensNowText(opensNow: cafe.openNow),
-            Spacer(),
+            const Spacer(),
             if (cafe.rating != null) Rating.large(cafe.rating),
           ],
         ),
@@ -44,7 +44,7 @@ class DetailHeader extends StatelessWidget {
           Row(
             children: <Widget>[
               Text(I18n.of(context).price),
-              SizedBox(width: 2),
+              const SizedBox(width: 2),
               Pricing(cafe.priceLevel)
             ],
           ),

@@ -26,7 +26,7 @@ class DetailScreen extends StatelessWidget {
       body: BlocBuilder<DetailBloc, DetailBlocState>(
         builder: (context, state) {
           return state.when(
-            loading: () => CircularLoader(),
+            loading: () => const CircularLoader(),
             failure: (message) => FailureContainer(
               message: message,
               onRefresh: () => context.bloc<DetailBloc>().add(Load()),

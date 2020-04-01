@@ -45,7 +45,7 @@ class _ExpandablePanelState extends State<ExpandablePanel>
                 child: Row(
                   children: <Widget>[
                     widget.header,
-                    Spacer(),
+                    const Spacer(),
                     IconButton(
                       splashColor: Colors.transparent,
                       icon: Icon(

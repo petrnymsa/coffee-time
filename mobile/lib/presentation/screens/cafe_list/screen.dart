@@ -13,10 +13,10 @@ class CafeListScreen extends StatelessWidget {
     return BlocBuilder<CafeListBloc, CafeListState>(
       builder: (context, state) {
         return state.map(
-          loading: (_) => CircularLoader(),
+          loading: (_) => const CircularLoader(),
           loaded: (loaded) {
             if (loaded.cafes.length == 0) {
-              return NoData();
+              return const NoData();
             }
             return CafeList(state: loaded);
           },

@@ -29,7 +29,7 @@ class FilterScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(I18n.of(context).filter_title),
             leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () => _handleAppBarBack(context),
             ),
           ),

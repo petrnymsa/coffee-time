@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:logger/logger.dart';
 
-import '../../../../core/app_logger.dart';
 import '../../../../di_container.dart';
 import '../../../../domain/entities/cafe.dart';
 import '../../../../domain/entities/location.dart';
@@ -43,7 +41,6 @@ class _MapContainerState extends State<MapContainer> {
   static const double defaultBearing = 0;
 
   final Completer<GoogleMapController> _controller = Completer();
-  final Logger logger = getLogger('MapScreen');
 
   BitmapDescriptor cafeIcon;
   BitmapDescriptor flagIcon;
@@ -130,8 +127,6 @@ class _MapContainerState extends State<MapContainer> {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('Rebuild');
-
     _markers.clear();
     _addCafeMarkers();
 
@@ -190,7 +185,7 @@ class _MapContainerState extends State<MapContainer> {
                     .add(SetCurrentLocation(filter: widget.state.filter));
                 _moveToCurrentLocation();
               },
-              child: FaIcon(
+              child: const FaIcon(
                 FontAwesomeIcons.crosshairs,
                 color: Colors.white,
               ),

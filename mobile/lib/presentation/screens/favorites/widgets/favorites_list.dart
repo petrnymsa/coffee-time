@@ -33,7 +33,7 @@ class FavoritesList extends StatelessWidget {
             ),
           );
         }
-        return CircularLoader();
+        return const CircularLoader();
       },
     );
   }

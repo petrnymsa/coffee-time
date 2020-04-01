@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../domain/entities/tag.dart';
+import '../../theme.dart';
 
 class TagContainer extends StatelessWidget {
   final Tag tag;
@@ -18,7 +19,7 @@ class TagContainer extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: const Color(0xFF63A69F), //todo hardcoded color
+        color: AppTheme.kTagColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: !onlyIcon
@@ -36,7 +37,7 @@ class TagContainer extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     tag.translatedTitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 14,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),

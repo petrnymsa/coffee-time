@@ -13,16 +13,11 @@ class NoFavorites extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          FaIcon(
-            FontAwesomeIcons.heart,
-            size: 48,
-          ),
-          SizedBox(
-            height: 14,
-          ),
+          const FaIcon(FontAwesomeIcons.heart, size: 48),
+          const SizedBox(height: 14),
           Text(
             I18n.of(context).favorites_noFavorites,
-            style: TextStyle(fontSize: 20),
+            style: const TextStyle(fontSize: 20),
           ),
         ],
       ),

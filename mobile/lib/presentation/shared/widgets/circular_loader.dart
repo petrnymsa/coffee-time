@@ -8,9 +8,7 @@ class CircularLoader extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
-        child: CircularProgressIndicator(
-          strokeWidth: 1,
-        ),
+        child: const CircularProgressIndicator(strokeWidth: 1),
       ),
     );
   }

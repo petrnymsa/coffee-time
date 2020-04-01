@@ -34,7 +34,7 @@ class FailureContainer extends StatelessWidget {
             message: message,
             icon: titleIcon,
           ),
-          Divider(indent: 60, endIndent: 60),
+          const Divider(indent: 60, endIndent: 60),
           if (onRefresh != null)
             FlatButton.icon(
               onPressed: onRefresh,

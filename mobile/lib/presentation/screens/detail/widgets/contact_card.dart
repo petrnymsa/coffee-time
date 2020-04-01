@@ -91,7 +91,7 @@ class Phone extends StatelessWidget {
               padding: const EdgeInsets.only(left: 5),
               child: Text(
                 contact.formattedPhone,
-                style: TextStyle(decoration: TextDecoration.underline),
+                style: const TextStyle(decoration: TextDecoration.underline),
               ),
             ),
           ],

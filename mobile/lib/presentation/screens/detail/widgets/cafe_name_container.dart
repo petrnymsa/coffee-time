@@ -34,7 +34,7 @@ class CafeNameContainer extends StatelessWidget {
               padding: const EdgeInsets.only(top: 6.0),
               child: SelectableText(
                 cafe.placeId,
-                style: TextStyle(color: Colors.black38),
+                style: const TextStyle(color: Colors.black38),
               ),
             ),
           FlatButton.icon(
