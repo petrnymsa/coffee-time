@@ -21,7 +21,6 @@ class FilterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getLogger('FilterScreen').i('Rebuild');
     return WillPopScope(
       onWillPop: () => _handleBackButton(context),
       child: BlocBuilder<FilterBloc, FilterBlocState>(

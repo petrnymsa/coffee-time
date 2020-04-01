@@ -63,8 +63,6 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
         isFavorite: lastUpdate.lastCafeIsFavorite,
       ));
     }
-    getLogger(runtimeType.toString())
-        .w('Got favorites state change: ${favoritesState.runtimeType}');
   }
 
   Stream<CafeListState> _mapLoadNext(LoadNext event) async* {
