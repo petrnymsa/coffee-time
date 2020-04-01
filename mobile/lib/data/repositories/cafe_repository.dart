@@ -48,7 +48,6 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   Future<List<String>> _getFavoriteIds() async {
-    //todo getUserId
     return favoriteService.getFavorites('user');
   }
 
@@ -213,8 +212,7 @@ class CafeRepositoryImpl implements CafeRepository {
   @override
   Future<Either<bool, Failure>> toggleFavorite(String cafeId) async {
     try {
-      final result =
-          await favoriteService.setFavorite('user', cafeId); //todo get User
+      final result = await favoriteService.setFavorite('user', cafeId);
       return Left(result);
     } catch (e) {
       return Right(CommonFailure(e));

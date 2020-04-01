@@ -35,7 +35,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => sl<CafeListBloc>()..add(Refresh())),
       ],
       child: MaterialApp(
-        title: 'Coffee Time', //todo title
+        title: 'Coffee Time',
         localizationsDelegates: _localizationDelegates,
         supportedLocales: I18n.delegate.supportedLocales,
         localeResolutionCallback:
