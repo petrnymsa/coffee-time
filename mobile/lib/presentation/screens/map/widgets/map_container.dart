@@ -10,6 +10,7 @@ import '../../../../domain/entities/cafe.dart';
 import '../../../../domain/entities/location.dart';
 import '../../../../domain/services/location_service.dart';
 import '../../../../generated/i18n.dart';
+import '../../../assets.dart';
 import '../../../core/notification_helper.dart';
 import '../../detail/bloc/bloc.dart' as detail_bloc;
 import '../../detail/screen.dart';
@@ -56,14 +57,13 @@ class _MapContainerState extends State<MapContainer> {
   }
 
   void _loadCafeIcon() async {
-    //todo assets constants
     cafeIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(devicePixelRatio: 2.5),
-      'assets/coffee-shop-marker.png',
+      Assets.kCoffeeMarker,
     );
     flagIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(devicePixelRatio: 2.5),
-      'assets/flag.png',
+      Assets.kFlag,
     );
     setState(() {});
   }

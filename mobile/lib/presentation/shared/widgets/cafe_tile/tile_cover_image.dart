@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/firebase/authentication.dart';
 import '../../../../di_container.dart';
 import '../../../../domain/photo_url_helper.dart';
+import '../../../assets.dart';
 import '../../shared_widgets.dart';
 
 class TileCoverImage extends StatelessWidget {
@@ -39,7 +40,7 @@ class TileCoverImage extends StatelessWidget {
               },
             )
           : Image.asset(
-              'assets/table.jpg', //todo asset
+              Assets.kImageTable,
               width: double.infinity,
               fit: BoxFit.cover,
             ),
