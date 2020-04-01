@@ -42,8 +42,7 @@ dev_dependencies:
   effective_dart: ^1.2.0
   build_runner: ^1.7.4
   freezed: ^0.9.0
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  flutter_launcher_icons: "^0.7.3"
 
 # The following section is specific to Flutter.
 flutter:
@@ -73,3 +72,8 @@ flutter:
           weight: 300
         - asset: assets/fonts/Raleway-Bold.ttf
           weight: 700
+
+flutter_icons:
+  android: "launcher_icon" 
+  ios: true
+  image_path: "assets/icon/icon.png"
