@@ -5,7 +5,7 @@ It allows users to easily search nearby cafes, locate them, display reviews and 
 
 ## :computer: Used technologies 
 - Flutter, of course. 
-- Firebase and Cloud Funtions as back-end
+- Firebase and Cloud Functions as back-end
 - Express.js for REST API
 
 ## :package: How to build and run
@@ -15,7 +15,7 @@ What you will need:
 - Flutter SDK
 - Firebase CLI
 - Firebase account and created empty firebase project
-- Google API
+- Google API Key
 
 For details look at [firebase](firebase/README.md) and [mobile](mobile/README.md) directories.
 
@@ -23,7 +23,7 @@ For details look at [firebase](firebase/README.md) and [mobile](mobile/README.md
 TBA.
 
 ## :star:  Can I contribute?
-Yes. Just fork :fork_and_knife: it and open pull request. Easy as that :+1:. 
+Yes. Just fork it and open pull request. Easy as that :+1:. 
 
 ## :interrobang: Found issue? 
 Go ahead and open one. Thank you. 
