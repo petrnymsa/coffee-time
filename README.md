@@ -1,7 +1,7 @@
 # Coffee Time :coffee:
 Coffee Time is Flutter application as part of my master thesis in *Czech Technical University in Prague*. 
 
-It allows users to easily search nearby cafes, locate them, display reviews and add custom tags which helps filtering cafes.
+It allows users to easily search nearby cafes, display reviews and add custom tags which helps filtering cafes.
 
 ![CoffeeTime](docs/app.jpg)
 
