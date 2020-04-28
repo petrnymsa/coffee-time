@@ -3,10 +3,7 @@ Coffee Time is Flutter application as part of my master thesis in *Czech Technic
 
 It allows users to easily search nearby cafes, locate them, display reviews and add custom tags which helps filtering cafes.
 
-![CoffeeTime](docs/img1.jpg)
-
-
-![CoffeeTime2](docs/img2.jpg)
+![CoffeeTime](docs/app.jpg)
 
 ## :computer: Used technologies 
 - Flutter, of course. 
