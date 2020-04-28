@@ -21,9 +21,6 @@ What you will need:
 
 For details look at [firebase](firebase/README.md) and [mobile](mobile/README.md) directories.
 
-## :scroll: License
-TBA.
-
 ## :star:  Can I contribute?
 Yes. Just fork it and open pull request. Easy as that :+1:. 
 
