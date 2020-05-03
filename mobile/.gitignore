@@ -9,6 +9,8 @@
 .history
 .svn/
 
+scripts/install.ps1
+
 # IntelliJ related
 *.iml
 *.ipr

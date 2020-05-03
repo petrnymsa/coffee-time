@@ -53,14 +53,14 @@ class FavoritesList extends StatelessWidget {
   }
 
   void _onToggleFavorite(BuildContext context, Cafe cafe) {
-    context.bloc<FavoritesBloc>().add(ToggleFavorite(cafe.placeId));
+    final favoritesBloc = context.bloc<FavoritesBloc>();
+
+    favoritesBloc.add(ToggleFavorite(cafe.placeId));
 
     context.showFavoriteChangedSnackBar(
       isFavorite: cafe.isFavorite,
       duration: const Duration(seconds: 3),
-      undoAction: () {
-        context.bloc<FavoritesBloc>().add(ToggleFavorite(cafe.placeId));
-      },
+      undoAction: () => favoritesBloc.add(ToggleFavorite(cafe.placeId)),
     );
   }
 
