@@ -1,3 +1,13 @@
+import { photosRoute } from './routes/photos';
+import * as express from 'express';
+import * as dotenv from 'dotenv';
+import * as firebase from 'firebase-functions';
+import * as admin from 'firebase-admin';
+import { placesRoute } from './routes/places';
+import { tagsRoute } from './routes/tags';
+import { TagsRepository } from './firebase/tags'
+import { db } from './firebase/connection';
+import { logInfo } from './logger';
 
 declare module 'express-serve-static-core' {
     interface Request {
@@ -5,17 +15,6 @@ declare module 'express-serve-static-core' {
         user: admin.auth.DecodedIdToken //User's ID token
     }
 }
-
-import * as express from 'express';
-import * as dotenv from 'dotenv';
-import * as firebase from 'firebase-functions';
-import * as admin from 'firebase-admin';
-import { ValidationError, getPhoto } from './google';
-import { placesRoute } from './routes/places';
-import { tagsRoute } from './routes/tags';
-import { TagsRepository } from './firebase/tags'
-import { db } from './firebase/connection';
-import { logRequestError, logInfo } from './logger';
 
 let app;
 
@@ -48,7 +47,7 @@ if (typeof app === 'undefined') {
             next();
             return;
         } catch (e) {
-            res.status(403).send('Unauthorized - Invalid token');
+            res.status(401).send('Unauthorized - Invalid token');
             return;
         }
     });
@@ -63,37 +62,8 @@ if (typeof app === 'undefined') {
     app.use('/:language', placesRoute(tagsRepository));
     // Tags routes
     app.use('/tags', tagsRoute(tagsRepository));
-    // Photo 
-    app.get('/photo/:id', async (req, res) => {
-        try {
-            const maxHeight = req.query.maxheight;
-            const maxWidth = req.query.maxwidth;
-
-            const response = await getPhoto(req.params.id, maxHeight, maxWidth);
-            const photo = Buffer.from(response.body, 'base64');
-
-            res.header(response.headers);
-            res.send(photo);
-        }
-        catch (err) {
-            logRequestError(req, err);
-            if (err instanceof ValidationError) {
-                res.status(400);
-                res.json(err.message);
-            } else {
-                if (err.statusCode < 500) {
-                    res.status(err.statusCode);
-                    const msg = {
-                        'error': 'Bad usage. Check photoreference.',
-                        'internal': err
-                    };
-                    res.json(msg);
-                } else {
-                    res.status(500).json(err);
-                }
-            }
-        }
-    });
+    // Photo
+    app.use('/photo', photosRoute());
 }
 
 
