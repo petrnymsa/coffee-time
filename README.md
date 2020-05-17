@@ -5,6 +5,10 @@ It allows users to easily search nearby cafes, display reviews and add custom ta
 
 ![CoffeeTime](docs/app.jpg)
 
+Available from [Google Play Store](https://play.google.com/store/apps/details?id=cz.petrnymsa.coffee_time). Give it a try :star:
+
+![GooglePlayStore](http://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcz.petrnymsa.coffee_time&qzone=1&margin=0&size=150x150&ecc=L)
+
 ## :computer: Used technologies 
 - Flutter, of course. 
 - Firebase and Cloud Functions as back-end
