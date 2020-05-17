@@ -1,7 +1,7 @@
 name: coffee_time
 description: Find your nearest and best cafe for you
 
-version: 1.0.1+9
+version: 1.0.2+10
 
 environment:
   sdk: '>2.6.0 <3.0.0'
