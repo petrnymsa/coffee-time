@@ -14,5 +14,7 @@ A clear and concise description of what the problem is.
 A clear and concise description of what you want to happen.
 
 **Definition of done**
+- [ ] ..
 
-- [x] Example 
+**Acceptance criteria**
+- [ ] ...
