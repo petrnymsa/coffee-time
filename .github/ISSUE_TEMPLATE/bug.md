@@ -2,7 +2,7 @@
 name: bug
 about: Create a report to help us improve
 title: "[BUG]"
-labels: bug, need-planning
+labels: bug, need-triage
 assignees: petrnymsa
 
 ---
