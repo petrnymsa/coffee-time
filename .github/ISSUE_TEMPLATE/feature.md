@@ -2,7 +2,7 @@
 name: feature
 about: Suggest an idea for this project
 title: "[FEATURE]"
-labels: enhancement, not-revisited
+labels: enhancement, need-triage
 assignees: petrnymsa
 
 ---
