@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 
 class NoLocationPermissionException extends Equatable implements Exception {
-  final GeolocationStatus status;
+  final LocationPermission status;
 
   const NoLocationPermissionException(this.status);
 

@@ -16,10 +16,7 @@ class TagsReviewBloc extends Bloc<TagsReviewBlocEvent, TagsReviewBlocState> {
   TagsReviewBloc({
     @required this.tagsToReview,
     @required this.tagRepository,
-  });
-
-  @override
-  TagsReviewBlocState get initialState => Loading();
+  }) : super(Loading());
 
   @override
   Stream<TagsReviewBlocState> mapEventToState(

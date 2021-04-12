@@ -11,25 +11,25 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  font_awesome_flutter: ^8.8.1
-  page_indicator: ^0.3.0
-  expandable: ^4.1.4
-  url_launcher: ^5.4.2
-  intl: ^0.16.0
-  logger: ^0.7.0+2
-  equatable: ^1.1.1
-  google_maps_flutter: ^0.5.25+2
-  http: ^0.12.0+4
-  freezed_annotation: ^0.7.1
-  shared_preferences: ^0.5.6+1
-  flutter_bloc: ^4.0.0
-  geolocator: ^5.2.1
-  cached_network_image: ^2.0.0
-  get_it: ^4.0.0  
-  permission_handler: ^5.0.0
-  app_settings: ^3.0.1
-  firebase_auth: ^0.15.5+3
-  firebase_crashlytics: ^0.1.3+3
+  font_awesome_flutter: ^9.0.0
+  page_indicator: ^0.4.1
+  expandable: ^5.0.1
+  url_launcher: ^6.0.3
+  intl: ^0.17.0
+  logger: ^1.0.0
+  equatable: ^2.0.0
+  google_maps_flutter: ^2.0.3
+  http: ^0.13.1
+  freezed_annotation: ^0.14.1
+  shared_preferences: ^2.0.5
+  flutter_bloc: ^7.0.0
+  geolocator: ^7.0.2
+  cached_network_image: ^3.0.0
+  get_it: ^6.0.0  
+  permission_handler: ^6.1.1
+  app_settings: ^4.1.0
+  firebase_auth: ^1.0.3
+  firebase_crashlytics: ^2.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -38,12 +38,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter 
-  mockito: ^4.1.1
-  bloc_test: ^5.1.0
+  mockito: ^5.0.3
+  bloc_test: ^8.0.0
   effective_dart: ^1.2.0
   build_runner: ^1.7.4
-  freezed: ^0.10.8
-  flutter_launcher_icons: "^0.7.3"
+  freezed: ^0.14.1+2
+  flutter_launcher_icons: ^0.9.0
 
 # The following section is specific to Flutter.
 flutter:

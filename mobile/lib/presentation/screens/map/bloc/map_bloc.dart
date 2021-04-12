@@ -19,10 +19,7 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
   MapBloc({
     @required this.cafeRepository,
     @required this.locationService,
-  });
-
-  @override
-  MapBlocState get initialState => Loading();
+  }) : super(Loading());
 
   @override
   Stream<MapBlocState> mapEventToState(MapBlocEvent event) async* {

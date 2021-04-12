@@ -40,7 +40,7 @@ class TagsContainer extends StatelessWidget {
                                   sourceTags: state.notAddedTags),
                             )));
                 if (addedTags != null) {
-                  context.bloc<FilterBloc>().add(AddTags(tags: addedTags));
+                  context.read<FilterBloc>().add(AddTags(tags: addedTags));
                 }
               },
             ),
@@ -62,7 +62,7 @@ class TagsContainer extends StatelessWidget {
           FlatButton.icon(
             label: Text(I18n.of(context).filter_tags_clear),
             icon: Icon(Icons.clear_all),
-            onPressed: () => context.bloc<FilterBloc>().add(ClearTags()),
+            onPressed: () => context.read<FilterBloc>().add(ClearTags()),
           )
         ],
       ),
@@ -76,9 +76,9 @@ class TagsContainer extends StatelessWidget {
               (t) => TagInput(
                 tag: t,
                 onDeleted: () =>
-                    context.bloc<FilterBloc>().add(RemoveTag(tagId: t.id)),
+                    context.read<FilterBloc>().add(RemoveTag(tagId: t.id)),
                 onPressed: () =>
-                    context.bloc<FilterBloc>().add(RemoveTag(tagId: t.id)),
+                    context.read<FilterBloc>().add(RemoveTag(tagId: t.id)),
               ),
             )
             .toList(),

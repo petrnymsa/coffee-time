@@ -13,7 +13,7 @@ class FavoritesScreen extends StatelessWidget {
         return state.when(
           loading: () => const CircularLoader(),
           loaded: (cafes, _, __) {
-            if (cafes.length == 0) {
+            if (cafes.isEmpty) {
               return const NoFavorites();
             }
 
@@ -22,7 +22,7 @@ class FavoritesScreen extends StatelessWidget {
           failure: (msg) => FailureContainer(
             message: msg,
             onRefresh: () {
-              context.bloc<FavoritesBloc>().add(Load());
+              context.read<FavoritesBloc>().add(Load());
             },
           ),
         );

@@ -11,11 +11,8 @@ class FilterBloc extends Bloc<FilterBlocEvent, FilterBlocState> {
   final TagRepository tagRepository;
   final Filter initialFilter;
 
-  FilterBloc({@required this.tagRepository, this.initialFilter});
-
-  @override
-  FilterBlocState get initialState =>
-      FilterBlocState(filter: initialFilter ?? Filter());
+  FilterBloc({@required this.tagRepository, this.initialFilter})
+      : super(FilterBlocState(filter: initialFilter ?? Filter()));
 
   @override
   Stream<FilterBlocState> mapEventToState(FilterBlocEvent event) async* {

@@ -35,7 +35,7 @@ abstract class ApiBase {
     http.Response response;
     try {
       final headers = await _getRequestHeader();
-      response = await client.get(url, headers: headers);
+      response = await client.get(Uri(path: url), headers: headers);
       //ignore: avoid_catches_without_on_clauses
     } catch (e) {
       _logger.e(e.toString());
@@ -56,7 +56,7 @@ abstract class ApiBase {
     http.Response response;
     try {
       final token = await authProvider.getAuthToken();
-      response = await client.post(url, body: body, headers: {
+      response = await client.post(Uri(path: url), body: body, headers: {
         HttpHeaders.contentTypeHeader: ContentType.json.toString(),
         HttpHeaders.authorizationHeader: 'Bearer $token'
       });

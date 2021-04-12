@@ -11,7 +11,7 @@ class TagsChooseScreen extends StatelessWidget {
   const TagsChooseScreen({Key key}) : super(key: key);
 
   void _onTagSelected(BuildContext context, Tag tag) {
-    context.bloc<TagsChooseBloc>().add(ChooseTag(tag: tag));
+    context.read<TagsChooseBloc>().add(ChooseTag(tag: tag));
   }
 
   @override

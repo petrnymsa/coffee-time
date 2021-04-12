@@ -10,10 +10,7 @@ import 'favorites_bloc_state.dart';
 class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState> {
   final CafeRepository cafeRepository;
 
-  FavoritesBloc({@required this.cafeRepository});
-
-  @override
-  FavoritesBlocState get initialState => Loading();
+  FavoritesBloc({@required this.cafeRepository}) : super(Loading());
 
   @override
   Stream<FavoritesBlocState> mapEventToState(FavoritesBlocEvent event) async* {

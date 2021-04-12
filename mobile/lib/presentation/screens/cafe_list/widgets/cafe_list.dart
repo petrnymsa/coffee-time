@@ -21,9 +21,8 @@ class CafeList extends StatelessWidget {
   }) : super(key: key);
 
   void _onToggleFavorite(BuildContext context, Cafe cafe) {
-    //  context.bloc<CafeListBloc>().add(ToggleFavorite(cafeId: cafe.placeId));
     context
-        .bloc<favorites.FavoritesBloc>()
+        .read<favorites.FavoritesBloc>()
         .add(favorites.ToggleFavorite(cafe.placeId));
     context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
   }
@@ -32,7 +31,7 @@ class CafeList extends StatelessWidget {
       BuildContext context, Notification notification) {
     if (notification is ScrollEndNotification &&
         notification.metrics.extentAfter == 0) {
-      context.bloc<CafeListBloc>().add(
+      context.read<CafeListBloc>().add(
           LoadNext(pageToken: state.nextPageToken, filter: state.actualFilter));
     }
 
@@ -54,7 +53,7 @@ class CafeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (state.cafes.length == 0) return NoData();
+    if (state.cafes.isEmpty) return NoData();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -64,7 +63,7 @@ class CafeList extends StatelessWidget {
           child: RefreshIndicator(
             onRefresh: () {
               context
-                  .bloc<CafeListBloc>()
+                  .read<CafeListBloc>()
                   .add(Refresh(filter: state.actualFilter));
               return Future.value();
             },

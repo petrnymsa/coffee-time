@@ -15,7 +15,7 @@ class TagsReviewScreen extends StatelessWidget {
   void _onTagReview(
       BuildContext context, String tagId, TagReviewKind reviewKind) {
     context
-        .bloc<TagsReviewBloc>()
+        .read<TagsReviewBloc>()
         .add(ReviewTag(id: tagId, review: reviewKind));
   }
 
@@ -32,12 +32,12 @@ class TagsReviewScreen extends StatelessWidget {
     );
 
     if (addedTags != null) {
-      context.bloc<TagsReviewBloc>().add(AddTags(tagsToAdd: addedTags));
+      context.read<TagsReviewBloc>().add(AddTags(tagsToAdd: addedTags));
     }
   }
 
   Future<void> _onConfirm(BuildContext context) async {
-    final updates = context.bloc<TagsReviewBloc>().getUpdates();
+    final updates = context.read<TagsReviewBloc>().getUpdates();
     Navigator.of(context).pop(updates);
   }
 

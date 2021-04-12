@@ -30,12 +30,12 @@ class OpeningHoursContainer extends StatelessWidget {
                 onChanged: (value) {
                   final b = BlocProvider.of<FilterBloc>(context);
                   b.add(ChangeOpeningHour());
-                  //context.bloc<FilterBloc>().add(ChangeOpeningHour());
+                  //context.read<FilterBloc>().add(ChangeOpeningHour());
                 },
               ),
               GestureDetector(
                 onTap: () =>
-                    context.bloc<FilterBloc>().add(ChangeOpeningHour()),
+                    context.read<FilterBloc>().add(ChangeOpeningHour()),
                 child: Text(
                   I18n.of(context).filter_openingHours_onlyOpen,
                   style: Theme.of(context).textTheme.subhead,

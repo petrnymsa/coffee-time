@@ -4,8 +4,7 @@ import '../../../models/app_tab.dart';
 import 'tab_event.dart';
 
 class TabsBloc extends Bloc<TabEvent, AppTabKey> {
-  @override
-  AppTabKey get initialState => AppTabKey.cafeList;
+  TabsBloc() : super(AppTabKey.cafeList);
 
   @override
   Stream<AppTabKey> mapEventToState(

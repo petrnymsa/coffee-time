@@ -22,16 +22,16 @@ class _MapScreenState extends State<MapScreen> {
         failure: (failure) => FailureContainer(
           message: failure.message,
           onRefresh: () {
-            context.bloc<MapBloc>().add(Init(filter: failure.filter));
+            context.read<MapBloc>().add(Init(filter: failure.filter));
           },
         ),
         failureNoLocationPermission: (f) => NoLocationPermission(
           onPermissionGranted: () =>
-              context.bloc<MapBloc>().add(Init(filter: f.filter)),
+              context.read<MapBloc>().add(Init(filter: f.filter)),
         ),
         failureNoLocationService: (f) => NoLocationService(
           onLocationServiceOpened: () =>
-              context.bloc<MapBloc>().add(Init(filter: f.filter)),
+              context.read<MapBloc>().add(Init(filter: f.filter)),
         ),
       ),
     );

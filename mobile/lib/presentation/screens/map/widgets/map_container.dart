@@ -76,7 +76,7 @@ class _MapContainerState extends State<MapContainer> {
     _moveCameraToLocation(tappedLocation);
     final location = tappedLocation.toLocation();
     context
-        .bloc<MapBloc>()
+        .read<MapBloc>()
         .add(SetLocation(location, filter: widget.state.filter));
   }
 
@@ -181,7 +181,7 @@ class _MapContainerState extends State<MapContainer> {
             child: FloatingActionButton(
               onPressed: () {
                 context
-                    .bloc<MapBloc>()
+                    .read<MapBloc>()
                     .add(SetCurrentLocation(filter: widget.state.filter));
                 _moveToCurrentLocation();
               },

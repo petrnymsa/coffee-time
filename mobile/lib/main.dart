@@ -19,10 +19,12 @@ Future setupLocalization() async {
 }
 
 void main({AppEnvironment environment}) async {
-  Crashlytics.instance.enableInDevMode = true;
+  if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  }
 
   // Pass all uncaught errors from the framework to Crashlytics.
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
   await setupLocalization();
 
@@ -40,13 +42,13 @@ void main({AppEnvironment environment}) async {
 
   //Setup Bloc logger
   if (kDebugMode) {
-    BlocSupervisor.delegate = SimpleBlocDelegate();
+    Bloc.observer = SimpleBlocDelegate();
   }
 
   runApp(App());
 }
 
-class SimpleBlocDelegate extends BlocDelegate {
+class SimpleBlocDelegate extends BlocObserver {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);

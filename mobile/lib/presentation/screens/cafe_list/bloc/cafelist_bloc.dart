@@ -4,6 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
+import './cafelist_event.dart';
+import './cafelist_state.dart';
 import '../../../../core/app_logger.dart';
 import '../../../../core/either.dart';
 import '../../../../core/utils/string_utils.dart';
@@ -15,8 +17,6 @@ import '../../../../domain/repositories/cafe_repository.dart';
 import '../../../../domain/repositories/nearby_result.dart';
 import '../../../../domain/services/location_service.dart';
 import '../../../core/blocs/favorites/bloc.dart' as favorites;
-import './cafelist_event.dart';
-import './cafelist_state.dart';
 
 class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
   final CafeRepository _cafeRepository;
@@ -34,12 +34,11 @@ class CafeListBloc extends Bloc<CafeListEvent, CafeListState> {
     @required LocationService locationService,
     @required this.favoritesBloc,
   })  : _cafeRepository = cafeRepository,
-        _locationService = locationService {
-    _favoritesBlocSubscription = favoritesBloc.listen(_onFavoritesStateChanged);
+        _locationService = locationService,
+        super(Loading()) {
+    _favoritesBlocSubscription =
+        favoritesBloc.stream.listen(_onFavoritesStateChanged);
   }
-
-  @override
-  CafeListState get initialState => Loading();
 
   @override
   Stream<CafeListState> mapEventToState(CafeListEvent event) async* {

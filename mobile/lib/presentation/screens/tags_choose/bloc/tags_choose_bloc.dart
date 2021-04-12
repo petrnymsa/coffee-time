@@ -9,13 +9,11 @@ class TagsChooseBloc extends Bloc<TagsChooseBlocEvent, TagsChooseBlocState> {
   final List<Tag> sourceTags;
   final List<Tag> alreadyChosenTags;
 
-  TagsChooseBloc({@required this.sourceTags, this.alreadyChosenTags});
-
-  @override
-  TagsChooseBlocState get initialState => Loaded(
-        availableTags: sourceTags,
-        chosenTags: alreadyChosenTags ?? [],
-      );
+  TagsChooseBloc({@required this.sourceTags, this.alreadyChosenTags})
+      : super(Loaded(
+          availableTags: sourceTags,
+          chosenTags: alreadyChosenTags ?? [],
+        ));
 
   @override
   Stream<TagsChooseBlocState> mapEventToState(

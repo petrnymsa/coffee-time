@@ -21,9 +21,8 @@ class FavoriteButton extends StatelessWidget {
         color: Colors.white,
       ),
       onPressed: () {
-        // context.bloc<DetailBloc>().add(ToggleFavorite(cafe.placeId));
         context
-            .bloc<favorites.FavoritesBloc>()
+            .read<favorites.FavoritesBloc>()
             .add(favorites.ToggleFavorite(cafe.placeId));
         context.showFavoriteChangedSnackBar(isFavorite: cafe.isFavorite);
       },

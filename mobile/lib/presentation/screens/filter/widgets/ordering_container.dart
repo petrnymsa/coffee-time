@@ -27,10 +27,10 @@ class OrderingContainer extends StatelessWidget {
                 groupValue: ordering.index,
                 value: FilterOrdering.distance.index,
                 onChanged: (_) =>
-                    context.bloc<FilterBloc>().add(ChangeOrdering()),
+                    context.read<FilterBloc>().add(ChangeOrdering()),
               ),
               GestureDetector(
-                onTap: () => context.bloc<FilterBloc>().add(ChangeOrdering()),
+                onTap: () => context.read<FilterBloc>().add(ChangeOrdering()),
                 child: Text(
                   I18n.of(context).filter_orderBy_distance,
                   style: Theme.of(context).textTheme.subhead,
@@ -44,10 +44,10 @@ class OrderingContainer extends StatelessWidget {
                 groupValue: ordering.index,
                 value: FilterOrdering.popularity.index,
                 onChanged: (v) =>
-                    context.bloc<FilterBloc>().add(ChangeOrdering()),
+                    context.read<FilterBloc>().add(ChangeOrdering()),
               ),
               GestureDetector(
-                onTap: () => context.bloc<FilterBloc>().add(ChangeOrdering()),
+                onTap: () => context.read<FilterBloc>().add(ChangeOrdering()),
                 child: Text(
                   I18n.of(context).filter_orderBy_popularity,
                   style: Theme.of(context).textTheme.subhead,

@@ -22,10 +22,10 @@ class Shell extends StatelessWidget {
       listener: (context, state) {
         if (state.confirmed) {
           context
-              .bloc<map_bloc.MapBloc>()
+              .read<map_bloc.MapBloc>()
               .add(map_bloc.FilterChanged(state.filter));
           context
-              .bloc<cafe_list_bloc.CafeListBloc>()
+              .read<cafe_list_bloc.CafeListBloc>()
               .add(cafe_list_bloc.Refresh(filter: state.filter));
         }
       },
@@ -44,7 +44,7 @@ class Shell extends StatelessWidget {
                 bottomNavigationBar: BottomTabSelector(
                   currentTab: tab,
                   tabSelected: (selectedTab) =>
-                      context.bloc<TabsBloc>().add(SetTab(selectedTab)),
+                      context.read<TabsBloc>().add(SetTab(selectedTab)),
                 ),
               ),
             ),
@@ -84,7 +84,7 @@ class Shell extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (_) => BlocProvider.value(
                     child: FilterScreen(),
-                    value: context.bloc<FilterBloc>(),
+                    value: context.read<FilterBloc>(),
                   ),
                 ),
               );

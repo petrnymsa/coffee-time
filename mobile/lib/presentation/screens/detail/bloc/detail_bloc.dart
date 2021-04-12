@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/app_logger.dart';
 import '../../../../domain/entities/cafe.dart';
 import '../../../../domain/failure.dart';
 import '../../../../domain/repositories/cafe_repository.dart';
@@ -26,12 +25,10 @@ class DetailBloc extends Bloc<DetailBlocEvent, DetailBlocState> {
     @required this.cafeListBloc,
     @required this.cafeRepository,
     @required this.favoritesBloc,
-  }) {
-    _favoritesBlocSubscription = favoritesBloc.listen(_onFavoritesStateChanged);
+  }) : super(Loading()) {
+    _favoritesBlocSubscription =
+        favoritesBloc.stream.listen(_onFavoritesStateChanged);
   }
-
-  @override
-  DetailBlocState get initialState => Loading();
 
   @override
   Stream<DetailBlocState> mapEventToState(DetailBlocEvent event) async* {

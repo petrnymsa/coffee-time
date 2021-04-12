@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 
-import '../../../core/app_logger.dart';
 import '../../../di_container.dart';
 import '../../../domain/entities/cafe.dart';
 import '../../../generated/i18n.dart';
@@ -27,7 +25,7 @@ class DetailScreen extends StatelessWidget {
             loading: () => const CircularLoader(),
             failure: (message) => FailureContainer(
               message: message,
-              onRefresh: () => context.bloc<DetailBloc>().add(Load()),
+              onRefresh: () => context.read<DetailBloc>().add(Load()),
             ),
             loaded: (cafe, detail) => DetailContainer(
               cafe: cafe,
@@ -62,7 +60,7 @@ class DetailScreen extends StatelessWidget {
       context.showNotificationSnackBar(
           text: I18n.of(context).notification_reviewAdded);
       context
-          .bloc<DetailBloc>()
+          .read<DetailBloc>()
           .add(UpdateTags(id: cafe.placeId, tags: tagsToUpdate));
     }
   }

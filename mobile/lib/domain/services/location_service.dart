@@ -11,7 +11,7 @@ import 'app_permission_provider.dart';
 abstract class LocationService {
   Future<Location> getCurrentLocation();
   Stream<Location> getLocationStream({int distanceFilter = 10});
-  Future<double> distanceBetween(Location start, Location end);
+  double distanceBetween(Location start, Location end);
 }
 
 class GeolocatorLocationService implements LocationService {
@@ -28,17 +28,17 @@ class GeolocatorLocationService implements LocationService {
         _locationPermissionProvider = permissionProvider;
 
   Future<void> _checkAvailability() async {
-    if (!await _geolocator.isLocationServiceEnabled()) {
+    if (!await Geolocator.isLocationServiceEnabled()) {
       throw NoLocationServiceException();
     }
 
-    final geoPermission = await _geolocator.checkGeolocationPermissionStatus();
+    final geoPermission = await Geolocator.checkPermission();
 
-    if (geoPermission != GeolocationStatus.granted) {
+    if (geoPermission != LocationPermission.whileInUse) {
       //request again, but can fail if user opted 'ask never again'
       final permission = await _locationPermissionProvider.request();
 
-      if (permission != PermissionStatus.granted) {
+      if (permission != Permission.locationAlways) {
         //if so throw exception
         throw NoLocationPermissionException(geoPermission);
       }
@@ -49,7 +49,7 @@ class GeolocatorLocationService implements LocationService {
   Future<Location> getCurrentLocation() async {
     await _checkAvailability();
 
-    final position = await _geolocator.getCurrentPosition();
+    final position = await Geolocator.getCurrentPosition();
     return Location(position.latitude, position.longitude);
   }
 
@@ -65,12 +65,14 @@ class GeolocatorLocationService implements LocationService {
   }
 
   void _startListen(int distanceFilter) {
-    final opt = LocationOptions(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: distanceFilter,
-    );
-    _geolocatorStream =
-        _geolocator.getPositionStream(opt).listen(_locationChanged);
+    // final opt = LocationOptions(
+    //   accuracy: LocationAccuracy.high,
+    //   distanceFilter: distanceFilter,
+    // );
+    _geolocatorStream = Geolocator.getPositionStream(
+            desiredAccuracy: LocationAccuracy.high,
+            distanceFilter: distanceFilter)
+        .listen(_locationChanged);
   }
 
   void _locationChanged(Position position) {
@@ -82,7 +84,7 @@ class GeolocatorLocationService implements LocationService {
   }
 
   @override
-  Future<double> distanceBetween(Location start, Location end) {
-    return _geolocator.distanceBetween(start.lat, start.lng, end.lat, end.lng);
+  double distanceBetween(Location start, Location end) {
+    return Geolocator.distanceBetween(start.lat, start.lng, end.lat, end.lng);
   }
 }

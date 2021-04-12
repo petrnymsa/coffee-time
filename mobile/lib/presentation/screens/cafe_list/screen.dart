@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/shared_widgets.dart';
 import './bloc/bloc.dart';
+import '../../shared/shared_widgets.dart';
 import 'widgets/widgets.dart';
 
 class CafeListScreen extends StatelessWidget {
@@ -13,7 +13,7 @@ class CafeListScreen extends StatelessWidget {
         return state.map(
           loading: (_) => const CircularLoader(),
           loaded: (loaded) {
-            if (loaded.cafes.length == 0) {
+            if (loaded.cafes.isEmpty) {
               return const NoData();
             }
             return CafeList(state: loaded);
@@ -21,16 +21,16 @@ class CafeListScreen extends StatelessWidget {
           failure: (failure) => FailureContainer(
             message: failure.message,
             onRefresh: () => context
-                .bloc<CafeListBloc>()
+                .read<CafeListBloc>()
                 .add(Refresh(filter: failure.filter)),
           ),
           failureNoLocationPermission: (f) => NoLocationPermission(
             onPermissionGranted: () =>
-                context.bloc<CafeListBloc>().add(Refresh(filter: f.filter)),
+                context.read<CafeListBloc>().add(Refresh(filter: f.filter)),
           ),
           failureNoLocationService: (f) => NoLocationService(
             onLocationServiceOpened: () =>
-                context.bloc<CafeListBloc>().add(Refresh(filter: f.filter)),
+                context.read<CafeListBloc>().add(Refresh(filter: f.filter)),
           ),
         );
       },

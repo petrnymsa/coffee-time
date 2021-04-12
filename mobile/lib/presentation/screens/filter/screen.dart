@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/app_logger.dart';
 import '../../../generated/i18n.dart';
 import '../../core/blocs/filter/bloc.dart';
 import 'widgets/widgets.dart';
@@ -10,12 +9,12 @@ class FilterScreen extends StatelessWidget {
   const FilterScreen({Key key}) : super(key: key);
 
   void _handleAppBarBack(BuildContext context) {
-    context.bloc<FilterBloc>().add(Confirm());
+    context.read<FilterBloc>().add(Confirm());
     Navigator.of(context).pop();
   }
 
   Future<bool> _handleBackButton(BuildContext context) async {
-    context.bloc<FilterBloc>().add(Confirm());
+    context.read<FilterBloc>().add(Confirm());
     return true;
   }
 

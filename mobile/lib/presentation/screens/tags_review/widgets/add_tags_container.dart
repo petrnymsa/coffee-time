@@ -37,9 +37,9 @@ class AddTagsContainer extends StatelessWidget {
     return TagInput(
       tag: tag,
       onDeleted: () =>
-          context.bloc<TagsReviewBloc>().add(RemovedAdded(tagToRemove: tag)),
+          context.read<TagsReviewBloc>().add(RemovedAdded(tagToRemove: tag)),
       onPressed: () =>
-          context.bloc<TagsReviewBloc>().add(RemovedAdded(tagToRemove: tag)),
+          context.read<TagsReviewBloc>().add(RemovedAdded(tagToRemove: tag)),
     );
   }
 
@@ -72,6 +72,6 @@ class AddTagsContainer extends StatelessWidget {
   }
 
   void _onClearAdded(BuildContext context) {
-    context.bloc<TagsReviewBloc>().add(ClearAdded());
+    context.read<TagsReviewBloc>().add(ClearAdded());
   }
 }

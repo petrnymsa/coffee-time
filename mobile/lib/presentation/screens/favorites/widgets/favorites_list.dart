@@ -53,7 +53,7 @@ class FavoritesList extends StatelessWidget {
   }
 
   void _onToggleFavorite(BuildContext context, Cafe cafe) {
-    final favoritesBloc = context.bloc<FavoritesBloc>();
+    final favoritesBloc = context.read<FavoritesBloc>();
 
     favoritesBloc.add(ToggleFavorite(cafe.placeId));
 
